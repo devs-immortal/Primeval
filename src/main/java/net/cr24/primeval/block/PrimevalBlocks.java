@@ -6,10 +6,9 @@ import net.cr24.primeval.item.Weight;
 import net.cr24.primeval.item.WeightedBlockItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.tag.FabricItemTags;
+import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -18,12 +17,12 @@ import net.minecraft.util.registry.Registry;
 public class PrimevalBlocks {
 
     static {
-        final Block TESTDIRT = registerBlock("dirt", new CollapsibleBlock(FabricBlockSettings.copyOf(Blocks.DIRT).breakByTool(FabricItemTags.SHOVELS)), Weight.NORMAL, Size.MEDIUM, ItemGroup.BUILDING_BLOCKS);
-        final Block TESTCOBBLE = registerBlock("cobble", new CollapsibleBlock(FabricBlockSettings.copyOf(Blocks.COBBLESTONE).breakByTool(FabricItemTags.PICKAXES)), Weight.NORMAL, Size.MEDIUM, ItemGroup.BUILDING_BLOCKS);
+        final Block TESTDIRT = registerBlock("dirt", new CollapsibleBlock(FabricBlockSettings.copyOf(Blocks.DIRT).breakByTool(FabricToolTags.SHOVELS)), Weight.NORMAL, Size.MEDIUM, ItemGroup.BUILDING_BLOCKS);
+        final Block TESTCOBBLE = registerBlock("cobble", new CollapsibleBlock(FabricBlockSettings.copyOf(Blocks.COBBLESTONE).breakByTool(FabricToolTags.PICKAXES)), Weight.NORMAL, Size.MEDIUM, ItemGroup.BUILDING_BLOCKS);
     }
 
 
-    public static void init() {};
+    public static void init() {}
 
 
     private static Block registerBlockWithoutItem(String id, Block block) {
