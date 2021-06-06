@@ -9,7 +9,10 @@ import net.minecraft.block.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.FallingBlockEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -32,12 +35,14 @@ public class CollapsibleBlock extends FallingBlock {
     protected boolean collapse(World world, BlockPos pos, Random random) {
         if (!this.supported(world, pos, random)) {
             if (canFallThrough(world.getBlockState(pos.down()))) {
+                world.playSound(null, pos, world.getBlockState(pos).getSoundGroup().getBreakSound(), SoundCategory.BLOCKS, 0.5F, 0.6F + world.random.nextFloat() * 0.4F);
                 return world.spawnEntity(getFallingBlockEntity(world, pos, pos));
             } else {
                 List<BlockPos> neighborPositions = Arrays.asList(pos.north(), pos.east(), pos.south(), pos.west());
                 Collections.shuffle(neighborPositions);
                 for (BlockPos dest : neighborPositions) {
                     if (canFallThrough(world.getBlockState(dest)) && canFallThrough(world.getBlockState(dest.down()))) {
+                        world.playSound(null, pos, world.getBlockState(pos).getSoundGroup().getBreakSound(), SoundCategory.BLOCKS, 0.5F, 0.6F + world.random.nextFloat() * 0.4F);
                         return world.spawnEntity(getFallingBlockEntity(world, dest, pos));
                     }
                 }

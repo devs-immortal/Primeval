@@ -1,4 +1,11 @@
 {
+    "block.primeval.cobblestone": "Cobblestone",
+    "block.primeval.dirt": "Dirt",
+    "item.primeval.fired_clay_jug": "Clay Jug",
+    "item.primeval.stick": "Stick",
+    "item.primeval.straw": "Straw",
+    "itemGroup.primeval.items": "Primeval Items",
+    "itemGroup.primeval.blocks": "Primeval Blocks",
     "text.primeval.size.small": "Small",
     "text.primeval.size.medium": "Medium",
     "text.primeval.size.large": "Large",

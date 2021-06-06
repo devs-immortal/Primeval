@@ -13,13 +13,13 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
+import static net.cr24.primeval.PrimevalMain.PRIMEVAL_BLOCKS;
+
 @SuppressWarnings("unused")
 public class PrimevalBlocks {
 
-    static {
-        final Block TESTDIRT = registerBlock("dirt", new CollapsibleBlock(FabricBlockSettings.copyOf(Blocks.DIRT).breakByTool(FabricToolTags.SHOVELS)), Weight.NORMAL, Size.MEDIUM, ItemGroup.BUILDING_BLOCKS);
-        final Block TESTCOBBLE = registerBlock("cobble", new CollapsibleBlock(FabricBlockSettings.copyOf(Blocks.COBBLESTONE).breakByTool(FabricToolTags.PICKAXES)), Weight.NORMAL, Size.MEDIUM, ItemGroup.BUILDING_BLOCKS);
-    }
+    public static final Block DIRT = registerBlock("dirt", new CollapsibleBlock(FabricBlockSettings.copyOf(Blocks.DIRT).breakByTool(FabricToolTags.SHOVELS)), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block COBBLESTONE = registerBlock("cobblestone", new CollapsibleBlock(FabricBlockSettings.copyOf(Blocks.COBBLESTONE).breakByTool(FabricToolTags.PICKAXES)), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
 
 
     public static void init() {}
