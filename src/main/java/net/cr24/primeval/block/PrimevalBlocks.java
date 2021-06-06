@@ -12,6 +12,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
 import net.minecraft.block.PillarBlock;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.recipe.RecipeType;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -21,10 +22,16 @@ import static net.cr24.primeval.PrimevalMain.PRIMEVAL_BLOCKS;
 @SuppressWarnings("unused")
 public class PrimevalBlocks {
 
+    // Terrain blocks
     public static final Block DIRT = registerBlock("dirt", new CollapsibleBlock(FabricBlockSettings.copyOf(Blocks.DIRT).breakByTool(FabricToolTags.SHOVELS)), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block COBBLESTONE = registerBlock("cobblestone", new CollapsibleBlock(FabricBlockSettings.copyOf(Blocks.COBBLESTONE).breakByTool(FabricToolTags.PICKAXES)), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
-    public static final Block STRAW_PILE = registerBlockWithoutItem("straw", new LayeredBlock(FabricBlockSettings.of(Material.PLANT).strength(0.2F).sounds(BlockSoundGroup.GRASS)));
+
+    // Crafted Blocks
     public static final Block STRAW_BLOCK = registerBlock("straw_block", new PillarBlock(FabricBlockSettings.of(Material.PLANT).strength(0.2F).sounds(BlockSoundGroup.GRASS)), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
+
+    // Technical Blocks or Blocks with other BlockItems than themselves
+    public static final Block STRAW_PILE = registerBlockWithoutItem("straw", new LayeredBlock(FabricBlockSettings.of(Material.PLANT).strength(0.2F).sounds(BlockSoundGroup.GRASS)));
+
 
     public static void init() {}
 
