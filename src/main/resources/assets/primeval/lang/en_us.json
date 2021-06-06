@@ -1,0 +1,11 @@
+{
+    "text.primeval.size.small": "Small",
+    "text.primeval.size.medium": "Medium",
+    "text.primeval.size.large": "Large",
+    "text.primeval.size.very_large": "Very Large",
+    "text.primeval.weight.very_light": "Very Light",
+    "text.primeval.weight.light": "Light",
+    "text.primeval.weight.normal": "Normal",
+    "text.primeval.weight.heavy": "Heavy",
+    "text.primeval.weight.very_heavy": "Very Heavy"
+}
