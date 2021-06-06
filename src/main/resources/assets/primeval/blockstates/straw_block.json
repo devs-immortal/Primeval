@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "primeval:block/straw_block",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "primeval:block/straw_block"
+    },
+    "axis=z": {
+      "model": "primeval:block/straw_block",
+      "x": 90
+    }
+  }
+}
