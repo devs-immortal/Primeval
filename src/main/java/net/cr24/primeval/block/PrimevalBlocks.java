@@ -14,21 +14,22 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
+@SuppressWarnings("unused")
 public class PrimevalBlocks {
 
-    public static final Block TESTDIRT = new CollapsibleBlock(FabricBlockSettings.copyOf(Blocks.DIRT).breakByTool(FabricItemTags.SHOVELS));
-    public static final Block TESTCOBBLE = new CollapsibleBlock(FabricBlockSettings.copyOf(Blocks.COBBLESTONE).breakByTool(FabricItemTags.PICKAXES));
-
-
-    public static void registerBlocks() {
-        registerBlock("dirt", TESTDIRT, Weight.NORMAL, Size.MEDIUM, ItemGroup.BUILDING_BLOCKS);
-        registerBlock("cobble", TESTCOBBLE, Weight.NORMAL, Size.MEDIUM, ItemGroup.BUILDING_BLOCKS);
-
+    static {
+        final Block TESTDIRT = registerBlock("dirt", new CollapsibleBlock(FabricBlockSettings.copyOf(Blocks.DIRT).breakByTool(FabricItemTags.SHOVELS)), Weight.NORMAL, Size.MEDIUM, ItemGroup.BUILDING_BLOCKS);
+        final Block TESTCOBBLE = registerBlock("cobble", new CollapsibleBlock(FabricBlockSettings.copyOf(Blocks.COBBLESTONE).breakByTool(FabricItemTags.PICKAXES)), Weight.NORMAL, Size.MEDIUM, ItemGroup.BUILDING_BLOCKS);
     }
+
+
+    public static void init() {};
+
 
     private static Block registerBlockWithoutItem(String id, Block block) {
         return Registry.register(Registry.BLOCK, new Identifier(PrimevalMain.mod_id, id), block);
     }
+
 
     private static Block registerBlock(String id, Block block, Weight weight, Size size, ItemGroup itemgroup) {
         Registry.register(Registry.ITEM, new Identifier(PrimevalMain.mod_id, id), new WeightedBlockItem(block, new FabricItemSettings().group(itemgroup).maxCount(size.getStackSize()), weight, size));

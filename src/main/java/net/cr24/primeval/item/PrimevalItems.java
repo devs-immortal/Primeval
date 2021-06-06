@@ -14,12 +14,14 @@ import net.minecraft.util.registry.Registry;
 
 public class PrimevalItems {
 
-    public static final Item TESTITEM = new WeightedItem(new FabricItemSettings().group(ItemGroup.MISC).maxCount(Size.MEDIUM.getStackSize()), Weight.NORMAL, Size.MEDIUM);
-
-    public static void registerItems() {
-        registerItem("testitem", TESTITEM);
+    static {
+        final Item TESTITEM = registerItem("testitem", new WeightedItem(new FabricItemSettings().group(ItemGroup.MISC).maxCount(Size.MEDIUM.getStackSize()), Weight.NORMAL, Size.MEDIUM));
 
     }
+
+
+    public static void init() {}
+
 
     private static Item registerItem(String id, Item item) {
         return Registry.register(Registry.ITEM, new Identifier(PrimevalMain.mod_id, id), item);

@@ -16,8 +16,8 @@ public class PrimevalMain implements ModInitializer {
 
         System.out.println("Hello Fabric world!");
 
-        PrimevalItems.registerItems();
-        PrimevalBlocks.registerBlocks();
+        PrimevalItems.init();
+        PrimevalBlocks.init();
     }
 
 }
