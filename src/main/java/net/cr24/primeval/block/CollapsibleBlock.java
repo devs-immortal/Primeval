@@ -25,10 +25,10 @@ public class CollapsibleBlock extends FallingBlock {
 
 
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        collapse(world, pos, random);
+        collapse(world, pos, random, 0, false);
     }
 
-    protected boolean collapse(World world, BlockPos pos, Random random) {
+    protected boolean collapse(World world, BlockPos pos, Random random, int step, boolean force) {
         if (!this.supported(world, pos, random)) {
             if (canFallThrough(world.getBlockState(pos.down()))) {
                 world.playSound(null, pos, world.getBlockState(pos).getSoundGroup().getBreakSound(), SoundCategory.BLOCKS, 0.5F, 0.6F + world.random.nextFloat() * 0.4F);
@@ -56,7 +56,7 @@ public class CollapsibleBlock extends FallingBlock {
         return state.isAir() || !material.isSolid();
     }
 
-    private FallingBlockEntity getFallingBlockEntity(World world, BlockPos pos, BlockPos origin) {
+    protected FallingBlockEntity getFallingBlockEntity(World world, BlockPos pos, BlockPos origin) {
         BlockState fallingBlockState = fallBlock == null ? world.getBlockState(origin) : fallBlock.getDefaultState();
         if (pos.equals(origin)) {
             return new CollapsingBlockEntity(world, (double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, fallingBlockState, origin, world.getBlockState(origin));
