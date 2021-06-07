@@ -3,7 +3,6 @@ package net.cr24.primeval.block;
 import net.minecraft.block.Block;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
 import java.util.Arrays;
@@ -11,18 +10,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class CascadingBlock extends CollapsibleBlock {
-
-    public float percentPerSide;
+public class CascadingBlock extends SemiSupportedBlock {
 
     public CascadingBlock(Settings settings, float percentPerSide, Block fallBlock) {
-        super(settings, fallBlock);
-        this.percentPerSide = percentPerSide;
+        super(settings, percentPerSide, fallBlock);
     }
 
     public CascadingBlock(Settings settings, float percentPerSide) {
-        super(settings);
-        this.percentPerSide = percentPerSide;
+        super(settings, percentPerSide);
     }
 
     @Override
@@ -53,16 +48,5 @@ public class CascadingBlock extends CollapsibleBlock {
             }
         }
         return false;
-    }
-
-    protected boolean supported(World world, BlockPos pos, Random random) {
-        float fallPercent = 1.0f;
-        for (Direction sideDirection : Arrays.asList(Direction.UP, Direction.DOWN, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST)) {
-            if (world.getBlockState(pos.offset(sideDirection)).isSideSolidFullSquare(world, pos.offset(sideDirection), sideDirection.getOpposite())) {
-                fallPercent -= percentPerSide;
-            }
-        }
-        float rand = random.nextFloat();
-        return rand > fallPercent || super.supported(world, pos, random);
     }
 }

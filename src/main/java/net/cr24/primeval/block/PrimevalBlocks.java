@@ -23,8 +23,8 @@ import static net.cr24.primeval.PrimevalMain.PRIMEVAL_BLOCKS;
 public class PrimevalBlocks {
 
     // Terrain blocks
-    public static final Block DIRT = registerBlock("dirt", new CollapsibleBlock(FabricBlockSettings.copyOf(Blocks.DIRT).breakByTool(FabricToolTags.SHOVELS)), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
-    public static final Block COBBLESTONE = registerBlock("cobblestone", new CollapsibleBlock(FabricBlockSettings.copyOf(Blocks.COBBLESTONE).breakByTool(FabricToolTags.PICKAXES)), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block DIRT = registerBlock("dirt", new SemiSupportedBlock(FabricBlockSettings.copyOf(Blocks.DIRT).breakByTool(FabricToolTags.SHOVELS), 0.15f), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block COBBLESTONE = registerBlock("cobblestone", new SemiSupportedBlock(FabricBlockSettings.copyOf(Blocks.COBBLESTONE).breakByTool(FabricToolTags.PICKAXES), 0.1f), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block STONE = registerBlock("stone", new CascadingBlock(FabricBlockSettings.copyOf(Blocks.STONE).breakByTool(FabricToolTags.PICKAXES), 0.35f, COBBLESTONE), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
 
     // Crafted Blocks
