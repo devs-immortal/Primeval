@@ -1,46 +1,38 @@
 package net.cr24.primeval.entity;
 
 import com.google.common.collect.Lists;
-import net.cr24.primeval.block.CollapsibleBlock;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.FallingBlockEntity;
 import net.minecraft.entity.MovementType;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.data.TrackedData;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.item.AutomaticItemPlacementContext;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.state.property.Properties;
-import net.minecraft.tag.BlockTags;
 import net.minecraft.tag.FluidTags;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 
-import java.util.Iterator;
 import java.util.List;
 
 public class CollapsingBlockEntity extends FallingBlockEntity {
 
     private BlockState block;
-    private boolean destroyedOnLanding = false;
     public int timeFalling;
     public boolean dropItem;
     public BlockPos origin;
+    public BlockState sourceBlock;
     public NbtCompound blockEntityData;
 
-    public CollapsingBlockEntity(World world, double x, double y, double z, BlockState block, BlockPos origin) {
+    public CollapsingBlockEntity(World world, double x, double y, double z, BlockState block, BlockPos origin, BlockState sourceBlock) {
         super(world, x, y, z, block);
         this.block = block;
         this.inanimate = true;
@@ -50,6 +42,7 @@ public class CollapsingBlockEntity extends FallingBlockEntity {
         this.prevY = y;
         this.prevZ = z;
         this.origin = origin;
+        this.sourceBlock = sourceBlock;
         this.setFallingBlockPos(this.getBlockPos());
     }
 
@@ -59,10 +52,11 @@ public class CollapsingBlockEntity extends FallingBlockEntity {
             this.discard();
         } else {
             Block block = this.block.getBlock();
+            Block source = this.sourceBlock.getBlock();
             BlockPos blockPos2;
             if (this.timeFalling++ == 0) {
                 blockPos2 = this.origin;
-                if (this.world.getBlockState(blockPos2).isOf(block)) {
+                if (this.world.getBlockState(blockPos2).isOf(block) || this.world.getBlockState(blockPos2).isOf(source)) {
                     this.world.removeBlock(blockPos2, false);
                 } else if (!this.world.isClient) {
                     this.discard();
@@ -101,50 +95,38 @@ public class CollapsingBlockEntity extends FallingBlockEntity {
                     this.setVelocity(this.getVelocity().multiply(0.7D, -0.5D, 0.7D));
                     if (!blockState.isOf(Blocks.MOVING_PISTON)) {
                         this.discard();
-                        if (!this.destroyedOnLanding) {
-                            boolean bl3 = blockState.canReplace(new AutomaticItemPlacementContext(this.world, blockPos2, Direction.DOWN, ItemStack.EMPTY, Direction.UP));
-                            boolean bl4 = CollapsibleBlock.canFallThrough(this.world.getBlockState(blockPos2.down())) && (!bl || !bl2);
-                            boolean bl5 = this.block.canPlaceAt(this.world, blockPos2) && !bl4;
-                            if (true) {
-                                if (this.block.contains(Properties.WATERLOGGED) && this.world.getFluidState(blockPos2).getFluid() == Fluids.WATER) {
-                                    this.block = (BlockState)this.block.with(Properties.WATERLOGGED, true);
-                                }
+                        // !destroyedOnLanding
+                        if (this.block.contains(Properties.WATERLOGGED) && this.world.getFluidState(blockPos2).getFluid() == Fluids.WATER) {
+                            this.block = this.block.with(Properties.WATERLOGGED, true);
+                        }
 
-                                if (this.world.setBlockState(blockPos2, this.block, 3)) {
-                                    if (block instanceof FallingBlock) {
-                                        ((FallingBlock)block).onLanding(this.world, blockPos2, this.block, blockState, this);
-                                    }
+                        if (this.world.setBlockState(blockPos2, this.block, 3)) {
+                            if (block instanceof FallingBlock) {
+                                ((FallingBlock)block).onLanding(this.world, blockPos2, this.block, blockState, this);
+                            }
 
-                                    if (this.blockEntityData != null && block instanceof BlockEntityProvider) {
-                                        BlockEntity blockEntity = this.world.getBlockEntity(blockPos2);
-                                        if (blockEntity != null) {
-                                            NbtCompound compoundTag = blockEntity.writeNbt(new NbtCompound());
-                                            Iterator var13 = this.blockEntityData.getKeys().iterator();
+                            if (this.blockEntityData != null && block instanceof BlockEntityProvider) {
+                                BlockEntity blockEntity = this.world.getBlockEntity(blockPos2);
+                                if (blockEntity != null) {
+                                    NbtCompound compoundTag = blockEntity.writeNbt(new NbtCompound());
 
-                                            while(var13.hasNext()) {
-                                                String string = (String)var13.next();
-                                                NbtElement nbtElement = this.blockEntityData.get(string);
-                                                if (!"x".equals(string) && !"y".equals(string) && !"z".equals(string)) {
-                                                    compoundTag.put(string, nbtElement.copy());
-                                                }
-                                            }
-
-                                            try {
-                                                blockEntity.readNbt(compoundTag);
-                                            } catch (Exception var16) {
-                                                LOGGER.error("Failed to load block entity from falling block", var16);
-                                            }
-                                            blockEntity.markDirty();
+                                    for (String string : this.blockEntityData.getKeys()) {
+                                        NbtElement nbtElement = this.blockEntityData.get(string);
+                                        if (!"x".equals(string) && !"y".equals(string) && !"z".equals(string)) {
+                                            compoundTag.put(string, nbtElement.copy());
                                         }
                                     }
-                                } else if (this.dropItem && this.world.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
-                                    this.dropItem(block);
+
+                                    try {
+                                        blockEntity.readNbt(compoundTag);
+                                    } catch (Exception var16) {
+                                        LOGGER.error("Failed to load block entity from falling block", var16);
+                                    }
+                                    blockEntity.markDirty();
                                 }
-                            } else if (this.dropItem && this.world.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
-                                this.dropItem(block);
                             }
-                        } else if (block instanceof FallingBlock) {
-                            ((FallingBlock)block).onDestroyedOnLanding(this.world, blockPos2, this);
+                        } else if (this.dropItem && this.world.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
+                            this.dropItem(block);
                         }
                     }
                 }
@@ -159,12 +141,9 @@ public class CollapsingBlockEntity extends FallingBlockEntity {
         int i = MathHelper.ceil(fallDistance - 1.0F);
         if (i > 0) {
             List<Entity> list = Lists.newArrayList(this.world.getOtherEntities(this, this.getBoundingBox()));
-            boolean bl = this.block.isIn(BlockTags.ANVIL);
-            Iterator var7 = list.iterator();
 
-            while(var7.hasNext()) {
-                Entity entity = (Entity)var7.next();
-                entity.damage(damageSource, (float)Math.min(MathHelper.floor((float)i * 2f), 40f));
+            for (Entity entity : list) {
+                entity.damage(damageSource, Math.min(MathHelper.floor((float) i * 2f), 40f));
             }
         }
         return false;

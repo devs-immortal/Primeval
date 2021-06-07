@@ -1,32 +1,28 @@
 package net.cr24.primeval.block;
 
-import com.google.common.collect.Lists;
 import net.cr24.primeval.entity.CollapsingBlockEntity;
-import net.minecraft.block.AnvilBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FallingBlock;
-import net.minecraft.block.Material;
-import net.minecraft.entity.Entity;
+import net.minecraft.block.*;
 import net.minecraft.entity.FallingBlockEntity;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.tag.BlockTags;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 import java.util.*;
 
 public class CollapsibleBlock extends FallingBlock {
 
-    public static float stability;
+    public Block fallBlock;
+
+    public CollapsibleBlock(Settings settings, Block fallBlock) {
+        super(settings);
+        this.fallBlock = fallBlock;
+    }
 
     public CollapsibleBlock(Settings settings) {
         super(settings);
     }
+
 
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         collapse(world, pos, random);
@@ -61,10 +57,11 @@ public class CollapsibleBlock extends FallingBlock {
     }
 
     private FallingBlockEntity getFallingBlockEntity(World world, BlockPos pos, BlockPos origin) {
+        BlockState fallingBlockState = fallBlock == null ? world.getBlockState(origin) : fallBlock.getDefaultState();
         if (pos.equals(origin)) {
-            return new CollapsingBlockEntity(world, (double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, world.getBlockState(origin), origin);
+            return new CollapsingBlockEntity(world, (double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, fallingBlockState, origin, world.getBlockState(origin));
         } else {
-            return new CollapsingBlockEntity(world, (double)pos.getX() + 0.5D, (double)pos.getY() - 0.5D, (double)pos.getZ() + 0.5D, world.getBlockState(origin), origin);
+            return new CollapsingBlockEntity(world, (double)pos.getX() + 0.5D, (double)pos.getY() - 0.5D, (double)pos.getZ() + 0.5D, fallingBlockState, origin, world.getBlockState(origin));
         }
     }
 }
