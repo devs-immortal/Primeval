@@ -56,6 +56,8 @@ public class CollapsibleBlock extends FallingBlock {
         return state.isAir() || !material.isSolid();
     }
 
+    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {}
+
     protected FallingBlockEntity getFallingBlockEntity(World world, BlockPos pos, BlockPos origin) {
         BlockState fallingBlockState = fallBlock == null ? world.getBlockState(origin) : fallBlock.getDefaultState();
         if (pos.equals(origin)) {
