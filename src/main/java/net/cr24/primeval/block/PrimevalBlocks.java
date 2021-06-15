@@ -33,6 +33,8 @@ public class PrimevalBlocks {
     // Technical Blocks or Blocks with other BlockItems than themselves
     public static final Block STRAW_PILE = registerBlockWithoutItem("straw", new LayeredBlock(FabricBlockSettings.of(Material.PLANT).strength(0.2F).sounds(BlockSoundGroup.GRASS)));
 
+    // Intractable Blocks
+    public static final Block PIT_KILN = registerBlockWithoutItem("pit_kiln", new PitKilnBlock(FabricBlockSettings.of(Material.PLANT).strength(0.4F).sounds(BlockSoundGroup.GRASS)));
 
     public static void init() {}
 
