@@ -18,7 +18,14 @@ public class WeightedItem extends Item {
     private final Size size;
 
     public WeightedItem(Settings settings, Weight weight, Size size) {
-        super(settings);
+        super(settings.maxCount(Size.SMALL.getStackSize()));
+        this.weight = weight;
+        this.size = size;
+    }
+
+    // Constructor without size-dependent max-count
+    public WeightedItem(Settings settings, Weight weight, Size size, int stackSize) {
+        super(settings.maxCount(stackSize));
         this.weight = weight;
         this.size = size;
     }

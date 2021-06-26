@@ -3,10 +3,19 @@ package net.cr24.primeval;
 import net.cr24.primeval.block.PrimevalBlocks;
 import net.cr24.primeval.item.PrimevalItems;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Identifier;
 
 public class PrimevalMain implements ModInitializer {
 
     public static String mod_id = "primeval";
+
+    /* Item Groups */
+    public static final ItemGroup PRIMEVAL_ITEMS = FabricItemGroupBuilder.build(new Identifier(mod_id, "items"), () -> new ItemStack(PrimevalItems.STRAW));
+    public static final ItemGroup PRIMEVAL_BLOCKS = FabricItemGroupBuilder.build(new Identifier(mod_id, "blocks"), () -> new ItemStack(PrimevalBlocks.DIRT));
+
 
     @Override
     public void onInitialize() {
@@ -16,8 +25,8 @@ public class PrimevalMain implements ModInitializer {
 
         System.out.println("Hello Fabric world!");
 
-        PrimevalItems.registerItems();
-        PrimevalBlocks.registerBlocks();
+        PrimevalItems.init();
+        PrimevalBlocks.init();
     }
 
 }
