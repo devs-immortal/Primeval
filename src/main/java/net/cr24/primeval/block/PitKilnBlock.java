@@ -1,14 +1,23 @@
 package net.cr24.primeval.block;
 
+import net.cr24.primeval.item.PrimevalItems;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.IntProperty;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public class PitKilnBlock extends BlockWithEntity {
@@ -48,15 +57,34 @@ public class PitKilnBlock extends BlockWithEntity {
         return BlockRenderType.MODEL;
     }
 
-
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return null;
     }
 
+
     public boolean hasSidedTransparency(BlockState state) {
         return false;
+    }
+
+
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        if (!player.getAbilities().allowModifyWorld) {
+            return ActionResult.PASS;
+        } else {
+            ItemStack itemStack = player.getStackInHand(hand);
+            int stage = state.get(BUILD_STEP);
+            if (itemStack.isOf(PrimevalItems.STRAW) && stage < 4) {
+                world.setBlockState(pos, state.with(BUILD_STEP, stage+1));
+                return ActionResult.SUCCESS;
+            } else if (itemStack.isOf(PrimevalItems.STICK) && stage < 8) { // TODO replace with log tag
+                world.setBlockState(pos, state.with(BUILD_STEP, stage+1));
+                return ActionResult.SUCCESS;
+            } else {
+                return ActionResult.PASS;
+            }
+        }
     }
 
     @Override
