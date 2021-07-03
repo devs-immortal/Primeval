@@ -40,13 +40,13 @@ public class PrimevalBlocks {
 
 
     private static Block registerBlockWithoutItem(String id, Block block) {
-        return Registry.register(Registry.BLOCK, new Identifier(PrimevalMain.mod_id, id), block);
+        return Registry.register(Registry.BLOCK, PrimevalMain.getId(id), block);
     }
 
 
     private static Block registerBlock(String id, Block block, Weight weight, Size size, ItemGroup itemgroup) {
-        Registry.register(Registry.ITEM, new Identifier(PrimevalMain.mod_id, id), new WeightedBlockItem(block, new FabricItemSettings().group(itemgroup).maxCount(size.getStackSize()), weight, size));
-        return Registry.register(Registry.BLOCK, new Identifier(PrimevalMain.mod_id, id), block);
+        Registry.register(Registry.ITEM, PrimevalMain.getId(id), new WeightedBlockItem(block, new FabricItemSettings().group(itemgroup).maxCount(size.getStackSize()), weight, size));
+        return Registry.register(Registry.BLOCK, PrimevalMain.getId(id), block);
     }
 
 }

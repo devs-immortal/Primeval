@@ -2,6 +2,7 @@ package net.cr24.primeval;
 
 import net.cr24.primeval.block.PrimevalBlocks;
 import net.cr24.primeval.item.PrimevalItems;
+import net.cr24.primeval.world.PrimevalWorld;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.item.ItemGroup;
@@ -27,6 +28,11 @@ public class PrimevalMain implements ModInitializer {
 
         PrimevalItems.init();
         PrimevalBlocks.init();
+        PrimevalWorld.init();
+    }
+
+    public static Identifier getId(String id) {
+        return new Identifier(PrimevalMain.mod_id, id);
     }
 
 }

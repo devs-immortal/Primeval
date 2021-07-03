@@ -26,7 +26,7 @@ public class PrimevalItems {
 
 
     private static Item registerItem(String id, Item item) {
-        return Registry.register(Registry.ITEM, new Identifier(PrimevalMain.mod_id, id), item);
+        return Registry.register(Registry.ITEM, PrimevalMain.getId(id), item);
     }
 
 }
