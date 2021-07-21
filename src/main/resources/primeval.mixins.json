@@ -6,7 +6,8 @@
   "mixins": [
   ],
   "client": [
-    "ExampleMixin"
+    "ExampleMixin",
+    "client.color.block.BlockColorsMixin"
   ],
   "injectors": {
     "defaultRequire": 1

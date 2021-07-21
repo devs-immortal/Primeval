@@ -19,6 +19,9 @@
   "entrypoints": {
     "main": [
       "net.cr24.primeval.PrimevalMain"
+    ],
+    "client": [
+      "net.cr24.primeval.PrimevalMain"
     ]
   },
   "mixins": [

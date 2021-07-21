@@ -3,13 +3,16 @@ package net.cr24.primeval;
 import net.cr24.primeval.block.PrimevalBlocks;
 import net.cr24.primeval.item.PrimevalItems;
 import net.cr24.primeval.world.PrimevalWorld;
+import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
-public class PrimevalMain implements ModInitializer {
+public class PrimevalMain implements ModInitializer, ClientModInitializer {
 
     public static String mod_id = "primeval";
 
@@ -29,6 +32,13 @@ public class PrimevalMain implements ModInitializer {
         PrimevalItems.init();
         PrimevalBlocks.init();
         PrimevalWorld.init();
+    }
+
+    @Override
+    @Environment(EnvType.CLIENT)
+    public void onInitializeClient() {
+        System.out.println("Hello Fabric client!");
+        PrimevalBlocks.initClient();
     }
 
     public static Identifier getId(String id) {
