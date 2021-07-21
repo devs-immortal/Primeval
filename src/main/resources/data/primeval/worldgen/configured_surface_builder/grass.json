@@ -1,0 +1,17 @@
+{
+  "config": {
+    "top_material": {
+      "Properties": {
+        "snowy": "false"
+      },
+      "Name": "primeval:grassy_dirt"
+    },
+    "under_material": {
+      "Name": "primeval:dirt"
+    },
+    "underwater_material": {
+      "Name": "minecraft:gravel"
+    }
+  },
+  "type": "minecraft:default"
+}
