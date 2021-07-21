@@ -1,0 +1,24 @@
+{
+  "variants": {
+    "snowy=false": [
+      {
+        "model": "primeval:block/grassy_dirt"
+      },
+      {
+        "model": "primeval:block/grassy_dirt",
+        "y": 90
+      },
+      {
+        "model": "primeval:block/grassy_dirt",
+        "y": 180
+      },
+      {
+        "model": "primeval:block/grassy_dirt",
+        "y": 270
+      }
+    ],
+    "snowy=true": {
+      "model": "primeval:block/grassy_dirt_snowy"
+    }
+  }
+}
