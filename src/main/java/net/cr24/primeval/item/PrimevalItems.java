@@ -23,6 +23,12 @@ public class PrimevalItems {
     public static final Item STICK = registerItem("stick", new WeightedItem(new FabricItemSettings().group(PRIMEVAL_ITEMS), Weight.VERY_LIGHT, Size.SMALL));
     public static final Item ROCK = registerItem("rock", new WeightedItem(new FabricItemSettings().group(PRIMEVAL_ITEMS), Weight.LIGHT, Size.SMALL));
 
+    // Ore Items
+    public static final Item RAW_IRON_SMALL = registerItem("raw_iron_small", new WeightedItem(new FabricItemSettings().group(PRIMEVAL_ITEMS), Weight.NORMAL, Size.SMALL));
+    public static final Item RAW_IRON_MEDIUM = registerItem("raw_iron_medium", new WeightedItem(new FabricItemSettings().group(PRIMEVAL_ITEMS), Weight.NORMAL, Size.MEDIUM));
+    public static final Item RAW_IRON_LARGE = registerItem("raw_iron_large", new WeightedItem(new FabricItemSettings().group(PRIMEVAL_ITEMS), Weight.NORMAL, Size.LARGE));
+
+
     // Utility items
     public static final Item FIRED_CLAY_JUG = registerItem("fired_clay_jug", new WeightedItem(new FabricItemSettings().group(PRIMEVAL_ITEMS), Weight.NORMAL, Size.MEDIUM, 1));
 
