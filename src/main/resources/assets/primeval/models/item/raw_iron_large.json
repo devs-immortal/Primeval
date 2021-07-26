@@ -1,3 +1,6 @@
 {
-  "parent": "minecraft:item/raw_iron"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "primeval:item/raw_iron_large"
+  }
 }
