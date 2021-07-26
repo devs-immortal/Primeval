@@ -44,5 +44,5 @@
     "vertical_radius_multiplier": 1.0,
     "floor_level": -0.7
   },
-  "type": "minecraft:cave"
+  "type": "primeval:cave"
 }
