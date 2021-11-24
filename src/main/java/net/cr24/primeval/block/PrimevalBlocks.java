@@ -10,22 +10,15 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
 import net.minecraft.block.PillarBlock;
-import net.minecraft.client.color.block.BlockColorProvider;
-import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.RenderLayers;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.recipe.RecipeType;
 import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-
-import static net.cr24.primeval.PrimevalMain.PRIMEVAL_BLOCKS;
+import static net.cr24.primeval.item.PrimevalItems.PRIMEVAL_BLOCKS;
 
 @SuppressWarnings("unused")
 public class PrimevalBlocks {

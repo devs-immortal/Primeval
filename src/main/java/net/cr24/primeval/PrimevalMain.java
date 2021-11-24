@@ -14,21 +14,10 @@ import net.minecraft.util.Identifier;
 
 public class PrimevalMain implements ModInitializer, ClientModInitializer {
 
-    public static String mod_id = "primeval";
-
-    /* Item Groups */
-    public static final ItemGroup PRIMEVAL_ITEMS = FabricItemGroupBuilder.build(new Identifier(mod_id, "items"), () -> new ItemStack(PrimevalItems.STRAW));
-    public static final ItemGroup PRIMEVAL_BLOCKS = FabricItemGroupBuilder.build(new Identifier(mod_id, "blocks"), () -> new ItemStack(PrimevalBlocks.DIRT));
-
+    private static String mod_id = "primeval";
 
     @Override
     public void onInitialize() {
-        // This code runs as soon as Minecraft is in a mod-load-ready state.
-        // However, some things (like resources) may still be uninitialized.
-        // Proceed with mild caution.
-
-        System.out.println("Hello Fabric world!");
-
         PrimevalItems.init();
         PrimevalBlocks.init();
         PrimevalWorld.init();
@@ -37,7 +26,6 @@ public class PrimevalMain implements ModInitializer, ClientModInitializer {
     @Override
     @Environment(EnvType.CLIENT)
     public void onInitializeClient() {
-        System.out.println("Hello Fabric client!");
         PrimevalBlocks.initClient();
     }
 

@@ -2,11 +2,10 @@
   "required": true,
   "minVersion": "0.8",
   "package": "net.cr24.primeval.mixin",
-  "compatibilityLevel": "JAVA_16",
+  "compatibilityLevel": "JAVA_17",
   "mixins": [
   ],
   "client": [
-    "ExampleMixin",
     "client.color.block.BlockColorsMixin"
   ],
   "injectors": {

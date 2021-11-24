@@ -21,6 +21,7 @@ import net.minecraft.world.GameRules;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 
+import java.util.Iterator;
 import java.util.List;
 
 public class CollapsingBlockEntity extends FallingBlockEntity {
@@ -105,24 +106,24 @@ public class CollapsingBlockEntity extends FallingBlockEntity {
                                 ((FallingBlock)block).onLanding(this.world, blockPos2, this.block, blockState, this);
                             }
 
-                            if (this.blockEntityData != null && block instanceof BlockEntityProvider) {
-                                BlockEntity blockEntity = this.world.getBlockEntity(blockPos2);
-                                if (blockEntity != null) {
-                                    NbtCompound compoundTag = blockEntity.writeNbt(new NbtCompound());
+                            if (this.blockEntityData != null && this.block.hasBlockEntity()) {
+                                BlockEntity $$11 = this.world.getBlockEntity(blockPos2);
+                                if ($$11 != null) {
+                                    NbtCompound $$12 = $$11.createNbt();
+                                    Iterator var13 = this.blockEntityData.getKeys().iterator();
 
-                                    for (String string : this.blockEntityData.getKeys()) {
-                                        NbtElement nbtElement = this.blockEntityData.get(string);
-                                        if (!"x".equals(string) && !"y".equals(string) && !"z".equals(string)) {
-                                            compoundTag.put(string, nbtElement.copy());
-                                        }
+                                    while(var13.hasNext()) {
+                                        String $$13 = (String)var13.next();
+                                        $$12.put($$13, this.blockEntityData.get($$13).copy());
                                     }
 
                                     try {
-                                        blockEntity.readNbt(compoundTag);
-                                    } catch (Exception var16) {
-                                        LOGGER.error("Failed to load block entity from falling block", var16);
+                                        $$11.readNbt($$12);
+                                    } catch (Exception var15) {
+                                        LOGGER.error("Failed to load block entity from falling block", var15);
                                     }
-                                    blockEntity.markDirty();
+
+                                    $$11.markDirty();
                                 }
                             }
                         } else if (this.dropItem && this.world.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
