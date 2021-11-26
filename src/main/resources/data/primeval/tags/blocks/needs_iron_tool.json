@@ -12,7 +12,6 @@
     "minecraft:gold_ore",
     "minecraft:deepslate_gold_ore",
     "minecraft:redstone_ore",
-    "minecraft:deepslate_redstone_ore",
-    "primeval:needs_iron_tool"
+    "minecraft:deepslate_redstone_ore"
   ]
 }

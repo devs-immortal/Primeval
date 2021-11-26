@@ -19,6 +19,7 @@
     "minecraft:flowering_azalea_leaves",
     "minecraft:sculk_sensor",
     "minecraft:moss_block",
-    "minecraft:moss_carpet"
+    "minecraft:moss_carpet",
+    "#primeval:mineable\hoe"
   ]
 }

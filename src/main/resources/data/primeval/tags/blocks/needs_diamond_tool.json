@@ -5,7 +5,6 @@
     "minecraft:crying_obsidian",
     "minecraft:netherite_block",
     "minecraft:respawn_anchor",
-    "minecraft:ancient_debris",
-    "primeval:needs_diamond_tool"
+    "minecraft:ancient_debris"
   ]
 }

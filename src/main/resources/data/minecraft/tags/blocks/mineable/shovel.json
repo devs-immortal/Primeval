@@ -32,6 +32,7 @@
     "minecraft:red_concrete_powder",
     "minecraft:black_concrete_powder",
     "minecraft:soul_soil",
-    "minecraft:rooted_dirt"
+    "minecraft:rooted_dirt",
+    "#primeval:mineable\shovel"
   ]
 }
