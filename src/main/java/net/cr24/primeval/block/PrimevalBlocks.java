@@ -31,9 +31,13 @@ public class PrimevalBlocks {
 
     // Ore blocks
     // IRON
-    public static final Block IRON_ORE_SMALL = registerBlock("iron_ore_small", new SemiSupportedBlock(FabricBlockSettings.copyOf(Blocks.STONE), 0.35f, COBBLESTONE), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
-    public static final Block IRON_ORE_MEDIUM = registerBlock("iron_ore_medium", new SemiSupportedBlock(FabricBlockSettings.copyOf(Blocks.STONE), 0.35f, COBBLESTONE), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
-    public static final Block IRON_ORE_LARGE = registerBlock("iron_ore_large", new SemiSupportedBlock(FabricBlockSettings.copyOf(Blocks.STONE), 0.35f, COBBLESTONE), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block IRON_HEMATITE_ORE_SMALL = registerBlock("iron_hematite_ore_small", new SemiSupportedBlock(FabricBlockSettings.copyOf(Blocks.STONE), 0.35f, COBBLESTONE), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block IRON_HEMATITE_ORE_MEDIUM = registerBlock("iron_hematite_ore_medium", new SemiSupportedBlock(FabricBlockSettings.copyOf(Blocks.STONE), 0.35f, COBBLESTONE), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block IRON_HEMATITE_ORE_LARGE = registerBlock("iron_hematite_ore_large", new SemiSupportedBlock(FabricBlockSettings.copyOf(Blocks.STONE), 0.35f, COBBLESTONE), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
+
+    public static final Block COPPER_NATIVE_ORE_SMALL = registerBlock("copper_native_ore_small", new SemiSupportedBlock(FabricBlockSettings.copyOf(Blocks.STONE), 0.35f, COBBLESTONE), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block COPPER_NATIVE_ORE_MEDIUM = registerBlock("copper_native_ore_medium", new SemiSupportedBlock(FabricBlockSettings.copyOf(Blocks.STONE), 0.35f, COBBLESTONE), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block COPPER_NATIVE_ORE_LARGE = registerBlock("copper_native_ore_large", new SemiSupportedBlock(FabricBlockSettings.copyOf(Blocks.STONE), 0.35f, COBBLESTONE), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
 
 
     // Crafted Blocks

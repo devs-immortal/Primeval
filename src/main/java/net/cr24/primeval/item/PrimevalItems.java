@@ -2,17 +2,11 @@ package net.cr24.primeval.item;
 
 import net.cr24.primeval.PrimevalMain;
 import net.cr24.primeval.block.PrimevalBlocks;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
-import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.minecraft.client.render.RenderLayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import static net.cr24.primeval.block.PrimevalBlocks.*;
 
@@ -32,9 +26,13 @@ public class PrimevalItems {
     public static final Item ROCK = registerItem("rock", new WeightedItem(groupItems, Weight.LIGHT, Size.SMALL));
 
     // Ore Items
-    public static final Item RAW_IRON_SMALL = registerItem("raw_iron_small", new WeightedItem(groupItems, Weight.NORMAL, Size.SMALL));
-    public static final Item RAW_IRON_MEDIUM = registerItem("raw_iron_medium", new WeightedItem(groupItems, Weight.NORMAL, Size.MEDIUM));
-    public static final Item RAW_IRON_LARGE = registerItem("raw_iron_large", new WeightedItem(groupItems, Weight.NORMAL, Size.LARGE));
+    public static final Item RAW_IRON_HEMATITE_SMALL = registerItem("raw_iron_hematite_small", new WeightedItem(groupItems, Weight.NORMAL, Size.SMALL));
+    public static final Item RAW_IRON_HEMATITE_MEDIUM = registerItem("raw_iron_hematite_medium", new WeightedItem(groupItems, Weight.NORMAL, Size.MEDIUM));
+    public static final Item RAW_IRON_HEMATITE_LARGE = registerItem("raw_iron_hematite_large", new WeightedItem(groupItems, Weight.NORMAL, Size.LARGE));
+
+    public static final Item RAW_COPPER_NATIVE_SMALL = registerItem("raw_copper_native_small", new WeightedItem(groupItems, Weight.NORMAL, Size.SMALL));
+    public static final Item RAW_COPPER_NATIVE_MEDIUM = registerItem("raw_copper_native_medium", new WeightedItem(groupItems, Weight.NORMAL, Size.MEDIUM));
+    public static final Item RAW_COPPER_NATIVE_LARGE = registerItem("raw_copper_native_large", new WeightedItem(groupItems, Weight.NORMAL, Size.LARGE));
 
     // Utility items
     public static final Item FIRED_CLAY_JUG = registerItem("fired_clay_jug", new WeightedItem(groupItems, Weight.NORMAL, Size.MEDIUM, 1));
