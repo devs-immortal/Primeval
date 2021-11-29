@@ -3,19 +3,33 @@
     "block.primeval.grassy_dirt": "Grassy Dirt",
     "block.primeval.cobblestone": "Cobblestone",
     "block.primeval.stone": "Stone",
-    "block.primeval.iron_ore_small": "Small Hematite Ore",
-    "block.primeval.iron_ore_medium": "Medium Hematite Ore",
-    "block.primeval.iron_ore_large": "Large Hematite Ore",
+    
+    "block.primeval.copper_native_ore_small": "Small Native Copper Ore",
+    "block.primeval.copper_native_ore_medium": "Medium Native Copper Ore",
+    "block.primeval.copper_native_ore_large": "Large Native Copper Ore",
+    "block.primeval.iron_hematite_ore_small": "Small Hematite Ore",
+    "block.primeval.iron_hematite_ore_medium": "Medium Hematite Ore",
+    "block.primeval.iron_hematite_ore_large": "Large Hematite Ore",
+    
     "block.primeval.straw_block": "Straw Block",
     "block.primeval.straw": "Straw",
+    
+    
     "item.primeval.stick": "Stick",
     "item.primeval.rock": "Rock",
-    "item.primeval.raw_iron_small": "Small Raw Hematite",
-    "item.primeval.raw_iron_medium": "Medium Raw Hematite",
-    "item.primeval.raw_iron_large": "Large Raw Hematite",
+    "item.primeval.raw_copper_native_small": "Small Raw Native Copper",
+    "item.primeval.raw_copper_native_medium": "Medium Raw Native Copper",
+    "item.primeval.raw_copper_native_large": "Large Raw Native Copper",
+    "item.primeval.raw_iron_hematite_small": "Small Raw Hematite",
+    "item.primeval.raw_iron_hematite_medium": "Medium Raw Hematite",
+    "item.primeval.raw_iron_hematite_large": "Large Raw Hematite",
     "item.primeval.fired_clay_jug": "Clay Jug",
+    
+    
     "itemGroup.primeval.items": "Primeval Items",
     "itemGroup.primeval.blocks": "Primeval Blocks",
+    
+    
     "text.primeval.size.small": "Small",
     "text.primeval.size.medium": "Medium",
     "text.primeval.size.large": "Large",
