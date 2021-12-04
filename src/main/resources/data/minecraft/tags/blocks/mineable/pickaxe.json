@@ -326,6 +326,6 @@
     "#minecraft:cauldrons",
     "#minecraft:rails",
     "minecraft:conduit",
-    "#primeval:mineable\pickaxe"
+    "#primeval:mineable/pickaxe"
   ]
 }

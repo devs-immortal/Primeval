@@ -29,6 +29,9 @@ public class PrimevalBlocks {
     public static final Block COBBLESTONE = registerBlock("cobblestone", new SemiSupportedBlock(FabricBlockSettings.copyOf(Blocks.COBBLESTONE), 0.1f), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block STONE = registerBlock("stone", new CascadingBlock(FabricBlockSettings.copyOf(Blocks.STONE), 0.35f, COBBLESTONE), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
 
+    // Plant blocks
+    public static final Block OAK_LOG = registerBlock("oak_log", new TrunkBlock(FabricBlockSettings.copyOf(Blocks.OAK_LOG)), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
+
     // Ore blocks
     // IRON
     public static final Block IRON_HEMATITE_ORE_SMALL = registerBlock("iron_hematite_ore_small", new SemiSupportedBlock(FabricBlockSettings.copyOf(Blocks.STONE), 0.35f, COBBLESTONE), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);

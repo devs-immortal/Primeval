@@ -80,6 +80,6 @@
     "#minecraft:wooden_slabs",
     "#minecraft:wooden_stairs",
     "#minecraft:wooden_trapdoors",
-    "#primeval:mineable\axe"
+    "#primeval:mineable/axe"
   ]
 }
