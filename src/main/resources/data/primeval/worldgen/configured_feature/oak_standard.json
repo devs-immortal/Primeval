@@ -19,7 +19,8 @@
     "trunk_provider": {
       "state": {
         "Properties": {
-          "axis": "y"
+          "axis": "y",
+          "natural": "true"
         },
         "Name": "primeval:oak_log"
       },
@@ -27,8 +28,8 @@
     },
     "trunk_placer": {
       "base_height": 8,
-      "height_rand_a": 4,
-      "height_rand_b": 2,
+      "height_rand_a": 6,
+      "height_rand_b": 4,
       "type": "minecraft:fancy_trunk_placer"
     },
     "foliage_provider": {
@@ -37,7 +38,7 @@
           "persistent": "false",
           "distance": "7"
         },
-        "Name": "minecraft:oak_leaves"
+        "Name": "primeval:oak_leaves"
       },
       "type": "minecraft:simple_state_provider"
     },

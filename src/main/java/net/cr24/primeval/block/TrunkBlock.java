@@ -23,17 +23,24 @@ public class TrunkBlock extends PillarBlock {
     }
 
     public void onBroken(WorldAccess world, BlockPos pos, BlockState state) {
-        Block nextBlock = world.getBlockState(pos.up()).getBlock();
-        if (nextBlock instanceof TrunkBlock) {
-            ((TrunkBlock) nextBlock).fell(world, pos.up(), world.getBlockState(pos.up()));
+        if (!state.get(NATURAL)) return;
+        BlockState nextBlockState = world.getBlockState(pos.up());
+        if (nextBlockState.getBlock() instanceof TrunkBlock && nextBlockState.get(NATURAL)) {
+            ((TrunkBlock) nextBlockState.getBlock()).fell(world, pos.up(), world.getBlockState(pos.up()));
         }
     }
 
     public void fell(WorldAccess world, BlockPos pos, BlockState state) {
         world.breakBlock(pos, true);
-        Block nextBlock = world.getBlockState(pos.up()).getBlock();
-        if (nextBlock instanceof TrunkBlock) {
-            ((TrunkBlock) nextBlock).fell(world, pos.up(), world.getBlockState(pos.up()));
+        for (BlockPos dest : new BlockPos[]{pos.up(), pos.north(), pos.east(), pos.south(), pos.west(),
+                                            pos.up().north(), pos.up().east(), pos.up().south(), pos.up().west(),
+                                            pos.north().east(), pos.east().south(), pos.south().west(), pos.west().north(),
+                                            pos.up().north().east(), pos.up().east().south(), pos.up().south().west(), pos.up().west().north()
+                                            }) {
+            BlockState nextBlockState = world.getBlockState(dest);
+            if (nextBlockState.getBlock() instanceof TrunkBlock && nextBlockState.get(NATURAL)) {
+                ((TrunkBlock) nextBlockState.getBlock()).fell(world, dest, world.getBlockState(dest));
+            }
         }
     }
 

@@ -24,6 +24,10 @@ public class BlockColorsMixin {
                 ((state, world, pos, tintIndex) ->  world != null && pos != null ? BiomeColors.getGrassColor(world, pos) : GrassColors.getColor(0.5D, 1.0D)),
                 PrimevalBlocks.GRASS
         );
+        origin.registerColorProvider(
+                ((state, world, pos, tintIndex) ->  world != null && pos != null ? BiomeColors.getFoliageColor(world, pos) : FoliageColors.getColor(0.5D, 1.0D)),
+                PrimevalBlocks.OAK_LEAVES
+        );
         info.setReturnValue(origin);
     }
 }

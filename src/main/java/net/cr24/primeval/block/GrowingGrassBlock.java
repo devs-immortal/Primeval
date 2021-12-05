@@ -38,6 +38,10 @@ public class GrowingGrassBlock extends Block {
         return SHAPES[shapeState];
     }
 
+    public boolean hasRandomTicks(BlockState state) {
+        return state.get(GROWTH_STATE) < 4;
+    }
+
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         super.randomTick(state, world, pos, random);
         int growth = state.get(GROWTH_STATE);

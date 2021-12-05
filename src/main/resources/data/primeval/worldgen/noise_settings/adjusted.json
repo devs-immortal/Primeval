@@ -2749,24 +2749,29 @@
           ]
         },
         "then_run": {
-          "type": "minecraft:sequence",
-          "sequence": [
-            {
-              "type": "minecraft:condition",
-              "if_true": {
-                "type": "minecraft:noise_threshold",
-                "noise": "primeval:surface_plains",
-                "min_threshold": -2,
-                "max_threshold": -0.6
-              },
-              "then_run": {
-                "type": "minecraft:block",
-                "result_state": {
-                  "Name": "primeval:coarse_dirt"
-                }
+          "type": "minecraft:condition",
+          "if_true": {
+            "type": "minecraft:noise_threshold",
+            "noise": "primeval:surface_plains",
+            "min_threshold": -2,
+            "max_threshold": -0.6
+          },
+          "then_run": {
+            "type": "minecraft:condition",
+            "if_true": {
+              "type": "minecraft:stone_depth",
+              "offset": 1,
+              "surface_type": "floor",
+              "add_surface_depth": false,
+              "add_surface_secondary_depth": false
+            },
+            "then_run": {
+              "type": "minecraft:block",
+              "result_state": {
+                "Name": "primeval:coarse_dirt"
               }
             }
-          ]
+          }
         }
       },
       

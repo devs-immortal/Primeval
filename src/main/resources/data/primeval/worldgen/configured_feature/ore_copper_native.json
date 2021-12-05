@@ -1,0 +1,23 @@
+{
+  "config": {
+    "large_ore_provider": {
+      "state": {
+        "Name": "primeval:copper_native_ore_large"
+      },
+      "type": "minecraft:simple_state_provider"
+    },
+    "medium_ore_provider": {
+      "state": {
+        "Name": "primeval:copper_native_ore_medium"
+      },
+      "type": "minecraft:simple_state_provider"
+    },
+    "small_ore_provider": {
+      "state": {
+        "Name": "primeval:copper_native_ore_small"
+      },
+      "type": "minecraft:simple_state_provider"
+    }
+  },
+  "type": "primeval:ore_cluster"
+}
