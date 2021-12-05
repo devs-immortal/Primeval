@@ -16,13 +16,13 @@ public class BlockColorsMixin {
     @Inject(method = "create", at = @At("RETURN"), cancellable = true)
     private static void create(CallbackInfoReturnable<BlockColors> info) {
         BlockColors origin = info.getReturnValue();
-//        origin.registerColorProvider(
-//                ((state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getFoliageColor(world, pos) : FoliageColors.getDefaultColor()),
-//                PrimevalBlocks.GRASSY_DIRT
-//        );
         origin.registerColorProvider(
                 ((state, world, pos, tintIndex) ->  world != null && pos != null ? BiomeColors.getGrassColor(world, pos) : GrassColors.getColor(0.5D, 1.0D)),
                 PrimevalBlocks.GRASSY_DIRT
+        );
+        origin.registerColorProvider(
+                ((state, world, pos, tintIndex) ->  world != null && pos != null ? BiomeColors.getGrassColor(world, pos) : GrassColors.getColor(0.5D, 1.0D)),
+                PrimevalBlocks.GRASS
         );
         info.setReturnValue(origin);
     }

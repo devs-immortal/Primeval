@@ -6,6 +6,7 @@
     "minecraft:diorite",
     "minecraft:andesite",
     "minecraft:tuff",
-    "minecraft:deepslate"
+    "minecraft:deepslate",
+    "primeval:stone"
   ]
 }

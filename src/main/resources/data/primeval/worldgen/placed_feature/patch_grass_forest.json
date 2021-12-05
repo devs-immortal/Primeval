@@ -1,0 +1,21 @@
+{
+  "feature": "primeval:patch_grass_0_2",
+  "placement": [
+    {
+      "noise_level": -0.8,
+      "below_noise": 3,
+      "above_noise": 8,
+      "type": "minecraft:noise_threshold_count"
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "heightmap": "WORLD_SURFACE_WG",
+      "type": "minecraft:heightmap"
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

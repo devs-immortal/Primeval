@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "primeval:block/coarse_dirt"
+      },
+      {
+        "model": "primeval:block/coarse_dirt",
+        "y": 90
+      },
+      {
+        "model": "primeval:block/coarse_dirt",
+        "y": 180
+      },
+      {
+        "model": "primeval:block/coarse_dirt",
+        "y": 270
+      }
+    ]
+  }
+}
