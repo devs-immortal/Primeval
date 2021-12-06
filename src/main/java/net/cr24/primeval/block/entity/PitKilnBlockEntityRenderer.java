@@ -10,8 +10,7 @@ import net.minecraft.item.ItemStack;
 
 public class PitKilnBlockEntityRenderer implements BlockEntityRenderer<PitKilnBlockEntity> {
 
-    public PitKilnBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
-    }
+    public PitKilnBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {}
 
     @Override
     public void render(PitKilnBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {

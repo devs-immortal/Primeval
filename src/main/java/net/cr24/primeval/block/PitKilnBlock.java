@@ -7,6 +7,8 @@ import net.cr24.primeval.recipe.PitKilnFiringRecipe;
 import net.cr24.primeval.recipe.PrimevalRecipes;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.SimpleInventory;
@@ -14,6 +16,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.CampfireCookingRecipe;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.IntProperty;
@@ -32,6 +35,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.Random;
 
 public class PitKilnBlock extends BlockWithEntity {
 
@@ -55,16 +59,9 @@ public class PitKilnBlock extends BlockWithEntity {
         BlockEntity blockEntity = world.getBlockEntity(pos);
         System.out.println(pos);
         if (blockEntity instanceof PitKilnBlockEntity) {
-            System.out.println(Arrays.toString(((PitKilnBlockEntity) blockEntity).getItems()));
             for (ItemStack stack : ((PitKilnBlockEntity) blockEntity).getItems()) {
-                Optional<PitKilnFiringRecipe> result = world.getRecipeManager().getFirstMatch(PrimevalRecipes.PIT_KILN_FIRING, new SimpleInventory(stack), world);
-                if (result.isPresent()) {
-                    dropStack(world, pos, result.get().getOutput());
-                } else {
-                    dropStack(world, pos, stack);
-                }
+                dropStack(world, pos, stack);
             }
-            System.out.println(Arrays.toString(((PitKilnBlockEntity) blockEntity).getLogs()));
             for (ItemStack stack : ((PitKilnBlockEntity) blockEntity).getLogs()) {
                 if (stack != null) dropStack(world, pos, stack);
             }
@@ -74,8 +71,22 @@ public class PitKilnBlock extends BlockWithEntity {
     @Override
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
         super.neighborUpdate(state, world, pos, block, fromPos, notify);
-        breakBlockEntity(world, pos, state);
-        world.breakBlock(pos, true);
+        if (!isSoilSurrounded(world, pos)) {
+            breakBlockEntity(world, pos, state);
+            world.breakBlock(pos, true);
+        } else if (world.getBlockState(pos.up()).isOf(Blocks.FIRE)) {
+            BlockEntity blockEnt = world.getBlockEntity(pos);
+            if (blockEnt instanceof PitKilnBlockEntity) {
+                ((PitKilnBlockEntity) blockEnt).startFiring(100);
+                world.setBlockState(pos, state.with(LIT, true));
+            }
+        } else {
+            BlockEntity blockEnt = world.getBlockEntity(pos);
+            if (blockEnt instanceof PitKilnBlockEntity) {
+                ((PitKilnBlockEntity) blockEnt).startFiring(-1);
+                world.setBlockState(pos, state.with(LIT, false));
+            }
+        }
     }
 
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
@@ -212,6 +223,23 @@ public class PitKilnBlock extends BlockWithEntity {
             if (!world.getBlockState(pos).isIn(PrimevalBlockTags.SOIL)) return false;
         }
         return true;
+    }
+
+//    @Override
+//    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+//        super.scheduledTick(state, world, pos, random);
+//        if (state.get(LIT)) {
+//            BlockEntity blockEntity = world.getBlockEntity(pos);
+//            if (blockEntity instanceof PitKilnBlockEntity && ((PitKilnBlockEntity) blockEntity).isDone()) {
+//                ((PitKilnBlockEntity) blockEntity).processItems();
+//                world.setBlockState(pos.up(), Blocks.AIR.getDefaultState());
+//            }
+//        }
+//    }
+
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return checkType(type, PrimevalBlocks.PIT_KILN_BLOCK_ENTITY, (world1, pos, state1, be) -> PitKilnBlockEntity.tick(world1, pos, state1, be));
     }
 
     static {
