@@ -15,10 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.LightType;
-import net.minecraft.world.WorldAccess;
-import net.minecraft.world.WorldView;
+import net.minecraft.world.*;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
@@ -104,10 +101,13 @@ public class LayeredBlock extends Block {
 
     @Nullable
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        BlockState blockState = ctx.getWorld().getBlockState(ctx.getBlockPos());
+        World world = ctx.getWorld();
+        BlockState blockState = world.getBlockState(ctx.getBlockPos());
         if (blockState.isOf(this)) {
             int i = (Integer)blockState.get(LAYERS);
             return (BlockState)blockState.with(LAYERS, Math.min(8, i + 1));
+        } else if (PitKilnBlock.isSoilSurrounded(world, ctx.getBlockPos())) {
+            return PrimevalBlocks.PIT_KILN.getDefaultState();
         } else {
             return super.getPlacementState(ctx);
         }
