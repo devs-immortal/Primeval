@@ -20,10 +20,14 @@ public class PrimevalItems {
 
     private static final FabricItemSettings groupItems = new FabricItemSettings().group(PRIMEVAL_ITEMS);
     /* Items */
-    // Basic materials
+    // Crafting materials
     public static final Item STRAW = registerItem("straw", new WeightedBlockItem(STRAW_PILE, groupItems, Weight.VERY_LIGHT, Size.SMALL));
     public static final Item STICK = registerItem("stick", new WeightedItem(groupItems, Weight.VERY_LIGHT, Size.SMALL));
     public static final Item ROCK = registerItem("rock", new WeightedItem(groupItems, Weight.LIGHT, Size.SMALL));
+    public static final Item CLAY_BRICK = registerItem("clay_brick", new WeightedItem(groupItems, Weight.NORMAL, Size.SMALL));
+    public static final Item FIRED_CLAY_BRICK = registerItem("fired_clay_brick", new WeightedItem(groupItems, Weight.NORMAL, Size.SMALL));
+
+
 
     // Ore Items
     public static final Item RAW_IRON_HEMATITE_SMALL = registerItem("raw_iron_hematite_small", new WeightedItem(groupItems, Weight.NORMAL, Size.SMALL));

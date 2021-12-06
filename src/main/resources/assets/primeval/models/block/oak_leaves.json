@@ -1,6 +1,6 @@
 {
-	"parent": "minecraft:block/leaves",
+	"parent": "minecraft:block/cube_all",
 	"textures": {
-		"all": "minecraft:block/oak_leaves"
+		"all": "primeval:block/oak_leaves"
 	}
 }

@@ -47,6 +47,6 @@ def create_ore_set(ore_type):
     generate_standard_item("raw_"+ore_type+"_large")
 
 
-generate_standard_block("oak_leaves")
-
+generate_standard_item("clay_brick")
+generate_standard_item("fired_clay_brick")
 

@@ -3,13 +3,17 @@ package net.cr24.primeval.block;
 import net.cr24.primeval.block.entity.PitKilnBlockEntity;
 import net.cr24.primeval.item.PrimevalItemTags;
 import net.cr24.primeval.item.PrimevalItems;
+import net.cr24.primeval.recipe.PitKilnFiringRecipe;
+import net.cr24.primeval.recipe.PrimevalRecipes;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.CampfireCookingRecipe;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.IntProperty;
@@ -27,6 +31,7 @@ import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 public class PitKilnBlock extends BlockWithEntity {
 
@@ -52,7 +57,12 @@ public class PitKilnBlock extends BlockWithEntity {
         if (blockEntity instanceof PitKilnBlockEntity) {
             System.out.println(Arrays.toString(((PitKilnBlockEntity) blockEntity).getItems()));
             for (ItemStack stack : ((PitKilnBlockEntity) blockEntity).getItems()) {
-                dropStack(world, pos, stack);
+                Optional<PitKilnFiringRecipe> result = world.getRecipeManager().getFirstMatch(PrimevalRecipes.PIT_KILN_FIRING, new SimpleInventory(stack), world);
+                if (result.isPresent()) {
+                    dropStack(world, pos, result.get().getOutput());
+                } else {
+                    dropStack(world, pos, stack);
+                }
             }
             System.out.println(Arrays.toString(((PitKilnBlockEntity) blockEntity).getLogs()));
             for (ItemStack stack : ((PitKilnBlockEntity) blockEntity).getLogs()) {
