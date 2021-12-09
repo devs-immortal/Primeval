@@ -1,16 +1,14 @@
 package net.cr24.primeval.block.entity;
 
-import net.cr24.primeval.block.PitKilnBlock;
 import net.cr24.primeval.block.PrimevalBlocks;
 import net.cr24.primeval.recipe.PitKilnFiringRecipe;
 import net.cr24.primeval.recipe.PrimevalRecipes;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.util.Clearable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -19,6 +17,10 @@ import java.util.Optional;
 import java.util.Stack;
 
 public class PitKilnBlockEntity extends BlockEntity implements Clearable {
+
+    //public static final int[] FIRING_TIMES = new int[] {-1, 9600, 13200, 16800, 19200};
+    public static final int[] FIRING_TIMES = new int[] {-1, 40, 40, 40, 40};
+
     private Stack<ItemStack> logs;
     private ItemStack[] inventory;
     private int burnTimer;
@@ -33,12 +35,11 @@ public class PitKilnBlockEntity extends BlockEntity implements Clearable {
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
         for (int i = 0; i < 4; i++) {
+            this.logs.clear();
             if (nbt.contains(("Log"+i), 10)) {
-                this.clear();
                 this.logs.push(ItemStack.fromNbt(nbt.getCompound(("Log"+i))));
             }
             if (nbt.contains(("Item"+i), 10)) {
-                this.clear();
                 this.inventory[i] = ItemStack.fromNbt(nbt.getCompound(("Item"+i)));
             }
         }
@@ -59,10 +60,29 @@ public class PitKilnBlockEntity extends BlockEntity implements Clearable {
     public static void tick(World world, BlockPos pos, BlockState state, PitKilnBlockEntity blockEntity) {
         if (blockEntity.burnTimer > 0) {
             blockEntity.burnTimer--;
-        } else if (blockEntity.burnTimer == 0) {
-            blockEntity.processItems();
-            world.setBlockState(pos.up(), Blocks.AIR.getDefaultState());
+        } else if (blockEntity.burnTimer == 0) { // WHEN FINISHES FIRING
+            ItemStack[] results = blockEntity.processItems();
+            world.removeBlockEntity(pos);
+            world.setBlockState(pos, PrimevalBlocks.ASH_PILE.getDefaultState());
+            BlockEntity newBlockEntity = world.getBlockEntity(pos);
+            if (newBlockEntity instanceof AshPileBlockEntity) {
+                ((AshPileBlockEntity) newBlockEntity).setItems(results);
+            }
         }
+    }
+
+    public BlockEntityUpdateS2CPacket toUpdatePacket() {
+        return BlockEntityUpdateS2CPacket.create(this);
+    }
+
+    @Override
+    public NbtCompound toInitialChunkDataNbt() {
+        NbtCompound nbtCompound = new NbtCompound();
+        for (int i = 0; i < 4; i++) {
+            nbtCompound.put(("Item"+i), this.inventory[i].writeNbt(new NbtCompound()));
+        }
+        nbtCompound.putInt("burnTimer", this.burnTimer);
+        return nbtCompound;
     }
 
     public void addLog(ItemStack stack) {
@@ -75,6 +95,7 @@ public class PitKilnBlockEntity extends BlockEntity implements Clearable {
     }
 
     public ItemStack removeLog() {
+        this.markDirty();
         return this.logs.pop();
     }
 
@@ -95,20 +116,32 @@ public class PitKilnBlockEntity extends BlockEntity implements Clearable {
     public ItemStack removeItem(int slot) {
         ItemStack ret = this.inventory[slot];
         this.inventory[slot] = ItemStack.EMPTY;
+        this.markDirty();
         return ret;
     }
 
-    public void processItems() {
+    public ItemStack[] processItems() {
         for (int i = 0; i < 4; i++) {
             Optional<PitKilnFiringRecipe> result = world.getRecipeManager().getFirstMatch(PrimevalRecipes.PIT_KILN_FIRING, new SimpleInventory(this.inventory[i]), world);
             if (result.isPresent()) {
                 this.inventory[i] = result.get().getOutput();
             }
         }
+        this.markDirty();
+        return this.inventory;
     }
 
-    public void startFiring(int time) {
-        this.burnTimer = time;
+    public void startFiring() {
+        int itemCount = 0;
+        for (ItemStack item : this.inventory) {
+            if (!item.isEmpty()) itemCount+=1;
+        }
+        this.burnTimer = FIRING_TIMES[itemCount];
+    }
+
+    public void stopFiring() {
+        this.burnTimer = FIRING_TIMES[0];
+        this.markDirty();
     }
 
     @Override

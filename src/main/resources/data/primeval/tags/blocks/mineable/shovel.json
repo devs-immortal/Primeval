@@ -1,6 +1,11 @@
 {
   "replace": false,
   "values": [
-
+    "primeval:dirt",
+    "primeval:coarse_dirt",
+    "primeval:grassy_dirt",
+    "primeval:sand",
+    "primeval:block_of_clay",
+    "primeval:ash_pile"
   ]
 }

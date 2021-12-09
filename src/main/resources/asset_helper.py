@@ -21,6 +21,11 @@ def generate_standard_item(item_id):
     item_model_file = open(get_asset_path()+MOD_ID+"/models/item/"+item_id+".json", "w")
     item_model_file.write("{\n\t\"parent\": \"minecraft:item/generated\",\n\t\"textures\": {\n\t\t\"layer0\": \""+MOD_ID+":item/"+item_id+"\"\n\t}\n}")
     item_model_file.close()
+        
+def generate_handheld_item(item_id):
+    item_model_file = open(get_asset_path()+MOD_ID+"/models/item/"+item_id+".json", "w")
+    item_model_file.write("{\n\t\"parent\": \"minecraft:item/handheld\",\n\t\"textures\": {\n\t\t\"layer0\": \""+MOD_ID+":item/"+item_id+"\"\n\t}\n}")
+    item_model_file.close()
     
 def generate_log_block(block_id):
     blockstate_file = open(get_asset_path()+MOD_ID+"/blockstates/"+block_id+".json", "w")
@@ -46,7 +51,4 @@ def create_ore_set(ore_type):
     generate_standard_block(ore_type+"_ore_large")
     generate_standard_item("raw_"+ore_type+"_large")
 
-
-generate_standard_item("clay_brick")
-generate_standard_item("fired_clay_brick")
-
+generate_standard_item("ashes")

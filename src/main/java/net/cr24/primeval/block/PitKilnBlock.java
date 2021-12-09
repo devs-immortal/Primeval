@@ -57,7 +57,6 @@ public class PitKilnBlock extends BlockWithEntity {
     private void breakBlockEntity(World world, BlockPos pos, BlockState state) {
         dropStack(world, pos, new ItemStack(PrimevalItems.STRAW, 1+Math.min(state.get(BUILD_STEP), 4)));
         BlockEntity blockEntity = world.getBlockEntity(pos);
-        System.out.println(pos);
         if (blockEntity instanceof PitKilnBlockEntity) {
             for (ItemStack stack : ((PitKilnBlockEntity) blockEntity).getItems()) {
                 dropStack(world, pos, stack);
@@ -71,19 +70,19 @@ public class PitKilnBlock extends BlockWithEntity {
     @Override
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
         super.neighborUpdate(state, world, pos, block, fromPos, notify);
-        if (!isSoilSurrounded(world, pos)) {
+        if (!isSoilSurrounded(world, pos)) { // if not surrounded properly
             breakBlockEntity(world, pos, state);
             world.breakBlock(pos, true);
-        } else if (world.getBlockState(pos.up()).isOf(Blocks.FIRE)) {
+        } else if (world.getBlockState(pos.up()).isOf(Blocks.FIRE)) { // if lit on fire
             BlockEntity blockEnt = world.getBlockEntity(pos);
             if (blockEnt instanceof PitKilnBlockEntity) {
-                ((PitKilnBlockEntity) blockEnt).startFiring(100);
+                ((PitKilnBlockEntity) blockEnt).startFiring();
                 world.setBlockState(pos, state.with(LIT, true));
             }
-        } else {
+        } else { // if fire goes away/is not present
             BlockEntity blockEnt = world.getBlockEntity(pos);
             if (blockEnt instanceof PitKilnBlockEntity) {
-                ((PitKilnBlockEntity) blockEnt).startFiring(-1);
+                ((PitKilnBlockEntity) blockEnt).stopFiring();
                 world.setBlockState(pos, state.with(LIT, false));
             }
         }
@@ -224,18 +223,6 @@ public class PitKilnBlock extends BlockWithEntity {
         }
         return true;
     }
-
-//    @Override
-//    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-//        super.scheduledTick(state, world, pos, random);
-//        if (state.get(LIT)) {
-//            BlockEntity blockEntity = world.getBlockEntity(pos);
-//            if (blockEntity instanceof PitKilnBlockEntity && ((PitKilnBlockEntity) blockEntity).isDone()) {
-//                ((PitKilnBlockEntity) blockEntity).processItems();
-//                world.setBlockState(pos.up(), Blocks.AIR.getDefaultState());
-//            }
-//        }
-//    }
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {

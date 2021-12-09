@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "##",
+        "##"
+    ],
+    "key": {
+        "#": {
+            "item": "primeval:clay_ball"
+        }
+    },
+    "result": {
+        "item": "primeval:block_of_clay",
+        "count": 1
+    }
+}
