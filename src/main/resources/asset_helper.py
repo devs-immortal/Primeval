@@ -51,4 +51,3 @@ def create_ore_set(ore_type):
     generate_standard_block(ore_type+"_ore_large")
     generate_standard_item("raw_"+ore_type+"_large")
 
-generate_standard_item("ashes")

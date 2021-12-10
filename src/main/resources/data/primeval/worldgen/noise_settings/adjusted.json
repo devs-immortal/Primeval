@@ -1,5 +1,5 @@
 {
-  "sea_level": 64,
+  "sea_level": 63,
   "disable_mob_generation": true,
   "noise_caves_enabled": false,
   "noodle_caves_enabled": false,
@@ -2861,7 +2861,10 @@
       {
         "type": "minecraft:condition",
         "if_true": {
-          "type": "minecraft:above_preliminary_surface"
+          "type": "minecraft:water",
+          "offset": -1,
+          "surface_depth_multiplier": 0,
+          "add_stone_depth": false
         },
         "then_run": {
           "type": "minecraft:sequence",
@@ -2869,10 +2872,14 @@
             {
               "type": "minecraft:condition",
               "if_true": {
-                "type": "minecraft:water",
-                "offset": -1,
-                "surface_depth_multiplier": 0,
-                "add_stone_depth": false
+                "type": "minecraft:biome",
+                "biome_is": [
+                  "primeval:coastal/rocky_shore",
+                  "primeval:coastal/sandy_shore",
+                  "primeval:inland/oak_forest",
+                  "primeval:inland/plains",
+                  "primeval:inland/rocky_outcrop"
+                ]
               },
               "then_run": {
                 "type": "minecraft:sequence",
@@ -2918,58 +2925,69 @@
           ]
         }
       },
-      
       {
         "type": "minecraft:condition",
         "if_true": {
-          "type": "minecraft:stone_depth",
-          "offset": 1,
-          "surface_type": "floor",
-          "add_surface_depth": false,
-          "add_surface_secondary_depth": false
+          "type": "minecraft:not",
+          "invert": {
+            "type": "minecraft:water",
+            "offset": -1,
+            "surface_depth_multiplier": 0,
+            "add_stone_depth": false
+          }
         },
         "then_run": {
-          "type": "minecraft:condition",
-          "if_true": {
-            "type": "minecraft:noise_threshold",
-            "noise": "primeval:ocean_sand",
-            "min_threshold": 0.3,
-            "max_threshold": 2.0
-          },
-          "then_run": {
-            "type": "minecraft:block",
-            "result_state": {
-              "Name": "primeval:sand"
+          "type": "minecraft:sequence",
+          "sequence": [
+            {
+              "type": "minecraft:condition",
+              "if_true": {
+                "type": "minecraft:stone_depth",
+                "offset": 1,
+                "surface_type": "floor",
+                "add_surface_depth": false,
+                "add_surface_secondary_depth": false
+              },
+              "then_run": {
+                "type": "minecraft:sequence",
+                "sequence": [
+                  {
+                    "type": "minecraft:condition",
+                    "if_true": {
+                      "type": "minecraft:noise_threshold",
+                      "noise": "primeval:ocean_sand",
+                      "min_threshold": 0.3,
+                      "max_threshold": 2
+                    },
+                    "then_run": {
+                      "type": "minecraft:block",
+                      "result_state": {
+                        "Name": "primeval:sand"
+                      }
+                    }
+                  },
+                  {
+                    "type": "minecraft:condition",
+                    "if_true": {
+                      "type": "minecraft:noise_threshold",
+                      "noise": "primeval:ocean_dirt",
+                      "min_threshold": -0.3,
+                      "max_threshold": 2
+                    },
+                    "then_run": {
+                      "type": "minecraft:block",
+                      "result_state": {
+                        "Name": "primeval:dirt"
+                      }
+                    }
+                  }
+                ]
+              }
             }
-          }
-        }
-      },
-      
-      {
-        "type": "minecraft:condition",
-        "if_true": {
-          "type": "minecraft:stone_depth",
-          "offset": 1,
-          "surface_type": "floor",
-          "add_surface_depth": false,
-          "add_surface_secondary_depth": false
-        },
-        "then_run": {
-          "type": "minecraft:condition",
-          "if_true": {
-            "type": "minecraft:noise_threshold",
-            "noise": "primeval:ocean_dirt",
-            "min_threshold": -0.3,
-            "max_threshold": 2.0
-          },
-          "then_run": {
-            "type": "minecraft:block",
-            "result_state": {
-              "Name": "primeval:dirt"
-            }
-          }
+          ]
         }
       }
+      
     ]
   },
   "structures": {
