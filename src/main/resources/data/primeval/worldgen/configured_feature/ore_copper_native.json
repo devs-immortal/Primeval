@@ -1,22 +1,50 @@
 {
   "config": {
-    "large_ore_provider": {
+    "large_ore": {
       "state": {
         "Name": "primeval:copper_native_ore_large"
       },
       "type": "minecraft:simple_state_provider"
     },
-    "medium_ore_provider": {
+    "medium_ore": {
       "state": {
         "Name": "primeval:copper_native_ore_medium"
       },
       "type": "minecraft:simple_state_provider"
     },
-    "small_ore_provider": {
+    "small_ore": {
       "state": {
         "Name": "primeval:copper_native_ore_small"
       },
       "type": "minecraft:simple_state_provider"
+    },
+    "radius": {
+      "type": "minecraft:uniform",
+      "value": {
+        "min_inclusive": 5,
+        "max_inclusive": 8
+      }
+    },
+    "height": {
+      "type": "minecraft:uniform",
+      "value": {
+        "min_inclusive": 3,
+        "max_inclusive": 5
+      }
+    },
+    "density": {
+      "type": "minecraft:uniform",
+      "value": {
+        "min_inclusive": 0.15,
+        "max_exclusive": 0.35
+      }
+    },
+    "richness":{
+      "type": "minecraft:uniform",
+      "value": {
+        "min_inclusive": 0.3,
+        "max_exclusive": 0.5
+      }
     }
   },
   "type": "primeval:ore_cluster"

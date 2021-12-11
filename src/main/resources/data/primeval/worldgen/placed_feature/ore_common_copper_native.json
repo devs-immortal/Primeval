@@ -2,8 +2,8 @@
   "feature": "primeval:ore_copper_native",
   "placement": [
     {
-      "count": 7,
-      "type": "minecraft:count"
+      "chance": 4,
+      "type": "minecraft:rarity_filter"
     },
     {
       "type": "minecraft:in_square"
@@ -11,7 +11,7 @@
     {
       "height": {
         "min_inclusive": {
-          "absolute": 0
+          "absolute": 35
         },
         "max_inclusive": {
           "absolute": 160
