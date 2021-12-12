@@ -49,6 +49,10 @@ public class PrimevalItems {
     public static final Item RAW_COPPER_NATIVE_MEDIUM = registerItem("raw_copper_native_medium", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
     public static final Item RAW_COPPER_NATIVE_LARGE = registerItem("raw_copper_native_large", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.LARGE));
 
+    public static final Item RAW_COPPER_MALACHITE_SMALL = registerItem("raw_copper_malachite_small", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
+    public static final Item RAW_COPPER_MALACHITE_MEDIUM = registerItem("raw_copper_malachite_medium", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
+    public static final Item RAW_COPPER_MALACHITE_LARGE = registerItem("raw_copper_malachite_large", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.LARGE));
+
     // Tools
     public static final Item FLINT_AXE = registerItem("flint_axe", new PrimevalAxeItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.FLINT.getAttackDamage(), -3.0f, GROUP_TOOLS, Weight.HEAVY, Size.LARGE));
     public static final Item FLINT_SHOVEL = registerItem("flint_shovel", new PrimevalShovelItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.FLINT.getAttackDamage(), -3.0f, GROUP_TOOLS, Weight.HEAVY, Size.LARGE));

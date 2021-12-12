@@ -3,11 +3,14 @@
   "values": [
     "primeval:cobblestone",
     "primeval:stone",
+    "primeval:iron_hematite_ore_small",
+    "primeval:iron_hematite_ore_medium",
+    "primeval:iron_hematite_ore_large",
     "primeval:copper_native_ore_small",
     "primeval:copper_native_ore_medium",
     "primeval:copper_native_ore_large",
-    "primeval:iron_hematite_ore_small",
-    "primeval:iron_hematite_ore_medium",
-    "primeval:iron_hematite_ore_large"
+    "primeval:copper_malachite_ore_small",
+    "primeval:copper_malachite_ore_medium",
+    "primeval:copper_malachite_ore_large"
   ]
 }

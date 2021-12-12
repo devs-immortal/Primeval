@@ -1,0 +1,51 @@
+{
+  "config": {
+    "large_ore": {
+      "state": {
+        "Name": "primeval:copper_malachite_ore_large"
+      },
+      "type": "minecraft:simple_state_provider"
+    },
+    "medium_ore": {
+      "state": {
+        "Name": "primeval:copper_malachite_ore_medium"
+      },
+      "type": "minecraft:simple_state_provider"
+    },
+    "small_ore": {
+      "state": {
+        "Name": "primeval:copper_malachite_ore_small"
+      },
+      "type": "minecraft:simple_state_provider"
+    },
+    "radius": {
+      "type": "minecraft:uniform",
+      "value": {
+        "min_inclusive": 6,
+        "max_inclusive": 9
+      }
+    },
+    "height": {
+      "type": "minecraft:uniform",
+      "value": {
+        "min_inclusive": 4,
+        "max_inclusive": 6
+      }
+    },
+    "density": {
+      "type": "minecraft:uniform",
+      "value": {
+        "min_inclusive": 0.15,
+        "max_exclusive": 0.2
+      }
+    },
+    "richness":{
+      "type": "minecraft:uniform",
+      "value": {
+        "min_inclusive": 0.25,
+        "max_exclusive": 0.4
+      }
+    }
+  },
+  "type": "primeval:ore_cluster"
+}
