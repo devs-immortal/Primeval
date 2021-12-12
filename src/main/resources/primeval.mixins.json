@@ -4,6 +4,7 @@
   "package": "net.cr24.primeval.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "world.gen.trunk.TrunkPlacerTypeMixin"
   ],
   "client": [
     "client.color.block.BlockColorsMixin"
