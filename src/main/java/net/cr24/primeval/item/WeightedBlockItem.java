@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class WeightedBlockItem extends BlockItem {
+public class WeightedBlockItem extends BlockItem implements IWeightedItem{
 
     private final Weight weight;
     private final Size size;
@@ -28,5 +28,15 @@ public class WeightedBlockItem extends BlockItem {
     @Environment(EnvType.CLIENT)
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         tooltip.add((new TranslatableText("⚖ ").append(this.weight.getText()).append(" ⤧ ").append(this.size.getText())).formatted(Formatting.GRAY));
+    }
+
+    @Override
+    public Weight getWeight() {
+        return weight;
+    }
+
+    @Override
+    public Size getSize() {
+        return size;
     }
 }

@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class PrimevalShovelItem extends ShovelItem {
+public class PrimevalShovelItem extends ShovelItem implements IWeightedItem {
 
     private final Weight weight;
     private final Size size;
@@ -28,6 +28,15 @@ public class PrimevalShovelItem extends ShovelItem {
     @Environment(EnvType.CLIENT)
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         tooltip.add((new TranslatableText("⚖ ").append(this.weight.getText()).append(" ⤧ ").append(this.size.getText())).formatted(Formatting.GRAY));
+    }
 
+    @Override
+    public Weight getWeight() {
+        return weight;
+    }
+
+    @Override
+    public Size getSize() {
+        return size;
     }
 }
