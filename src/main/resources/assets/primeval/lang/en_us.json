@@ -24,6 +24,9 @@
     "block.primeval.straw_block": "Straw Block",
     "block.primeval.straw": "Straw",
     
+    "block.primeval.molten_copper": "Molten Copper",
+    "block.primeval.molten_botched_alloy": "Molten Botched Alloy",
+    
     
     "item.primeval.stick": "Stick",
     "item.primeval.rock": "Rock",
@@ -58,7 +61,7 @@
     "itemGroup.primeval.blocks": "Primeval Blocks",
     "itemGroup.primeval.tools": "Primeval Tools",
     
-    
+    "text.primeval.fluid.contains": "Contains %ddb of %s",
     "text.primeval.size.small": "Small",
     "text.primeval.size.medium": "Medium",
     "text.primeval.size.large": "Large",

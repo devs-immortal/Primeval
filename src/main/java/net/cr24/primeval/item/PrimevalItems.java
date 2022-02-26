@@ -58,8 +58,8 @@ public class PrimevalItems {
     public static final Item FLINT_SHOVEL = registerItem("flint_shovel", new PrimevalShovelItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.FLINT.getAttackDamage(), -3.0f, GROUP_TOOLS, Weight.HEAVY, Size.LARGE));
 
     // Utility items
-    public static final Item FIRED_CLAY_JUG = registerItem("fired_clay_jug", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM, 1));
-
+    public static final Item FIRED_CLAY_JUG = registerItem("fired_clay_jug", new JugItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM, 1));
+    public static final Item FIRED_CLAY_VESSEL = registerItem("fired_clay_vessel", new VesselItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
 
     public static void init() {}
 

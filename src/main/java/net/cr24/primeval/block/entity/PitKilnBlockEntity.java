@@ -1,6 +1,7 @@
 package net.cr24.primeval.block.entity;
 
 import net.cr24.primeval.block.PrimevalBlocks;
+import net.cr24.primeval.item.VesselItem;
 import net.cr24.primeval.recipe.PitKilnFiringRecipe;
 import net.cr24.primeval.recipe.PrimevalRecipes;
 import net.minecraft.block.BlockState;
@@ -18,7 +19,8 @@ import java.util.Stack;
 
 public class PitKilnBlockEntity extends BlockEntity implements Clearable {
 
-    public static final int[] FIRING_TIMES = new int[] {-1, 9600, 13200, 16800, 19200};
+    //public static final int[] FIRING_TIMES = new int[] {-1, 9600, 13200, 16800, 19200};
+    public static final int[] FIRING_TIMES = new int[] {-1, 100, 100, 100, 100};
 
     private Stack<ItemStack> logs;
     private ItemStack[] inventory;
@@ -121,9 +123,13 @@ public class PitKilnBlockEntity extends BlockEntity implements Clearable {
 
     public ItemStack[] processItems() {
         for (int i = 0; i < 4; i++) {
-            Optional<PitKilnFiringRecipe> result = world.getRecipeManager().getFirstMatch(PrimevalRecipes.PIT_KILN_FIRING, new SimpleInventory(this.inventory[i]), world);
-            if (result.isPresent()) {
-                this.inventory[i] = result.get().getOutput();
+            if (this.inventory[i].getItem() instanceof VesselItem) { // TODO
+                this.inventory[i] = VesselItem.processItems(this.inventory[i]);
+            } else {
+                Optional<PitKilnFiringRecipe> result = world.getRecipeManager().getFirstMatch(PrimevalRecipes.PIT_KILN_FIRING, new SimpleInventory(this.inventory[i]), world);
+                if (result.isPresent()) {
+                    this.inventory[i] = result.get().getOutput();
+                }
             }
         }
         this.markDirty();

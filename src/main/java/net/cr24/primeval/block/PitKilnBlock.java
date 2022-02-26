@@ -194,7 +194,9 @@ public class PitKilnBlock extends BlockWithEntity {
                     if (clicked.z > 0.5) {
                         index+=2;
                     }
-                    if (((PitKilnBlockEntity) blockEntity).addItem(new ItemStack(itemStack.getItem(), 1), index)) {
+                    ItemStack newStack = itemStack.copy();
+                    newStack.setCount(1);
+                    if (((PitKilnBlockEntity) blockEntity).addItem(newStack, index)) {
                         if (!player.isCreative()) {
                             player.getStackInHand(hand).decrement(1);
                         }
