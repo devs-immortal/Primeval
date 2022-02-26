@@ -1,6 +1,7 @@
 package net.cr24.primeval.recipe;
 
 import net.cr24.primeval.PrimevalMain;
+import net.cr24.primeval.fluid.PrimevalFluids;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
@@ -8,8 +9,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.CookingRecipeSerializer;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import net.minecraft.util.registry.Registry;
+
+import java.util.HashMap;
 
 public class PrimevalRecipes {
 
@@ -27,11 +31,17 @@ public class PrimevalRecipes {
     public static void init() {}
 
     public static Pair<Fluid, Integer> getFluidFromItem(Item item) {
-        System.out.println(item.getTranslationKey());
+        Identifier id = Registry.ITEM.getId(item);
+        System.out.println(id);
         Pair<Fluid, Integer> out = switch (item.getTranslationKey()) {
             default -> new Pair<Fluid, Integer>(Fluids.EMPTY, 0);
         };
         return out;
+    }
+
+    public static Pair<Fluid, Integer> getAlloyFromFluids(HashMap<Fluid, Integer> fluids) {
+        Pair<Fluid, Integer> defaultFluid = new Pair<Fluid, Integer>(PrimevalFluids.MOLTEN_BOTCHED_ALLOY, 100);
+        return defaultFluid;
     }
 
 }

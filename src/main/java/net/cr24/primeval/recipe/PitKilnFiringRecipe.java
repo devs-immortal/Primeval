@@ -14,51 +14,24 @@ import net.minecraft.world.World;
 
 import java.util.stream.Stream;
 
-public class PitKilnFiringRecipe implements Recipe<Inventory> {
-    final Ingredient input;
-    final ItemStack result;
-    private final Identifier id;
-
+public class PitKilnFiringRecipe extends SimpleOneToOneRecipe {
     public PitKilnFiringRecipe(Identifier id, Ingredient input, ItemStack result) {
-        this.id = id;
-        this.input = input;
-        this.result = result;
+        super(id, input, result);
     }
 
-    public boolean matches(Inventory inventory, World world) {
-        return this.input.test(inventory.getStack(0));
-    }
-
-    public ItemStack craft(Inventory inventory) {
-        return this.result.copy();
-    }
-
-    public boolean fits(int width, int height) {
-        return width * height >= 2;
-    }
-
-    public ItemStack getOutput() {
-        return this.result;
-    }
-
+    @Override
     public ItemStack createIcon() {
         return new ItemStack(PrimevalItems.STRAW);
     }
 
-    public Identifier getId() {
-        return this.id;
-    }
-
+    @Override
     public RecipeSerializer<?> getSerializer() {
         return PrimevalRecipes.PIT_KILN_FIRING_SERIALIZER;
     }
 
+    @Override
     public RecipeType<?> getType() {
         return PrimevalRecipes.PIT_KILN_FIRING;
-    }
-
-    public boolean isEmpty() {
-        return Stream.of(this.input).anyMatch((ingredient) -> ingredient.getMatchingStacks().length == 0);
     }
 
     public static class Serializer implements RecipeSerializer<PitKilnFiringRecipe> {
