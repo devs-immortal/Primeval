@@ -20,6 +20,11 @@ public class PitKilnFiringRecipe extends SimpleOneToOneRecipe {
     }
 
     @Override
+    public ItemStack getOutput() {
+        return this.result;
+    }
+
+    @Override
     public ItemStack createIcon() {
         return new ItemStack(PrimevalItems.STRAW);
     }
