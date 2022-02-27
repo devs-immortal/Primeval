@@ -124,7 +124,7 @@ public class PitKilnBlockEntity extends BlockEntity implements Clearable {
     public ItemStack[] processItems() {
         for (int i = 0; i < 4; i++) {
             if (this.inventory[i].getItem() instanceof VesselItem) { // TODO
-                this.inventory[i] = VesselItem.processItems(this.inventory[i]);
+                this.inventory[i] = VesselItem.processItems(this.inventory[i], world);
             } else {
                 Optional<PitKilnFiringRecipe> result = world.getRecipeManager().getFirstMatch(PrimevalRecipes.PIT_KILN_FIRING, new SimpleInventory(this.inventory[i]), world);
                 if (result.isPresent()) {

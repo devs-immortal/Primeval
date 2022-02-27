@@ -1,6 +1,8 @@
 package net.cr24.primeval.item;
 
 import net.cr24.primeval.fluid.PrimevalFluids;
+import net.cr24.primeval.recipe.MeltingRecipe;
+import net.cr24.primeval.recipe.PrimevalRecipes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
@@ -13,6 +15,7 @@ import net.minecraft.client.item.TooltipData;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.inventory.StackReference;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.BundleItem;
@@ -27,13 +30,11 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ClickType;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Pair;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class VesselItem extends BundleItem implements IWeightedItem, Storage<FluidVariant> {
@@ -208,19 +209,39 @@ public class VesselItem extends BundleItem implements IWeightedItem, Storage<Flu
     // VESSEL-SPECIFIC METHODS
     //
 
-    public static ItemStack processItems(ItemStack vessel) {
+    public static ItemStack processItems(ItemStack vessel, World world) {
         NbtCompound nbt = vessel.getOrCreateNbt();
-        if (!nbt.contains("Fluid")) {
-            NbtCompound nbtF = FluidVariant.of(PrimevalFluids.MOLTEN_COPPER).toNbt();
-            nbtF.putInt("Amount", 2400);
-            nbt.put("Fluid", nbtF);
-        }
         NbtList nbtList = nbt.getList("Items", 10);
 
+        HashMap<FluidVariant, Integer> fluids = new HashMap<>();
+        ItemStack itemStack;
+        Pair<FluidVariant, Integer> fluidResult;
+        FluidVariant fluidType;
+        int fluidAmount;
+
         for (NbtElement nbtC : nbtList) {
-            ItemStack itemStack = ItemStack.fromNbt((NbtCompound) nbtC);
-            System.out.println(itemStack.getName());
+            itemStack = ItemStack.fromNbt((NbtCompound) nbtC);
+            Optional<MeltingRecipe> option = world.getRecipeManager().getFirstMatch(PrimevalRecipes.MELTING, new SimpleInventory(itemStack), world);
+            if (option.isPresent()) {
+                fluidResult = option.get().getFluidResult();
+                fluidType = fluidResult.getLeft();
+                fluidAmount = fluidResult.getRight();
+                if (fluids.containsKey(fluidType)) {
+                    fluids.put(fluidType, fluids.get(fluidType) + fluidAmount*itemStack.getCount());
+                } else {
+                    fluids.put(fluidType, fluidAmount*itemStack.getCount());
+                }
+            }
         }
+
+        Pair<FluidVariant, Integer> alloyResult = PrimevalFluids.combineFluids(fluids);
+
+        if (alloyResult.getRight() > 0) {
+            NbtCompound nbtF = alloyResult.getLeft().toNbt();
+            nbtF.putInt("Amount", alloyResult.getRight());
+            nbt.put("Fluid", nbtF);
+        }
+        nbt.put("Items", new NbtList()); // Clear out items
 
         vessel.setNbt(nbt);
         return vessel;
@@ -238,7 +259,6 @@ public class VesselItem extends BundleItem implements IWeightedItem, Storage<Flu
 
     @Override
     public long insert(FluidVariant resource, long maxAmount, TransactionContext transaction) {
-
         return 0;
     }
 

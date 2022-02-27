@@ -1,0 +1,10 @@
+{
+  "type": "primeval:melting",
+  "input": {
+    "item": "primeval:raw_tin_cassiterite_large"
+  },
+  "result": {
+    "fluid": "primeval:molten_tin",
+    "amount": 9000
+  }
+}

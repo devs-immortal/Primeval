@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "primeval:item/raw_tin_cassiterite_large"
+	}
+}

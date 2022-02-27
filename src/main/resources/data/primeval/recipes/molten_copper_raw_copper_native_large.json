@@ -1,0 +1,10 @@
+{
+  "type": "primeval:melting",
+  "input": {
+    "item": "primeval:raw_copper_native_large"
+  },
+  "result": {
+    "fluid": "primeval:molten_copper",
+    "amount": 9000
+  }
+}

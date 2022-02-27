@@ -11,20 +11,26 @@
     "block.primeval.oak_leaves": "Oak Leaves",
     "block.primeval.grass": "Grass",
     
-    "block.primeval.iron_hematite_ore_small": "Small Hematite Ore",
-    "block.primeval.iron_hematite_ore_medium": "Medium Hematite Ore",
-    "block.primeval.iron_hematite_ore_large": "Large Hematite Ore",
-    "block.primeval.copper_native_ore_small": "Small Native Copper Ore",
-    "block.primeval.copper_native_ore_medium": "Medium Native Copper Ore",
-    "block.primeval.copper_native_ore_large": "Large Native Copper Ore",
     "block.primeval.copper_malachite_ore_small": "Small Malachite Copper Ore",
     "block.primeval.copper_malachite_ore_medium": "Medium Malachite Copper Ore",
     "block.primeval.copper_malachite_ore_large": "Large Malachite Copper Ore",
+    "block.primeval.copper_native_ore_small": "Small Native Copper Ore",
+    "block.primeval.copper_native_ore_medium": "Medium Native Copper Ore",
+    "block.primeval.copper_native_ore_large": "Large Native Copper Ore",
+    "block.primeval.iron_hematite_ore_small": "Small Hematite Ore",
+    "block.primeval.iron_hematite_ore_medium": "Medium Hematite Ore",
+    "block.primeval.iron_hematite_ore_large": "Large Hematite Ore",
+    "block.primeval.tin_cassiterite_ore_small": "Small Cassiterite Ore",
+    "block.primeval.tin_cassiterite_ore_medium": "Medium Cassiterite Ore",
+    "block.primeval.tin_cassiterite_ore_large": "Large Cassiterite Ore",
     
     "block.primeval.straw_block": "Straw Block",
     "block.primeval.straw": "Straw",
     
+    
     "block.primeval.molten_copper": "Molten Copper",
+    "block.primeval.molten_tin": "Molten Tin",
+    "block.primeval.molten_bronze": "Molten Bronze",
     "block.primeval.molten_botched_alloy": "Molten Botched Alloy",
     
     
@@ -42,6 +48,8 @@
     "item.primeval.fired_clay_bowl": "Fired Clay Bowl",
     "item.primeval.clay_tile": "Clay Tile",
     "item.primeval.fired_clay_tile": "Fired Clay Tile",
+    "item.primeval.clay_jug": "Clay Jug",
+    "item.primeval.clay_vessel": "Clay Vessel",
     "item.primeval.raw_iron_hematite_small": "Small Raw Hematite",
     "item.primeval.raw_iron_hematite_medium": "Medium Raw Hematite",
     "item.primeval.raw_iron_hematite_large": "Large Raw Hematite",
@@ -51,15 +59,20 @@
     "item.primeval.raw_copper_malachite_small": "Small Raw Malachite Copper",
     "item.primeval.raw_copper_malachite_medium": "Medium Raw Malachite Copper",
     "item.primeval.raw_copper_malachite_large": "Large Raw Malachite Copper",
-    "item.primeval.fired_clay_jug": "Clay Jug",
+    "item.primeval.raw_tin_cassiterite_small": "Small Raw Cassiterite Tin",
+    "item.primeval.raw_tin_cassiterite_medium": "Medium Raw Cassiterite Tin",
+    "item.primeval.raw_tin_cassiterite_large": "Large Raw Cassiterite Tin",
     
     "item.primeval.flint_axe": "Flint Hatchet",
     "item.primeval.flint_shovel": "Flint Shovel",
+    "item.primeval.fired_clay_jug": "Fired Clay Jug",
+    "item.primeval.fired_clay_vessel": "Fired Clay Vessel",
     
     
     "itemGroup.primeval.items": "Primeval Items",
     "itemGroup.primeval.blocks": "Primeval Blocks",
     "itemGroup.primeval.tools": "Primeval Tools",
+    
     
     "text.primeval.fluid.contains": "Contains %ddb of %s",
     "text.primeval.size.small": "Small",
