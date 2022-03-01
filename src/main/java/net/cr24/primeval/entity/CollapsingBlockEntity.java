@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.FallingBlockEntity;
 import net.minecraft.entity.MovementType;
 import net.minecraft.entity.damage.DamageSource;
@@ -34,9 +35,9 @@ public class CollapsingBlockEntity extends FallingBlockEntity {
     public NbtCompound blockEntityData;
 
     public CollapsingBlockEntity(World world, double x, double y, double z, BlockState block, BlockPos origin, BlockState sourceBlock) {
-        super(world, x, y, z, block);
+        super(EntityType.FALLING_BLOCK, world);
         this.block = block;
-        this.inanimate = true;
+        this.intersectionChecked = true;
         this.updatePosition(x, y + (double)((1.0F - this.getHeight()) / 2.0F), z);
         this.setVelocity(Vec3d.ZERO);
         this.prevX = x;
@@ -120,7 +121,6 @@ public class CollapsingBlockEntity extends FallingBlockEntity {
                                     try {
                                         $$11.readNbt($$12);
                                     } catch (Exception var15) {
-                                        LOGGER.error("Failed to load block entity from falling block", var15);
                                     }
 
                                     $$11.markDirty();
@@ -135,6 +135,11 @@ public class CollapsingBlockEntity extends FallingBlockEntity {
 
             this.setVelocity(this.getVelocity().multiply(0.98D));
         }
+    }
+
+    @Override
+    public BlockState getBlockState() {
+        return this.block;
     }
 
     @Override

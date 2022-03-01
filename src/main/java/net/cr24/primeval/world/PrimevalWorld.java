@@ -7,7 +7,6 @@ import net.cr24.primeval.world.gen.NaturalTrunkPlacer;
 import net.cr24.primeval.world.gen.feature.*;
 import net.fabricmc.fabric.impl.registry.sync.FabricRegistry;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.gen.decorator.CountMultilayerPlacementModifier;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.foliage.FoliagePlacerType;
 import net.minecraft.world.gen.trunk.LargeOakTrunkPlacer;
