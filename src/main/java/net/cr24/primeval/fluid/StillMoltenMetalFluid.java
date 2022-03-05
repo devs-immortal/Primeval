@@ -13,7 +13,7 @@ abstract class StillMoltenMetalFluid extends LavaFluid {
     }
 
     public int getFlowSpeed(WorldView world) {
-        return 2;
+        return 0;
     }
 
     public boolean matchesType(Fluid fluid) {
@@ -21,7 +21,7 @@ abstract class StillMoltenMetalFluid extends LavaFluid {
     }
 
     public int getLevelDecreasePerBlock(WorldView world) {
-        return 2;
+        return 16;
     }
 
     public int getTickRate(WorldView world) {

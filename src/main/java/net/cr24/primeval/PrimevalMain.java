@@ -28,6 +28,7 @@ public class PrimevalMain implements ModInitializer, ClientModInitializer {
     @Environment(EnvType.CLIENT)
     public void onInitializeClient() {
         PrimevalBlocks.initClient();
+        PrimevalFluids.clientInit();
     }
 
     public static Identifier getId(String id) {
