@@ -14,7 +14,7 @@ public class PrimevalToolMaterials {
         }
         @Override
         public float getMiningSpeedMultiplier() {
-            return 1.5f;
+            return 2f;
         }
         @Override
         public float getAttackDamage() {
