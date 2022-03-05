@@ -2,8 +2,8 @@ package net.cr24.primeval.fluid;
 
 import net.cr24.primeval.PrimevalMain;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
+import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.LavaFluid;
 import net.minecraft.util.Pair;
 import net.minecraft.util.registry.Registry;
 
@@ -11,11 +11,11 @@ import java.util.HashMap;
 
 public class PrimevalFluids {
 
-    public static final Fluid MOLTEN_COPPER = registerFluid("molten_copper", new LavaFluid.Still());
-    public static final Fluid MOLTEN_TIN = registerFluid("molten_tin", new LavaFluid.Still());
+    public static final FlowableFluid MOLTEN_COPPER = registerFluid("molten_copper", new StillMoltenMetalFluid.Copper());
+    public static final FlowableFluid MOLTEN_TIN = registerFluid("molten_tin", new StillMoltenMetalFluid.Tin());
 
-    public static final Fluid MOLTEN_BRONZE = registerFluid("molten_bronze", new LavaFluid.Still());
-    public static final Fluid MOLTEN_BOTCHED_ALLOY = registerFluid("molten_botched_alloy", new LavaFluid.Still());
+    public static final FlowableFluid MOLTEN_BRONZE = registerFluid("molten_bronze", new StillMoltenMetalFluid.Bronze());
+    public static final FlowableFluid MOLTEN_BOTCHED_ALLOY = registerFluid("molten_botched_alloy", new StillMoltenMetalFluid.Botched());
 
 
     public static final AlloyRatio BRONZE_RATIO = new AlloyRatio(
@@ -30,8 +30,8 @@ public class PrimevalFluids {
 
     public static void init() {}
 
-    private static Fluid registerFluid(String id, Fluid fluid) {
-        return Registry.register(Registry.FLUID, PrimevalMain.getId(id), fluid);
+    private static FlowableFluid registerFluid(String id, Fluid fluid) {
+        return (FlowableFluid)Registry.register(Registry.FLUID, PrimevalMain.getId(id), fluid);
     }
 
     public static Pair<FluidVariant, Integer> combineFluids(HashMap<FluidVariant, Integer> fluids) {

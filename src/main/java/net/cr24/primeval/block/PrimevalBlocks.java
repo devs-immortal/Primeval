@@ -2,6 +2,7 @@ package net.cr24.primeval.block;
 
 import net.cr24.primeval.PrimevalMain;
 import net.cr24.primeval.block.entity.*;
+import net.cr24.primeval.fluid.PrimevalFluids;
 import net.cr24.primeval.item.Size;
 import net.cr24.primeval.item.Weight;
 import net.cr24.primeval.item.WeightedBlockItem;
@@ -16,6 +17,8 @@ import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityT
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.fluid.FlowableFluid;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.registry.Registry;
@@ -77,6 +80,13 @@ public class PrimevalBlocks {
     // Intractable Blocks
     public static final Block PIT_KILN = registerBlockWithoutItem("pit_kiln", new PitKilnBlock(FabricBlockSettings.of(Material.PLANT).strength(1.0F).sounds(BlockSoundGroup.GRASS)));
 
+
+    // Fluid Blocks
+    public static final Block MOLTEN_COPPER = registerMoltenFluid("molten_copper", PrimevalFluids.MOLTEN_COPPER);
+    public static final Block MOLTEN_TIN = registerMoltenFluid("molten_tin", PrimevalFluids.MOLTEN_TIN);
+    public static final Block MOLTEN_BRONZE = registerMoltenFluid("molten_bronze", PrimevalFluids.MOLTEN_BRONZE);
+    public static final Block MOLTEN_BOTCHED_ALLOY = registerMoltenFluid("molten_botched_alloy", PrimevalFluids.MOLTEN_BOTCHED_ALLOY);
+
     public static void init() {}
 
 
@@ -113,6 +123,12 @@ public class PrimevalBlocks {
     private static Block registerBlock(String id, Block block, Weight weight, Size size, ItemGroup itemgroup) {
         Registry.register(Registry.ITEM, PrimevalMain.getId(id), new WeightedBlockItem(block, new FabricItemSettings().group(itemgroup).maxCount(size.getStackSize()), weight, size));
         return Registry.register(Registry.BLOCK, PrimevalMain.getId(id), block);
+    }
+
+    private static Block registerMoltenFluid(String id, FlowableFluid fluid) {
+        return registerBlockWithoutItem(id, new UnprotectedFluidBlock(fluid, AbstractBlock.Settings.of(Material.LAVA).noCollision().ticksRandomly().strength(100.0F).luminance((state) -> {
+            return 15;
+        }).dropsNothing()));
     }
 
 }
