@@ -33,7 +33,7 @@ public class PrimevalBlocks {
     public static final FabricBlockSettings SETTINGS_SAND = FabricBlockSettings.of(Material.AGGREGATE, MapColor.PALE_YELLOW).strength(1.8f, 2.0f).sounds(BlockSoundGroup.SAND);
     public static final FabricBlockSettings SETTINGS_STONE = FabricBlockSettings.of(Material.STONE, MapColor.DEEPSLATE_GRAY).strength(4.5f, 6.0f).requiresTool();
     public static final FabricBlockSettings SETTINGS_LOG = FabricBlockSettings.of(Material.WOOD, MapColor.BROWN).strength(4.0f, 6.0f).sounds(BlockSoundGroup.WOOD).requiresTool();
-
+    public static final FabricBlockSettings SETTINGS_CLAY = FabricBlockSettings.of(Material.STONE, MapColor.ORANGE).strength(4.0f, 6.0f).sounds(BlockSoundGroup.STONE).requiresTool();
 
     // Terrain blocks
     public static final Block DIRT = registerBlock("dirt", new SemiSupportedBlock(SETTINGS_SOIL, 0.2f), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
@@ -72,6 +72,10 @@ public class PrimevalBlocks {
 
     // Crafted Blocks
     public static final Block STRAW_BLOCK = registerBlock("straw_block", new PillarBlock(FabricBlockSettings.of(Material.PLANT).strength(0.5F).sounds(BlockSoundGroup.GRASS)), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block TERRACOTTA = registerBlock("terracotta", new Block(SETTINGS_CLAY), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block FIRED_CLAY_BRICKS = registerBlock("fired_clay_bricks", new Block(SETTINGS_CLAY), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block DRIED_CLAY_BRICKS = registerBlock("dried_bricks", new Block(SETTINGS_CLAY), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
+
 
     // Technical Blocks or Blocks with other BlockItems than themselves
     public static final Block STRAW_PILE = registerBlockWithoutItem("straw", new LayeredBlock(FabricBlockSettings.of(Material.PLANT).strength(0.5F).sounds(BlockSoundGroup.GRASS)));
@@ -87,14 +91,13 @@ public class PrimevalBlocks {
     public static final Block MOLTEN_BRONZE = registerMoltenFluid("molten_bronze", PrimevalFluids.MOLTEN_BRONZE);
     public static final Block MOLTEN_BOTCHED_ALLOY = registerMoltenFluid("molten_botched_alloy", PrimevalFluids.MOLTEN_BOTCHED_ALLOY);
 
-    public static void init() {}
-
-
 
     // Block entities
     public static final BlockEntityType<PitKilnBlockEntity> PIT_KILN_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, PrimevalMain.getId("pit_kiln_block_entity"), FabricBlockEntityTypeBuilder.create(PitKilnBlockEntity::new, PIT_KILN).build());
     public static final BlockEntityType<AshPileBlockEntity> ASH_PILE_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, PrimevalMain.getId("ash_pile_block_entity"), FabricBlockEntityTypeBuilder.create(AshPileBlockEntity::new, ASH_PILE).build());
 
+
+    public static void init() {}
 
 
     @Environment(EnvType.CLIENT)
