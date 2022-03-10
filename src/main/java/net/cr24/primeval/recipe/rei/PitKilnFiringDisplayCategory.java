@@ -9,12 +9,10 @@ import me.shedaniel.rei.api.client.gui.widgets.Widgets;
 import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryStacks;
-import me.shedaniel.rei.plugin.client.categories.DefaultWaxingCategory;
 import net.cr24.primeval.item.PrimevalItems;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PitKilnFiringDisplayCategory implements DisplayCategory<PitKilnFiringDisplay> {
@@ -29,7 +27,7 @@ public class PitKilnFiringDisplayCategory implements DisplayCategory<PitKilnFiri
     }
 
     @Override
-    public CategoryIdentifier getCategoryIdentifier() {
+    public CategoryIdentifier<? extends PitKilnFiringDisplay> getCategoryIdentifier() {
         return PrimevalREIIntegration.PIT_KILN_FIRING;
     }
 
