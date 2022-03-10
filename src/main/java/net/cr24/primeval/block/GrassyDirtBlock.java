@@ -53,6 +53,9 @@ public class GrassyDirtBlock extends SemiSupportedBlock {
                     BlockPos blockPos = pos.add(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1);
                     if (world.getBlockState(blockPos).isOf(PrimevalBlocks.DIRT) && canSpread(blockState, world, blockPos)) {
                         world.setBlockState(blockPos, blockState.with(SNOWY, world.getBlockState(blockPos.up()).isOf(Blocks.SNOW)));
+                        if (random.nextInt(3) == 0 && world.getBlockState(pos.up()).isAir()) {
+                            world.setBlockState(pos.up(), PrimevalBlocks.GRASS.getDefaultState());
+                        }
                     }
                 }
             }

@@ -7,6 +7,7 @@ import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
+import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Property;
 import net.minecraft.util.math.BlockPos;
@@ -21,16 +22,17 @@ import java.util.Random;
 
 public class GrowingGrassBlock extends Block {
     public static final IntProperty GROWTH_STATE;
+    public static final BooleanProperty GROWING;
     protected static final VoxelShape[] SHAPES;
 
     protected GrowingGrassBlock(Settings settings) {
         super(settings);
-        this.setDefaultState(this.getDefaultState().with(GROWTH_STATE, 0));
+        this.setDefaultState(this.getDefaultState().with(GROWTH_STATE, 0).with(GROWING, true));
     }
 
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         super.appendProperties(builder);
-        builder.add(new Property[]{GROWTH_STATE});
+        builder.add(new Property[]{GROWTH_STATE, GROWING});
     }
 
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
@@ -39,7 +41,7 @@ public class GrowingGrassBlock extends Block {
     }
 
     public boolean hasRandomTicks(BlockState state) {
-        return state.get(GROWTH_STATE) < 4;
+        return state.get(GROWING) && state.get(GROWTH_STATE) < 4;
     }
 
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
@@ -52,7 +54,11 @@ public class GrowingGrassBlock extends Block {
             }
         }
         if (growth < 4 && canGrow(growth+1, world.getBlockState(pos.down()))) {
-            world.setBlockState(pos, state.with(GROWTH_STATE, growth+1));
+            BlockState next = state.with(GROWTH_STATE, growth+1);
+            if (random.nextInt(4-growth) <= 0) {
+                next = next.with(GROWING, false);
+            }
+            world.setBlockState(pos, next);
         }
     }
 
@@ -90,7 +96,7 @@ public class GrowingGrassBlock extends Block {
 
     static {
         GROWTH_STATE = IntProperty.of("growth", 0, 4);
-
+        GROWING = BooleanProperty.of("active");
         SHAPES = new VoxelShape[] {
                 Block.createCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 4.0D, 14.0D),
                 Block.createCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 7.0D, 14.0D),
