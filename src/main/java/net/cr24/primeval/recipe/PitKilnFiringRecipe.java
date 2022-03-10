@@ -5,11 +5,13 @@ import net.cr24.primeval.block.PrimevalBlocks;
 import net.cr24.primeval.item.PrimevalItems;
 import net.minecraft.block.Blocks;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
 import java.util.stream.Stream;
@@ -17,6 +19,13 @@ import java.util.stream.Stream;
 public class PitKilnFiringRecipe extends SimpleOneToOneRecipe {
     public PitKilnFiringRecipe(Identifier id, Ingredient input, ItemStack result) {
         super(id, input, result);
+    }
+
+    @Override
+    public DefaultedList<Ingredient> getIngredients() {
+        DefaultedList<Ingredient> list = DefaultedList.of();
+        list.add(this.input);
+        return list;
     }
 
     @Override

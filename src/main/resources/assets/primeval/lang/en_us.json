@@ -79,6 +79,9 @@
     "itemGroup.primeval.tools": "Primeval Tools",
     
     
+    "category.primeval.pit_kiln_firing": "Pit Firing",    
+    
+    
     "text.primeval.fluid.contains": "Contains %ddb of %s",
     "text.primeval.size.small": "Small",
     "text.primeval.size.medium": "Medium",

@@ -22,6 +22,9 @@
     ],
     "client": [
       "net.cr24.primeval.PrimevalMain"
+    ],
+    "rei_plugins": [
+      "net.cr24.primeval.recipe.rei.PrimevalREIClientIntegration"
     ]
   },
   "mixins": [
