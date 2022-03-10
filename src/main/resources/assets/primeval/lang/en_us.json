@@ -69,8 +69,12 @@
     "item.primeval.raw_tin_cassiterite_medium": "Medium Raw Cassiterite Tin",
     "item.primeval.raw_tin_cassiterite_large": "Large Raw Cassiterite Tin",
     
+    "item.primeval.clay_ingot_mold": "Clay Ingot Mold",
+    "item.primeval.fired_clay_ingot_mold": "Fired Clay Ingot Mold",
+    
     "item.primeval.flint_axe": "Flint Hatchet",
     "item.primeval.flint_shovel": "Flint Shovel",
+    
     "item.primeval.fired_clay_jug": "Fired Clay Jug",
     "item.primeval.fired_clay_vessel": "Fired Clay Vessel",
     
