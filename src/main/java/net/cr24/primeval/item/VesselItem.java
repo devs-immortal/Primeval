@@ -5,16 +5,11 @@ import net.cr24.primeval.recipe.MeltingRecipe;
 import net.cr24.primeval.recipe.PrimevalRecipes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
-import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
-import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
-import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.item.TooltipData;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.inventory.StackReference;
 import net.minecraft.item.BlockItem;
@@ -34,14 +29,16 @@ import net.minecraft.util.Pair;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Stream;
 
-public class VesselItem extends BundleItem implements IWeightedItem, Storage<FluidVariant> {
+public class VesselItem extends BundleItem implements IWeightedItem {
 
     private final Weight weight;
     private final Size size;
-    private static final double FLUID_CAPACITY = FluidConstants.INGOT * 16;
 
     public VesselItem(Settings settings, Weight weight, Size size) {
         super(settings);
@@ -56,7 +53,24 @@ public class VesselItem extends BundleItem implements IWeightedItem, Storage<Flu
     public boolean onStackClicked(ItemStack stack, Slot slot, ClickType clickType, PlayerEntity player) {
         if (clickType != ClickType.RIGHT) {
             return false;
-        } else {
+        } else if (slot.getStack().getItem() instanceof ClayMoldItem) {
+            ItemStack moldItemStack = slot.getStack();
+
+            NbtCompound nbt = stack.getOrCreateNbt();
+            NbtCompound fluidNbt = nbt.getCompound("Fluid");
+            int fluidAmount = fluidNbt.getInt("Amount");
+            Pair<FluidVariant, Integer> fluidPair = new Pair<>(FluidVariant.fromNbt(fluidNbt), fluidAmount);
+
+            int amountInserted = ClayMoldItem.insertFluid(fluidPair, moldItemStack);
+
+
+            fluidNbt.putInt("Amount", fluidAmount-amountInserted);
+            nbt.put("Fluid", fluidNbt);
+
+            stack.setNbt(nbt);
+
+            return true;
+        } else if (canAddItem(stack)){
             ItemStack itemStack = slot.getStack();
             if (itemStack.isEmpty()) {
                 this.playRemoveOneSound(player);
@@ -71,6 +85,7 @@ public class VesselItem extends BundleItem implements IWeightedItem, Storage<Flu
 
             return true;
         }
+        return false;
     }
 
     public boolean onClicked(ItemStack stack, ItemStack otherStack, Slot slot, ClickType clickType, PlayerEntity player, StackReference cursorStackReference) {
@@ -212,17 +227,19 @@ public class VesselItem extends BundleItem implements IWeightedItem, Storage<Flu
     public static ItemStack processItems(ItemStack vessel, World world) {
         NbtCompound nbt = vessel.getOrCreateNbt();
         NbtList nbtList = nbt.getList("Items", 10);
-
+        // Create new hashmap to store fluids that will be inserted
         HashMap<FluidVariant, Integer> fluids = new HashMap<>();
-        ItemStack itemStack;
-        Pair<FluidVariant, Integer> fluidResult;
-        FluidVariant fluidType;
-        int fluidAmount;
+        ItemStack itemStack; // Item being melted
+        Pair<FluidVariant, Integer> fluidResult; // Resulting fluid from melted item, being <type, quantity>
+        FluidVariant fluidType; // Type of fluid result
+        int fluidAmount; // Amonut of fluid from melting
 
         for (NbtElement nbtC : nbtList) {
+            // Get itemstack from item to melted
             itemStack = ItemStack.fromNbt((NbtCompound) nbtC);
+            // Check if meltable recipe for the item
             Optional<MeltingRecipe> option = world.getRecipeManager().getFirstMatch(PrimevalRecipes.MELTING, new SimpleInventory(itemStack), world);
-            if (option.isPresent()) {
+            if (option.isPresent()) { // if can be melted
                 fluidResult = option.get().getFluidResult();
                 fluidType = fluidResult.getLeft();
                 fluidAmount = fluidResult.getRight();
@@ -250,26 +267,9 @@ public class VesselItem extends BundleItem implements IWeightedItem, Storage<Flu
     public static boolean canAddItem(ItemStack vessel) {
         NbtCompound nbt = vessel.getOrCreateNbt();
         if (nbt.contains("Fluid")) {
-            if (nbt.getCompound("Fluid").getInt("Amount") > 0) {
-                return false;
-            }
+            return nbt.getCompound("Fluid").getInt("Amount") <= 0;
         }
         return true;
-    }
-
-    @Override
-    public long insert(FluidVariant resource, long maxAmount, TransactionContext transaction) {
-        return 0;
-    }
-
-    @Override
-    public long extract(FluidVariant resource, long maxAmount, TransactionContext transaction) {
-        return 0;
-    }
-
-    @Override
-    public Iterator<StorageView<FluidVariant>> iterator(TransactionContext transaction) {
-        return null;
     }
 
     @Override

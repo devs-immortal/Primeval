@@ -14,8 +14,8 @@ import java.util.List;
 
 public class WeightedItem extends Item implements IWeightedItem {
 
-    private final Weight weight;
-    private final Size size;
+    protected final Weight weight;
+    protected final Size size;
 
     public WeightedItem(Settings settings, Weight weight, Size size) {
         super(settings.maxCount(size.getStackSize()));
