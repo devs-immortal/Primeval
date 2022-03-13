@@ -2,9 +2,18 @@ package net.cr24.primeval.item;
 
 import net.cr24.primeval.PrimevalMain;
 import net.cr24.primeval.block.PrimevalBlocks;
+import net.cr24.primeval.fluid.PrimevalFluids;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
+import net.fabricmc.fabric.mixin.client.indigo.renderer.MixinItemRenderer;
+import net.minecraft.client.item.UnclampedModelPredicateProvider;
 import net.minecraft.item.*;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import static net.cr24.primeval.block.PrimevalBlocks.*;
 
@@ -74,6 +83,24 @@ public class PrimevalItems {
     public static final Item FIRED_CLAY_VESSEL = registerItem("fired_clay_vessel", new VesselItem(GROUP_TOOLS, Weight.NORMAL, Size.MEDIUM));
 
     public static void init() {}
+
+    @Environment(EnvType.CLIENT)
+    public static void initClient() {
+        FabricModelPredicateProviderRegistry.register(FIRED_CLAY_INGOT_MOLD, new Identifier("fluid"), (itemStack, clientWorld, livingEntity, var4) -> {
+            if (livingEntity == null) {
+                return 0.0F;
+            }
+            NbtCompound nbt = itemStack.getOrCreateNbt();
+            NbtCompound fluidNbt = nbt.getCompound("Fluid");
+            int fluidAmount = fluidNbt.getInt("Amount");
+            if (fluidAmount == ClayMoldItem.CAPACITY) {
+                FluidVariant variant = FluidVariant.fromNbt(fluidNbt);
+                System.out.println(PrimevalFluids.fluidToIntegerId(variant.getFluid()));
+                return PrimevalFluids.fluidToIntegerId(variant.getFluid());
+            }
+            return 0;
+        });
+    }
 
     private static Item registerItem(String id, Item item) {
         return Registry.register(Registry.ITEM, PrimevalMain.getId(id), item);

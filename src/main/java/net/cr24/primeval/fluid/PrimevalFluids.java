@@ -89,10 +89,22 @@ public class PrimevalFluids {
         return new Pair<>(FluidVariant.of(MOLTEN_BOTCHED_ALLOY), overallFluid);
     }
 
+    public static float fluidToIntegerId(Fluid f) {
+        if (f == MOLTEN_COPPER) {
+            return 0.01F;
+        } else if (f == MOLTEN_TIN) {
+            return 0.02F;
+        } else if (f == MOLTEN_BRONZE) {
+            return 0.03F;
+        } else if (f == MOLTEN_BOTCHED_ALLOY) {
+            return 1F;
+        }
+        return 0F;
+    }
+
     /*
      * Fluid rendering setup from Spectrum,
-     * Made by DaFaqs, credit to him for this
-     * method
+     * by DaFaqs, credit to him for this method
      */
     @Environment(EnvType.CLIENT)
     private static void setupFluidRendering(final Fluid still, final Fluid flowing, final Identifier textureFluidId, final int color) {

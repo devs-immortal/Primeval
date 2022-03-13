@@ -28,6 +28,7 @@ public class PrimevalMain implements ModInitializer, ClientModInitializer {
     @Override
     @Environment(EnvType.CLIENT)
     public void onInitializeClient() {
+        PrimevalItems.initClient();
         PrimevalBlocks.initClient();
         PrimevalFluids.clientInit();
     }

@@ -6,8 +6,12 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ArmorItem;
+import net.minecraft.item.DyeableArmorItem;
+import net.minecraft.item.DyeableHorseArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.recipe.ArmorDyeRecipe;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
@@ -21,7 +25,8 @@ import java.util.List;
 
 public class ClayMoldItem extends WeightedItem {
 
-    private static int CAPACITY = (int) FluidConstants.INGOT;
+    public static int CAPACITY = (int) FluidConstants.INGOT;
+    private static int MAX_INSERTION_AMOUNT = 9000;
 
     public ClayMoldItem(Settings settings, Weight weight, Size size) {
         super(settings, weight, size, 1);
@@ -59,7 +64,7 @@ public class ClayMoldItem extends WeightedItem {
         }
         // if not already storing, or we pass the tests above, insert 1000dp of fluid
         int remainingCapacity = CAPACITY - currentStoredAmount;
-        int amountToInsert = Math.min(remainingCapacity, Math.min(incomingAmount, 1000));
+        int amountToInsert = Math.min(remainingCapacity, Math.min(incomingAmount, MAX_INSERTION_AMOUNT));
         // build new nbt for mold item
         NbtCompound nbtF = fluidPair.getLeft().toNbt();
         nbtF.putInt("Amount", currentStoredAmount + amountToInsert);
@@ -82,4 +87,7 @@ public class ClayMoldItem extends WeightedItem {
         }
         tooltip.add((new TranslatableText("⚖ ").append(this.weight.getText()).append(" ⤧ ").append(this.size.getText())).formatted(Formatting.GRAY));
     }
+
+
+
 }
