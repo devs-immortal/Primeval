@@ -68,6 +68,14 @@ public class PrimevalItems {
     public static final Item RAW_TIN_CASSITERITE_MEDIUM = registerItem("raw_tin_cassiterite_medium", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
     public static final Item RAW_TIN_CASSITERITE_LARGE = registerItem("raw_tin_cassiterite_large", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.LARGE));
 
+    // Metal Items
+    // Ingots
+    public static final Item COPPER_INGOT = registerItem("copper_ingot", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
+    public static final Item TIN_INGOT = registerItem("tin_ingot", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
+
+    public static final Item BRONZE_INGOT = registerItem("bronze_ingot", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
+    public static final Item BOTCHED_ALLOY_INGOT = registerItem("botched_alloy_ingot", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
+
 
     // Molds
     public static final Item CLAY_INGOT_MOLD = registerItem("clay_ingot_mold", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));

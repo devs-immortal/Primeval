@@ -69,6 +69,11 @@
     "item.primeval.raw_tin_cassiterite_medium": "Medium Raw Cassiterite Tin",
     "item.primeval.raw_tin_cassiterite_large": "Large Raw Cassiterite Tin",
     
+    "item.primeval.copper_ingot": "Copper Ingot",
+    "item.primeval.tin_ingot": "Tin Ingot",
+    "item.primeval.bronze_ingot": "Bronze Ingot",
+    "item.primeval.botched_alloy_ingot": "Botched Alloy Ingot",
+    
     "item.primeval.clay_ingot_mold": "Clay Ingot Mold",
     "item.primeval.fired_clay_ingot_mold": "Fired Clay Ingot Mold",
     
