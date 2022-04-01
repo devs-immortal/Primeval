@@ -46,6 +46,9 @@ public class AlloyRatio {
         private double lower;
 
         public RangedInt(int u, int l) {
+            if (l > u) {
+                System.out.println("Invalid Alloy Ratio is being defined!\n  Upper: "+u+"\n  Lower: "+l);
+            }
             this.upper = u;
             this.lower = l;
         }

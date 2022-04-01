@@ -1,6 +1,6 @@
 package net.cr24.primeval.item;
 
-import net.cr24.primeval.fluid.PrimevalFluids;
+import net.cr24.primeval.fluid.PrimevalFluidUtil;
 import net.cr24.primeval.recipe.MeltingRecipe;
 import net.cr24.primeval.recipe.PrimevalRecipes;
 import net.fabricmc.api.EnvType;
@@ -251,7 +251,7 @@ public class VesselItem extends BundleItem implements IWeightedItem {
             }
         }
 
-        Pair<FluidVariant, Integer> alloyResult = PrimevalFluids.combineFluids(fluids);
+        Pair<FluidVariant, Integer> alloyResult = PrimevalFluidUtil.combineFluids(fluids);
 
         if (alloyResult.getRight() > 0) {
             NbtCompound nbtF = alloyResult.getLeft().toNbt();

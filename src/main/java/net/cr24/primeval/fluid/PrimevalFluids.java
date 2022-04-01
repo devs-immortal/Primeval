@@ -45,7 +45,7 @@ public class PrimevalFluids {
             FluidVariant.of(MOLTEN_BRONZE)
     );
 
-    public static final AlloyRatio[] alloys = new AlloyRatio[] {BRONZE_RATIO};
+    public static final AlloyRatio[] ALLOYS = new AlloyRatio[] {BRONZE_RATIO};
 
     public static void init() {}
 
@@ -66,40 +66,6 @@ public class PrimevalFluids {
 
     private static FlowableFluid registerFluid(String id, Fluid fluid) {
         return (FlowableFluid)Registry.register(Registry.FLUID, PrimevalMain.getId(id), fluid);
-    }
-
-    public static Pair<FluidVariant, Integer> combineFluids(HashMap<FluidVariant, Integer> fluids) {
-        if (fluids.keySet().size() == 1) {
-            for ( FluidVariant fluid : fluids.keySet()) {
-                return new Pair<>(fluid, fluids.get(fluid));
-            }
-        }
-        int overallFluid = 0;
-        for ( FluidVariant fluid : fluids.keySet()) {
-
-            System.out.print(fluid.toNbt().getString("fluid") + " | " + fluids.get(fluid));
-            overallFluid += fluids.get(fluid);
-        }
-        for (AlloyRatio a : alloys) {
-            if (a.satisfies(fluids, overallFluid)) {
-                return new Pair<>(a.getResult(), overallFluid);
-            }
-        }
-
-        return new Pair<>(FluidVariant.of(MOLTEN_BOTCHED_ALLOY), overallFluid);
-    }
-
-    public static float fluidToIntegerId(Fluid f) {
-        if (f == MOLTEN_COPPER) {
-            return 0.01F;
-        } else if (f == MOLTEN_TIN) {
-            return 0.02F;
-        } else if (f == MOLTEN_BRONZE) {
-            return 0.03F;
-        } else if (f == MOLTEN_BOTCHED_ALLOY) {
-            return 1F;
-        }
-        return 0F;
     }
 
     /*

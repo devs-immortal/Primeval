@@ -2,6 +2,7 @@ package net.cr24.primeval.item;
 
 import net.cr24.primeval.PrimevalMain;
 import net.cr24.primeval.block.PrimevalBlocks;
+import net.cr24.primeval.fluid.PrimevalFluidUtil;
 import net.cr24.primeval.fluid.PrimevalFluids;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -95,8 +96,8 @@ public class PrimevalItems {
             int fluidAmount = fluidNbt.getInt("Amount");
             if (fluidAmount == ClayMoldItem.CAPACITY) {
                 FluidVariant variant = FluidVariant.fromNbt(fluidNbt);
-                System.out.println(PrimevalFluids.fluidToIntegerId(variant.getFluid()));
-                return PrimevalFluids.fluidToIntegerId(variant.getFluid());
+                System.out.println(PrimevalFluidUtil.fluidToIntegerId(variant.getFluid()));
+                return PrimevalFluidUtil.fluidToIntegerId(variant.getFluid());
             }
             return 0;
         });
