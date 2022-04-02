@@ -6,7 +6,7 @@ import net.minecraft.fluid.*;
 import net.minecraft.world.*;
 
 
-abstract class StillMoltenMetalFluid extends LavaFluid {
+abstract class StillMoltenMetalFluid extends LavaFluid implements PrefixedFluid {
 
     public Fluid getFlowing() {
         return Fluids.FLOWING_LAVA; // No flowing metals because I'm lazy
@@ -45,6 +45,10 @@ abstract class StillMoltenMetalFluid extends LavaFluid {
         public BlockState toBlockState(FluidState state) {
             return PrimevalBlocks.MOLTEN_COPPER.getDefaultState().with(FluidBlock.LEVEL, getBlockStateLevel(state));
         }
+
+        public String getPrefix() {
+            return "copper";
+        }
     }
 
     public static class Tin extends StillMoltenMetalFluid {
@@ -55,6 +59,10 @@ abstract class StillMoltenMetalFluid extends LavaFluid {
 
         public BlockState toBlockState(FluidState state) {
             return PrimevalBlocks.MOLTEN_TIN.getDefaultState().with(FluidBlock.LEVEL, getBlockStateLevel(state));
+        }
+
+        public String getPrefix() {
+            return "tin";
         }
     }
 
@@ -67,6 +75,10 @@ abstract class StillMoltenMetalFluid extends LavaFluid {
         public BlockState toBlockState(FluidState state) {
             return PrimevalBlocks.MOLTEN_BRONZE.getDefaultState().with(FluidBlock.LEVEL, getBlockStateLevel(state));
         }
+
+        public String getPrefix() {
+            return "bronze";
+        }
     }
 
     public static class Botched extends StillMoltenMetalFluid {
@@ -77,6 +89,10 @@ abstract class StillMoltenMetalFluid extends LavaFluid {
 
         public BlockState toBlockState(FluidState state) {
             return PrimevalBlocks.MOLTEN_BOTCHED_ALLOY.getDefaultState().with(FluidBlock.LEVEL, getBlockStateLevel(state));
+        }
+
+        public String getPrefix() {
+            return "botched_alloy";
         }
     }
 

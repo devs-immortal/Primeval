@@ -2,6 +2,8 @@ package net.cr24.primeval.fluid;
 
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.fluid.Fluid;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Pair;
 
 import java.util.HashMap;
@@ -40,5 +42,13 @@ public class PrimevalFluidUtil {
             return 1F;
         }
         return 0F;
+    }
+
+    public static Pair<FluidVariant, Integer> fluidFromItemStack(ItemStack stack) {
+
+        NbtCompound nbt = stack.getOrCreateNbt();
+        NbtCompound fluidNbt = nbt.getCompound("Fluid");
+        int fluidAmount = fluidNbt.getInt("Amount");
+        return new Pair<>(FluidVariant.fromNbt(fluidNbt), fluidAmount);
     }
 }

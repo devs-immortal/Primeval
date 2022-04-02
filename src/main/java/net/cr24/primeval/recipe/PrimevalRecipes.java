@@ -3,8 +3,10 @@ package net.cr24.primeval.recipe;
 import net.cr24.primeval.PrimevalMain;
 import net.cr24.primeval.fluid.PrimevalFluids;
 import net.minecraft.fluid.Fluid;
+import net.minecraft.recipe.ArmorDyeRecipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.recipe.SpecialRecipeSerializer;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import net.minecraft.util.registry.Registry;
@@ -17,6 +19,8 @@ public class PrimevalRecipes {
     public static final RecipeSerializer<PitKilnFiringRecipe> PIT_KILN_FIRING_SERIALIZER;
     public static final RecipeType<MeltingRecipe> MELTING;
     public static final RecipeSerializer<MeltingRecipe> MELTING_SERIALIZER;
+    public static final RecipeType<ClayMoldBreakingRecipe> CLAY_MOLD_BREAKING_RECIPE;
+    public static final SpecialRecipeSerializer<ClayMoldBreakingRecipe> CLAY_MOLD_BREAKING_RECIPE_SERIALIZER;
 
     static {
         PIT_KILN_FIRING = Registry.register(Registry.RECIPE_TYPE, PrimevalMain.getId("pit_kiln_firing"), new RecipeType<PitKilnFiringRecipe>() {
@@ -31,13 +35,14 @@ public class PrimevalRecipes {
         });
         MELTING_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, PrimevalMain.getId("melting"), new MeltingRecipe.Serializer());
 
+        CLAY_MOLD_BREAKING_RECIPE = Registry.register(Registry.RECIPE_TYPE, PrimevalMain.getId("clay_mold_breaking_recipe"), new RecipeType<ClayMoldBreakingRecipe>() {
+            @Override
+            public String toString() {return "clay_mold_breaking_recipe";}
+        });
+        CLAY_MOLD_BREAKING_RECIPE_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, PrimevalMain.getId("clay_mold_breaking_recipe"), new SpecialRecipeSerializer<>(ClayMoldBreakingRecipe::new));
+
     }
 
     public static void init() {}
-
-    public static Pair<Identifier, Integer> getAlloyFromFluids(HashMap<Identifier, Integer> fluids) {
-        Pair<Identifier, Integer> defaultFluid = new Pair<>(Registry.FLUID.getId(PrimevalFluids.MOLTEN_BOTCHED_ALLOY), 100);
-        return defaultFluid;
-    }
 
 }
