@@ -6,5 +6,6 @@ import net.cr24.primeval.PrimevalMain;
 public class PrimevalREIIntegration {
 
     public static final CategoryIdentifier<PitKilnFiringDisplay> PIT_KILN_FIRING = CategoryIdentifier.of(PrimevalMain.getId("pit_kiln_firing"));
+    public static final CategoryIdentifier<MeltingDisplay> MELTING = CategoryIdentifier.of(PrimevalMain.getId("melting"));
 
 }

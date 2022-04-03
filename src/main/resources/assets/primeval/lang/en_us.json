@@ -91,7 +91,9 @@
     "itemGroup.primeval.tools": "Primeval Tools",
     
     
-    "category.primeval.pit_kiln_firing": "Pit Firing",    
+    "category.primeval.pit_kiln_firing": "Pit Firing",
+    "category.primeval.melting": "Item Melting",
+    "category.primeval.alloying": "Fluid Alloying",
     
     
     "text.primeval.fluid.contains": "Contains %ddb of %s",
