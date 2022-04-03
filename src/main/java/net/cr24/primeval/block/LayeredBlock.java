@@ -32,10 +32,6 @@ public class LayeredBlock extends Block {
         switch(type) {
             case LAND:
                 return (Integer)state.get(LAYERS) < 5;
-            case WATER:
-                return false;
-            case AIR:
-                return false;
             default:
                 return false;
         }

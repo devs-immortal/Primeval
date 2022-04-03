@@ -1,0 +1,9 @@
+{
+  "type": "primeval:pit_kiln_firing",
+  "input": {
+    "item": "primeval:clay_ingot_mold"
+  },
+  "result": {
+    "item": "primeval:fired_clay_ingot_mold"
+  }
+}

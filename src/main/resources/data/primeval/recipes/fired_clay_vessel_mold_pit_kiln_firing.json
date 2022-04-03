@@ -1,0 +1,9 @@
+{
+  "type": "primeval:pit_kiln_firing",
+  "input": {
+    "item": "primeval:clay_vessel"
+  },
+  "result": {
+    "item": "primeval:fired_clay_vessel"
+  }
+}

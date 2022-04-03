@@ -41,7 +41,6 @@ public class PitKilnBlock extends BlockWithEntity {
 
     public static final IntProperty BUILD_STEP = IntProperty.of("build_step", 0, 8);
     public static final BooleanProperty LIT = BooleanProperty.of("lit");
-    protected static final VoxelShape[] SHAPES;
 
     protected PitKilnBlock(Settings settings) {
         super(settings);
@@ -92,8 +91,10 @@ public class PitKilnBlock extends BlockWithEntity {
         int shapeState = state.get(BUILD_STEP);
         if (shapeState < 5) {
             return LayeredBlock.LAYERS_TO_SHAPE[(Integer)state.get(BUILD_STEP)+1];
+        } else if (state.get(BUILD_STEP) < 7) {
+            return Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 13.0D, 16.0D);
         } else {
-            return SHAPES[shapeState-5];
+            return Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
         }
     }
 
@@ -121,7 +122,7 @@ public class PitKilnBlock extends BlockWithEntity {
 
 
     public boolean hasSidedTransparency(BlockState state) {
-        return false;
+        return true;
     }
 
 
@@ -231,12 +232,4 @@ public class PitKilnBlock extends BlockWithEntity {
         return checkType(type, PrimevalBlocks.PIT_KILN_BLOCK_ENTITY, (world1, pos, state1, be) -> PitKilnBlockEntity.tick(world1, pos, state1, be));
     }
 
-    static {
-        SHAPES = new VoxelShape[] {
-                VoxelShapes.union(Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 10.0D, 16.0D), Block.createCuboidShape(0.0D, 10.0D, 1.0D, 16.0D, 13.0D, 5.0D)),
-                VoxelShapes.union(Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 10.0D, 16.0D), Block.createCuboidShape(0.0D, 10.0D, 1.0D, 16.0D, 13.0D, 5.0D), Block.createCuboidShape(0.0D, 10.0D, 11.0D, 16.0D, 13.0D, 15.0D)),
-                VoxelShapes.union(Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 10.0D, 16.0D), Block.createCuboidShape(0.0D, 10.0D, 1.0D, 16.0D, 13.0D, 5.0D), Block.createCuboidShape(0.0D, 10.0D, 11.0D, 16.0D, 13.0D, 15.0D), Block.createCuboidShape(1.0D, 12.0D, 0.0D, 5.0D, 16.0D, 16.0D)),
-                VoxelShapes.union(Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 10.0D, 16.0D), Block.createCuboidShape(0.0D, 10.0D, 1.0D, 16.0D, 13.0D, 5.0D), Block.createCuboidShape(0.0D, 10.0D, 11.0D, 16.0D, 13.0D, 15.0D), Block.createCuboidShape(1.0D, 12.0D, 0.0D, 5.0D, 16.0D, 16.0D), Block.createCuboidShape(11.0D, 12.0D, 0.0D, 15.0D, 16.0D, 16.0D))
-        };
-    }
 }

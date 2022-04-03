@@ -25,19 +25,19 @@ public class PrimevalRecipes {
     static {
         PIT_KILN_FIRING = Registry.register(Registry.RECIPE_TYPE, PrimevalMain.getId("pit_kiln_firing"), new RecipeType<PitKilnFiringRecipe>() {
             @Override
-            public String toString() {return "pit_kiln_firing";}
+            public String toString() {return "primeval:pit_kiln_firing";}
         });
         PIT_KILN_FIRING_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, PrimevalMain.getId("pit_kiln_firing"), new PitKilnFiringRecipe.Serializer());
 
         MELTING = Registry.register(Registry.RECIPE_TYPE, PrimevalMain.getId("melting"), new RecipeType<MeltingRecipe>() {
             @Override
-            public String toString() {return "melting";}
+            public String toString() {return "primeval:melting";}
         });
         MELTING_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, PrimevalMain.getId("melting"), new MeltingRecipe.Serializer());
 
         CLAY_MOLD_BREAKING_RECIPE = Registry.register(Registry.RECIPE_TYPE, PrimevalMain.getId("clay_mold_breaking_recipe"), new RecipeType<ClayMoldBreakingRecipe>() {
             @Override
-            public String toString() {return "clay_mold_breaking_recipe";}
+            public String toString() {return "primeval:clay_mold_breaking_recipe";}
         });
         CLAY_MOLD_BREAKING_RECIPE_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, PrimevalMain.getId("clay_mold_breaking_recipe"), new SpecialRecipeSerializer<>(ClayMoldBreakingRecipe::new));
 
