@@ -30,6 +30,8 @@ public class ClayMoldBreakingRecipe extends SpecialCraftingRecipe {
             if (stack != null) return false;
             if (itemStack2.getItem() instanceof ClayMoldItem) {
                 stack = itemStack2;
+            } else {
+                return false;
             }
         }
         return true;

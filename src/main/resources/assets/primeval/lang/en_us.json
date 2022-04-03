@@ -11,6 +11,7 @@
     "block.primeval.oak_log": "Oak Log",
     "block.primeval.oak_leaves": "Oak Leaves",
     "block.primeval.grass": "Grass",
+    "block.primeval.bush": "Bush",
     
     "block.primeval.copper_malachite_ore_small": "Small Malachite Copper Ore",
     "block.primeval.copper_malachite_ore_medium": "Medium Malachite Copper Ore",
@@ -77,6 +78,7 @@
     "item.primeval.clay_ingot_mold": "Clay Ingot Mold",
     "item.primeval.fired_clay_ingot_mold": "Fired Clay Ingot Mold",
     
+    "item.primeval.flint_knife": "Flint Knife",
     "item.primeval.flint_axe": "Flint Hatchet",
     "item.primeval.flint_shovel": "Flint Shovel",
     

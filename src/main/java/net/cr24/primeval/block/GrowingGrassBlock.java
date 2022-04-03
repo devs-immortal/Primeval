@@ -94,6 +94,10 @@ public class GrowingGrassBlock extends Block {
         return type == NavigationType.AIR && !this.collidable ? true : super.canPathfindThrough(state, world, pos, type);
     }
 
+    public OffsetType getOffsetType() {
+        return OffsetType.XZ;
+    }
+
     static {
         GROWTH_STATE = IntProperty.of("growth", 0, 4);
         GROWING = BooleanProperty.of("active");
