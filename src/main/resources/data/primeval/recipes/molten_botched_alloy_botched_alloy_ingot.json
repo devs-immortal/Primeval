@@ -1,0 +1,10 @@
+{
+  "type": "primeval:melting",
+  "input": {
+    "item": "primeval:botched_alloy_ingot"
+  },
+  "result": {
+    "fluid": "primeval:molten_botched_alloy",
+    "amount": 9000
+  }
+}

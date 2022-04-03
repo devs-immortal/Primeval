@@ -69,12 +69,16 @@ public class PrimevalItems {
     public static final Item RAW_TIN_CASSITERITE_LARGE = registerItem("raw_tin_cassiterite_large", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.LARGE));
 
     // Metal Items
-    // Ingots
+    // Primary
     public static final Item COPPER_INGOT = registerItem("copper_ingot", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
+    public static final Item COPPER_CHUNK = registerItem("copper_chunk", new WeightedItem(GROUP_ITEMS, Weight.LIGHT, Size.SMALL));
     public static final Item TIN_INGOT = registerItem("tin_ingot", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
-
+    public static final Item TIN_CHUNK = registerItem("tin_chunk", new WeightedItem(GROUP_ITEMS, Weight.LIGHT, Size.SMALL));
+    // Alloys
     public static final Item BRONZE_INGOT = registerItem("bronze_ingot", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
+    public static final Item BRONZE_CHUNK = registerItem("bronze_chunk", new WeightedItem(GROUP_ITEMS, Weight.LIGHT, Size.SMALL));
     public static final Item BOTCHED_ALLOY_INGOT = registerItem("botched_alloy_ingot", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
+    public static final Item BOTCHED_ALLOY_CHUNK = registerItem("botched_alloy_chunk", new WeightedItem(GROUP_ITEMS, Weight.LIGHT, Size.SMALL));
 
 
     // Molds

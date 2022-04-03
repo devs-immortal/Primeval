@@ -1,0 +1,10 @@
+{
+  "type": "primeval:melting",
+  "input": {
+    "item": "primeval:copper_ingot"
+  },
+  "result": {
+    "fluid": "primeval:molten_copper",
+    "amount": 9000
+  }
+}

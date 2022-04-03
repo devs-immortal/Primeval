@@ -1,0 +1,10 @@
+{
+  "type": "primeval:melting",
+  "input": {
+    "item": "primeval:copper_chunk"
+  },
+  "result": {
+    "fluid": "primeval:molten_copper",
+    "amount": 1000
+  }
+}
