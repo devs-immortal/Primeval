@@ -9,7 +9,6 @@ import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.texture.Sprite;
@@ -20,12 +19,10 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.BlockRenderView;
 
-import java.util.HashMap;
 import java.util.function.Function;
 
 public class PrimevalFluids {
@@ -36,16 +33,6 @@ public class PrimevalFluids {
     public static final FlowableFluid MOLTEN_BRONZE = registerFluid("molten_bronze", new StillMoltenMetalFluid.Bronze());
     public static final FlowableFluid MOLTEN_BOTCHED_ALLOY = registerFluid("molten_botched_alloy", new StillMoltenMetalFluid.Botched());
 
-
-    public static final AlloyRatio BRONZE_RATIO = new AlloyRatio(
-            new HashMap<>() {{
-                put(FluidVariant.of(MOLTEN_COPPER), new AlloyRatio.RangedInt(9, 8));
-                put(FluidVariant.of(MOLTEN_TIN), new AlloyRatio.RangedInt(2, 1));
-            }},
-            FluidVariant.of(MOLTEN_BRONZE)
-    );
-
-    public static final AlloyRatio[] ALLOYS = new AlloyRatio[] {BRONZE_RATIO};
 
     public static void init() {}
 

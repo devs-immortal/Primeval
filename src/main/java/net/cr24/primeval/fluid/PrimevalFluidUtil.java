@@ -6,30 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Pair;
 
-import java.util.HashMap;
-
 public class PrimevalFluidUtil {
-
-    public static Pair<FluidVariant, Integer> combineFluids(HashMap<FluidVariant, Integer> fluids) {
-        if (fluids.keySet().size() == 1) {
-            for ( FluidVariant fluid : fluids.keySet()) {
-                return new Pair<>(fluid, fluids.get(fluid));
-            }
-        }
-        int overallFluid = 0;
-        for ( FluidVariant fluid : fluids.keySet()) {
-
-            System.out.print(fluid.toNbt().getString("fluid") + " | " + fluids.get(fluid));
-            overallFluid += fluids.get(fluid);
-        }
-        for (AlloyRatio a : PrimevalFluids.ALLOYS) {
-            if (a.satisfies(fluids, overallFluid)) {
-                return new Pair<>(a.getResult(), overallFluid);
-            }
-        }
-
-        return new Pair<>(FluidVariant.of(PrimevalFluids.MOLTEN_BOTCHED_ALLOY), overallFluid);
-    }
 
     public static float fluidToIntegerId(Fluid f) {
         if (f == PrimevalFluids.MOLTEN_COPPER) {

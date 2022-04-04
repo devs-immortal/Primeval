@@ -34,6 +34,11 @@ public class PitKilnFiringRecipe extends SimpleOneToOneRecipe {
     }
 
     @Override
+    public boolean isIgnoredInRecipeBook() {
+        return true;
+    }
+
+    @Override
     public ItemStack createIcon() {
         return new ItemStack(PrimevalItems.STRAW);
     }

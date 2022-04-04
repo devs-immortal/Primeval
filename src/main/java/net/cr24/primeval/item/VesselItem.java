@@ -1,7 +1,11 @@
 package net.cr24.primeval.item;
 
+import net.cr24.primeval.fluid.FluidInventory;
 import net.cr24.primeval.fluid.PrimevalFluidUtil;
+import net.cr24.primeval.fluid.PrimevalFluids;
+import net.cr24.primeval.recipe.AlloyingRecipe;
 import net.cr24.primeval.recipe.MeltingRecipe;
+import net.cr24.primeval.recipe.PitKilnFiringRecipe;
 import net.cr24.primeval.recipe.PrimevalRecipes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -233,6 +237,7 @@ public class VesselItem extends BundleItem implements IWeightedItem {
         Pair<FluidVariant, Integer> fluidResult; // Resulting fluid from melted item, being <type, quantity>
         FluidVariant fluidType; // Type of fluid result
         int fluidAmount; // Amonut of fluid from melting
+        int overallFluid = 0;
 
         for (NbtElement nbtC : nbtList) {
             // Get itemstack from item to melted
@@ -243,6 +248,7 @@ public class VesselItem extends BundleItem implements IWeightedItem {
                 fluidResult = option.get().getFluidResult();
                 fluidType = fluidResult.getLeft();
                 fluidAmount = fluidResult.getRight();
+                overallFluid += fluidAmount*itemStack.getCount();
                 if (fluids.containsKey(fluidType)) {
                     fluids.put(fluidType, fluids.get(fluidType) + fluidAmount*itemStack.getCount());
                 } else {
@@ -251,11 +257,22 @@ public class VesselItem extends BundleItem implements IWeightedItem {
             }
         }
 
-        Pair<FluidVariant, Integer> alloyResult = PrimevalFluidUtil.combineFluids(fluids);
+        FluidVariant resultFluid;
+        if (fluids.size() == 1) {
+            resultFluid = (FluidVariant) fluids.keySet().toArray()[0];
+        } else {
+            Optional<AlloyingRecipe> result = world.getRecipeManager().getFirstMatch(PrimevalRecipes.ALLOYING, new FluidInventory(fluids), world);
 
-        if (alloyResult.getRight() > 0) {
-            NbtCompound nbtF = alloyResult.getLeft().toNbt();
-            nbtF.putInt("Amount", alloyResult.getRight());
+            if (result.isPresent()) {
+                resultFluid = result.get().getFluidResult();
+            } else {
+                resultFluid = FluidVariant.of(PrimevalFluids.MOLTEN_BOTCHED_ALLOY);
+            }
+        }
+
+        if (overallFluid > 0) {
+            NbtCompound nbtF = resultFluid.toNbt();
+            nbtF.putInt("Amount", overallFluid);
             nbt.put("Fluid", nbtF);
         }
         nbt.put("Items", new NbtList()); // Clear out items
