@@ -47,7 +47,7 @@ public class PrimevalBlocks {
 
 
     // Plant blocks
-    public static final Block OAK_LOG = registerBlock("oak_log", new TrunkBlock(SETTINGS_LOG), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
+    public static final Block OAK_TRUNK = registerBlock("oak_trunk", new TrunkBlock(SETTINGS_LOG.nonOpaque()), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
     public static final Block OAK_LEAVES = registerBlock("oak_leaves", new LeafBlock(FabricBlockSettings.copyOf(Blocks.OAK_LEAVES)), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block GRASS = registerBlock("grass", new GrowingGrassBlock(FabricBlockSettings.copyOf(Blocks.GRASS).ticksRandomly()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
     public static final Block BUSH = registerBlock("bush", new PrimevalPlantBlock(FabricBlockSettings.copyOf(Blocks.GRASS)), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);

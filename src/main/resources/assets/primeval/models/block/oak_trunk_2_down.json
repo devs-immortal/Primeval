@@ -1,0 +1,22 @@
+{
+	"credit": "Made by 24Chrome",
+	"textures": {
+		"0": "primeval:block/oak_log_2",
+		"1": "primeval:block/oak_log_top_2",
+		"particle": "primeval:block/oak_log_0"
+	},
+	"elements": [
+		{
+			"name": "down",
+			"from": [4, 0, 4],
+			"to": [12, 4, 12],
+			"faces": {
+				"north": {"uv": [4, 12, 12, 16], "texture": "#0"},
+				"east": {"uv": [4, 12, 12, 16], "texture": "#0"},
+				"south": {"uv": [4, 12, 12, 16], "texture": "#0"},
+				"west": {"uv": [4, 12, 12, 16], "texture": "#0"},
+				"down": {"uv": [4, 4, 12, 12], "texture": "#1"}
+			}
+		}
+	]
+}
