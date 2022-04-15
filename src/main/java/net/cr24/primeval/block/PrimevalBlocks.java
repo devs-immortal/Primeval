@@ -6,6 +6,8 @@ import net.cr24.primeval.fluid.PrimevalFluids;
 import net.cr24.primeval.item.Size;
 import net.cr24.primeval.item.Weight;
 import net.cr24.primeval.item.WeightedBlockItem;
+import net.cr24.primeval.world.gen.trunker.AbstractTrunker;
+import net.cr24.primeval.world.gen.trunker.OakTrunker;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
@@ -18,7 +20,6 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.fluid.FlowableFluid;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.registry.Registry;
@@ -28,12 +29,13 @@ import static net.cr24.primeval.item.PrimevalItems.PRIMEVAL_BLOCKS;
 public class PrimevalBlocks {
 
     // Block Settings
-    public static final FabricBlockSettings SETTINGS_SOIL = FabricBlockSettings.of(Material.SOIL, MapColor.DIRT_BROWN).strength(2.1f, 2.0f).sounds(BlockSoundGroup.GRAVEL);
-    public static final FabricBlockSettings SETTINGS_GRASSY = FabricBlockSettings.of(Material.SOLID_ORGANIC, MapColor.TERRACOTTA_GREEN).strength(2.5f, 2.0f).sounds(BlockSoundGroup.GRASS);
-    public static final FabricBlockSettings SETTINGS_SAND = FabricBlockSettings.of(Material.AGGREGATE, MapColor.PALE_YELLOW).strength(1.8f, 2.0f).sounds(BlockSoundGroup.SAND);
-    public static final FabricBlockSettings SETTINGS_STONE = FabricBlockSettings.of(Material.STONE, MapColor.DEEPSLATE_GRAY).strength(4.5f, 6.0f).requiresTool();
-    public static final FabricBlockSettings SETTINGS_LOG = FabricBlockSettings.of(Material.WOOD, MapColor.BROWN).strength(4.0f, 6.0f).sounds(BlockSoundGroup.WOOD).requiresTool();
-    public static final FabricBlockSettings SETTINGS_CLAY = FabricBlockSettings.of(Material.STONE, MapColor.ORANGE).strength(4.0f, 6.0f).sounds(BlockSoundGroup.STONE).requiresTool();
+    private static final FabricBlockSettings SETTINGS_SOIL = FabricBlockSettings.of(Material.SOIL, MapColor.DIRT_BROWN).strength(2.1f, 2.0f).sounds(BlockSoundGroup.GRAVEL);
+    private static final FabricBlockSettings SETTINGS_GRASSY = FabricBlockSettings.of(Material.SOLID_ORGANIC, MapColor.TERRACOTTA_GREEN).strength(2.5f, 2.0f).sounds(BlockSoundGroup.GRASS);
+    private static final FabricBlockSettings SETTINGS_SAND = FabricBlockSettings.of(Material.AGGREGATE, MapColor.PALE_YELLOW).strength(1.8f, 2.0f).sounds(BlockSoundGroup.SAND);
+    private static final FabricBlockSettings SETTINGS_STONE = FabricBlockSettings.of(Material.STONE, MapColor.DEEPSLATE_GRAY).strength(4.5f, 6.0f).requiresTool();
+    private static final FabricBlockSettings SETTINGS_PLANT = FabricBlockSettings.of(Material.REPLACEABLE_PLANT, MapColor.GREEN).strength(0.1f, 0f).sounds(BlockSoundGroup.GRASS).noCollision();
+    private static final FabricBlockSettings SETTINGS_LOG = FabricBlockSettings.of(Material.WOOD, MapColor.BROWN).strength(4.0f, 6.0f).sounds(BlockSoundGroup.WOOD).requiresTool();
+    private static final FabricBlockSettings SETTINGS_CLAY = FabricBlockSettings.of(Material.STONE, MapColor.ORANGE).strength(4.0f, 6.0f).sounds(BlockSoundGroup.STONE).requiresTool();
 
     // Terrain blocks
     public static final Block DIRT = registerBlock("dirt", new SemiSupportedBlock(SETTINGS_SOIL, 0.2f), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
@@ -47,10 +49,11 @@ public class PrimevalBlocks {
 
 
     // Plant blocks
-    public static final Block OAK_TRUNK = registerBlock("oak_trunk", new TrunkBlock(SETTINGS_LOG.nonOpaque()), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
+    public static final Block OAK_SAPLING = registerBlock("oak_sapling", new GrowingSaplingBlock(SETTINGS_PLANT.ticksRandomly(), OakTrunker.INSTANCE), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
+    public static final Block OAK_TRUNK = registerBlock("oak_trunk", new TrunkBlock(SETTINGS_LOG.nonOpaque(), OakTrunker.INSTANCE), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
     public static final Block OAK_LEAVES = registerBlock("oak_leaves", new LeafBlock(FabricBlockSettings.copyOf(Blocks.OAK_LEAVES)), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
-    public static final Block GRASS = registerBlock("grass", new GrowingGrassBlock(FabricBlockSettings.copyOf(Blocks.GRASS).ticksRandomly()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
-    public static final Block BUSH = registerBlock("bush", new PrimevalPlantBlock(FabricBlockSettings.copyOf(Blocks.GRASS)), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
+    public static final Block GRASS = registerBlock("grass", new GrowingGrassBlock(SETTINGS_PLANT.ticksRandomly()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
+    public static final Block BUSH = registerBlock("bush", new PrimevalPlantBlock(SETTINGS_PLANT), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
 
 
     // Ore blocks
@@ -99,7 +102,9 @@ public class PrimevalBlocks {
     public static final BlockEntityType<AshPileBlockEntity> ASH_PILE_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, PrimevalMain.getId("ash_pile_block_entity"), FabricBlockEntityTypeBuilder.create(AshPileBlockEntity::new, ASH_PILE).build());
 
 
-    public static void init() {}
+    public static void init() {
+        OakTrunker.INSTANCE.build();
+    }
 
 
     @Environment(EnvType.CLIENT)
@@ -108,6 +113,7 @@ public class PrimevalBlocks {
         BlockRenderLayerMap.INSTANCE.putBlock(GRASSY_DIRT, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(GRASS, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BUSH, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(OAK_SAPLING, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(OAK_LEAVES, RenderLayer.getCutout());
 
         // Color registry on items

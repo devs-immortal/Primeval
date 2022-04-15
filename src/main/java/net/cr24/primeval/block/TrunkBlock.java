@@ -1,8 +1,10 @@
 package net.cr24.primeval.block;
 
+import net.cr24.primeval.world.gen.trunker.AbstractTrunker;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.IntProperty;
@@ -12,7 +14,9 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 public class TrunkBlock extends Block {
     public static final BooleanProperty NORTH;
@@ -25,10 +29,13 @@ public class TrunkBlock extends Block {
     public static final BooleanProperty GROWN;
     public static final IntProperty AGE;
 
+    public final AbstractTrunker trunker;
     public static final HashMap<Direction, BooleanProperty> DIRECTION_MAP;
+    public static final Direction[] XZ_DIRECTIONS;
 
-    public TrunkBlock(Settings settings) {
+    public TrunkBlock(Settings settings, AbstractTrunker trunker) {
         super(settings);
+        this.trunker = trunker;
         this.setDefaultState(this.getDefaultState().with(NORTH, false));
         this.setDefaultState(this.getDefaultState().with(EAST, false));
         this.setDefaultState(this.getDefaultState().with(SOUTH, false));
@@ -36,8 +43,41 @@ public class TrunkBlock extends Block {
         this.setDefaultState(this.getDefaultState().with(UP, false));
         this.setDefaultState(this.getDefaultState().with(DOWN, false));
         this.setDefaultState(this.getDefaultState().with(SIZE, 3));
-        this.setDefaultState(this.getDefaultState().with(GROWN, true));
+        this.setDefaultState(this.getDefaultState().with(GROWN, false));
         this.setDefaultState(this.getDefaultState().with(AGE, 0));
+    }
+
+    @Override
+    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+        BlockState floor = world.getBlockState(pos.down());
+        if (state.get(AGE) == 0 && floor.isIn(PrimevalBlockTags.HEAVY_SOIL) || floor.isIn(PrimevalBlockTags.MEDIUM_SOIL)) return;
+        for (Direction d : DIRECTION_MAP.keySet()) {
+            if (
+                    state.get(DIRECTION_MAP.get(d)) &&
+                            world.getBlockState(pos.offset(d)).getBlock() instanceof TrunkBlock &&
+                            world.getBlockState(pos.offset(d)).get(AGE) < state.get(AGE)
+            ) return;
+        }
+        world.breakBlock(pos, true);
+    }
+
+    @Override
+    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
+        world.createAndScheduleBlockTick(pos, this, 2);
+    }
+
+    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+        ArrayList<Direction> dirs = new ArrayList<>();
+        for (Direction d : DIRECTION_MAP.keySet()) {
+            if (state.get(DIRECTION_MAP.get(d)) && world.getBlockState(pos.offset(d, 1)).getBlock() instanceof LeafBlock) {
+                dirs.add(d);
+            }
+        }
+        trunker.tickTrunk(state, world, pos, random, dirs.toArray(new Direction[dirs.size()]));
+    }
+
+    public boolean hasRandomTicks(BlockState state) {
+        return !state.get(GROWN);
     }
 
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
@@ -47,21 +87,7 @@ public class TrunkBlock extends Block {
 
     @Nullable
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        BlockPos blockPos = ctx.getBlockPos();
-        World world = ctx.getWorld();
-        BlockState state = this.getDefaultState();
-        if (world.getBlockState(blockPos.down()).isIn(PrimevalBlockTags.HEAVY_SOIL) || world.getBlockState(blockPos.down()).isIn(PrimevalBlockTags.MEDIUM_SOIL)) {
-            state = state.with(DOWN, true);
-        }
-        BlockState directionState;
-        for (Direction d : DIRECTION_MAP.keySet()) {
-            directionState = world.getBlockState(blockPos.offset(d));
-            if (directionState.getBlock() instanceof TrunkBlock) {
-                state = state.with(DIRECTION_MAP.get(d), true);
-                world.setBlockState(blockPos.offset(d), directionState.with(DIRECTION_MAP.get(d.getOpposite()), true));
-            }
-        }
-        return state;
+        return this.getDefaultState().with(SIZE, 0);
     }
 
     static {
@@ -82,5 +108,7 @@ public class TrunkBlock extends Block {
         DIRECTION_MAP.put(Direction.WEST, WEST);
         DIRECTION_MAP.put(Direction.UP, UP);
         DIRECTION_MAP.put(Direction.DOWN, DOWN);
+
+        XZ_DIRECTIONS = new Direction[] {Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST};
     }
 }
