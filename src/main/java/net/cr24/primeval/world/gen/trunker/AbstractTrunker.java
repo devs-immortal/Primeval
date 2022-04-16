@@ -1,11 +1,9 @@
 package net.cr24.primeval.world.gen.trunker;
 
-import net.cr24.primeval.block.PrimevalBlocks;
 import net.cr24.primeval.block.TrunkBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.LeavesBlock;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
@@ -49,7 +47,7 @@ public abstract class AbstractTrunker {
 
     protected void placeLeaves(World world, BlockPos pos, Direction growingFrom) {
         if (world.getBlockState(pos).isAir()) {
-            world.setBlockState(pos, leafBlockState.with(LeavesBlock.DISTANCE, 1));
+            world.setBlockState(pos, leafBlockState);
             world.setBlockState(pos.offset(growingFrom), world.getBlockState(pos.offset(growingFrom)).with(TrunkBlock.DIRECTION_MAP.get(growingFrom.getOpposite()), true));
         }
     }

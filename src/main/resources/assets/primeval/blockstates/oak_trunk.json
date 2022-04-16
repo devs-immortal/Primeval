@@ -22,7 +22,7 @@
         "north": "true"
       },
       "apply": {
-        "model": "primeval:block/oak_trunk_1_north"
+        "model": "primeval:block/oak_trunk_1_ns"
       }
     },
     {
@@ -31,7 +31,7 @@
         "east": "true"
       },
       "apply": {
-        "model": "primeval:block/oak_trunk_1_east"
+        "model": "primeval:block/oak_trunk_1_ew"
       }
     },
     {
@@ -40,7 +40,9 @@
         "south": "true"
       },
       "apply": {
-        "model": "primeval:block/oak_trunk_1_south"
+        "model": "primeval:block/oak_trunk_1_ns",
+        "y": 180,
+        "uvlock": true
       }
     },
     {
@@ -49,7 +51,9 @@
         "west": "true"
       },
       "apply": {
-        "model": "primeval:block/oak_trunk_1_west"
+        "model": "primeval:block/oak_trunk_1_ew",
+        "y": 180,
+        "uvlock": true
       }
     },
     {
@@ -85,7 +89,7 @@
         "north": "true"
       },
       "apply": {
-        "model": "primeval:block/oak_trunk_2_north"
+        "model": "primeval:block/oak_trunk_2_ns"
       }
     },
     {
@@ -94,7 +98,7 @@
         "east": "true"
       },
       "apply": {
-        "model": "primeval:block/oak_trunk_2_east"
+        "model": "primeval:block/oak_trunk_2_ew"
       }
     },
     {
@@ -103,7 +107,9 @@
         "south": "true"
       },
       "apply": {
-        "model": "primeval:block/oak_trunk_2_south"
+        "model": "primeval:block/oak_trunk_2_ns",
+        "y": 180,
+        "uvlock": true
       }
     },
     {
@@ -112,7 +118,9 @@
         "west": "true"
       },
       "apply": {
-        "model": "primeval:block/oak_trunk_2_west"
+        "model": "primeval:block/oak_trunk_2_ew",
+        "y": 180,
+        "uvlock": true
       }
     },
     {
@@ -148,7 +156,7 @@
         "north": "true"
       },
       "apply": {
-        "model": "primeval:block/oak_trunk_3_north"
+        "model": "primeval:block/oak_trunk_3_ns"
       }
     },
     {
@@ -157,7 +165,7 @@
         "east": "true"
       },
       "apply": {
-        "model": "primeval:block/oak_trunk_3_east"
+        "model": "primeval:block/oak_trunk_3_ew"
       }
     },
     {
@@ -166,7 +174,9 @@
         "south": "true"
       },
       "apply": {
-        "model": "primeval:block/oak_trunk_3_south"
+        "model": "primeval:block/oak_trunk_3_ns",
+        "y": 180,
+        "uvlock": true
       }
     },
     {
@@ -175,7 +185,9 @@
         "west": "true"
       },
       "apply": {
-        "model": "primeval:block/oak_trunk_3_west"
+        "model": "primeval:block/oak_trunk_3_ew",
+        "y": 180,
+        "uvlock": true
       }
     },
     {
