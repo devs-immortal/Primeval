@@ -65,8 +65,7 @@ public class VesselItem extends BundleItem implements IWeightedItem {
             int fluidAmount = fluidNbt.getInt("Amount");
             Pair<FluidVariant, Integer> fluidPair = new Pair<>(FluidVariant.fromNbt(fluidNbt), fluidAmount);
 
-            int amountInserted = ClayMoldItem.insertFluid(fluidPair, moldItemStack);
-
+            int amountInserted = ClayMoldItem.insertFluid(fluidPair, moldItemStack, player);
 
             fluidNbt.putInt("Amount", fluidAmount-amountInserted);
             nbt.put("Fluid", fluidNbt);

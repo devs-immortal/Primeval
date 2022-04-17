@@ -12,7 +12,6 @@ public class PrimevalRecipes {
     public static final RecipeSerializer<MeltingRecipe> MELTING_SERIALIZER;
     public static final RecipeType<AlloyingRecipe> ALLOYING;
     public static final RecipeSerializer<AlloyingRecipe> ALLOYING_SERIALIZER;
-    public static final RecipeType<ClayMoldCastingRecipe> CLAY_MOLD_CASTING;
     public static final RecipeSerializer<ClayMoldCastingRecipe> CLAY_MOLD_CASTING_SERIALIZER;
 
     static {
@@ -34,12 +33,7 @@ public class PrimevalRecipes {
         });
         ALLOYING_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, PrimevalMain.getId("alloying"), new AlloyingRecipe.Serializer());
 
-        CLAY_MOLD_CASTING = Registry.register(Registry.RECIPE_TYPE, PrimevalMain.getId("clay_mold_casting"), new RecipeType<ClayMoldCastingRecipe>() {
-            @Override
-            public String toString() {return "primeval:clay_mold_casting";}
-        });
         CLAY_MOLD_CASTING_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, PrimevalMain.getId("clay_mold_casting"), new ClayMoldCastingRecipe.Serializer());
-
     }
 
     public static void init() {}

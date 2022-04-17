@@ -1,32 +1,32 @@
 {
 	"parent": "minecraft:item/generated",
 	"textures": {
-		"layer0": "primeval:item/fired_clay_ingot_mold"
+		"layer0": "primeval:item/fired_clay_mold_ingot"
 	},
     "overrides": [
         {
             "predicate": {
                 "fluid": 0.01
             },
-            "model": "primeval:item/fired_clay_ingot_mold_copper"
+            "model": "primeval:item/fired_clay_mold_ingot_copper"
         },
         {
             "predicate": {
                 "fluid": 0.02
             },
-            "model": "primeval:item/fired_clay_ingot_mold_tin"
+            "model": "primeval:item/fired_clay_mold_ingot_tin"
         },
         {
             "predicate": {
                 "fluid": 0.03
             },
-            "model": "primeval:item/fired_clay_ingot_mold_bronze"
+            "model": "primeval:item/fired_clay_mold_ingot_bronze"
         },
         {
             "predicate": {
                 "fluid": 1.0
             },
-            "model": "primeval:item/fired_clay_ingot_mold_botched_alloy"
+            "model": "primeval:item/fired_clay_mold_ingot_botched_alloy"
         }
     ]
 }

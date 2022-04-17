@@ -1,6 +1,6 @@
 {
 	"parent": "minecraft:item/generated",
 	"textures": {
-		"layer0": "primeval:item/fired_clay_ingot_mold_bronze"
+		"layer0": "primeval:item/clay_mold_ingot"
 	}
 }

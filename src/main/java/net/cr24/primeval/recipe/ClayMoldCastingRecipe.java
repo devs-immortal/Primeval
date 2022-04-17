@@ -35,7 +35,6 @@ public class ClayMoldCastingRecipe implements CraftingRecipe {
 
     @Override
     public boolean matches(CraftingInventory inventory, World world) {
-
         ItemStack stack = null;
         for (int i = 0; i < inventory.size(); ++i) {
             ItemStack itemStack2 = inventory.getStack(i);
@@ -105,7 +104,7 @@ public class ClayMoldCastingRecipe implements CraftingRecipe {
     public DefaultedList<Ingredient> getIngredients() {
         DefaultedList<Ingredient> list = DefaultedList.of();
         ItemStack moldStack = new ItemStack(mold);
-        ClayMoldItem.insertFluid(new Pair<>(fluid, ((ClayMoldItem)mold).getCapacity()), moldStack);
+        ClayMoldItem.insertFluid(new Pair<>(fluid, ((ClayMoldItem)mold).getCapacity()), moldStack, null);
         list.add(Ingredient.ofStacks(moldStack));
         return list;
     }

@@ -1,7 +1,7 @@
 {
   "type": "primeval:clay_mold_casting",
   "input": {
-    "mold": "primeval:fired_clay_ingot_mold",
+    "mold": "primeval:fired_clay_mold_ingot",
     "fluid": "primeval:molten_botched_alloy"
   },
   "result": {

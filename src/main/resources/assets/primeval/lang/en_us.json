@@ -83,8 +83,8 @@
     "item.primeval.botched_alloy_ingot": "Botched Alloy Ingot",
     "item.primeval.botched_alloy_chunk": "Botched Alloy Chunk",
     
-    "item.primeval.clay_ingot_mold": "Clay Ingot Mold",
-    "item.primeval.fired_clay_ingot_mold": "Fired Clay Ingot Mold",
+    "item.primeval.clay_mold_ingot": "Clay Ingot Mold",
+    "item.primeval.fired_clay_mold_ingot": "Fired Clay Ingot Mold",
     
     "item.primeval.flint_knife": "Flint Knife",
     "item.primeval.flint_axe": "Flint Hatchet",

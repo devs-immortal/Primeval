@@ -82,10 +82,13 @@ public class PrimevalItems {
 
 
     // Molds
-    public static final Item CLAY_INGOT_MOLD = registerItem("clay_ingot_mold", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
-    public static final Item CLAY_AXE_HEAD_MOLD = registerItem("clay_axe_head_mold", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
-    public static final Item FIRED_CLAY_INGOT_MOLD = registerItem("fired_clay_ingot_mold", new ClayMoldItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM, 9000));
-    public static final Item FIRED_CLAY_AXE_HEAD_MOLD = registerItem("fired_clay_axe_head_mold", new ClayMoldItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM, 9000*3));
+    public static final Item CLAY_INGOT_MOLD = registerItem("clay_mold_ingot", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
+    public static final Item CLAY_PICKAXE_HEAD_MOLD = registerItem("clay_mold_pickaxe_head", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
+    public static final Item CLAY_AXE_HEAD_MOLD = registerItem("clay_mold_axe_head", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
+
+    public static final Item FIRED_CLAY_INGOT_MOLD = registerItem("fired_clay_mold_ingot", new ClayMoldItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM, 9000));
+    public static final Item FIRED_CLAY_PICKAXE_HEAD_MOLD = registerItem("fired_clay_mold_pickaxe_head", new ClayMoldItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM, 9000*3));
+    public static final Item FIRED_CLAY_AXE_HEAD_MOLD = registerItem("fired_clay_mold_axe_head", new ClayMoldItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM, 9000*3));
 
 
     // Tools

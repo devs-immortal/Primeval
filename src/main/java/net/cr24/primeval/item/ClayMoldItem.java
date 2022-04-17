@@ -1,13 +1,21 @@
 package net.cr24.primeval.item;
 
+import net.cr24.primeval.recipe.ClayMoldCastingRecipe;
+import net.cr24.primeval.recipe.PrimevalRecipes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.Fluid;
+import net.minecraft.inventory.CraftingInventory;
+import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.recipe.CraftingRecipe;
+import net.minecraft.recipe.RecipeType;
+import net.minecraft.screen.CraftingScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
@@ -18,6 +26,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ClayMoldItem extends WeightedItem {
 
@@ -42,8 +51,10 @@ public class ClayMoldItem extends WeightedItem {
      * Handle inserting fluid into a mold from a source
      * Return the amount of fluid inserted
      */
-    public static int insertFluid(Pair<FluidVariant, Integer> fluidPair, ItemStack mold) {
+    public static int insertFluid(Pair<FluidVariant, Integer> fluidPair, ItemStack mold, PlayerEntity player) {
+
         NbtCompound nbt = mold.getOrCreateNbt();
+        NbtCompound originalNbt = nbt.copy();
         FluidVariant incomingFluid = fluidPair.getLeft();
         int incomingAmount = fluidPair.getRight();
         int currentStoredAmount = 0;
@@ -66,7 +77,20 @@ public class ClayMoldItem extends WeightedItem {
         NbtCompound nbtF = fluidPair.getLeft().toNbt();
         nbtF.putInt("Amount", currentStoredAmount + amountToInsert);
         nbt.put("Fluid", nbtF);
+
         mold.setNbt(nbt);
+
+        if (player != null) {
+            World world = player.getWorld();
+            CraftingInventory recipeInventory = new CraftingInventory(new CraftingScreenHandler(0, player.getInventory()), 2, 2);
+            recipeInventory.setStack(0, mold);
+            Optional<CraftingRecipe> recipe = world.getRecipeManager().getFirstMatch(RecipeType.CRAFTING, recipeInventory, world);
+            if (!recipe.isPresent()) {
+                mold.setNbt(originalNbt);
+                return 0;
+            }
+        }
+
         return amountToInsert;
     }
 
