@@ -86,7 +86,6 @@ public class PrimevalItems {
     public static final Item FIRED_CLAY_INGOT_MOLD = registerItem("fired_clay_ingot_mold", new ClayMoldItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM, "ingot"));
 
 
-
     // Tools
     public static final Item FLINT_KNIFE = registerItem("flint_knife", new PrimevalSwordItem(PrimevalToolMaterials.FLINT, (int) PrimevalToolMaterials.FLINT.getAttackDamage(), -3.0f, GROUP_TOOLS, Weight.HEAVY, Size.LARGE));
     public static final Item FLINT_AXE = registerItem("flint_axe", new PrimevalAxeItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.FLINT.getAttackDamage(), -3.0f, GROUP_TOOLS, Weight.HEAVY, Size.LARGE));

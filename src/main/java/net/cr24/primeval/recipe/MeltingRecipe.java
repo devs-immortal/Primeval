@@ -1,9 +1,7 @@
 package net.cr24.primeval.recipe;
 
 import com.google.gson.JsonObject;
-import net.cr24.primeval.fluid.PrimevalFluids;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
-import net.fabricmc.fabric.impl.transfer.fluid.FluidVariantImpl;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
@@ -14,8 +12,6 @@ import net.minecraft.util.Pair;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
-
-import java.util.Collections;
 
 public class MeltingRecipe implements Recipe<Inventory> {
 

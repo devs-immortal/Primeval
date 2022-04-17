@@ -1,18 +1,10 @@
 package net.cr24.primeval.recipe;
 
 import net.cr24.primeval.PrimevalMain;
-import net.cr24.primeval.fluid.PrimevalFluids;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.recipe.ArmorDyeRecipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.SpecialRecipeSerializer;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Pair;
 import net.minecraft.util.registry.Registry;
-
-import java.util.HashMap;
-
 public class PrimevalRecipes {
 
     public static final RecipeType<PitKilnFiringRecipe> PIT_KILN_FIRING;
