@@ -8,8 +8,12 @@
     "block.primeval.cobblestone": "Cobblestone",
     "block.primeval.stone": "Stone",
     
+    "block.primeval.oak_sapling": "Oak Sapling",
     "block.primeval.oak_log": "Oak Log",
     "block.primeval.oak_leaves": "Oak Leaves",
+    "block.primeval.birch_sapling": "Birch Sapling",
+    "block.primeval.birch_log": "Birch Log",
+    "block.primeval.birch_leaves": "Birch Leaves",
     "block.primeval.grass": "Grass",
     "block.primeval.bush": "Bush",
     

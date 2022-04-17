@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "primeval:item/oak_log"
+    "layer0": "primeval:item/birch_log"
   }
 }

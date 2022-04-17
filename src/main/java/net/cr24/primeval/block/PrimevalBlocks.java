@@ -7,6 +7,7 @@ import net.cr24.primeval.item.Size;
 import net.cr24.primeval.item.Weight;
 import net.cr24.primeval.item.WeightedBlockItem;
 import net.cr24.primeval.world.gen.trunker.AbstractTrunker;
+import net.cr24.primeval.world.gen.trunker.BirchTrunker;
 import net.cr24.primeval.world.gen.trunker.OakTrunker;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -48,11 +49,18 @@ public class PrimevalBlocks {
     public static final Block STONE = registerBlock("stone", new CascadingBlock(SETTINGS_STONE, 0.35f, COBBLESTONE), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
 
 
-    // Plant blocks
+    //// Plant blocks
+    // Oak Trees
     public static final Block OAK_SAPLING = registerBlock("oak_sapling", new GrowingSaplingBlock(SETTINGS_PLANT.ticksRandomly(), OakTrunker.INSTANCE), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
     public static final Block OAK_LOG = registerBlock("oak_log", new PillarBlock(SETTINGS_LOG), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
     public static final Block OAK_TRUNK = registerBlockWithoutItem("oak_trunk", new TrunkBlock(SETTINGS_LOG.nonOpaque(), OakTrunker.INSTANCE));
     public static final Block OAK_LEAVES = registerBlockWithoutItem("oak_leaves", new LeafBlock(FabricBlockSettings.copyOf(Blocks.OAK_LEAVES)));
+    // Birch Trees
+    public static final Block BIRCH_SAPLING = registerBlock("birch_sapling", new GrowingSaplingBlock(SETTINGS_PLANT.ticksRandomly(), BirchTrunker.INSTANCE), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
+    public static final Block BIRCH_LOG = registerBlock("birch_log", new PillarBlock(SETTINGS_LOG), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
+    public static final Block BIRCH_TRUNK = registerBlockWithoutItem("birch_trunk", new TrunkBlock(SETTINGS_LOG.nonOpaque(), BirchTrunker.INSTANCE));
+    public static final Block BIRCH_LEAVES = registerBlockWithoutItem("birch_leaves", new LeafBlock(FabricBlockSettings.copyOf(Blocks.OAK_LEAVES)));
+
     public static final Block GRASS = registerBlock("grass", new GrowingGrassBlock(SETTINGS_PLANT.ticksRandomly()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
     public static final Block BUSH = registerBlock("bush", new PrimevalPlantBlock(SETTINGS_PLANT), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
 
@@ -105,6 +113,7 @@ public class PrimevalBlocks {
 
     public static void init() {
         OakTrunker.INSTANCE.build();
+        BirchTrunker.INSTANCE.build();
     }
 
 
@@ -116,12 +125,13 @@ public class PrimevalBlocks {
         BlockRenderLayerMap.INSTANCE.putBlock(BUSH, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(OAK_SAPLING, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(OAK_LEAVES, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BIRCH_SAPLING, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BIRCH_LEAVES, RenderLayer.getCutout());
 
         // Color registry on items
         ColorProviderRegistry.ITEM.register((stack, tintIndex) -> 0x91BD59, GRASSY_DIRT.asItem());
         ColorProviderRegistry.ITEM.register((stack, tintIndex) -> 0x91BD59, GRASS.asItem());
         ColorProviderRegistry.ITEM.register((stack, tintIndex) -> 0x91BD59, BUSH.asItem());
-        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> 0x91BD59, OAK_LEAVES.asItem());
 
         // Block Renderers
         BlockEntityRendererRegistry.register(PIT_KILN_BLOCK_ENTITY, PitKilnBlockEntityRenderer::new);

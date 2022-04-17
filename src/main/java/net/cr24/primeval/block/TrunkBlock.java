@@ -99,7 +99,7 @@ public class TrunkBlock extends Block {
         DOWN = BooleanProperty.of("down");
         SIZE = IntProperty.of("size", 0, 3);
         GROWN = BooleanProperty.of("grown");
-        AGE = IntProperty.of("age", 0, 16);
+        AGE = IntProperty.of("age", 0, 24);
 
         DIRECTION_MAP = new HashMap<>();
         DIRECTION_MAP.put(Direction.NORTH, NORTH);

@@ -5,7 +5,7 @@
         "size": 0
       },
       "apply": {
-        "model": "primeval:block/oak_trunk_0"
+        "model": "primeval:block/birch_trunk_0"
       }
     },
     {
@@ -13,7 +13,7 @@
         "size": 1
       },
       "apply": {
-        "model": "primeval:block/oak_trunk_1_core"
+        "model": "primeval:block/birch_trunk_1_core"
       }
     },
     {
@@ -22,7 +22,7 @@
         "north": "true"
       },
       "apply": {
-        "model": "primeval:block/oak_trunk_1_ns"
+        "model": "primeval:block/birch_trunk_1_ns"
       }
     },
     {
@@ -31,7 +31,7 @@
         "east": "true"
       },
       "apply": {
-        "model": "primeval:block/oak_trunk_1_ew"
+        "model": "primeval:block/birch_trunk_1_ew"
       }
     },
     {
@@ -40,7 +40,7 @@
         "south": "true"
       },
       "apply": {
-        "model": "primeval:block/oak_trunk_1_ns",
+        "model": "primeval:block/birch_trunk_1_ns",
         "y": 180,
         "uvlock": true
       }
@@ -51,7 +51,7 @@
         "west": "true"
       },
       "apply": {
-        "model": "primeval:block/oak_trunk_1_ew",
+        "model": "primeval:block/birch_trunk_1_ew",
         "y": 180,
         "uvlock": true
       }
@@ -62,7 +62,7 @@
         "up": "true"
       },
       "apply": {
-        "model": "primeval:block/oak_trunk_1_ud"
+        "model": "primeval:block/birch_trunk_1_ud"
       }
     },
     {
@@ -71,7 +71,7 @@
         "down": "true"
       },
       "apply": {
-        "model": "primeval:block/oak_trunk_1_ud",
+        "model": "primeval:block/birch_trunk_1_ud",
         "x": 180,
         "uvlock": true
       }
@@ -82,7 +82,7 @@
         "size": 2
       },
       "apply": {
-        "model": "primeval:block/oak_trunk_2_core"
+        "model": "primeval:block/birch_trunk_2_core"
       }
     },
     {
@@ -91,7 +91,7 @@
         "north": "true"
       },
       "apply": {
-        "model": "primeval:block/oak_trunk_2_ns"
+        "model": "primeval:block/birch_trunk_2_ns"
       }
     },
     {
@@ -100,7 +100,7 @@
         "east": "true"
       },
       "apply": {
-        "model": "primeval:block/oak_trunk_2_ew"
+        "model": "primeval:block/birch_trunk_2_ew"
       }
     },
     {
@@ -109,7 +109,7 @@
         "south": "true"
       },
       "apply": {
-        "model": "primeval:block/oak_trunk_2_ns",
+        "model": "primeval:block/birch_trunk_2_ns",
         "y": 180,
         "uvlock": true
       }
@@ -120,7 +120,7 @@
         "west": "true"
       },
       "apply": {
-        "model": "primeval:block/oak_trunk_2_ew",
+        "model": "primeval:block/birch_trunk_2_ew",
         "y": 180,
         "uvlock": true
       }
@@ -131,7 +131,7 @@
         "up": "true"
       },
       "apply": {
-        "model": "primeval:block/oak_trunk_2_ud"
+        "model": "primeval:block/birch_trunk_2_ud"
       }
     },
     {
@@ -140,7 +140,7 @@
         "down": "true"
       },
       "apply": {
-        "model": "primeval:block/oak_trunk_2_ud",
+        "model": "primeval:block/birch_trunk_2_ud",
         "x": 180,
         "uvlock": true
       }
@@ -151,7 +151,7 @@
         "size": 3
       },
       "apply": {
-        "model": "primeval:block/oak_trunk_3_core"
+        "model": "primeval:block/birch_trunk_3_core"
       }
     },
     {
@@ -160,7 +160,7 @@
         "north": "true"
       },
       "apply": {
-        "model": "primeval:block/oak_trunk_3_ns"
+        "model": "primeval:block/birch_trunk_3_ns"
       }
     },
     {
@@ -169,7 +169,7 @@
         "east": "true"
       },
       "apply": {
-        "model": "primeval:block/oak_trunk_3_ew"
+        "model": "primeval:block/birch_trunk_3_ew"
       }
     },
     {
@@ -178,7 +178,7 @@
         "south": "true"
       },
       "apply": {
-        "model": "primeval:block/oak_trunk_3_ns",
+        "model": "primeval:block/birch_trunk_3_ns",
         "y": 180,
         "uvlock": true
       }
@@ -189,7 +189,7 @@
         "west": "true"
       },
       "apply": {
-        "model": "primeval:block/oak_trunk_3_ew",
+        "model": "primeval:block/birch_trunk_3_ew",
         "y": 180,
         "uvlock": true
       }
@@ -200,7 +200,7 @@
         "up": "true"
       },
       "apply": {
-        "model": "primeval:block/oak_trunk_3_ud"
+        "model": "primeval:block/birch_trunk_3_ud"
       }
     },
     {
@@ -209,7 +209,7 @@
         "down": "true"
       },
       "apply": {
-        "model": "primeval:block/oak_trunk_3_ud",
+        "model": "primeval:block/birch_trunk_3_ud",
         "x": 180,
         "uvlock": true
       }
