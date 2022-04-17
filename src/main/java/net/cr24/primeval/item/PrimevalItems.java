@@ -100,9 +100,6 @@ public class PrimevalItems {
     @Environment(EnvType.CLIENT)
     public static void initClient() {
         FabricModelPredicateProviderRegistry.register(FIRED_CLAY_INGOT_MOLD, new Identifier("fluid"), (itemStack, clientWorld, livingEntity, var4) -> {
-//            if (livingEntity == null) {
-//                return 0.0F;
-//            }
             NbtCompound nbt = itemStack.getOrCreateNbt();
             NbtCompound fluidNbt = nbt.getCompound("Fluid");
             int fluidAmount = fluidNbt.getInt("Amount");
