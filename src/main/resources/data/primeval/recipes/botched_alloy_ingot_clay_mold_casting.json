@@ -2,9 +2,9 @@
   "type": "primeval:clay_mold_casting",
   "input": {
     "mold": "primeval:fired_clay_ingot_mold",
-    "fluid": "primeval:molten_copper"
+    "fluid": "primeval:molten_botched_alloy"
   },
   "result": {
-    "item": "primeval:copper_ingot"
+    "item": "primeval:botched_alloy_ingot"
   }
 }

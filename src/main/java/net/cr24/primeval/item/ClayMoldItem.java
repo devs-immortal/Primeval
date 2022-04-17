@@ -6,12 +6,8 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.DyeableArmorItem;
-import net.minecraft.item.DyeableHorseArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.recipe.ArmorDyeRecipe;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
@@ -73,10 +69,6 @@ public class ClayMoldItem extends WeightedItem {
         nbt.put("Fluid", nbtF);
         mold.setNbt(nbt);
         return amountToInsert;
-    }
-
-    public String getPostfix() {
-        return this.postfix;
     }
 
     @Environment(EnvType.CLIENT)

@@ -23,7 +23,7 @@ public class PitKilnFiringRecipe extends SimpleOneToOneRecipe {
 
     @Override
     public ItemStack getOutput() {
-        return this.result;
+        return this.result.copy();
     }
 
     @Override
