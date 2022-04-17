@@ -83,7 +83,9 @@ public class PrimevalItems {
 
     // Molds
     public static final Item CLAY_INGOT_MOLD = registerItem("clay_ingot_mold", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
-    public static final Item FIRED_CLAY_INGOT_MOLD = registerItem("fired_clay_ingot_mold", new ClayMoldItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
+    public static final Item CLAY_AXE_HEAD_MOLD = registerItem("clay_axe_head_mold", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
+    public static final Item FIRED_CLAY_INGOT_MOLD = registerItem("fired_clay_ingot_mold", new ClayMoldItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM, 9000));
+    public static final Item FIRED_CLAY_AXE_HEAD_MOLD = registerItem("fired_clay_axe_head_mold", new ClayMoldItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM, 9000*3));
 
 
     // Tools
@@ -103,7 +105,7 @@ public class PrimevalItems {
             NbtCompound nbt = itemStack.getOrCreateNbt();
             NbtCompound fluidNbt = nbt.getCompound("Fluid");
             int fluidAmount = fluidNbt.getInt("Amount");
-            if (fluidAmount == ClayMoldItem.CAPACITY) {
+            if (fluidAmount == ((ClayMoldItem)itemStack.getItem()).getCapacity()) {
                 FluidVariant variant = FluidVariant.fromNbt(fluidNbt);
                 return PrimevalFluidUtil.fluidToIntegerId(variant.getFluid());
             }

@@ -21,11 +21,12 @@ import java.util.List;
 
 public class ClayMoldItem extends WeightedItem {
 
-    public static int CAPACITY = (int) FluidConstants.INGOT;
+    public int capacity;
     private static int MAX_INSERTION_AMOUNT = 9000;
 
-    public ClayMoldItem(Settings settings, Weight weight, Size size) {
+    public ClayMoldItem(Settings settings, Weight weight, Size size, int capacity) {
         super(settings, weight, size, 1);
+        this.capacity = capacity;
     }
 
     public boolean onStackClicked(ItemStack stack, Slot slot, ClickType clickType, PlayerEntity player) {
@@ -59,7 +60,7 @@ public class ClayMoldItem extends WeightedItem {
             }
         }
         // if not already storing, or we pass the tests above, insert 1000dp of fluid
-        int remainingCapacity = CAPACITY - currentStoredAmount;
+        int remainingCapacity = ((ClayMoldItem)mold.getItem()).getCapacity() - currentStoredAmount;
         int amountToInsert = Math.min(remainingCapacity, Math.min(incomingAmount, MAX_INSERTION_AMOUNT));
         // build new nbt for mold item
         NbtCompound nbtF = fluidPair.getLeft().toNbt();
@@ -67,6 +68,10 @@ public class ClayMoldItem extends WeightedItem {
         nbt.put("Fluid", nbtF);
         mold.setNbt(nbt);
         return amountToInsert;
+    }
+
+    public int getCapacity() {
+        return this.capacity;
     }
 
     @Environment(EnvType.CLIENT)

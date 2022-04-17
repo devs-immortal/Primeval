@@ -1,12 +1,14 @@
 package net.cr24.primeval.fluid;
 
 import net.cr24.primeval.block.PrimevalBlocks;
+import net.cr24.primeval.item.PrimevalItems;
 import net.minecraft.block.*;
 import net.minecraft.fluid.*;
+import net.minecraft.item.Item;
 import net.minecraft.world.*;
 
 
-abstract class StillMoltenMetalFluid extends LavaFluid implements PrefixedFluid {
+abstract class StillMoltenMetalFluid extends LavaFluid implements FallbackFluid {
 
     public Fluid getFlowing() {
         return Fluids.FLOWING_LAVA; // No flowing metals because I'm lazy
@@ -46,8 +48,8 @@ abstract class StillMoltenMetalFluid extends LavaFluid implements PrefixedFluid 
             return PrimevalBlocks.MOLTEN_COPPER.getDefaultState().with(FluidBlock.LEVEL, getBlockStateLevel(state));
         }
 
-        public String getPrefix() {
-            return "copper";
+        public Item getFallbackItem() {
+            return PrimevalItems.COPPER_CHUNK;
         }
     }
 
@@ -61,8 +63,8 @@ abstract class StillMoltenMetalFluid extends LavaFluid implements PrefixedFluid 
             return PrimevalBlocks.MOLTEN_TIN.getDefaultState().with(FluidBlock.LEVEL, getBlockStateLevel(state));
         }
 
-        public String getPrefix() {
-            return "tin";
+        public Item getFallbackItem() {
+            return PrimevalItems.TIN_CHUNK;
         }
     }
 
@@ -76,8 +78,8 @@ abstract class StillMoltenMetalFluid extends LavaFluid implements PrefixedFluid 
             return PrimevalBlocks.MOLTEN_BRONZE.getDefaultState().with(FluidBlock.LEVEL, getBlockStateLevel(state));
         }
 
-        public String getPrefix() {
-            return "bronze";
+        public Item getFallbackItem() {
+            return PrimevalItems.BRONZE_CHUNK;
         }
     }
 
@@ -91,8 +93,8 @@ abstract class StillMoltenMetalFluid extends LavaFluid implements PrefixedFluid 
             return PrimevalBlocks.MOLTEN_BOTCHED_ALLOY.getDefaultState().with(FluidBlock.LEVEL, getBlockStateLevel(state));
         }
 
-        public String getPrefix() {
-            return "botched_alloy";
+        public Item getFallbackItem() {
+            return PrimevalItems.BOTCHED_ALLOY_CHUNK;
         }
     }
 

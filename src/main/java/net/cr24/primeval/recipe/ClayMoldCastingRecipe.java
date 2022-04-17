@@ -1,8 +1,10 @@
 package net.cr24.primeval.recipe;
 
 import com.google.gson.JsonObject;
+import net.cr24.primeval.fluid.FallbackFluid;
 import net.cr24.primeval.item.ClayMoldItem;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -52,14 +54,10 @@ public class ClayMoldCastingRecipe implements CraftingRecipe {
         Item moldItem = stack.getItem();
         FluidVariant moldFluid = FluidVariant.fromNbt(fluidNbt);
         int moldFluidAmount = fluidNbt.getInt("Amount");
-        System.out.println("moldFluidAmount: "+moldFluidAmount);
-        if (moldFluidAmount != 9000) return false;
+
+        if (moldFluidAmount < 1000) return false;
         if (moldItem != mold) return false;
-        System.out.print("moldItem: "+moldItem + " =");
-        System.out.println("mold: "+mold);
         if (moldFluid != fluid) return false;
-        System.out.print("moldFluid: "+moldFluid + " =");
-        System.out.println("fluid: "+fluid);
         return true;
     }
 
@@ -78,7 +76,19 @@ public class ClayMoldCastingRecipe implements CraftingRecipe {
         }
         if (moldStack.isEmpty()) return ItemStack.EMPTY;
 
-        return result.copy();
+        NbtCompound nbt = moldStack.getOrCreateNbt();
+        NbtCompound fluidNbt = nbt.getCompound("Fluid");
+        ClayMoldItem moldItem = (ClayMoldItem) moldStack.getItem();
+        Fluid moldFluid = FluidVariant.fromNbt(fluidNbt).getFluid();
+        int moldFluidAmount = fluidNbt.getInt("Amount");
+
+        if (moldFluidAmount == moldItem.getCapacity()) {
+            return result.copy();
+        } else if (moldFluid instanceof FallbackFluid) {
+            return new ItemStack(((FallbackFluid) moldFluid).getFallbackItem(), moldFluidAmount / 1000);
+        } else {
+            return ItemStack.EMPTY;
+        }
     }
 
     @Override
@@ -95,17 +105,13 @@ public class ClayMoldCastingRecipe implements CraftingRecipe {
     public DefaultedList<Ingredient> getIngredients() {
         DefaultedList<Ingredient> list = DefaultedList.of();
         ItemStack moldStack = new ItemStack(mold);
-        ClayMoldItem.insertFluid(new Pair<>(fluid, 9000), moldStack);
+        ClayMoldItem.insertFluid(new Pair<>(fluid, ((ClayMoldItem)mold).getCapacity()), moldStack);
         list.add(Ingredient.ofStacks(moldStack));
         return list;
     }
 
     public FluidVariant getFluid() {
         return this.fluid;
-    }
-
-    public Ingredient getOutputItem() {
-        return Ingredient.ofItems(result.getItem());
     }
 
     @Override
