@@ -8,6 +8,5 @@ public class PrimevalREIIntegration {
     public static final CategoryIdentifier<PitKilnFiringDisplay> PIT_KILN_FIRING = CategoryIdentifier.of(PrimevalMain.getId("pit_kiln_firing"));
     public static final CategoryIdentifier<MeltingDisplay> MELTING = CategoryIdentifier.of(PrimevalMain.getId("melting"));
     public static final CategoryIdentifier<AlloyingDisplay> ALLOYING = CategoryIdentifier.of(PrimevalMain.getId("alloying"));
-    public static final CategoryIdentifier<ClayMoldCastingDisplay> CLAY_MOLD_CASTING = CategoryIdentifier.of(PrimevalMain.getId("clay_mold_casting"));
 
 }

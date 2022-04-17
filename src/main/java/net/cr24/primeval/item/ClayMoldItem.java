@@ -23,11 +23,9 @@ public class ClayMoldItem extends WeightedItem {
 
     public static int CAPACITY = (int) FluidConstants.INGOT;
     private static int MAX_INSERTION_AMOUNT = 9000;
-    private final String postfix;
 
-    public ClayMoldItem(Settings settings, Weight weight, Size size, String postfix) {
+    public ClayMoldItem(Settings settings, Weight weight, Size size) {
         super(settings, weight, size, 1);
-        this.postfix = postfix;
     }
 
     public boolean onStackClicked(ItemStack stack, Slot slot, ClickType clickType, PlayerEntity player) {
