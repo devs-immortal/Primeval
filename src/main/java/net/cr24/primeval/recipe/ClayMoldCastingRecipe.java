@@ -104,8 +104,13 @@ public class ClayMoldCastingRecipe implements CraftingRecipe {
     public DefaultedList<Ingredient> getIngredients() {
         DefaultedList<Ingredient> list = DefaultedList.of();
         ItemStack moldStack = new ItemStack(mold);
-        ClayMoldItem.insertFluid(new Pair<>(fluid, ((ClayMoldItem)mold).getCapacity()), moldStack, null);
-        list.add(Ingredient.ofStacks(moldStack));
+        NbtCompound nbt = moldStack.getOrCreateNbt().copy();
+        NbtCompound nbtF = fluid.toNbt();
+        nbtF.putInt("Amount", ((ClayMoldItem) mold).getCapacity());
+        nbt.put("Fluid", nbtF);
+        ItemStack stackCopy = moldStack.copy();
+        stackCopy.setNbt(nbt);
+        list.add(Ingredient.ofStacks(stackCopy));
         return list;
     }
 

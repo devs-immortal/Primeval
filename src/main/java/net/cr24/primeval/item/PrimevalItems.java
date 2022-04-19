@@ -16,6 +16,10 @@ import net.minecraft.item.*;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static net.cr24.primeval.block.PrimevalBlocks.*;
 
 @SuppressWarnings("unused")
@@ -70,53 +74,88 @@ public class PrimevalItems {
 
     // Metal Items
     // Primary
-    public static final Item COPPER_INGOT = registerItem("copper_ingot", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
+    public static final Item COPPER_INGOT = registerItem("copper_ingot", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
     public static final Item COPPER_CHUNK = registerItem("copper_chunk", new WeightedItem(GROUP_ITEMS, Weight.LIGHT, Size.SMALL));
-    public static final Item TIN_INGOT = registerItem("tin_ingot", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
+    public static final Item TIN_INGOT = registerItem("tin_ingot", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
     public static final Item TIN_CHUNK = registerItem("tin_chunk", new WeightedItem(GROUP_ITEMS, Weight.LIGHT, Size.SMALL));
     // Alloys
-    public static final Item BRONZE_INGOT = registerItem("bronze_ingot", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
+    public static final Item BRONZE_INGOT = registerItem("bronze_ingot", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
     public static final Item BRONZE_CHUNK = registerItem("bronze_chunk", new WeightedItem(GROUP_ITEMS, Weight.LIGHT, Size.SMALL));
-    public static final Item BOTCHED_ALLOY_INGOT = registerItem("botched_alloy_ingot", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
+    public static final Item BOTCHED_ALLOY_INGOT = registerItem("botched_alloy_ingot", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
     public static final Item BOTCHED_ALLOY_CHUNK = registerItem("botched_alloy_chunk", new WeightedItem(GROUP_ITEMS, Weight.LIGHT, Size.SMALL));
+    // Tool Parts
+    public static final Item COPPER_AXE_HEAD = registerItem("copper_axe_head", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
+    public static final Item COPPER_CHISEL_HEAD = registerItem("copper_chisel_head", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
+    public static final Item COPPER_KNIFE_BLADE = registerItem("copper_knife_blade", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
+    public static final Item COPPER_PICKAXE_HEAD = registerItem("copper_pickaxe_head", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
+    public static final Item COPPER_SHOVEL_HEAD = registerItem("copper_shovel_head", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
+    public static final Item COPPER_SWORD_BLADE = registerItem("copper_sword_blade", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
+
+    public static final Item BRONZE_AXE_HEAD = registerItem("bronze_axe_head", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
+    public static final Item BRONZE_CHISEL_HEAD = registerItem("bronze_chisel_head", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
+    public static final Item BRONZE_KNIFE_BLADE = registerItem("bronze_knife_blade", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
+    public static final Item BRONZE_PICKAXE_HEAD = registerItem("bronze_pickaxe_head", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
+    public static final Item BRONZE_SHOVEL_HEAD = registerItem("bronze_shovel_head", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
+    public static final Item BRONZE_SWORD_BLADE = registerItem("bronze_sword_blade", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
 
 
     // Molds
     public static final Item CLAY_INGOT_MOLD = registerItem("clay_mold_ingot", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
-    public static final Item CLAY_PICKAXE_HEAD_MOLD = registerItem("clay_mold_pickaxe_head", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
     public static final Item CLAY_AXE_HEAD_MOLD = registerItem("clay_mold_axe_head", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
+    public static final Item CLAY_CHISEL_HEAD_MOLD = registerItem("clay_mold_chisel_head", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
+    public static final Item CLAY_KNIFE_BLADE_MOLD = registerItem("clay_mold_knife_blade", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
+    public static final Item CLAY_PICKAXE_HEAD_MOLD = registerItem("clay_mold_pickaxe_head", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
+    public static final Item CLAY_SHOVEL_HEAD_MOLD = registerItem("clay_mold_shovel_head", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
+    public static final Item CLAY_SWORD_BLADE_MOLD = registerItem("clay_mold_sword_blade", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
 
-    public static final Item FIRED_CLAY_INGOT_MOLD = registerItem("fired_clay_mold_ingot", new ClayMoldItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM, 9000));
-    public static final Item FIRED_CLAY_PICKAXE_HEAD_MOLD = registerItem("fired_clay_mold_pickaxe_head", new ClayMoldItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM, 9000*3));
-    public static final Item FIRED_CLAY_AXE_HEAD_MOLD = registerItem("fired_clay_mold_axe_head", new ClayMoldItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM, 9000*3));
+    public static final List<Item> FIRED_MOLDS = new ArrayList<>();
+    public static final Item FIRED_CLAY_INGOT_MOLD = registerMoldItem("fired_clay_mold_ingot", new ClayMoldItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM, 9000));
+    public static final Item FIRED_CLAY_AXE_HEAD_MOLD = registerMoldItem("fired_clay_mold_axe_head", new ClayMoldItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM, 9000*3));
+    public static final Item FIRED_CLAY_CHISEL_HEAD_MOLD = registerMoldItem("fired_clay_mold_chisel_head", new ClayMoldItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM, 9000*2));
+    public static final Item FIRED_CLAY_KNIFE_BLADE_MOLD = registerMoldItem("fired_clay_mold_knife_blade", new ClayMoldItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM, 9000*2));
+    public static final Item FIRED_CLAY_PICKAXE_HEAD_MOLD = registerMoldItem("fired_clay_mold_pickaxe_head", new ClayMoldItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM, 9000*3));
+    public static final Item FIRED_CLAY_SHOVEL_HEAD_MOLD = registerMoldItem("fired_clay_mold_shovel_head", new ClayMoldItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM, 9000*1));
+    public static final Item FIRED_CLAY_SWORD_BLADE_MOLD = registerMoldItem("fired_clay_mold_sword_blade", new ClayMoldItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM, 9000*2));
 
-
-    // Tools
-    public static final Item FLINT_KNIFE = registerItem("flint_knife", new PrimevalSwordItem(PrimevalToolMaterials.FLINT, (int) PrimevalToolMaterials.FLINT.getAttackDamage(), -3.0f, GROUP_TOOLS, Weight.HEAVY, Size.LARGE));
-    public static final Item FLINT_AXE = registerItem("flint_axe", new PrimevalAxeItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.FLINT.getAttackDamage(), -3.0f, GROUP_TOOLS, Weight.HEAVY, Size.LARGE));
-    public static final Item FLINT_SHOVEL = registerItem("flint_shovel", new PrimevalShovelItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.FLINT.getAttackDamage(), -3.0f, GROUP_TOOLS, Weight.HEAVY, Size.LARGE));
 
     // Utility items
     public static final Item FIRED_CLAY_JUG = registerItem("fired_clay_jug", new JugItem(GROUP_TOOLS.maxDamage(0), Weight.NORMAL, Size.LARGE));
     public static final Item FIRED_CLAY_VESSEL = registerItem("fired_clay_vessel", new VesselItem(GROUP_TOOLS, Weight.NORMAL, Size.LARGE));
 
+
+    // Tools
+    public static final Item FLINT_KNIFE = registerItem("flint_knife", new PrimevalSwordItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.FLINT.getAttackDamage()*PrimevalToolMaterials.KNIFE_DAMAGE_MULTIPLIER, -3.0f, GROUP_TOOLS, Weight.HEAVY, Size.LARGE));
+    public static final Item FLINT_AXE = registerItem("flint_axe", new PrimevalAxeItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.FLINT.getAttackDamage(), -3.0f, GROUP_TOOLS, Weight.HEAVY, Size.LARGE));
+    public static final Item FLINT_SHOVEL = registerItem("flint_shovel", new PrimevalShovelItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.FLINT.getAttackDamage()*PrimevalToolMaterials.BLUNT_DAMAGE_MULTIPLIER, -3.0f, GROUP_TOOLS, Weight.HEAVY, Size.LARGE));
+
+
+
+    private static Item registerItem(String id, Item item) {
+        return Registry.register(Registry.ITEM, PrimevalMain.getId(id), item);
+    }
+
+    private static Item registerMoldItem(String id, Item item) {
+        Item registered = registerItem(id, item);
+        FIRED_MOLDS.add(registered);
+        return registered;
+    }
+
+
     public static void init() {}
 
     @Environment(EnvType.CLIENT)
     public static void initClient() {
-        FabricModelPredicateProviderRegistry.register(FIRED_CLAY_INGOT_MOLD, new Identifier("fluid"), (itemStack, clientWorld, livingEntity, var4) -> {
-            NbtCompound nbt = itemStack.getOrCreateNbt();
-            NbtCompound fluidNbt = nbt.getCompound("Fluid");
-            int fluidAmount = fluidNbt.getInt("Amount");
-            if (fluidAmount == ((ClayMoldItem)itemStack.getItem()).getCapacity()) {
-                FluidVariant variant = FluidVariant.fromNbt(fluidNbt);
-                return PrimevalFluidUtil.fluidToIntegerId(variant.getFluid());
-            }
-            return 0;
-        });
-    }
-
-    private static Item registerItem(String id, Item item) {
-        return Registry.register(Registry.ITEM, PrimevalMain.getId(id), item);
+        for (Item item : FIRED_MOLDS) {
+            FabricModelPredicateProviderRegistry.register(item, new Identifier("fluid"), (itemStack, clientWorld, livingEntity, var4) -> {
+                NbtCompound nbt = itemStack.getOrCreateNbt();
+                NbtCompound fluidNbt = nbt.getCompound("Fluid");
+                int fluidAmount = fluidNbt.getInt("Amount");
+                if (fluidAmount == ((ClayMoldItem)itemStack.getItem()).getCapacity()) {
+                    FluidVariant variant = FluidVariant.fromNbt(fluidNbt);
+                    return PrimevalFluidUtil.fluidToIntegerId(variant.getFluid());
+                }
+                return 0;
+            });
+        }
     }
 }

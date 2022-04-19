@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "primeval:item/fired_clay_mold_sword_blade_copper"
+	}
+}

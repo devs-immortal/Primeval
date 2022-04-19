@@ -83,8 +83,37 @@
     "item.primeval.botched_alloy_ingot": "Botched Alloy Ingot",
     "item.primeval.botched_alloy_chunk": "Botched Alloy Chunk",
     
+    "item.primeval.copper_axe_head": "Copper Axe Head",
+    "item.primeval.copper_chisel_head": "Copper Chisel Head",
+    "item.primeval.copper_knife_blade": "Copper Knife Blade",
+    "item.primeval.copper_pickaxe_head": "Copper Pickaxe Head",
+    "item.primeval.copper_shovel_head": "Copper Shovel Head",
+    "item.primeval.copper_sword_blade": "Copper Sword Blade",
+    
+    "item.primeval.bronze_axe_head": "Bronze Axe Head",
+    "item.primeval.bronze_chisel_head": "Bronze Chisel Head",
+    "item.primeval.bronze_knife_blade": "Bronze Knife Blade",
+    "item.primeval.bronze_pickaxe_head": "Bronze Pickaxe Head",
+    "item.primeval.bronze_shovel_head": "Bronze Shovel Head",
+    "item.primeval.bronze_sword_blade": "Bronze Sword Blade",
+    
+    
     "item.primeval.clay_mold_ingot": "Clay Ingot Mold",
+    "item.primeval.clay_mold_axe_head": "Clay Axe Head Mold",
+    "item.primeval.clay_mold_chisel_head": "Clay Chisel Head Mold",
+    "item.primeval.clay_mold_knife_blade": "Clay Knife Blade Mold",
+    "item.primeval.clay_mold_pickaxe_head": "Clay Pickaxe Head Mold",
+    "item.primeval.clay_mold_shovel_head": "Clay Shovel Head Mold",
+    "item.primeval.clay_mold_sword_blade": "Clay Sword Blade Mold",
+    
     "item.primeval.fired_clay_mold_ingot": "Fired Clay Ingot Mold",
+    "item.primeval.fired_clay_mold_axe_head": "Fired Clay Axe Head Mold",
+    "item.primeval.fired_clay_mold_chisel_head": "Fired Clay Chisel Head Mold",
+    "item.primeval.fired_clay_mold_knife_blade": "Fired Clay Knife Blade Mold",
+    "item.primeval.fired_clay_mold_pickaxe_head": "Fired Clay Pickaxe Head Mold",
+    "item.primeval.fired_clay_mold_shovel_head": "Fired Clay Shovel Head Mold",
+    "item.primeval.fired_clay_mold_sword_blade": "Fired Clay Sword Blade Mold",
+    
     
     "item.primeval.flint_knife": "Flint Knife",
     "item.primeval.flint_axe": "Flint Hatchet",

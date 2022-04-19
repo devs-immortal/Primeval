@@ -1,0 +1,10 @@
+{
+  "type": "primeval:clay_mold_casting",
+  "input": {
+    "mold": "primeval:fired_clay_mold_knife_blade",
+    "fluid": "primeval:molten_copper"
+  },
+  "result": {
+    "item": "primeval:copper_knife_blade"
+  }
+}

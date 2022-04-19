@@ -5,6 +5,10 @@ import net.minecraft.recipe.Ingredient;
 
 public class PrimevalToolMaterials {
 
+    public static final float BLUNT_DAMAGE_MULTIPLIER = 0.5f;
+    public static final float KNIFE_DAMAGE_MULTIPLIER = 1.5f;
+    public static final float SWORD_DAMAGE_MULTIPLIER = 2f;
+
     public static final FlintMaterial FLINT = new FlintMaterial();
 
     public static class FlintMaterial implements ToolMaterial {
@@ -18,7 +22,7 @@ public class PrimevalToolMaterials {
         }
         @Override
         public float getAttackDamage() {
-            return 2.0f;
+            return 1.0f;
         }
         @Override
         public int getMiningLevel() {

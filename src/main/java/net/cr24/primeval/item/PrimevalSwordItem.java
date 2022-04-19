@@ -25,6 +25,12 @@ public class PrimevalSwordItem extends SwordItem implements IWeightedItem {
         this.size = size;
     }
 
+    public PrimevalSwordItem(ToolMaterial toolMaterial, float attackDamage, float attackSpeed, Settings settings, Weight weight, Size size) {
+        super(toolMaterial, (int) attackDamage, attackSpeed, settings);
+        this.weight = weight;
+        this.size = size;
+    }
+
     @Environment(EnvType.CLIENT)
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         tooltip.add((new TranslatableText("⚖ ").append(this.weight.getText()).append(" ⤧ ").append(this.size.getText())).formatted(Formatting.GRAY));
