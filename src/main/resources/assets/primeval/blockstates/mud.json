@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "primeval:block/mud"
+      },
+      {
+        "model": "primeval:block/mud_mirrored"
+      }
+    ]
+  }
+}

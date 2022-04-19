@@ -6,7 +6,6 @@ import net.cr24.primeval.fluid.PrimevalFluids;
 import net.cr24.primeval.item.Size;
 import net.cr24.primeval.item.Weight;
 import net.cr24.primeval.item.WeightedBlockItem;
-import net.cr24.primeval.world.gen.trunker.AbstractTrunker;
 import net.cr24.primeval.world.gen.trunker.BirchTrunker;
 import net.cr24.primeval.world.gen.trunker.OakTrunker;
 import net.fabricmc.api.EnvType;
@@ -34,14 +33,16 @@ public class PrimevalBlocks {
     private static final FabricBlockSettings SETTINGS_GRASSY = FabricBlockSettings.of(Material.SOLID_ORGANIC, MapColor.TERRACOTTA_GREEN).strength(2.5f, 2.0f).sounds(BlockSoundGroup.GRASS);
     private static final FabricBlockSettings SETTINGS_SAND = FabricBlockSettings.of(Material.AGGREGATE, MapColor.PALE_YELLOW).strength(1.8f, 2.0f).sounds(BlockSoundGroup.SAND);
     private static final FabricBlockSettings SETTINGS_STONE = FabricBlockSettings.of(Material.STONE, MapColor.DEEPSLATE_GRAY).strength(4.5f, 6.0f).requiresTool();
-    private static final FabricBlockSettings SETTINGS_PLANT = FabricBlockSettings.of(Material.REPLACEABLE_PLANT, MapColor.GREEN).strength(0.1f, 0f).sounds(BlockSoundGroup.GRASS).noCollision();
+    private static final FabricBlockSettings SETTINGS_PLANT = FabricBlockSettings.of(Material.REPLACEABLE_PLANT, MapColor.GREEN).strength(0.05f, 0f).sounds(BlockSoundGroup.GRASS).noCollision();
     private static final FabricBlockSettings SETTINGS_LOG = FabricBlockSettings.of(Material.WOOD, MapColor.BROWN).strength(4.0f, 6.0f).sounds(BlockSoundGroup.WOOD).requiresTool();
     private static final FabricBlockSettings SETTINGS_TRUNK = FabricBlockSettings.of(Material.WOOD, MapColor.BROWN).strength(8.0f, 8.0f).sounds(BlockSoundGroup.WOOD).requiresTool();
-    private static final FabricBlockSettings SETTINGS_CLAY = FabricBlockSettings.of(Material.STONE, MapColor.ORANGE).strength(4.0f, 6.0f).sounds(BlockSoundGroup.STONE).requiresTool();
+    private static final FabricBlockSettings SETTINGS_FIRED_CLAY = FabricBlockSettings.of(Material.STONE, MapColor.ORANGE).strength(4.0f, 6.0f).sounds(BlockSoundGroup.STONE).requiresTool();
+    private static final FabricBlockSettings SETTINGS_REFINED_WOOD = FabricBlockSettings.of(Material.WOOD, MapColor.OAK_TAN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD).requiresTool();
 
     // Terrain blocks
     public static final Block DIRT = registerBlock("dirt", new SemiSupportedBlock(SETTINGS_SOIL, 0.2f), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block COARSE_DIRT = registerBlock("coarse_dirt", new SemiSupportedBlock(SETTINGS_SOIL, 0.3f), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block MUD = registerBlock("mud", new MudBlock(SETTINGS_SOIL.velocityMultiplier(0.4f), 0.25f), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block GRASSY_DIRT = registerBlock("grassy_dirt", new GrassyDirtBlock(SETTINGS_GRASSY.ticksRandomly(), 0.35f), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block SAND = registerBlock("sand", new SemiSupportedBlock(SETTINGS_SAND, 0.1f), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block GRAVEL = registerBlock("gravel", new SemiSupportedBlock(SETTINGS_SAND, 0.1f), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
@@ -87,9 +88,12 @@ public class PrimevalBlocks {
 
     // Crafted Blocks
     public static final Block STRAW_BLOCK = registerBlock("straw_block", new PillarBlock(FabricBlockSettings.of(Material.PLANT).strength(0.5F).sounds(BlockSoundGroup.GRASS)), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
-    public static final Block TERRACOTTA = registerBlock("terracotta", new Block(SETTINGS_CLAY), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
-    public static final Block FIRED_CLAY_BRICKS = registerBlock("fired_clay_bricks", new Block(SETTINGS_CLAY), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
-    public static final Block DRIED_BRICKS = registerBlock("dried_bricks", new Block(SETTINGS_CLAY), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block TERRACOTTA = registerBlock("terracotta", new Block(SETTINGS_FIRED_CLAY), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block FIRED_CLAY_SHINGLES = registerBlock("fired_clay_shingles", new Block(SETTINGS_FIRED_CLAY), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block FIRED_CLAY_BRICKS = registerBlock("fired_clay_bricks", new Block(SETTINGS_FIRED_CLAY), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block FIRED_CLAY_TILES = registerBlock("fired_clay_tiles", new Block(SETTINGS_FIRED_CLAY), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block DRIED_BRICKS = registerBlock("dried_bricks", new Block(SETTINGS_FIRED_CLAY), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block DAUB = registerBlock("daub", new Block(SETTINGS_REFINED_WOOD), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
 
 
     // Technical Blocks or Blocks with other BlockItems than themselves
