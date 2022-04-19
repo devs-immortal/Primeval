@@ -15,11 +15,11 @@ public class JugItem extends Item implements IWeightedItem {
 
     @Override
     public Weight getWeight() {
-        return null;
+        return this.weight;
     }
 
     @Override
     public Size getSize() {
-        return null;
+        return this.size;
     }
 }

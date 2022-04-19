@@ -36,6 +36,7 @@ public class PrimevalBlocks {
     private static final FabricBlockSettings SETTINGS_STONE = FabricBlockSettings.of(Material.STONE, MapColor.DEEPSLATE_GRAY).strength(4.5f, 6.0f).requiresTool();
     private static final FabricBlockSettings SETTINGS_PLANT = FabricBlockSettings.of(Material.REPLACEABLE_PLANT, MapColor.GREEN).strength(0.1f, 0f).sounds(BlockSoundGroup.GRASS).noCollision();
     private static final FabricBlockSettings SETTINGS_LOG = FabricBlockSettings.of(Material.WOOD, MapColor.BROWN).strength(4.0f, 6.0f).sounds(BlockSoundGroup.WOOD).requiresTool();
+    private static final FabricBlockSettings SETTINGS_TRUNK = FabricBlockSettings.of(Material.WOOD, MapColor.BROWN).strength(8.0f, 8.0f).sounds(BlockSoundGroup.WOOD).requiresTool();
     private static final FabricBlockSettings SETTINGS_CLAY = FabricBlockSettings.of(Material.STONE, MapColor.ORANGE).strength(4.0f, 6.0f).sounds(BlockSoundGroup.STONE).requiresTool();
 
     // Terrain blocks
@@ -52,11 +53,11 @@ public class PrimevalBlocks {
     //// Plant blocks
     // Oak Trees
     public static final Block OAK_LOG = registerBlock("oak_log", new PillarBlock(SETTINGS_LOG), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
-    public static final Block OAK_TRUNK = registerBlockWithoutItem("oak_trunk", new TrunkBlock(SETTINGS_LOG.nonOpaque(), OakTrunker.INSTANCE));
+    public static final Block OAK_TRUNK = registerBlockWithoutItem("oak_trunk", new TrunkBlock(SETTINGS_TRUNK.nonOpaque(), OakTrunker.INSTANCE));
     public static final Block OAK_LEAVES = registerBlockWithoutItem("oak_leaves", new LeafBlock(FabricBlockSettings.copyOf(Blocks.OAK_LEAVES)));
     // Birch Trees
     public static final Block BIRCH_LOG = registerBlock("birch_log", new PillarBlock(SETTINGS_LOG), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
-    public static final Block BIRCH_TRUNK = registerBlockWithoutItem("birch_trunk", new TrunkBlock(SETTINGS_LOG.nonOpaque(), BirchTrunker.INSTANCE));
+    public static final Block BIRCH_TRUNK = registerBlockWithoutItem("birch_trunk", new TrunkBlock(SETTINGS_TRUNK.nonOpaque(), BirchTrunker.INSTANCE));
     public static final Block BIRCH_LEAVES = registerBlockWithoutItem("birch_leaves", new LeafBlock(FabricBlockSettings.copyOf(Blocks.OAK_LEAVES)));
     // Saplings+
     public static final Block OAK_SAPLING = registerBlock("oak_sapling", new GrowingSaplingBlock(SETTINGS_PLANT.ticksRandomly(), OakTrunker.INSTANCE), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
@@ -88,7 +89,7 @@ public class PrimevalBlocks {
     public static final Block STRAW_BLOCK = registerBlock("straw_block", new PillarBlock(FabricBlockSettings.of(Material.PLANT).strength(0.5F).sounds(BlockSoundGroup.GRASS)), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block TERRACOTTA = registerBlock("terracotta", new Block(SETTINGS_CLAY), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block FIRED_CLAY_BRICKS = registerBlock("fired_clay_bricks", new Block(SETTINGS_CLAY), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
-    public static final Block DRIED_CLAY_BRICKS = registerBlock("dried_bricks", new Block(SETTINGS_CLAY), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block DRIED_BRICKS = registerBlock("dried_bricks", new Block(SETTINGS_CLAY), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
 
 
     // Technical Blocks or Blocks with other BlockItems than themselves

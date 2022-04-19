@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "primeval:iron_hematite_ore_small",
+    "primeval:iron_hematite_ore_medium",
+    "primeval:iron_hematite_ore_large"
+  ]
+}

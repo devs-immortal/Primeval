@@ -12,6 +12,14 @@ public class PrimevalBlockTags {
     public static final TagKey<Block> HEAVY_SOIL = register("heavy_soil");
     public static final TagKey<Block> SOIL = register("soil");
 
+    public static final TagKey<Block> TREE_TRUNKS = register("tree_trunks");
+    public static final TagKey<Block> LEAVES = register("leaves");
+    public static final TagKey<Block> LOGS = register("logs");
+
+    public static final TagKey<Block> COPPER_ORES = register("ores_copper");
+    public static final TagKey<Block> IRON_ORES = register("ores_iron");
+    public static final TagKey<Block> TIN_ORES = register("ores_tin");
+
     private static TagKey<Block> register(String id) {
         return TagKey.of(Registry.BLOCK_KEY, PrimevalMain.getId(id));
     }

@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primeval:iron_hematite_ore_medium"
+          "name": "primeval:raw_iron_hematite_medium"
         }
       ],
       "conditions": [

@@ -1,7 +1,11 @@
 {
   "replace": false,
   "values": [
-    "primeval:oak_log",
-    "primeval:oak_leaves"
+    "#primeval:tree_trunks",
+    "#primeval:logs",
+    "#primeval:leaves",
+    "primeval:straw_block",
+    "primeval:straw",
+    "primeval:pit_kiln"
   ]
 }

@@ -119,7 +119,7 @@ public class PrimevalItems {
 
 
     // Utility items
-    public static final Item FIRED_CLAY_JUG = registerItem("fired_clay_jug", new JugItem(GROUP_TOOLS.maxDamage(0), Weight.NORMAL, Size.LARGE));
+    //public static final Item FIRED_CLAY_JUG = registerItem("fired_clay_jug", new JugItem(GROUP_TOOLS.maxDamage(0), Weight.NORMAL, Size.LARGE)); // TODO: add
     public static final Item FIRED_CLAY_VESSEL = registerItem("fired_clay_vessel", new VesselItem(GROUP_TOOLS, Weight.NORMAL, Size.LARGE));
 
 
