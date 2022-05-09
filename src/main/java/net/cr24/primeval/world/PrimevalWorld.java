@@ -1,24 +1,59 @@
 package net.cr24.primeval.world;
 
-import com.mojang.serialization.Codec;
 import net.cr24.primeval.PrimevalMain;
-import net.cr24.primeval.mixin.world.gen.trunk.TrunkPlacerTypeMixin;
-import net.cr24.primeval.world.gen.NaturalTrunkPlacer;
-import net.cr24.primeval.world.gen.feature.*;
-import net.fabricmc.fabric.impl.registry.sync.FabricRegistry;
+import net.cr24.primeval.world.gen.feature.PrimevalFeatures;
+import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.foliage.FoliagePlacerType;
-import net.minecraft.world.gen.trunk.LargeOakTrunkPlacer;
-import net.minecraft.world.gen.trunk.TrunkPlacer;
-import net.minecraft.world.gen.trunk.TrunkPlacerType;
+import net.minecraft.util.registry.RegistryEntry;
+import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.world.biome.*;
+import net.minecraft.world.gen.GenerationStep;
+import net.minecraft.world.gen.feature.PlacedFeature;
+
+import java.util.List;
+
+import static net.cr24.primeval.world.gen.feature.PrimevalFeatures.*;
 
 public class PrimevalWorld {
 
-    /* FEATURES */
-    public static final Feature ORE_CLUSTER_FEATURE = Registry.register(Registry.FEATURE, PrimevalMain.getId("ore_cluster"), new OreClusterFeature(OreClusterFeatureConfig.CODEC));
+    /* BIOMES */
+    public static final BiomeEffects UNIVERSAL_EFFECTS = new BiomeEffects.Builder() .skyColor(7907327).fogColor(12638463).grassColor(9551193).waterColor(5404090).waterFogColor(329011).build();
 
-    public static final TrunkPlacerType<NaturalTrunkPlacer> NATURAL_TRUNK_PLACER = TrunkPlacerTypeMixin.callRegister("natural_trunk_placer", NaturalTrunkPlacer.CODEC);
+    public static final RegistryEntry<Biome> PLAINS = registerBiome(getBiomeKey("inland/plains"), createBiome());
 
     public static void init() {}
+
+    private static Biome createBiome() {
+        return new Biome.Builder()
+                .effects(UNIVERSAL_EFFECTS)
+                .generationSettings(buildGeneratorSettings(
+                        List.of(NATIVE_COPPER_ORE_CLUSTER, MALACHITE_COPPER_ORE_CLUSTER, DIRT_ORE_BLOBS),
+                        List.of(PLAINS_GRASS_PATCH, BUSH_PATCH)
+                        ))
+                .spawnSettings(new SpawnSettings.Builder().build())
+                .precipitation(Biome.Precipitation.RAIN)
+                .temperature(0.8f)
+                .downfall(0.4f)
+                .category(Biome.Category.PLAINS)
+                .build();
+    }
+
+    private static RegistryKey<Biome> getBiomeKey(String id) {
+        return RegistryKey.of(Registry.BIOME_KEY, PrimevalMain.getId(id));
+    }
+
+    private static RegistryEntry<Biome> registerBiome(RegistryKey<Biome> key, Biome b) {
+        return BuiltinRegistries.add(BuiltinRegistries.BIOME, key, b);
+    }
+
+    public static GenerationSettings buildGeneratorSettings(List<RegistryEntry<PlacedFeature>> undergroundOres, List<RegistryEntry<PlacedFeature>> vegetalDecoration) {
+        GenerationSettings.Builder gen = new GenerationSettings.Builder();
+        for (RegistryEntry<PlacedFeature> f : undergroundOres) {
+            gen.feature(GenerationStep.Feature.UNDERGROUND_ORES, f);
+        }
+        for (RegistryEntry<PlacedFeature> f : vegetalDecoration) {
+            gen.feature(GenerationStep.Feature.VEGETAL_DECORATION, f);
+        }
+        return gen.build();
+    }
 }
