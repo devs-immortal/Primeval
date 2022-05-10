@@ -6,7 +6,11 @@ import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 public class OakTrunker extends AbstractTrunker {
@@ -18,22 +22,29 @@ public class OakTrunker extends AbstractTrunker {
     }
 
     @Override
-    public void tickTrunk(BlockState state, World world, BlockPos pos, Random random, Direction[] directions) {
+    public List<BlockPos> tickTrunk(BlockState state, WorldAccess world, BlockPos pos, Random random, Direction[] directions) {
+        List<BlockPos> posList = new LinkedList<>();
         int age = state.get(TrunkBlock.AGE);
         int size = state.get(TrunkBlock.SIZE);
+        boolean stillGrowing = false;
         if (age == 0) {
-            expandSize(state, world, pos, 0);
+            stillGrowing = expandSize(state, world, pos, 0);
         } else if (age < 4) {
             if (world.getBlockState(pos.down()).getBlock() instanceof TrunkBlock && world.getBlockState(pos.down()).get(TrunkBlock.SIZE) < size) {
-                expandSize(state, world, pos, 0);
+                stillGrowing = expandSize(state, world, pos, 0);
+            } else {
+                stillGrowing = true;
             }
         } else if (age < 8) {
             if (world.getBlockState(pos.down()).getBlock() instanceof TrunkBlock && world.getBlockState(pos.down()).get(TrunkBlock.SIZE) < size) {
-                expandSize(state, world, pos, 1);
+                stillGrowing = expandSize(state, world, pos, 1);
+            } else {
+                stillGrowing = true;
             }
         } else if (age < 11)  {
-            expandSize(state, world, pos, 2);
+            stillGrowing = expandSize(state, world, pos, 2);
         }
+        if (stillGrowing) posList.add(pos);
 
         if (directions.length > 0 && age < 18) {
             // Expand into directions
@@ -42,9 +53,11 @@ public class OakTrunker extends AbstractTrunker {
                 BlockPos newBranchPos = pos.offset(d);
                 world.setBlockState(newBranchPos, logBlockState
                         .with(TrunkBlock.DIRECTION_MAP.get(d.getOpposite()), true)
-                        .with(TrunkBlock.AGE, Math.min(18, age + random.nextInt(2)+1))
+                        .with(TrunkBlock.AGE, Math.min(18, age + random.nextInt(2)+1)),
+                        3
                 );
-                world.setBlockState(pos, state.with(TrunkBlock.DIRECTION_MAP.get(d), true));
+                posList.add(newBranchPos);
+                world.setBlockState(pos, state.with(TrunkBlock.DIRECTION_MAP.get(d), true), 3);
                 if (age < 6) {
                     placeLeaves(world, newBranchPos.up(), Direction.DOWN);
                 } else if (age < 9) {
@@ -65,13 +78,14 @@ public class OakTrunker extends AbstractTrunker {
                 }
             }
         } else if (age > 12) {
-            world.setBlockState(pos, state.with(TrunkBlock.GROWN, true));
+            world.setBlockState(pos, state.with(TrunkBlock.GROWN, true), 3);
             for (Direction d : TrunkBlock.XZ_DIRECTIONS) {
                 placeLeaves(world, pos.offset(d), d.getOpposite());
             }
             placeLeaves(world, pos.up(), Direction.DOWN);
             if (random.nextBoolean()) placeLeaves(world, pos.down(), Direction.UP);
         }
+        return posList;
     }
 
 }

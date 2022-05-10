@@ -19,22 +19,25 @@ public class PrimevalWorld {
     /* BIOMES */
     public static final BiomeEffects UNIVERSAL_EFFECTS = new BiomeEffects.Builder() .skyColor(7907327).fogColor(12638463).grassColor(9551193).waterColor(5404090).waterFogColor(329011).build();
 
-    public static final RegistryEntry<Biome> PLAINS = registerBiome(getBiomeKey("inland/plains"), createBiome());
+    public static final RegistryEntry<Biome> PLAINS = registerBiome(getBiomeKey("inland/plains"), createBiome(
+            buildGeneratorSettings(
+                    List.of(NATIVE_COPPER_ORE_CLUSTER, MALACHITE_COPPER_ORE_CLUSTER, CASSITERITE_TIN_ORE_CLUSTER, DIRT_ORE_BLOBS, GRAVEL_ORE_BLOBS),
+                    List.of(PLAINS_OAK_TRUNKED_TREE, PLAINS_GRASS_PATCH, BUSH_PATCH)
+            ),
+            Biome.Category.PLAINS)
+    );
 
     public static void init() {}
 
-    private static Biome createBiome() {
+    private static Biome createBiome(GenerationSettings g, Biome.Category c) {
         return new Biome.Builder()
                 .effects(UNIVERSAL_EFFECTS)
-                .generationSettings(buildGeneratorSettings(
-                        List.of(NATIVE_COPPER_ORE_CLUSTER, MALACHITE_COPPER_ORE_CLUSTER, DIRT_ORE_BLOBS),
-                        List.of(PLAINS_GRASS_PATCH, BUSH_PATCH)
-                        ))
+                .generationSettings(g)
                 .spawnSettings(new SpawnSettings.Builder().build())
                 .precipitation(Biome.Precipitation.RAIN)
                 .temperature(0.8f)
                 .downfall(0.4f)
-                .category(Biome.Category.PLAINS)
+                .category(c)
                 .build();
     }
 
