@@ -1,5 +1,8 @@
-package net.cr24.primeval.block;
+package net.cr24.primeval.block.functional;
 
+import net.cr24.primeval.block.LayeredBlock;
+import net.cr24.primeval.block.PrimevalBlockTags;
+import net.cr24.primeval.block.PrimevalBlocks;
 import net.cr24.primeval.block.entity.PitKilnBlockEntity;
 import net.cr24.primeval.item.PrimevalItemTags;
 import net.cr24.primeval.item.PrimevalItems;
@@ -42,7 +45,7 @@ public class PitKilnBlock extends BlockWithEntity {
     public static final IntProperty BUILD_STEP = IntProperty.of("build_step", 0, 8);
     public static final BooleanProperty LIT = BooleanProperty.of("lit");
 
-    protected PitKilnBlock(Settings settings) {
+    public PitKilnBlock(Settings settings) {
         super(settings);
         this.setDefaultState((this.stateManager.getDefaultState()).with(BUILD_STEP, 0).with(LIT, false));
     }

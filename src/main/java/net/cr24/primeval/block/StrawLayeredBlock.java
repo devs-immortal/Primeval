@@ -1,5 +1,6 @@
 package net.cr24.primeval.block;
 
+import net.cr24.primeval.block.functional.PitKilnBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;

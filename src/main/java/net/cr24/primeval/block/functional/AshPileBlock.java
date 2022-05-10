@@ -1,4 +1,4 @@
-package net.cr24.primeval.block;
+package net.cr24.primeval.block.functional;
 
 import net.cr24.primeval.block.entity.AshPileBlockEntity;
 import net.minecraft.block.*;
@@ -12,9 +12,9 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class AshPileBlock extends BlockWithEntity implements Clearable {
+public class AshPileBlock extends BlockWithEntity {
 
-    protected AshPileBlock(Settings settings) {
+    public AshPileBlock(Settings settings) {
         super(settings);
     }
 
@@ -67,10 +67,5 @@ public class AshPileBlock extends BlockWithEntity implements Clearable {
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new AshPileBlockEntity(pos, state);
-    }
-
-    @Override
-    public void clear() {
-
     }
 }

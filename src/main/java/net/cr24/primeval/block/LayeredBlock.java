@@ -1,5 +1,6 @@
 package net.cr24.primeval.block;
 
+import net.cr24.primeval.block.functional.PitKilnBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -22,7 +23,7 @@ import java.util.Random;
 
 public class LayeredBlock extends Block {
     public static final IntProperty LAYERS;
-    protected static final VoxelShape[] LAYERS_TO_SHAPE;
+    public static final VoxelShape[] LAYERS_TO_SHAPE;
 
     public LayeredBlock(Settings settings) {
         super(settings);
