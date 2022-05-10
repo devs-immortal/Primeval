@@ -22,7 +22,7 @@ public class PrimevalWorld {
     public static final RegistryEntry<Biome> PLAINS = registerBiome(getBiomeKey("inland/plains"), createBiome(
             buildGeneratorSettings(
                     List.of(NATIVE_COPPER_ORE_CLUSTER, MALACHITE_COPPER_ORE_CLUSTER, CASSITERITE_TIN_ORE_CLUSTER, DIRT_ORE_BLOBS, GRAVEL_ORE_BLOBS),
-                    List.of(PLAINS_OAK_TRUNKED_TREE, PLAINS_GRASS_PATCH, BUSH_PATCH)
+                    List.of(PLAINS_OAK_TRUNKED_TREE, PLAINS_GRASS_PATCH, BUSH_PATCH, STICK_ITEM_PATCH, FLINT_ITEM_PATCH)
             ),
             Biome.Category.PLAINS)
     );
