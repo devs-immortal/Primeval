@@ -4,7 +4,7 @@
   "version": "${version}",
 
   "name": "Primeval",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "description": "Primeval aims for a complete overhaul of Minecraft systems to create a rustic, realistic game progression. You are dropped into a natural setting rich with materials and life, but punching a tree is no longer an option.",
   "authors": [
     "24Chrome"
   ],
@@ -12,7 +12,7 @@
     "sources": "https://github.com/devs-immortal/Primeval"
   },
 
-  "license": "CC0-1.0",
+  "license": "MIT",
   "icon": "assets/primeval/icon.png",
 
   "environment": "*",
@@ -34,7 +34,7 @@
   "depends": {
     "fabricloader": ">=0.11.3",
     "fabric": "*",
-    "minecraft": "1.18.x",
+    "minecraft": "1.18.2",
     "java": ">=17"
   }
 }
