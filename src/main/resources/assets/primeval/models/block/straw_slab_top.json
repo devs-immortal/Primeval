@@ -2,7 +2,7 @@
 	"parent": "minecraft:block/slab_top",
 	"textures": {
 		"bottom": "primeval:block/straw_block_side",
-		"top": "primeval:block/straw_block_side",
+		"top": "primeval:block/straw_block_top",
 		"side": "primeval:block/straw_block_side"
 	}
 }
