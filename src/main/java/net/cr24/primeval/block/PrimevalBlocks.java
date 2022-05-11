@@ -18,6 +18,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
+import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntityType;
@@ -124,8 +125,9 @@ public class PrimevalBlocks {
     public static void init() {
         OakTrunker.INSTANCE.build();
         BirchTrunker.INSTANCE.build();
-    }
 
+        registerFlammables();
+    }
 
     @Environment(EnvType.CLIENT)
     public static void initClient() {
@@ -147,6 +149,33 @@ public class PrimevalBlocks {
         BlockEntityRendererRegistry.register(PIT_KILN_BLOCK_ENTITY, PitKilnBlockEntityRenderer::new);
         BlockEntityRendererRegistry.register(ASH_PILE_BLOCK_ENTITY, AshPileBlockEntityRenderer::new);
         BlockEntityRendererRegistry.register(LAYING_ITEM_BLOCK_ENTITY, LayingItemBlockEntityRenderer::new);
+    }
+
+
+    private static void registerFlammables() {
+        FlammableBlockRegistry.getDefaultInstance().add(OAK_LOG, 5, 10);
+        FlammableBlockRegistry.getDefaultInstance().add(OAK_TRUNK, 1, 3);
+        FlammableBlockRegistry.getDefaultInstance().add(OAK_LEAVES, 50, 60);
+        FlammableBlockRegistry.getDefaultInstance().add(BIRCH_LOG, 5, 10);
+        FlammableBlockRegistry.getDefaultInstance().add(BIRCH_TRUNK, 1, 3);
+        FlammableBlockRegistry.getDefaultInstance().add(BIRCH_LEAVES, 50, 60);
+
+        FlammableBlockRegistry.getDefaultInstance().add(OAK_SAPLING, 50, 80);
+        FlammableBlockRegistry.getDefaultInstance().add(BIRCH_SAPLING, 50, 80);
+
+        FlammableBlockRegistry.getDefaultInstance().add(GRASS, 60, 100);
+        FlammableBlockRegistry.getDefaultInstance().add(BUSH, 60, 100);
+
+        for (Block b : STRAW_BLOCKS) {
+            FlammableBlockRegistry.getDefaultInstance().add(b, 10, 40);
+        }
+        FlammableBlockRegistry.getDefaultInstance().add(STRAW_MESH, 10, 40);
+        FlammableBlockRegistry.getDefaultInstance().add(STRAW_MAT, 10, 40);
+        FlammableBlockRegistry.getDefaultInstance().add(STRAW_PILE, 10, 40);
+
+        FlammableBlockRegistry.getDefaultInstance().add(DAUB, 2, 6);
+
+        FlammableBlockRegistry.getDefaultInstance().add(CRUDE_CRAFTING_BENCH, 2, 6);
     }
 
 
