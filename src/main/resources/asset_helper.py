@@ -88,5 +88,9 @@ def create_ore_set(ore_type):
     generate_standard_item("raw_"+ore_type+"_large")
 
 
-#generate_stairs_block("dried_bricks_stairs", "dried_bricks")
-#generate_slab_block("dried_bricks_slab", "dried_bricks", "dried_bricks")
+generate_standard_block("oak_planks")
+generate_stairs_block("oak_planks_stairs", "oak_planks")
+generate_slab_block("oak_planks_slab", "oak_planks", "oak_planks")
+generate_standard_block("birch_planks")
+generate_stairs_block("birch_planks_stairs", "birch_planks")
+generate_slab_block("birch_planks_slab", "birch_planks", "birch_planks")

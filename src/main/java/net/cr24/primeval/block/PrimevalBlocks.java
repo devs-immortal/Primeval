@@ -39,11 +39,10 @@ public class PrimevalBlocks {
     private static final FabricBlockSettings SETTINGS_SAND = FabricBlockSettings.of(Material.AGGREGATE, MapColor.PALE_YELLOW).strength(1.8f, 2.0f).sounds(BlockSoundGroup.SAND);
     private static final FabricBlockSettings SETTINGS_STONE = FabricBlockSettings.of(Material.STONE, MapColor.DEEPSLATE_GRAY).strength(4.5f, 6.0f).requiresTool();
     private static final FabricBlockSettings SETTINGS_PLANT = FabricBlockSettings.of(Material.REPLACEABLE_PLANT, MapColor.GREEN).strength(0.05f, 0f).sounds(BlockSoundGroup.GRASS).noCollision();
-    private static final FabricBlockSettings SETTINGS_WOOD = FabricBlockSettings.of(Material.WOOD, MapColor.BROWN).strength(6.0f, 6.0f).sounds(BlockSoundGroup.WOOD).requiresTool();
     private static final FabricBlockSettings SETTINGS_LOG = FabricBlockSettings.of(Material.WOOD, MapColor.BROWN).strength(5.0f, 6.0f).sounds(BlockSoundGroup.WOOD).requiresTool();
     private static final FabricBlockSettings SETTINGS_TRUNK = FabricBlockSettings.of(Material.WOOD, MapColor.BROWN).strength(8.0f, 8.0f).sounds(BlockSoundGroup.WOOD).requiresTool();
     private static final FabricBlockSettings SETTINGS_FIRED_CLAY = FabricBlockSettings.of(Material.STONE, MapColor.ORANGE).strength(4.0f, 6.0f).sounds(BlockSoundGroup.STONE).requiresTool();
-    private static final FabricBlockSettings SETTINGS_REFINED_WOOD = FabricBlockSettings.of(Material.WOOD, MapColor.OAK_TAN).strength(2.0f, 3.0f).sounds(BlockSoundGroup.WOOD).requiresTool();
+    private static final FabricBlockSettings SETTINGS_REFINED_WOOD = FabricBlockSettings.of(Material.WOOD, MapColor.OAK_TAN).strength(3.0f, 4.0f).sounds(BlockSoundGroup.WOOD).requiresTool();
 
     // Terrain blocks
     public static final Block DIRT = registerBlock("dirt", new SemiSupportedBlock(SETTINGS_SOIL, 0.2f), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
@@ -100,6 +99,8 @@ public class PrimevalBlocks {
     public static final Block[] FIRED_CLAY_TILES_BLOCKS = registerBlockSet("fired_clay_tiles", SETTINGS_FIRED_CLAY, Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block[] DRIED_BRICK_BLOCKS = registerBlockSet("dried_bricks", SETTINGS_FIRED_CLAY, Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block DAUB = registerBlock("daub", new Block(SETTINGS_REFINED_WOOD), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block[] OAK_PLANK_BLOCKS = registerBlockSet("oak_planks", SETTINGS_REFINED_WOOD, Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block[] BIRCH_PLANK_BLOCKS = registerBlockSet("birch_planks", SETTINGS_REFINED_WOOD, Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
 
     // Technical Blocks or Blocks with other BlockItems than themselves
     public static final Block STRAW_PILE = registerBlockWithoutItem("straw", new StrawLayeredBlock(FabricBlockSettings.of(Material.PLANT).strength(0.5F).sounds(BlockSoundGroup.GRASS)));
@@ -108,7 +109,7 @@ public class PrimevalBlocks {
 
     // Intractable Blocks
     public static final Block PIT_KILN = registerBlockWithoutItem("pit_kiln", new PitKilnBlock(FabricBlockSettings.of(Material.PLANT).strength(1.0F).sounds(BlockSoundGroup.GRASS).nonOpaque()));
-    public static final Block CRUDE_CRAFTING_BENCH = registerBlock("crude_crafting_bench", new PrimevalCraftingTableBlock(SETTINGS_WOOD), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
+    public static final Block CRUDE_CRAFTING_BENCH = registerBlock("crude_crafting_bench", new PrimevalCraftingTableBlock(SETTINGS_REFINED_WOOD), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
 
     // Fluid Blocks
     public static final Block MOLTEN_COPPER = registerMoltenFluid("molten_copper", PrimevalFluids.MOLTEN_COPPER);
@@ -174,6 +175,13 @@ public class PrimevalBlocks {
         FlammableBlockRegistry.getDefaultInstance().add(STRAW_PILE, 10, 40);
 
         FlammableBlockRegistry.getDefaultInstance().add(DAUB, 2, 6);
+
+        for (Block b : OAK_PLANK_BLOCKS) {
+            FlammableBlockRegistry.getDefaultInstance().add(b, 5, 20);
+        }
+        for (Block b : BIRCH_PLANK_BLOCKS) {
+            FlammableBlockRegistry.getDefaultInstance().add(b, 5, 20);
+        }
 
         FlammableBlockRegistry.getDefaultInstance().add(CRUDE_CRAFTING_BENCH, 2, 6);
     }

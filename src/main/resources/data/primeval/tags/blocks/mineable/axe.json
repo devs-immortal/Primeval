@@ -11,6 +11,12 @@
     "primeval:straw_mat",
     "primeval:straw",
     "primeval:daub",
+    "primeval:oak_planks",
+    "primeval:oak_planks_stairs",
+    "primeval:oak_planks_slab",
+    "primeval:birch_planks",
+    "primeval:birch_planks_stairs",
+    "primeval:birch_planks_slab",
     "primeval:pit_kiln",
     "primeval:crude_crafting_bench"
   ]

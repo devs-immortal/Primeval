@@ -46,6 +46,7 @@ public class PrimevalItems {
     public static final Item DRIED_BRICK = registerItem("dried_brick", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
 
     public static final Item CLAY_BALL = registerItem("clay_ball", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
+    public static final Item MUD_BALL = registerItem("mud_ball", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
     public static final Item CLAY_BRICK = registerItem("clay_brick", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
     public static final Item FIRED_CLAY_BRICK = registerItem("fired_clay_brick", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
     public static final Item CLAY_BOWL = registerItem("clay_bowl", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));

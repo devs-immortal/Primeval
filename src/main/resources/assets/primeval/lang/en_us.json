@@ -50,6 +50,12 @@
     "block.primeval.dried_bricks_stairs": "Dried Brick Stairs",
     "block.primeval.dried_bricks_slab": "Dried Brick Slab",
     "block.primeval.daub": "Daub",
+    "block.primeval.oak_planks": "Oak Planks",
+    "block.primeval.oak_planks_stairs": "Oak Plank Stairs",
+    "block.primeval.oak_planks_slab": "Oak Plank Slab",
+    "block.primeval.birch_planks": "Birch Planks",
+    "block.primeval.birch_planks_stairs": "Birch Plank Stairs",
+    "block.primeval.birch_planks_slab": "Birch Plank Slab",
     
     
     "block.primeval.straw": "Straw",
@@ -69,6 +75,7 @@
     "item.primeval.sandy_clay_brick": "Sandy Clay Brick",
     "item.primeval.dried_brick": "Dried Brick",
     "item.primeval.clay_ball": "Clay Ball",
+    "item.primeval.mud_ball": "Mud Ball",
     "item.primeval.clay_brick": "Clay Brick",
     "item.primeval.fired_clay_brick": "Fired Clay Brick",
     "item.primeval.clay_bowl": "Clay Bowl",

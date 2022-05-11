@@ -7,12 +7,18 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "primeval:mud"
-        }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 3.0,
+                "max": 4.0
+              },
+              "add": false
+            }
+          ],
+          "name": "primeval:mud_ball"
         }
       ]
     }
