@@ -28,21 +28,27 @@ public class LayingItemPatchFeature extends Feature<LayingItemPatchFeatureConfig
         BlockPos.Mutable mutable = new BlockPos.Mutable();
         int j = randomPatchFeatureConfig.xzSpread().get(random) + 1;
         int k = randomPatchFeatureConfig.ySpread().get(random) + 1;
-        Item item = randomPatchFeatureConfig.itemSource().getItem();
+        Item item1 = randomPatchFeatureConfig.itemSource().getItem();
+        Item item2 = randomPatchFeatureConfig.secondaryItemSource().getItem();
         int t = randomPatchFeatureConfig.tries().get(random);
         for (int l = 0; l < t; ++l) {
             mutable.set(blockPos, random.nextInt(j) - random.nextInt(j), random.nextInt(k) - random.nextInt(k), random.nextInt(j) - random.nextInt(j));
-            if (!trySetBlock(structureWorldAccess, item, mutable)) continue;
+            if (!trySetBlock(structureWorldAccess, item1, item2, random, mutable)) continue;
             ++i;
         }
         return i > 0;
     }
 
-    protected boolean trySetBlock(WorldAccess world, Item item, BlockPos.Mutable pos) {
+    protected boolean trySetBlock(WorldAccess world, Item item1, Item item2, Random random, BlockPos.Mutable pos) {
         if (world.getBlockState(pos).isAir() && world.getBlockState(pos.down()).isOpaqueFullCube(world, pos)) {
             world.setBlockState(pos, PrimevalBlocks.LAYING_ITEM.getDefaultState(), 4);
             LayingItemBlockEntity ent = (LayingItemBlockEntity) world.getBlockEntity(pos);
-            ent.setItem(new ItemStack(item));
+            if (random.nextInt(5) < 2) {
+                ent.setItem(new ItemStack(item2));
+            } else {
+                ent.setItem(new ItemStack(item1));
+            }
+            return true;
         }
         return false;
     }

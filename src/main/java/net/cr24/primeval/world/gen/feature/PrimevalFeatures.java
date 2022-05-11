@@ -44,13 +44,13 @@ public class PrimevalFeatures {
     /* CONFIGURED FEATURES */
     // ORES
     private static final RegistryEntry<ConfiguredFeature<OreClusterFeatureConfig, ?>> CONFIGURED_NATIVE_COPPER_CLUSTER = register("ore_copper_native", ORE_CLUSTER_FEATURE, Configs.NATIVE_COPPER_ORE_CLUSTER);
-    public static final RegistryEntry<PlacedFeature> NATIVE_COPPER_ORE_CLUSTER = register("ore_copper_native", CONFIGURED_NATIVE_COPPER_CLUSTER, RarityFilterPlacementModifier.of(5), SquarePlacementModifier.of(), getHeightModifier(5,80), BiomePlacementModifier.of());
+    public static final RegistryEntry<PlacedFeature> NATIVE_COPPER_ORE_CLUSTER = register("ore_copper_native", CONFIGURED_NATIVE_COPPER_CLUSTER, RarityFilterPlacementModifier.of(5), SquarePlacementModifier.of(), getHeightModifier(5,160), BiomePlacementModifier.of());
 
     private static final RegistryEntry<ConfiguredFeature<OreClusterFeatureConfig, ?>> CONFIGURED_MALACHITE_COPPER_CLUSTER = register("ore_copper_malachite", ORE_CLUSTER_FEATURE, Configs.MALACHITE_COPPER_ORE_CLUSTER);
     public static final RegistryEntry<PlacedFeature> MALACHITE_COPPER_ORE_CLUSTER = register("ore_copper_malachite", CONFIGURED_MALACHITE_COPPER_CLUSTER, RarityFilterPlacementModifier.of(7), SquarePlacementModifier.of(), getHeightModifier(-20,120), BiomePlacementModifier.of());
 
     private static final RegistryEntry<ConfiguredFeature<OreClusterFeatureConfig, ?>> CONFIGURED_CASSITERITE_TIN_CLUSTER = register("ore_tin_cassiterite", ORE_CLUSTER_FEATURE, Configs.CASSITERITE_TIN_ORE_CLUSTER);
-    public static final RegistryEntry<PlacedFeature> CASSITERITE_TIN_ORE_CLUSTER = register("ore_tin_cassiterite", CONFIGURED_CASSITERITE_TIN_CLUSTER, RarityFilterPlacementModifier.of(4), SquarePlacementModifier.of(), getHeightModifier(30,100), BiomePlacementModifier.of());
+    public static final RegistryEntry<PlacedFeature> CASSITERITE_TIN_ORE_CLUSTER = register("ore_tin_cassiterite", CONFIGURED_CASSITERITE_TIN_CLUSTER, RarityFilterPlacementModifier.of(8), SquarePlacementModifier.of(), getHeightModifier(30,100), BiomePlacementModifier.of());
 
     // BLOBS +
     private static final RegistryEntry<ConfiguredFeature<OreFeatureConfig, ?>> CONFIGURED_DIRT_ORE_BLOBS = register("ore_dirt", Feature.ORE, Configs.DIRT_ORE_BLOBS);
@@ -75,6 +75,18 @@ public class PrimevalFeatures {
 
     private static final RegistryEntry<ConfiguredFeature<LayingItemPatchFeatureConfig, ?>> CONFIGURED_FLINT_ITEM_PATCH = register("laying_item_patch_flint", LAYING_ITEM_PATCH_FEATURE, Configs.FLINT_ITEM_PATCH);
     public static final RegistryEntry<PlacedFeature> FLINT_ITEM_PATCH = register("laying_item_patch_flint", CONFIGURED_FLINT_ITEM_PATCH, RarityFilterPlacementModifier.of(2), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
+
+    private static final RegistryEntry<ConfiguredFeature<LayingItemPatchFeatureConfig, ?>> CONFIGURED_NATIVE_COPPER_ITEM_PATCH = register("laying_item_patch_native_copper", LAYING_ITEM_PATCH_FEATURE, Configs.NATIVE_COPPER_ITEM_PATCH);
+    public static final RegistryEntry<PlacedFeature> NATIVE_COPPER_ITEM_PATCH = register("laying_item_patch_native_copper", CONFIGURED_NATIVE_COPPER_ITEM_PATCH, getWeightedCountPlacementModifier(130, 1), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
+
+    private static final RegistryEntry<ConfiguredFeature<LayingItemPatchFeatureConfig, ?>> CONFIGURED_MALACHITE_COPPER_ITEM_PATCH = register("laying_item_patch_malachite_copper", LAYING_ITEM_PATCH_FEATURE, Configs.MALACHITE_COPPER_ITEM_PATCH);
+    public static final RegistryEntry<PlacedFeature> MALACHITE_COPPER_ITEM_PATCH = register("laying_item_patch_malachite_copper", CONFIGURED_MALACHITE_COPPER_ITEM_PATCH, getWeightedCountPlacementModifier(210, 1), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
+
+    private static final RegistryEntry<ConfiguredFeature<LayingItemPatchFeatureConfig, ?>> CONFIGURED_MIXED_COPPER_ITEM_PATCH = register("laying_item_patch_mixed_copper", LAYING_ITEM_PATCH_FEATURE, Configs.MIXED_COPPER_ITEM_PATCH);
+    public static final RegistryEntry<PlacedFeature> MIXED_COPPER_ITEM_PATCH = register("laying_item_patch_mixed_copper", CONFIGURED_MIXED_COPPER_ITEM_PATCH, getWeightedCountPlacementModifier(70, 1), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
+
+    private static final RegistryEntry<ConfiguredFeature<LayingItemPatchFeatureConfig, ?>> CONFIGURED_CASSITERITE_TIN_ITEM_PATCH = register("laying_item_patch_cassiterite_tin", LAYING_ITEM_PATCH_FEATURE, Configs.CASSITERITE_TIN_ITEM_PATCH);
+    public static final RegistryEntry<PlacedFeature> CASSITERITE_TIN_ITEM_PATCH = register("laying_item_patch_cassiterite_tin", CONFIGURED_CASSITERITE_TIN_ITEM_PATCH, getWeightedCountPlacementModifier(160, 1), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
 
 
     // TREES AND STUFF
@@ -106,7 +118,16 @@ public class PrimevalFeatures {
                         .add(ConstantIntProvider.create(0), i)
                         .add(ConstantIntProvider.create(1), j)
                         .add(ConstantIntProvider.create(2), k)
-                .build())
+                        .build())
+        );
+    }
+
+    private static CountPlacementModifier getWeightedCountPlacementModifier(int i, int j) {
+        return CountPlacementModifier.of(new WeightedListIntProvider(
+                DataPool.<IntProvider>builder()
+                        .add(ConstantIntProvider.create(0), i)
+                        .add(ConstantIntProvider.create(3), j)
+                        .build())
         );
     }
 
@@ -190,13 +211,43 @@ public class PrimevalFeatures {
                 UniformIntProvider.create(8, 12),
                 ConstantIntProvider.create(7),
                 ConstantIntProvider.create(3),
+                new ItemStack(PrimevalItems.STICK),
                 new ItemStack(PrimevalItems.STICK)
         );
         public static final LayingItemPatchFeatureConfig FLINT_ITEM_PATCH = new LayingItemPatchFeatureConfig(
                 UniformIntProvider.create(3, 6),
                 ConstantIntProvider.create(5),
                 ConstantIntProvider.create(3),
+                new ItemStack(PrimevalItems.FLINT),
                 new ItemStack(PrimevalItems.FLINT)
+        );
+        public static final LayingItemPatchFeatureConfig NATIVE_COPPER_ITEM_PATCH = new LayingItemPatchFeatureConfig(
+                UniformIntProvider.create(23, 32),
+                ConstantIntProvider.create(7),
+                ConstantIntProvider.create(3),
+                new ItemStack(PrimevalItems.RAW_COPPER_NATIVE_SMALL),
+                new ItemStack(PrimevalItems.RAW_COPPER_NATIVE_MEDIUM)
+        );
+        public static final LayingItemPatchFeatureConfig MALACHITE_COPPER_ITEM_PATCH = new LayingItemPatchFeatureConfig(
+                UniformIntProvider.create(13, 20),
+                ConstantIntProvider.create(9),
+                ConstantIntProvider.create(3),
+                new ItemStack(PrimevalItems.RAW_COPPER_MALACHITE_SMALL),
+                new ItemStack(PrimevalItems.RAW_COPPER_MALACHITE_MEDIUM)
+        );
+        public static final LayingItemPatchFeatureConfig MIXED_COPPER_ITEM_PATCH = new LayingItemPatchFeatureConfig(
+                UniformIntProvider.create(5, 10),
+                ConstantIntProvider.create(5),
+                ConstantIntProvider.create(3),
+                new ItemStack(PrimevalItems.RAW_COPPER_NATIVE_SMALL),
+                new ItemStack(PrimevalItems.RAW_COPPER_MALACHITE_SMALL)
+        );
+        public static final LayingItemPatchFeatureConfig CASSITERITE_TIN_ITEM_PATCH = new LayingItemPatchFeatureConfig(
+                UniformIntProvider.create(18, 26),
+                ConstantIntProvider.create(7),
+                ConstantIntProvider.create(3),
+                new ItemStack(PrimevalItems.RAW_TIN_CASSITERITE_SMALL),
+                new ItemStack(PrimevalItems.RAW_TIN_CASSITERITE_MEDIUM)
         );
 
         // TREES
