@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "primeval:straw_block"
+    }
+  },
+  "result": {
+    "item": "primeval:straw_slab",
+    "count": 6
+  }
+}

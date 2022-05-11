@@ -88,5 +88,5 @@ def create_ore_set(ore_type):
     generate_standard_item("raw_"+ore_type+"_large")
 
 
-#generate_stairs_block("straw_stairs", "straw_block_side")
-generate_slab_block("straw_slab", "straw_block", "straw_block_side")
+#generate_stairs_block("dried_bricks_stairs", "dried_bricks")
+#generate_slab_block("dried_bricks_slab", "dried_bricks", "dried_bricks")
