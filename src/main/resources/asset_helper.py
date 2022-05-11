@@ -62,6 +62,23 @@ def generate_stairs_block(block_id, texture):
     outer_block_model_file.close()
     item_model_file.close()
     
+   
+def generate_slab_block(block_id, base_block_id, texture):
+    blockstate_file = open(get_asset_path()+MOD_ID+"/blockstates/"+block_id+".json", "w")
+    bottom_block_model_file = open(get_asset_path()+MOD_ID+"/models/block/"+block_id+".json", "w")
+    top_block_model_file = open(get_asset_path()+MOD_ID+"/models/block/"+block_id+"_top.json", "w")
+    item_model_file = open(get_asset_path()+MOD_ID+"/models/item/"+block_id+".json", "w")
+    
+    blockstate_file.write("{\n\t\"variants\": {\n\t\t\"type=bottom\": {\n\t\t\t\"model\": \""+MOD_ID+":block/"+block_id+"\"\n\t\t},\n\t\t\"type=double\": {\n\t\t\t\"model\": \""+MOD_ID+":block/"+base_block_id+"\"\n\t\t},\n\t\t\"type=top\": {\n\t\t\t\"model\": \""+MOD_ID+":block/"+block_id+"_top\"\n\t\t}\n\t}\n}")
+    bottom_block_model_file.write("{\n\t\"parent\": \"minecraft:block/slab\",\n\t\"textures\": {\n\t\t\"bottom\": \""+MOD_ID+":block/"+texture+"\",\n\t\t\"top\": \""+MOD_ID+":block/"+texture+"\",\n\t\t\"side\": \""+MOD_ID+":block/"+texture+"\"\n\t}\n}")
+    top_block_model_file.write("{\n\t\"parent\": \"minecraft:block/slab_top\",\n\t\"textures\": {\n\t\t\"bottom\": \""+MOD_ID+":block/"+texture+"\",\n\t\t\"top\": \""+MOD_ID+":block/"+texture+"\",\n\t\t\"side\": \""+MOD_ID+":block/"+texture+"\"\n\t}\n}")
+    item_model_file.write("{\n\t\"parent\": \""+MOD_ID+":block/"+block_id+"\"\n}")
+    
+    blockstate_file.close()
+    bottom_block_model_file.close()
+    top_block_model_file.close()
+    item_model_file.close()
+    
 def create_ore_set(ore_type):
     generate_standard_block(ore_type+"_ore_small")
     generate_standard_item("raw_"+ore_type+"_small")
@@ -71,4 +88,5 @@ def create_ore_set(ore_type):
     generate_standard_item("raw_"+ore_type+"_large")
 
 
-generate_stairs_block("straw_stairs", "straw_block_side")
+#generate_stairs_block("straw_stairs", "straw_block_side")
+generate_slab_block("straw_slab", "straw_block", "straw_block_side")
