@@ -19,6 +19,16 @@
               "chance": 0.33
             }
           ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "primeval:straw",
+          "conditions": [
+            {
+              "condition": "minecraft:random_chance",
+              "chance": 0.06
+            }
+          ]
         }
       ]
     }
