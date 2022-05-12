@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "SS",
+        "##"
+    ],
+    "key": {
+        "S": {
+            "item": "primeval:straw_mesh"
+        },
+        "#": {
+            "tag": "primeval:planks"
+        }
+    },
+    "result": {
+        "item": "primeval:crude_crafting_bench",
+        "count": 1
+    }
+}

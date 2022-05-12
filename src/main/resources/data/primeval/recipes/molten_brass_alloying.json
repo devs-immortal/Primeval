@@ -1,0 +1,18 @@
+{
+  "type": "primeval:alloying",
+  "input": [
+    {
+      "fluid": "primeval:molten_copper",
+      "min": 0.6,
+      "max": 0.8
+    },
+    {
+      "fluid": "primeval:molten_zinc",
+      "min": 0.2,
+      "max": 0.4
+    }
+  ],
+  "result": {
+    "fluid": "primeval:molten_brass"
+  }
+}

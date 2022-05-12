@@ -1,0 +1,10 @@
+{
+  "type": "primeval:melting",
+  "input": {
+    "item": "primeval:brass_ingot"
+  },
+  "result": {
+    "fluid": "primeval:molten_brass",
+    "amount": 9000
+  }
+}

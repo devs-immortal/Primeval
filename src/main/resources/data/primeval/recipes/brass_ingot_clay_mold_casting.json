@@ -1,0 +1,10 @@
+{
+  "type": "primeval:clay_mold_casting",
+  "input": {
+    "mold": "primeval:fired_clay_mold_ingot",
+    "fluid": "primeval:molten_brass"
+  },
+  "result": {
+    "item": "primeval:brass_ingot"
+  }
+}

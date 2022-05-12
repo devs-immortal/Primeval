@@ -1,0 +1,10 @@
+{
+  "type": "primeval:melting",
+  "input": {
+    "item": "primeval:zinc_ingot"
+  },
+  "result": {
+    "fluid": "primeval:molten_zinc",
+    "amount": 9000
+  }
+}

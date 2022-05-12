@@ -24,6 +24,18 @@
         },
         {
             "predicate": {
+                "fluid": 0.04
+            },
+            "model": "primeval:item/fired_clay_mold_ingot_zinc"
+        },
+        {
+            "predicate": {
+                "fluid": 0.05
+            },
+            "model": "primeval:item/fired_clay_mold_ingot_brass"
+        },
+        {
+            "predicate": {
                 "fluid": 1.0
             },
             "model": "primeval:item/fired_clay_mold_ingot_botched_alloy"

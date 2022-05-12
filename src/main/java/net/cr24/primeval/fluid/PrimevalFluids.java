@@ -29,8 +29,10 @@ public class PrimevalFluids {
 
     public static final FlowableFluid MOLTEN_COPPER = registerFluid("molten_copper", new StillMoltenMetalFluid.Copper());
     public static final FlowableFluid MOLTEN_TIN = registerFluid("molten_tin", new StillMoltenMetalFluid.Tin());
+    public static final FlowableFluid MOLTEN_ZINC = registerFluid("molten_zinc", new StillMoltenMetalFluid.Zinc());
 
     public static final FlowableFluid MOLTEN_BRONZE = registerFluid("molten_bronze", new StillMoltenMetalFluid.Bronze());
+    public static final FlowableFluid MOLTEN_BRASS = registerFluid("molten_brass", new StillMoltenMetalFluid.Brass());
     public static final FlowableFluid MOLTEN_BOTCHED_ALLOY = registerFluid("molten_botched_alloy", new StillMoltenMetalFluid.Botched());
 
 
@@ -44,8 +46,14 @@ public class PrimevalFluids {
         setupFluidRendering(MOLTEN_TIN, null, PrimevalMain.getId("molten_tin"), 0xcbbbcb);
         BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getTranslucent(), MOLTEN_TIN);
 
+        setupFluidRendering(MOLTEN_ZINC, null, PrimevalMain.getId("molten_zinc"), 0xcbbbcb);
+        BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getTranslucent(), MOLTEN_ZINC);
+
         setupFluidRendering(MOLTEN_BRONZE, null, PrimevalMain.getId("molten_bronze"), 0xcbbbcb);
         BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getTranslucent(), MOLTEN_BRONZE);
+
+        setupFluidRendering(MOLTEN_BRASS, null, PrimevalMain.getId("molten_brass"), 0xcbbbcb);
+        BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getTranslucent(), MOLTEN_BRASS);
 
         setupFluidRendering(MOLTEN_BOTCHED_ALLOY, null, PrimevalMain.getId("molten_botched_alloy"), 0xcbbbcb);
         BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getTranslucent(), MOLTEN_BOTCHED_ALLOY);

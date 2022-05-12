@@ -15,6 +15,10 @@ public class PrimevalFluidUtil {
             return 0.02F;
         } else if (f == PrimevalFluids.MOLTEN_BRONZE) {
             return 0.03F;
+        } else if (f == PrimevalFluids.MOLTEN_ZINC) {
+            return 0.04F;
+        } else if (f == PrimevalFluids.MOLTEN_BRASS) {
+            return 0.05F;
         } else if (f == PrimevalFluids.MOLTEN_BOTCHED_ALLOY) {
             return 1F;
         }

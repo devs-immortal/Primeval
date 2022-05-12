@@ -68,6 +68,21 @@ abstract class StillMoltenMetalFluid extends LavaFluid implements FallbackFluid 
         }
     }
 
+    public static class Zinc extends StillMoltenMetalFluid {
+
+        public Fluid getStill() {
+            return PrimevalFluids.MOLTEN_ZINC;
+        }
+
+        public BlockState toBlockState(FluidState state) {
+            return PrimevalBlocks.MOLTEN_ZINC.getDefaultState().with(FluidBlock.LEVEL, getBlockStateLevel(state));
+        }
+
+        public Item getFallbackItem() {
+            return PrimevalItems.ZINC_CHUNK;
+        }
+    }
+
     public static class Bronze extends StillMoltenMetalFluid {
 
         public Fluid getStill() {
@@ -80,6 +95,21 @@ abstract class StillMoltenMetalFluid extends LavaFluid implements FallbackFluid 
 
         public Item getFallbackItem() {
             return PrimevalItems.BRONZE_CHUNK;
+        }
+    }
+
+    public static class Brass extends StillMoltenMetalFluid {
+
+        public Fluid getStill() {
+            return PrimevalFluids.MOLTEN_BRASS;
+        }
+
+        public BlockState toBlockState(FluidState state) {
+            return PrimevalBlocks.MOLTEN_BRASS.getDefaultState().with(FluidBlock.LEVEL, getBlockStateLevel(state));
+        }
+
+        public Item getFallbackItem() {
+            return PrimevalItems.BRASS_CHUNK;
         }
     }
 

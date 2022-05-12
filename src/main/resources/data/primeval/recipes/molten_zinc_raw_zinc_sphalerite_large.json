@@ -1,0 +1,10 @@
+{
+  "type": "primeval:melting",
+  "input": {
+    "item": "primeval:raw_zinc_sphalerite_large"
+  },
+  "result": {
+    "fluid": "primeval:molten_zinc",
+    "amount": 9000
+  }
+}
