@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "S",
+        "#"
+    ],
+    "key": {
+        "S": {
+            "item": "primeval:straw"
+        },
+        "#": {
+            "item": "primeval:stick"
+        }
+    },
+    "result": {
+        "item": "primeval:crude_torch",
+        "count": 3
+    }
+}

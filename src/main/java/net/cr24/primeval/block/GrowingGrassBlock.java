@@ -84,7 +84,7 @@ public class GrowingGrassBlock extends Block {
     }
 
     public boolean isTranslucent(BlockState state, BlockView world, BlockPos pos) {
-        return state.getFluidState().isEmpty();
+        return true;
     }
 
     public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
