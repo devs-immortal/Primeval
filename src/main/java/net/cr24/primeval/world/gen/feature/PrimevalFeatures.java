@@ -50,7 +50,10 @@ public class PrimevalFeatures {
     public static final RegistryEntry<PlacedFeature> MALACHITE_COPPER_ORE_CLUSTER = register("ore_copper_malachite", CONFIGURED_MALACHITE_COPPER_CLUSTER, RarityFilterPlacementModifier.of(7), SquarePlacementModifier.of(), getHeightModifier(-20,120), BiomePlacementModifier.of());
 
     private static final RegistryEntry<ConfiguredFeature<OreClusterFeatureConfig, ?>> CONFIGURED_CASSITERITE_TIN_CLUSTER = register("ore_tin_cassiterite", ORE_CLUSTER_FEATURE, Configs.CASSITERITE_TIN_ORE_CLUSTER);
-    public static final RegistryEntry<PlacedFeature> CASSITERITE_TIN_ORE_CLUSTER = register("ore_tin_cassiterite", CONFIGURED_CASSITERITE_TIN_CLUSTER, RarityFilterPlacementModifier.of(8), SquarePlacementModifier.of(), getHeightModifier(30,100), BiomePlacementModifier.of());
+    public static final RegistryEntry<PlacedFeature> CASSITERITE_TIN_ORE_CLUSTER = register("ore_tin_cassiterite", CONFIGURED_CASSITERITE_TIN_CLUSTER, RarityFilterPlacementModifier.of(10), SquarePlacementModifier.of(), getHeightModifier(30,100), BiomePlacementModifier.of());
+
+    private static final RegistryEntry<ConfiguredFeature<OreClusterFeatureConfig, ?>> CONFIGURED_SPHALERITE_ZINC_CLUSTER = register("ore_zinc_sphalerite", ORE_CLUSTER_FEATURE, Configs.SPHALERITE_ZINC_ORE_CLUSTER);
+    public static final RegistryEntry<PlacedFeature> SPHALERITE_ZINC_ORE_CLUSTER = register("ore_zinc_sphalerite", CONFIGURED_SPHALERITE_ZINC_CLUSTER, RarityFilterPlacementModifier.of(12), SquarePlacementModifier.of(), getHeightModifier(-20,120), BiomePlacementModifier.of());
 
     // BLOBS +
     private static final RegistryEntry<ConfiguredFeature<OreFeatureConfig, ?>> CONFIGURED_DIRT_ORE_BLOBS = register("ore_dirt", Feature.ORE, Configs.DIRT_ORE_BLOBS);
@@ -89,6 +92,9 @@ public class PrimevalFeatures {
 
     private static final RegistryEntry<ConfiguredFeature<LayingItemPatchFeatureConfig, ?>> CONFIGURED_CASSITERITE_TIN_ITEM_PATCH = register("laying_item_patch_cassiterite_tin", LAYING_ITEM_PATCH_FEATURE, Configs.CASSITERITE_TIN_ITEM_PATCH);
     public static final RegistryEntry<PlacedFeature> CASSITERITE_TIN_ITEM_PATCH = register("laying_item_patch_cassiterite_tin", CONFIGURED_CASSITERITE_TIN_ITEM_PATCH, getWeightedCountPlacementModifier(160, 1), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
+
+    private static final RegistryEntry<ConfiguredFeature<LayingItemPatchFeatureConfig, ?>> CONFIGURED_SPHALERITE_ZINC_ITEM_PATCH = register("laying_item_patch_sphalerite_zinc", LAYING_ITEM_PATCH_FEATURE, Configs.SPHALERITE_ZINC_ITEM_PATCH);
+    public static final RegistryEntry<PlacedFeature> SPHALERITE_ZINC_ITEM_PATCH = register("laying_item_patch_sphalerite_zinc", CONFIGURED_SPHALERITE_ZINC_ITEM_PATCH, getWeightedCountPlacementModifier(220, 1), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
 
 
     // TREES AND STUFF
@@ -176,6 +182,15 @@ public class PrimevalFeatures {
                 UniformFloatProvider.create(0.15f, 0.35f),
                 UniformFloatProvider.create(0.3f, 0.5f)
         );
+        public static final OreClusterFeatureConfig SPHALERITE_ZINC_ORE_CLUSTER = new OreClusterFeatureConfig(
+                SimpleBlockStateProvider.of(PrimevalBlocks.ZINC_SPHALERITE_ORE_LARGE),
+                SimpleBlockStateProvider.of(PrimevalBlocks.ZINC_SPHALERITE_ORE_MEDIUM),
+                SimpleBlockStateProvider.of(PrimevalBlocks.ZINC_SPHALERITE_ORE_SMALL),
+                UniformIntProvider.create(3, 6),
+                UniformIntProvider.create(2, 3),
+                UniformFloatProvider.create(0.2f, 0.4f),
+                UniformFloatProvider.create(0.2f, 0.4f)
+        );
         public static final OreFeatureConfig DIRT_ORE_BLOBS = new OreFeatureConfig(
                 List.of(OreFeatureConfig.createTarget(new TagMatchRuleTest(PrimevalBlockTags.NATURAL_STONE), PrimevalBlocks.DIRT.getDefaultState())),
                 33
@@ -258,11 +273,18 @@ public class PrimevalFeatures {
                 new ItemStack(PrimevalItems.RAW_COPPER_MALACHITE_SMALL)
         );
         public static final LayingItemPatchFeatureConfig CASSITERITE_TIN_ITEM_PATCH = new LayingItemPatchFeatureConfig(
-                UniformIntProvider.create(18, 26),
+                UniformIntProvider.create(9, 13),
                 ConstantIntProvider.create(7),
                 ConstantIntProvider.create(3),
                 new ItemStack(PrimevalItems.RAW_TIN_CASSITERITE_SMALL),
                 new ItemStack(PrimevalItems.RAW_TIN_CASSITERITE_MEDIUM)
+        );
+        public static final LayingItemPatchFeatureConfig SPHALERITE_ZINC_ITEM_PATCH = new LayingItemPatchFeatureConfig(
+                UniformIntProvider.create(9, 13),
+                ConstantIntProvider.create(7),
+                ConstantIntProvider.create(3),
+                new ItemStack(PrimevalItems.RAW_ZINC_SPHALERITE_SMALL),
+                new ItemStack(PrimevalItems.RAW_ZINC_SPHALERITE_MEDIUM)
         );
 
         // TREES
