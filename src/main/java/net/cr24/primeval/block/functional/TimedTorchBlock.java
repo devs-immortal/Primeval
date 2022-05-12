@@ -54,7 +54,7 @@ public class TimedTorchBlock extends Block {
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         super.randomTick(state, world, pos, random);
         double burnout = (double)state.get(BURNOUT_STAGE) * 0.1;
-        int randomChance = (int) ((1.0+burnout) * 6);
+        int randomChance = (int) ((1.0+burnout) * 7);
         if (random.nextInt(randomChance) == 0) {
             world.setBlockState(pos, state.with(BURNOUT_STAGE, state.get(BURNOUT_STAGE)+1));
         }

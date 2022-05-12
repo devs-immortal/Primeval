@@ -1,5 +1,7 @@
 package net.cr24.primeval.item;
 
+import net.cr24.primeval.block.PrimevalBlocks;
+import net.cr24.primeval.block.functional.TimedTorchBlock;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.AbstractFireBlock;
 import net.minecraft.block.Block;
@@ -20,6 +22,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -55,19 +58,21 @@ public class FirestarterItem extends WeightedItem {
             return stack;
         }
         ItemStack offHand = user.getStackInHand(Hand.OFF_HAND);
-        Vec3d result = user.raycast(10, 0, false).getPos();
-        if (offHand.getItem() == PrimevalItems.STICK) {
-            BlockPos pos = new BlockPos(result.x, result.y, result.z);
-
-            if (AbstractFireBlock.canPlaceAt(world, pos, user.getHorizontalFacing())) {
-                setFire(world, (PlayerEntity) user, pos);
+        BlockHitResult result = (BlockHitResult) user.raycast(4.5, 0, false);
+        if (result.getType() == HitResult.Type.BLOCK && offHand.getItem() == PrimevalItems.STICK) {
+            BlockPos pos = result.getBlockPos();
+            BlockState existingState = world.getBlockState(pos);
+            if (existingState.getBlock() == PrimevalBlocks.CRUDE_TORCH) {
+                int burnoutStage = existingState.get(TimedTorchBlock.BURNOUT_STAGE);
+                if (burnoutStage != 5) {
+                    world.setBlockState(pos, existingState.with(TimedTorchBlock.BURNOUT_STAGE, 1));
+                }
             } else {
-                BlockPos pos2 = pos.offset(user.getHorizontalFacing().getOpposite());
-                if (AbstractFireBlock.canPlaceAt(world, pos2, user.getHorizontalFacing())) {
+                BlockPos pos2 = pos.offset(result.getSide());
+                if (AbstractFireBlock.canPlaceAt(world, pos2, result.getSide())) {
                     setFire(world, (PlayerEntity) user, pos2);
                 }
             }
-
         }
         return stack;
     }
