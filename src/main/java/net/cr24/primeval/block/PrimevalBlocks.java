@@ -97,7 +97,9 @@ public class PrimevalBlocks {
     public static final Block IRON_HEMATITE_ORE_LARGE = registerBlock("iron_hematite_ore_large", new SemiSupportedBlock(SETTINGS_STONE, 0.35f, COBBLESTONE), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
 
     // Crafted Blocks
-    public static final Block[] STRAW_BLOCKS = registerBlockSet("straw_block", "straw_stairs", "straw_slab", FabricBlockSettings.of(Material.PLANT).strength(0.5F).sounds(BlockSoundGroup.GRASS), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block STRAW_BLOCK = registerBlock("straw_block", new PillarBlock(FabricBlockSettings.of(Material.PLANT).strength(0.5F).sounds(BlockSoundGroup.GRASS)), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block STRAW_STAIRS = registerBlock("straw_stairs", new PrimevalStairsBlock(STRAW_BLOCK.getDefaultState(), FabricBlockSettings.of(Material.PLANT).strength(0.5F).sounds(BlockSoundGroup.GRASS)), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block STRAW_SLAB = registerBlock("straw_slab", new SlabBlock(FabricBlockSettings.of(Material.PLANT).strength(0.5F).sounds(BlockSoundGroup.GRASS)), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block STRAW_MESH = registerBlock("straw_mesh", new Block(FabricBlockSettings.of(Material.PLANT).strength(0.5F).sounds(BlockSoundGroup.GRASS)), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block STRAW_MAT = registerBlock("straw_mat", new CarpetBlock(FabricBlockSettings.of(Material.PLANT).strength(0.3F).sounds(BlockSoundGroup.GRASS)), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block TERRACOTTA = registerBlock("terracotta", new Block(SETTINGS_FIRED_CLAY), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
@@ -119,7 +121,7 @@ public class PrimevalBlocks {
     public static final Block PIT_KILN = registerBlockWithoutItem("pit_kiln", new PitKilnBlock(FabricBlockSettings.of(Material.PLANT).strength(1.0F).sounds(BlockSoundGroup.GRASS).nonOpaque()));
     public static final Block CRUDE_CRAFTING_BENCH = registerBlock("crude_crafting_bench", new PrimevalCraftingTableBlock(SETTINGS_REFINED_WOOD), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
     public static final Block CRUDE_TORCH = registerBlock("crude_torch", new TimedTorchBlock(FabricBlockSettings.of(Material.WOOD, MapColor.OAK_TAN).sounds(BlockSoundGroup.WOOD).breakInstantly().noCollision().luminance(state -> TimedTorchBlock.getLuminanceFromState(state)).ticksRandomly()), Weight.LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
-    public static final Item LIT_CRUDE_TORCH = Registry.register(Registry.ITEM, PrimevalMain.getId("crude_torch_lit"), new WeightedBlockItem(CRUDE_TORCH, new FabricItemSettings().group(PRIMEVAL_BLOCKS).maxCount(Size.SMALL.getStackSize()), Weight.LIGHT, Size.SMALL));
+    public static final Item LIT_CRUDE_TORCH = Registry.register(Registry.ITEM, PrimevalMain.getId("crude_torch_lit"), new WeightedBlockItem(CRUDE_TORCH, new FabricItemSettings().maxCount(Size.SMALL.getStackSize()), Weight.LIGHT, Size.SMALL));
 
     // Fluid Blocks
     public static final Block MOLTEN_COPPER = registerMoltenFluid("molten_copper", PrimevalFluids.MOLTEN_COPPER);
@@ -181,9 +183,10 @@ public class PrimevalBlocks {
         FlammableBlockRegistry.getDefaultInstance().add(GRASS, 60, 100);
         FlammableBlockRegistry.getDefaultInstance().add(BUSH, 60, 100);
 
-        for (Block b : STRAW_BLOCKS) {
-            FlammableBlockRegistry.getDefaultInstance().add(b, 10, 40);
-        }
+        FlammableBlockRegistry.getDefaultInstance().add(STRAW_BLOCK, 10, 40);
+        FlammableBlockRegistry.getDefaultInstance().add(STRAW_STAIRS, 10, 40);
+        FlammableBlockRegistry.getDefaultInstance().add(STRAW_SLAB, 10, 40);
+
         FlammableBlockRegistry.getDefaultInstance().add(STRAW_MESH, 10, 40);
         FlammableBlockRegistry.getDefaultInstance().add(STRAW_MAT, 10, 40);
         FlammableBlockRegistry.getDefaultInstance().add(STRAW_PILE, 10, 40);
@@ -220,7 +223,7 @@ public class PrimevalBlocks {
     }
     private static Block[] registerBlockSet(String base_id, String stairs_id, String slab_id, AbstractBlock.Settings settings, Weight weight, Size size, ItemGroup itemgroup) {
         Block[] blocks = new Block[3];
-        blocks[0] = registerBlock(base_id, new PillarBlock(settings), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
+        blocks[0] = registerBlock(base_id, new Block(settings), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
         blocks[1] = registerBlock(stairs_id, new PrimevalStairsBlock(blocks[0].getDefaultState(), settings), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
         blocks[2] = registerBlock(slab_id, new SlabBlock(settings), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
         return blocks;
