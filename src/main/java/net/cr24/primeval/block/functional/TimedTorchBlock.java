@@ -128,10 +128,10 @@ public class TimedTorchBlock extends Block {
         DIRECTION = DirectionProperty.of("facing", facing -> facing != Direction.UP);
         SHAPES = new VoxelShape[] {
                 Block.createCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 11.0D, 10.0D),  // ground shape
-                Block.createCuboidShape(6.0D, 1.0D, 0.0D, 10.0D, 11.0D, 5.0D),
-                Block.createCuboidShape(11.0D, 1.0D, 6.0D, 16.0D, 11.0D, 10.0D),
-                Block.createCuboidShape(6.0D, 1.0D, 11.0D, 10.0D, 11.0D, 16.0D),
-                Block.createCuboidShape(0.0D, 1.0D, 6.0D, 5.0D, 11.0D, 10.0D)
+                Block.createCuboidShape(6.0D, 3.0D, 0.0D, 10.0D, 13.0D, 5.0D),
+                Block.createCuboidShape(11.0D, 3.0D, 6.0D, 16.0D, 13.0D, 10.0D),
+                Block.createCuboidShape(6.0D, 3.0D, 11.0D, 10.0D, 13.0D, 16.0D),
+                Block.createCuboidShape(0.0D, 3.0D, 6.0D, 5.0D, 13.0D, 10.0D)
         };
     }
 }

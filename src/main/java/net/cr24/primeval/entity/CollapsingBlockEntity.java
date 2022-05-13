@@ -1,6 +1,7 @@
 package net.cr24.primeval.entity;
 
 import com.google.common.collect.Lists;
+import net.cr24.primeval.block.PrimevalBlockTags;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
@@ -96,6 +97,10 @@ public class CollapsingBlockEntity extends FallingBlockEntity {
                     BlockState blockState = this.world.getBlockState(blockPos2);
                     this.setVelocity(this.getVelocity().multiply(0.7D, -0.5D, 0.7D));
                     if (!blockState.isOf(Blocks.MOVING_PISTON)) {
+                        if (blockState.isIn(PrimevalBlockTags.COLLAPSING_NO_CRUSH)) {
+                            blockPos2 = blockPos2.up();
+                            blockState = this.world.getBlockState(blockPos2);
+                        }
                         this.discard();
                         // !destroyedOnLanding
                         if (this.block.contains(Properties.WATERLOGGED) && this.world.getFluidState(blockPos2).getFluid() == Fluids.WATER) {

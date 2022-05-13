@@ -8,6 +8,9 @@
     "primeval:sand",
     "primeval:gravel",
     "primeval:block_of_clay",
+    "primeval:mud_bricks",
+    "primeval:mud_bricks_stairs",
+    "primeval:mud_bricks_slab",
     "primeval:ash_pile"
   ]
 }
