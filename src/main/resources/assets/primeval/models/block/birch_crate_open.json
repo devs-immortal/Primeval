@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "primeval:block/birch_crate_side",
+    "north": "primeval:block/birch_crate_side",
+    "south": "primeval:block/birch_crate_side",
+    "east": "primeval:block/birch_crate_side",
+    "west": "primeval:block/birch_crate_side",
+    "up": "primeval:block/birch_crate_top_open",
+    "down": "primeval:block/birch_barrel_bottom"
+  }
+}

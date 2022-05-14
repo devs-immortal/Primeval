@@ -66,6 +66,8 @@
     "block.primeval.straw": "Straw",
     "block.primeval.crude_crafting_bench": "Crude Crafting Bench",
     "block.primeval.crude_torch": "Crude Torch",
+    "block.primeval.oak_crate": "Oak Storage Crate",
+    "block.primeval.birch_crate": "Birch Storage Crate",
     
     "block.primeval.molten_copper": "Molten Copper",
     "block.primeval.molten_tin": "Molten Tin",
@@ -160,6 +162,8 @@
     
     "item.primeval.fired_clay_jug": "Fired Clay Jug",
     "item.primeval.fired_clay_vessel": "Fired Clay Vessel",
+    
+    "container.primeval.crate": "Crate",
     
     
     "itemGroup.primeval.items": "Primeval Items",

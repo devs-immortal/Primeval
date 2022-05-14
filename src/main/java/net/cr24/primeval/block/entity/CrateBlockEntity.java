@@ -2,6 +2,7 @@ package net.cr24.primeval.block.entity;
 
 import net.cr24.primeval.block.PrimevalBlocks;
 import net.cr24.primeval.block.functional.CrateBlock;
+import net.cr24.primeval.screen.PrimevalContainerScreenHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.LootableContainerBlockEntity;
@@ -12,7 +13,6 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.screen.GenericContainerScreenHandler;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
@@ -21,11 +21,10 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 
 public class CrateBlockEntity extends LootableContainerBlockEntity {
-    private DefaultedList<ItemStack> inventory = DefaultedList.ofSize(27, ItemStack.EMPTY);
+    private DefaultedList<ItemStack> inventory = DefaultedList.ofSize(15, ItemStack.EMPTY);
     private ViewerCountManager stateManager = new ViewerCountManager(){
 
         @Override
@@ -46,8 +45,8 @@ public class CrateBlockEntity extends LootableContainerBlockEntity {
 
         @Override
         protected boolean isPlayerViewing(PlayerEntity player) {
-            if (player.currentScreenHandler instanceof GenericContainerScreenHandler) {
-                Inventory inventory = ((GenericContainerScreenHandler)player.currentScreenHandler).getInventory();
+            if (player.currentScreenHandler instanceof PrimevalContainerScreenHandler) {
+                Inventory inventory = ((PrimevalContainerScreenHandler)player.currentScreenHandler).getInventory();
                 return inventory == CrateBlockEntity.this;
             }
             return false;
@@ -77,7 +76,7 @@ public class CrateBlockEntity extends LootableContainerBlockEntity {
 
     @Override
     public int size() {
-        return 27;
+        return 15;
     }
 
     @Override
@@ -97,7 +96,7 @@ public class CrateBlockEntity extends LootableContainerBlockEntity {
 
     @Override
     protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
-        return GenericContainerScreenHandler.createGeneric9x3(syncId, playerInventory, this);
+        return new PrimevalContainerScreenHandler(syncId, playerInventory, this);
     }
 
     @Override

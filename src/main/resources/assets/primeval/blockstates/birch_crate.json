@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "open=false": {
+      "model": "primeval:block/birch_crate"
+    },
+    "open=true": {
+      "model": "primeval:block/birch_crate_open"
+    }
+  }
+}
