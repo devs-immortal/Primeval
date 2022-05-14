@@ -68,6 +68,9 @@
     "block.primeval.crude_torch": "Crude Torch",
     "block.primeval.oak_crate": "Oak Storage Crate",
     "block.primeval.birch_crate": "Birch Storage Crate",
+    "block.primeval.large_clay_pot": "Large Clay Pot",
+    "block.primeval.fired_large_clay_pot": "Large Fired Clay Pot",
+    "block.primeval.fired_large_decorative_clay_pot": "Large Filled Fired Clay Pot",
     
     "block.primeval.molten_copper": "Molten Copper",
     "block.primeval.molten_tin": "Molten Tin",
@@ -163,7 +166,9 @@
     "item.primeval.fired_clay_jug": "Fired Clay Jug",
     "item.primeval.fired_clay_vessel": "Fired Clay Vessel",
     
+    
     "container.primeval.crate": "Crate",
+    "container.primeval.large_pot": "Large Clay Pot",
     
     
     "itemGroup.primeval.items": "Primeval Items",

@@ -8,6 +8,7 @@ import net.minecraft.util.registry.Registry;
 public class PrimevalBlockTags {
 
     public static final TagKey<Block> COLLAPSING_NO_CRUSH = register("collapsing_no_crush");
+    public static final TagKey<Block> SPECIAL_PLANTABLE = register("special_plantable");
 
     public static final TagKey<Block> LIGHT_SOIL = register("light_soil");
     public static final TagKey<Block> MEDIUM_SOIL = register("medium_soil");

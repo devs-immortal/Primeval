@@ -123,6 +123,10 @@ public class PrimevalBlocks {
     public static final Block OAK_CRATE = registerBlock("oak_crate", new CrateBlock(SETTINGS_REFINED_WOOD), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
     public static final Block BIRCH_CRATE = registerBlock("birch_crate", new CrateBlock(SETTINGS_REFINED_WOOD), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
 
+    public static final Block LARGE_CLAY_POT = registerBlock("large_clay_pot", new DecorativePotBlock(SETTINGS_SOIL.nonOpaque()), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
+    public static final Block LARGE_FIRED_CLAY_POT = registerBlock("fired_large_clay_pot", new StoragePotBlock(SETTINGS_FIRED_CLAY.nonOpaque()), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
+    public static final Block LARGE_DECORATIVE_FIRED_CLAY_POT = registerBlock("fired_large_decorative_clay_pot", new DecorativePotBlock(SETTINGS_FIRED_CLAY.nonOpaque()), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
+
 
     // Intractable Blocks
     public static final Block PIT_KILN = registerBlockWithoutItem("pit_kiln", new PitKilnBlock(FabricBlockSettings.of(Material.PLANT).strength(1.0F).sounds(BlockSoundGroup.GRASS).nonOpaque()));
@@ -145,6 +149,7 @@ public class PrimevalBlocks {
     public static final BlockEntityType<AshPileBlockEntity> ASH_PILE_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, PrimevalMain.getId("ash_pile_block_entity"), FabricBlockEntityTypeBuilder.create(AshPileBlockEntity::new, ASH_PILE).build());
     public static final BlockEntityType<LayingItemBlockEntity> LAYING_ITEM_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, PrimevalMain.getId("laying_item_block_entity"), FabricBlockEntityTypeBuilder.create(LayingItemBlockEntity::new, LAYING_ITEM).build());
     public static final BlockEntityType<CrateBlockEntity> CRATE_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, PrimevalMain.getId("crate_block_entity"), FabricBlockEntityTypeBuilder.create(CrateBlockEntity::new, OAK_CRATE).build());
+    public static final BlockEntityType<StoragePotBlockEntity> LARGE_POT_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, PrimevalMain.getId("large_pot_block_entity"), FabricBlockEntityTypeBuilder.create(StoragePotBlockEntity::new, LARGE_FIRED_CLAY_POT).build());
 
     // Screen Handlers
     public static final ScreenHandlerType<PrimevalContainerScreenHandler> CRATE_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(PrimevalMain.getId("crate_screen_handler"), PrimevalContainerScreenHandler::new);

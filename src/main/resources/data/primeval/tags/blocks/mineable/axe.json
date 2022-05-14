@@ -18,6 +18,8 @@
     "primeval:birch_planks_stairs",
     "primeval:birch_planks_slab",
     "primeval:pit_kiln",
+    "primeval:oak_crate",
+    "primeval:birch_crate",
     "primeval:crude_crafting_bench"
   ]
 }

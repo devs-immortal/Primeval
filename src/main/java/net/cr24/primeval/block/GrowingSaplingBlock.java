@@ -28,6 +28,7 @@ public class GrowingSaplingBlock extends PrimevalPlantBlock {
     }
 
     public boolean inGrowableArea(World world, BlockPos pos) {
+        if (world.getBlockState(pos.down()).isIn(PrimevalBlockTags.SPECIAL_PLANTABLE)) return false;
         // If too dark
         if (world.getLightLevel(pos) < 11) return false;
         // If not in air bubble
@@ -45,5 +46,9 @@ public class GrowingSaplingBlock extends PrimevalPlantBlock {
             }
         }
         return true;
+    }
+
+    public OffsetType getOffsetType() {
+        return OffsetType.NONE;
     }
 }
