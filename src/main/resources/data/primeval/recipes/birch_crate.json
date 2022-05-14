@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "# #",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "primeval:birch_planks"
+    },
+    "S": {
+      "item": "primeval:birch_planks_slab"
+    }
+  },
+  "result": {
+    "item": "primeval:birch_crate",
+    "count": 1
+  }
+}

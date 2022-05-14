@@ -26,7 +26,7 @@ public class PrimevalContainerScreenHandler extends ScreenHandler {
 
         for (int m = 0; m < 3; ++m) {
             for (int l = 0; l < 5; ++l) {
-                this.addSlot(new Slot(inventory, l + m * 3, 44 + l * 18, 17 + m * 18));
+                this.addSlot(new Slot(inventory, l + m * 5, 44 + l * 18, 17 + m * 18));
             }
         }
         //player inventory

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "# #",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "primeval:oak_planks"
+    },
+    "S": {
+      "item": "primeval:oak_planks_slab"
+    }
+  },
+  "result": {
+    "item": "primeval:oak_crate",
+    "count": 1
+  }
+}

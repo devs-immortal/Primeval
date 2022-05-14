@@ -36,7 +36,6 @@ public class Primeval3x5ContainerScreen extends HandledScreen<PrimevalContainerS
     @Override
     protected void init() {
         super.init();
-        // Center the title
         titleX = (backgroundWidth - textRenderer.getWidth(title)) / 2;
     }
 }
