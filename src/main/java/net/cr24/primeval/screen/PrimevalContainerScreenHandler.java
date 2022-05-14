@@ -19,7 +19,6 @@ public class PrimevalContainerScreenHandler extends ScreenHandler {
 
     public PrimevalContainerScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory) {
         super(PrimevalBlocks.CRATE_SCREEN_HANDLER, syncId);
-        System.out.println("create PrimevalContainerScreenHandler");
         this.inventory = inventory;
 
         inventory.onOpen(playerInventory.player);
