@@ -2,6 +2,7 @@ package net.cr24.primeval.block.entity;
 
 import net.cr24.primeval.block.PrimevalBlocks;
 import net.cr24.primeval.block.functional.PrimevalCampfireBlock;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.CampfireBlockEntity;
@@ -24,6 +25,7 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
     private final DefaultedList<ItemStack> itemsBeingCooked = DefaultedList.ofSize(4, ItemStack.EMPTY);
     private final int[] cookingTimes = new int[4];
     private final int[] cookingTotalTimes = new int[4];
+    private int burnTime = 0;
     private int fuel = 0;
     private boolean lit = false;
 
@@ -44,6 +46,7 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
             is = nbt.getIntArray("CookingTotalTimes");
             System.arraycopy(is, 0, this.cookingTotalTimes, 0, Math.min(this.cookingTotalTimes.length, is.length));
         }
+        this.burnTime = nbt.getInt("BurnTime");
         this.fuel = nbt.getInt("Fuel");
         this.lit = nbt.getBoolean("Lit");
     }
@@ -53,12 +56,17 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
         Inventories.writeNbt(nbt, this.itemsBeingCooked, true);
         nbt.putIntArray("CookingTimes", this.cookingTimes);
         nbt.putIntArray("CookingTotalTimes", this.cookingTotalTimes);
+        nbt.putInt("BurnTime", this.burnTime);
         nbt.putInt("Fuel", this.fuel);
         nbt.putBoolean("Lit", this.lit);
     }
 
     public DefaultedList<ItemStack> getItemsBeingCooked() {
         return this.itemsBeingCooked;
+    }
+
+    public int[] getCookingTimes() {
+        return this.cookingTimes;
     }
 
     public List<ItemStack> retrieveCookedItems() {
@@ -71,7 +79,7 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
             this.cookingTimes[i] = 0;
             this.cookingTotalTimes[i] = 0;
         }
-        this.markDirty();
+        this.updateListeners();
         return arr;
     }
 
@@ -82,16 +90,17 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
             this.cookingTotalTimes[i] = cookTime;
             this.cookingTimes[i] = 0;
             this.itemsBeingCooked.set(i, item.split(1));
-            this.markDirty();
+            this.updateListeners();
             return true;
         }
         return false;
     }
 
     public static void tick(World world, BlockPos pos, BlockState state, PrimevalCampfireBlockEntity blockEntity) {
+        boolean bl = false;
         if (blockEntity.lit) {
-            boolean bl = false;
             blockEntity.fuel--;
+            blockEntity.burnTime++;
             for (int i = 0; i < blockEntity.itemsBeingCooked.size(); ++i) {
                 ItemStack itemStack = blockEntity.itemsBeingCooked.get(i);
                 if (itemStack.isEmpty() || blockEntity.cookingTimes[i] == -1) continue;
@@ -104,17 +113,23 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
                     bl = true;
                 }
             }
-            if (bl) {
-                CampfireBlockEntity.markDirty(world, pos, state);
-            }
+            world.updateListeners(pos, state, state, Block.NOTIFY_ALL);
+        }
+        if (bl) {
+            CampfireBlockEntity.markDirty(world, pos, state);
         }
     }
 
+    private void updateListeners() {
+        this.markDirty();
+        this.getWorld().updateListeners(this.getPos(), this.getCachedState(), this.getCachedState(), Block.NOTIFY_ALL);
+    }
 
     @Override
     public NbtCompound toInitialChunkDataNbt() {
         NbtCompound nbtCompound = new NbtCompound();
         Inventories.writeNbt(nbtCompound, this.itemsBeingCooked, true);
+        nbtCompound.putInt("BurnTime", this.burnTime);
         nbtCompound.putInt("Fuel", this.fuel);
         nbtCompound.putBoolean("Lit", this.lit);
         return nbtCompound;

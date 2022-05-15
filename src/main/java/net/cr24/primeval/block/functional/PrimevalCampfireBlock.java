@@ -1,12 +1,10 @@
 package net.cr24.primeval.block.functional;
 
+import net.cr24.primeval.block.LayeredBlock;
 import net.cr24.primeval.block.PrimevalBlocks;
 import net.cr24.primeval.block.entity.PitKilnBlockEntity;
 import net.cr24.primeval.block.entity.PrimevalCampfireBlockEntity;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.BlockWithEntity;
-import net.minecraft.block.PressurePlateBlock;
-import net.minecraft.block.WeightedPressurePlateBlock;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
@@ -24,6 +22,8 @@ import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -31,6 +31,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class PrimevalCampfireBlock extends BlockWithEntity {
+
+    private static final VoxelShape SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 3.0D, 16.0D);
 
     public PrimevalCampfireBlock(Settings settings) {
         super(settings);
@@ -53,11 +55,12 @@ public class PrimevalCampfireBlock extends BlockWithEntity {
         Optional<CampfireCookingRecipe> optional;
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof PrimevalCampfireBlockEntity) {
-            if (itemStack == ItemStack.EMPTY) {
+            if (itemStack == ItemStack.EMPTY && !world.isClient) {
                 List<ItemStack> cooked = ((PrimevalCampfireBlockEntity) blockEntity).retrieveCookedItems();
                 for (ItemStack i : cooked) {
                     player.giveItemStack(i);
                 }
+                return ActionResult.SUCCESS;
             } else {
                 optional = world.getRecipeManager().getFirstMatch(RecipeType.CAMPFIRE_COOKING, new SimpleInventory(itemStack), world);
                 if (optional.isPresent()) {
@@ -72,11 +75,24 @@ public class PrimevalCampfireBlock extends BlockWithEntity {
         return ActionResult.PASS;
     }
 
+    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        return SHAPE;
+    }
+
+    public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        return SHAPE;
+    }
+
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new PrimevalCampfireBlockEntity(pos, state);
     }
+
+    public BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.MODEL;
+    }
+
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
