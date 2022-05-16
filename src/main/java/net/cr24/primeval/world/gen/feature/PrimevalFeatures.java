@@ -81,6 +81,9 @@ public class PrimevalFeatures {
     private static final RegistryEntry<ConfiguredFeature<LayingItemPatchFeatureConfig, ?>> CONFIGURED_FLINT_ITEM_PATCH = register("laying_item_patch_flint", LAYING_ITEM_PATCH_FEATURE, Configs.FLINT_ITEM_PATCH);
     public static final RegistryEntry<PlacedFeature> FLINT_ITEM_PATCH = register("laying_item_patch_flint", CONFIGURED_FLINT_ITEM_PATCH, RarityFilterPlacementModifier.of(2), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
 
+    private static final RegistryEntry<ConfiguredFeature<LayingItemPatchFeatureConfig, ?>> CONFIGURED_ROCK_ITEM_PATCH = register("laying_item_patch_rock", LAYING_ITEM_PATCH_FEATURE, Configs.ROCK_ITEM_PATCH);
+    public static final RegistryEntry<PlacedFeature> ROCK_ITEM_PATCH = register("laying_item_patch_rock", CONFIGURED_ROCK_ITEM_PATCH, RarityFilterPlacementModifier.of(2), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
+
     private static final RegistryEntry<ConfiguredFeature<LayingItemPatchFeatureConfig, ?>> CONFIGURED_NATIVE_COPPER_ITEM_PATCH = register("laying_item_patch_native_copper", LAYING_ITEM_PATCH_FEATURE, Configs.NATIVE_COPPER_ITEM_PATCH);
     public static final RegistryEntry<PlacedFeature> NATIVE_COPPER_ITEM_PATCH = register("laying_item_patch_native_copper", CONFIGURED_NATIVE_COPPER_ITEM_PATCH, getWeightedCountPlacementModifier(130, 1), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
 
@@ -250,6 +253,13 @@ public class PrimevalFeatures {
                 ConstantIntProvider.create(3),
                 new ItemStack(PrimevalItems.FLINT),
                 new ItemStack(PrimevalItems.FLINT)
+        );
+        public static final LayingItemPatchFeatureConfig ROCK_ITEM_PATCH = new LayingItemPatchFeatureConfig(
+                UniformIntProvider.create(3, 9),
+                ConstantIntProvider.create(7),
+                ConstantIntProvider.create(3),
+                new ItemStack(PrimevalItems.ROCK),
+                new ItemStack(PrimevalItems.ROCK)
         );
         public static final LayingItemPatchFeatureConfig NATIVE_COPPER_ITEM_PATCH = new LayingItemPatchFeatureConfig(
                 UniformIntProvider.create(23, 32),

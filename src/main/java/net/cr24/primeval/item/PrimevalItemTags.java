@@ -12,6 +12,10 @@ public class PrimevalItemTags {
 
     public static final TagKey<Item> KNIVES = register("knives");
     public static final TagKey<Item> LOGS = register("logs");
+    public static final TagKey<Item> ROCKS = register("rocks");
+    public static final TagKey<Item> CAMPFIRE_KINDLING = register("campfire_kindling");
+
+
     public static final TagKey<Item> PLANKS = register("planks");
     public static final TagKey<Item> MORTAR = register("mortar");
     public static final TagKey<Item> SAPLINGS = register("saplings");

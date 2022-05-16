@@ -1,37 +1,44 @@
 package net.cr24.primeval.item;
 
 import net.cr24.primeval.block.PrimevalBlocks;
+import net.cr24.primeval.block.entity.PrimevalCampfireBlockEntity;
 import net.cr24.primeval.block.functional.PrimevalCampfireBlock;
 import net.cr24.primeval.block.functional.TimedTorchBlock;
+import net.cr24.primeval.util.PrimevalUtil;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.AbstractFireBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.CampfireBlockEntity;
 import net.minecraft.client.gui.hud.DebugHud;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.*;
 import net.minecraft.potion.PotionUtil;
+import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.UseAction;
+import net.minecraft.util.*;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 public class FirestarterItem extends WeightedItem {
     public FirestarterItem(Settings settings, Weight weight, Size size) {
@@ -57,7 +64,15 @@ public class FirestarterItem extends WeightedItem {
                 PrimevalCampfireBlock.tryLight(world, pos, existingState);
             } else {
                 BlockPos pos2 = pos.offset(result.getSide());
-                if (AbstractFireBlock.canPlaceAt(world, pos2, result.getSide())) {
+
+                if (PrimevalUtil.itemEntitiesInBlock(world, pos2, PrimevalItemTags.LOGS, PrimevalItemTags.ROCKS, PrimevalItemTags.ROCKS, PrimevalItemTags.CAMPFIRE_KINDLING)) {
+                    world.setBlockState(pos2, PrimevalBlocks.CAMPFIRE.getDefaultState().with(PrimevalCampfireBlock.LIT, true));
+                    BlockEntity blockEntity = world.getBlockEntity(pos2);
+                    if (!world.isClient && blockEntity instanceof PrimevalCampfireBlockEntity) {
+                        ((PrimevalCampfireBlockEntity) blockEntity).addFuel(world.getBlockState(pos2), world, pos2, 1200);
+                        ((PrimevalCampfireBlockEntity) blockEntity).setLit(true);
+                    }
+                } else if (AbstractFireBlock.canPlaceAt(world, pos2, result.getSide())) {
                     setFire(world, (PlayerEntity) user, pos2);
                 }
             }

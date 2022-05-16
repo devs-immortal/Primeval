@@ -37,7 +37,7 @@ public class PrimevalWorld {
             buildGeneratorSettings(
                     UNDERGROUND_FEATURES_NO_TIN,
                     List.of(PLAINS_OAK_TRUNKED_TREE,
-                            STICK_ITEM_PATCH, FLINT_ITEM_PATCH,
+                            STICK_ITEM_PATCH, FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
                             NATIVE_COPPER_ITEM_PATCH, MALACHITE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, SPHALERITE_ZINC_ITEM_PATCH,
                             PLAINS_GRASS_PATCH, BUSH_PATCH
                     )
@@ -48,7 +48,7 @@ public class PrimevalWorld {
             buildGeneratorSettings(
                     UNDERGROUND_FEATURES_NO_ZINC,
                     List.of(FOREST_OAK_TRUNKED_TREE,
-                            STICK_ITEM_PATCH, FLINT_ITEM_PATCH,
+                            STICK_ITEM_PATCH, FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
                             NATIVE_COPPER_ITEM_PATCH, MALACHITE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, CASSITERITE_TIN_ITEM_PATCH,
                             OAK_FOREST_GRASS_PATCH, BUSH_PATCH
                     )
@@ -59,7 +59,7 @@ public class PrimevalWorld {
             buildGeneratorSettings(
                     UNDERGROUND_FEATURES_NO_ZINC,
                     List.of(FOREST_DENSE_OAK_TRUNKED_TREE,
-                            STICK_ITEM_PATCH, FLINT_ITEM_PATCH,
+                            STICK_ITEM_PATCH, FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
                             NATIVE_COPPER_ITEM_PATCH, MALACHITE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, CASSITERITE_TIN_ITEM_PATCH,
                             SPARSE_GRASS_PATCH, BUSH_PATCH
                     )
@@ -70,7 +70,7 @@ public class PrimevalWorld {
             buildGeneratorSettings(
                     UNDERGROUND_FEATURES_NO_ZINC,
                     List.of(FOREST_BIRCH_TRUNKED_TREE,
-                            STICK_ITEM_PATCH, FLINT_ITEM_PATCH,
+                            STICK_ITEM_PATCH, FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
                             NATIVE_COPPER_ITEM_PATCH, MALACHITE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, CASSITERITE_TIN_ITEM_PATCH,
                             PLAINS_GRASS_PATCH
                     )
@@ -80,7 +80,7 @@ public class PrimevalWorld {
     public static final RegistryEntry<Biome> ROCKY_OUTCROP = registerBiome(getBiomeKey("inland/rocky_outcrop"), createBiome(
             buildGeneratorSettings(
                     UNDERGROUND_FEATURES_ALL,
-                    List.of(FLINT_ITEM_PATCH,
+                    List.of(FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
                             NATIVE_COPPER_ITEM_PATCH, MALACHITE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, CASSITERITE_TIN_ITEM_PATCH, SPHALERITE_ZINC_ITEM_PATCH,
                             SPARSE_GRASS_PATCH
                     )
@@ -90,7 +90,7 @@ public class PrimevalWorld {
     public static final RegistryEntry<Biome> CRUMBLING_CLIFFS = registerBiome(getBiomeKey("inland/crumbling_cliffs"), createBiome(
             buildGeneratorSettings(
                     UNDERGROUND_FEATURES_ALL,
-                    List.of(FLINT_ITEM_PATCH,
+                    List.of(FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
                             NATIVE_COPPER_ITEM_PATCH, MALACHITE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, CASSITERITE_TIN_ITEM_PATCH, SPHALERITE_ZINC_ITEM_PATCH
                     )
             ),
@@ -101,7 +101,7 @@ public class PrimevalWorld {
     public static final RegistryEntry<Biome> SANDY_SHORE = registerBiome(getBiomeKey("coastal/sandy_shore"), createBiome(
             buildGeneratorSettings(
                     UNDERGROUND_FEATURES_NO_TIN,
-                    List.of(STICK_ITEM_PATCH,
+                    List.of(STICK_ITEM_PATCH, ROCK_ITEM_PATCH,
                             SPARSE_GRASS_PATCH
                     )
             ),
@@ -110,7 +110,7 @@ public class PrimevalWorld {
     public static final RegistryEntry<Biome> ROCKY_SHORE = registerBiome(getBiomeKey("coastal/rocky_shore"), createBiome(
             buildGeneratorSettings(
                     UNDERGROUND_FEATURES_NO_TIN,
-                    List.of(STICK_ITEM_PATCH, FLINT_ITEM_PATCH
+                    List.of(STICK_ITEM_PATCH, FLINT_ITEM_PATCH, ROCK_ITEM_PATCH
                     )
             ),
             Biome.Category.BEACH
