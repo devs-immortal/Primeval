@@ -9,6 +9,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.WaterFluid;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -57,7 +59,7 @@ public class LayingItemBlock extends BlockWithEntity {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             player.giveItemStack(((LayingItemBlockEntity) blockEntity).getItem());
             world.setBlockState(pos, Blocks.AIR.getDefaultState());
-            blockEntity.markRemoved();
+            if (!world.isClient) world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 0.5f, world.getRandom().nextFloat() * 0.4f + 0.8f);
             return ActionResult.SUCCESS;
         } else {
             return super.onUse(state, world, pos, player, hand, hit);

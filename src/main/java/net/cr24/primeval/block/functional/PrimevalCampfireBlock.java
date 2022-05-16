@@ -14,6 +14,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.recipe.CampfireCookingRecipe;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.sound.SoundCategory;
@@ -34,6 +35,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 public class PrimevalCampfireBlock extends BlockWithEntity {
 
@@ -59,7 +61,7 @@ public class PrimevalCampfireBlock extends BlockWithEntity {
                     if (!world.isClient) bl = ((PrimevalCampfireBlockEntity) blockEntity).addFuel(state, world, pos, 2400);
                 } else if (stack.isIn(PrimevalItemTags.BURNABLE_SHORT)) {
                     if (!world.isClient) bl = ((PrimevalCampfireBlockEntity) blockEntity).addFuel(state, world, pos, 300);
-                } else {
+                } else if (state.get(LIT)) {
                     entity.setFireTicks(20);
                 }
                 if (bl) stack.decrement(1);
@@ -93,7 +95,10 @@ public class PrimevalCampfireBlock extends BlockWithEntity {
                     player.giveItemStack(i);
                     bl = true;
                 }
-                if (bl) return ActionResult.SUCCESS;
+                if (bl) {
+                    world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 0.5f, world.getRandom().nextFloat() * 0.4f + 0.8f);
+                    return ActionResult.SUCCESS;
+                }
             } else if (itemStack.getItem() instanceof PrimevalShovelItem && !world.isClient && state.get(LIT)) {
                 ((PrimevalCampfireBlockEntity) blockEntity).setLit(false);
                 world.setBlockState(pos, state.with(LIT, false));
@@ -103,6 +108,7 @@ public class PrimevalCampfireBlock extends BlockWithEntity {
                 if (optional.isPresent()) {
                     CampfireCookingRecipe recipe = optional.get();
                     if (!world.isClient && ((PrimevalCampfireBlockEntity) blockEntity).addItem(itemStack, recipe.getCookTime())) {
+                        world.playSound(null, pos, SoundEvents.BLOCK_STONE_HIT, SoundCategory.BLOCKS, 0.7f, world.getRandom().nextFloat() * 0.4f + 0.8f);
                         return ActionResult.SUCCESS;
                     }
                     return ActionResult.CONSUME;
@@ -139,6 +145,21 @@ public class PrimevalCampfireBlock extends BlockWithEntity {
 
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
+    }
+
+    @Override
+    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+        if (!state.get(LIT).booleanValue()) {
+            return;
+        }
+        if (random.nextInt(6) == 0) {
+            world.playSound((double)pos.getX() + 0.5, (double)pos.getY() + 0.5, (double)pos.getZ() + 0.5, SoundEvents.BLOCK_CAMPFIRE_CRACKLE, SoundCategory.BLOCKS, 0.5f + random.nextFloat(), random.nextFloat() * 0.7f + 0.6f, false);
+        }
+        if (random.nextInt(7) == 0) {
+            for (int i = 0; i < random.nextInt(1) + 1; ++i) {
+                world.addParticle(ParticleTypes.LAVA, (double)pos.getX() + 0.5, (double)pos.getY() + 0.3, (double)pos.getZ() + 0.5, random.nextFloat() / 3.0f, 5.0E-5, random.nextFloat() / 3.0f);
+            }
+        }
     }
 
     @Override

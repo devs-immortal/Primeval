@@ -20,6 +20,8 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.CampfireCookingRecipe;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.IntProperty;
@@ -147,6 +149,7 @@ public class PitKilnBlock extends BlockWithEntity {
                         index+=2;
                     }
                     player.giveItemStack(((PitKilnBlockEntity) blockEntity).removeItem(index));
+                    if (world.isClient) world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 0.5f, world.getRandom().nextFloat() * 0.4f + 0.8f);
                     return ActionResult.SUCCESS;
                 } else {
                     return ActionResult.FAIL;
@@ -174,6 +177,7 @@ public class PitKilnBlock extends BlockWithEntity {
                 if (!player.isCreative()) {
                     player.getStackInHand(hand).decrement(1);
                 }
+                if (world.isClient) world.playSound(null, pos, SoundEvents.BLOCK_GRASS_PLACE, SoundCategory.BLOCKS, 0.3f, world.getRandom().nextFloat() * 0.4f + 0.8f);
                 return ActionResult.SUCCESS;
             } else if (itemStack.isIn(PrimevalItemTags.LOGS) && stage > 3 && stage < 8) {
                 BlockEntity blockEntity = world.getBlockEntity(pos);

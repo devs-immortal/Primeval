@@ -108,7 +108,7 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
         world.setBlockState(pos, state.with(PrimevalCampfireBlock.KINDLING, kState));
     }
 
-    private void updateFireHeight(BlockState state, World world, BlockPos pos, int fireLevel) {
+    private int updateFireHeight(BlockState state, World world, BlockPos pos, int fireLevel) {
         int fState;
         if (fireLevel > 3600) {
             fState = 3;
@@ -120,6 +120,7 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
             fState = 0;
         }
         world.setBlockState(pos, state.with(PrimevalCampfireBlock.FIRE_SCALE, fState));
+        return fState;
     }
 
     public boolean addItem(ItemStack item, int cookTime) {
@@ -137,6 +138,7 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
 
     public void setLit(boolean lighted) {
         this.lit = lighted;
+        if (!lighted) this.burnTime = 0;
         this.updateListeners();
     }
 
@@ -151,7 +153,7 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
             for (int i = 0; i < blockEntity.itemsBeingCooked.size(); ++i) {
                 ItemStack itemStack = blockEntity.itemsBeingCooked.get(i);
                 if (itemStack.isEmpty() || blockEntity.cookingTimes[i] == -1) continue;
-                blockEntity.cookingTimes[i]++;
+                blockEntity.cookingTimes[i] += blockEntity.updateFireHeight(state, world, pos, blockEntity.burnTime)+1;
                 if (blockEntity.cookingTimes[i] >= blockEntity.cookingTotalTimes[i]) {
                     SimpleInventory inventory = new SimpleInventory(itemStack);
                     ItemStack craftingResult = world.getRecipeManager().getFirstMatch(RecipeType.CAMPFIRE_COOKING, inventory, world).map(recipe -> recipe.craft(inventory)).orElse(itemStack);
@@ -163,9 +165,10 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
             blockEntity.updateKindling(state, world, pos, blockEntity.fuel);
             blockEntity.updateFireHeight(state, world, pos, blockEntity.burnTime);
             world.updateListeners(pos, state, state, Block.NOTIFY_ALL);
-        } else {
-            blockEntity.lit = false;
-            world.setBlockState(pos, world.getBlockState(pos).with(PrimevalCampfireBlock.LIT, false));
+        } else if (blockEntity.lit){
+            blockEntity.setLit(false);
+            world.setBlockState(pos, world.getBlockState(pos).with(PrimevalCampfireBlock.LIT, false).with(PrimevalCampfireBlock.KINDLING, 0));
+            world.updateListeners(pos, state, state, Block.NOTIFY_ALL);
         }
         if (bl) {
             CampfireBlockEntity.markDirty(world, pos, state);

@@ -61,6 +61,7 @@ public class FirestarterItem extends WeightedItem {
                     setFire(world, (PlayerEntity) user, pos2);
                 }
             }
+            if (!world.isClient) world.playSound(null, pos, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.BLOCKS, 0.5f, world.getRandom().nextFloat() * 0.4f + 0.8f);
         }
         return stack;
     }
@@ -85,7 +86,6 @@ public class FirestarterItem extends WeightedItem {
     }
 
     private void setFire(World world, PlayerEntity player, BlockPos pos) {
-        world.playSound(player, pos, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.BLOCKS, 1.0f, world.getRandom().nextFloat() * 0.4f + 0.8f);
         BlockState blockState2 = AbstractFireBlock.getState(world, pos);
         world.setBlockState(pos, blockState2, Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD);
     }
