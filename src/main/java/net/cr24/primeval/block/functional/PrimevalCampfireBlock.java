@@ -4,6 +4,8 @@ import net.cr24.primeval.block.PrimevalBlocks;
 import net.cr24.primeval.block.entity.PrimevalCampfireBlockEntity;
 import net.cr24.primeval.item.PrimevalItemTags;
 import net.cr24.primeval.item.PrimevalShovelItem;
+import net.cr24.primeval.recipe.OpenFireRecipe;
+import net.cr24.primeval.recipe.PrimevalRecipes;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -15,7 +17,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.recipe.CampfireCookingRecipe;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -58,9 +59,9 @@ public class PrimevalCampfireBlock extends BlockWithEntity {
             if (blockEntity instanceof PrimevalCampfireBlockEntity) {
                 ItemStack stack = ((ItemEntity) entity).getStack();
                 if (stack.isIn(PrimevalItemTags.BURNABLE_LONG)) {
-                    if (!world.isClient) bl = ((PrimevalCampfireBlockEntity) blockEntity).addFuel(state, world, pos, 2400);
+                    if (!world.isClient) bl = ((PrimevalCampfireBlockEntity) blockEntity).addFuel(state, world, pos, 1200);
                 } else if (stack.isIn(PrimevalItemTags.BURNABLE_SHORT)) {
-                    if (!world.isClient) bl = ((PrimevalCampfireBlockEntity) blockEntity).addFuel(state, world, pos, 300);
+                    if (!world.isClient) bl = ((PrimevalCampfireBlockEntity) blockEntity).addFuel(state, world, pos, 200);
                 } else if (state.get(LIT)) {
                     entity.setFireTicks(20);
                 }
@@ -85,7 +86,7 @@ public class PrimevalCampfireBlock extends BlockWithEntity {
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         ItemStack itemStack = player.getStackInHand(hand);
-        Optional<CampfireCookingRecipe> optional;
+        Optional<OpenFireRecipe> optional;
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof PrimevalCampfireBlockEntity) {
             if (itemStack == ItemStack.EMPTY && !world.isClient) {
@@ -104,10 +105,10 @@ public class PrimevalCampfireBlock extends BlockWithEntity {
                 world.setBlockState(pos, state.with(LIT, false));
                 return ActionResult.SUCCESS;
             } else if (state.get(LIT)) {
-                optional = world.getRecipeManager().getFirstMatch(RecipeType.CAMPFIRE_COOKING, new SimpleInventory(itemStack), world);
+                optional = world.getRecipeManager().getFirstMatch(PrimevalRecipes.OPEN_FIRE, new SimpleInventory(itemStack), world); //TODO
                 if (optional.isPresent()) {
-                    CampfireCookingRecipe recipe = optional.get();
-                    if (!world.isClient && ((PrimevalCampfireBlockEntity) blockEntity).addItem(itemStack, recipe.getCookTime())) {
+                    OpenFireRecipe recipe = optional.get();
+                    if (!world.isClient && ((PrimevalCampfireBlockEntity) blockEntity).addItem(player.isCreative() ? itemStack.copy() : itemStack, recipe.getCookTime())) {
                         world.playSound(null, pos, SoundEvents.BLOCK_STONE_HIT, SoundCategory.BLOCKS, 0.7f, world.getRandom().nextFloat() * 0.4f + 0.8f);
                         return ActionResult.SUCCESS;
                     }

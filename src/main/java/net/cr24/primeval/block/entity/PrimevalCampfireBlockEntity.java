@@ -2,6 +2,7 @@ package net.cr24.primeval.block.entity;
 
 import net.cr24.primeval.block.PrimevalBlocks;
 import net.cr24.primeval.block.functional.PrimevalCampfireBlock;
+import net.cr24.primeval.recipe.PrimevalRecipes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -11,7 +12,6 @@ import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Clearable;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
@@ -155,8 +155,8 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
                 if (itemStack.isEmpty() || blockEntity.cookingTimes[i] == -1) continue;
                 blockEntity.cookingTimes[i] += blockEntity.updateFireHeight(state, world, pos, blockEntity.burnTime)+1;
                 if (blockEntity.cookingTimes[i] >= blockEntity.cookingTotalTimes[i]) {
-                    SimpleInventory inventory = new SimpleInventory(itemStack);
-                    ItemStack craftingResult = world.getRecipeManager().getFirstMatch(RecipeType.CAMPFIRE_COOKING, inventory, world).map(recipe -> recipe.craft(inventory)).orElse(itemStack);
+                    SimpleInventory inventory = new SimpleInventory(itemStack); //TODO
+                    ItemStack craftingResult = world.getRecipeManager().getFirstMatch(PrimevalRecipes.OPEN_FIRE, inventory, world).map(recipe -> recipe.craft(inventory)).orElse(itemStack);
                     blockEntity.itemsBeingCooked.set(i, craftingResult);
                     blockEntity.cookingTimes[i] = -1;
                     bl = true;
