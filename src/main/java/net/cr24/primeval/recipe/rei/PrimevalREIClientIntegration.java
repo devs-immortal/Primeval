@@ -20,15 +20,18 @@ public class PrimevalREIClientIntegration implements REIClientPlugin {
         registry.add(new PitKilnFiringDisplayCategory());
         registry.add(new MeltingDisplayCategory());
         registry.add(new AlloyingDisplayCategory());
+        registry.add(new OpenFireDisplayCategory());
 
         registry.addWorkstations(PrimevalREIIntegration.PIT_KILN_FIRING, EntryStacks.of(PrimevalItems.STRAW));
         registry.addWorkstations(PrimevalREIIntegration.MELTING, EntryStacks.of(PrimevalItems.FIRED_CLAY_VESSEL));
         registry.addWorkstations(PrimevalREIIntegration.ALLOYING, EntryStacks.of(PrimevalItems.FIRED_CLAY_VESSEL));
+        registry.addWorkstations(PrimevalREIIntegration.OPEN_FIRE, EntryStacks.of(PrimevalBlocks.CAMPFIRE));
         registry.addWorkstations(CRAFTING, EntryStacks.of(PrimevalBlocks.CRUDE_CRAFTING_BENCH));
 
         registry.removePlusButton(PrimevalREIIntegration.PIT_KILN_FIRING);
         registry.removePlusButton(PrimevalREIIntegration.MELTING);
         registry.removePlusButton(PrimevalREIIntegration.ALLOYING);
+        registry.removePlusButton(PrimevalREIIntegration.OPEN_FIRE);
     }
 
     @Override
@@ -36,5 +39,6 @@ public class PrimevalREIClientIntegration implements REIClientPlugin {
         registry.registerRecipeFiller(PitKilnFiringRecipe.class, PrimevalRecipes.PIT_KILN_FIRING, PitKilnFiringDisplay::new);
         registry.registerRecipeFiller(MeltingRecipe.class, PrimevalRecipes.MELTING, MeltingDisplay::new);
         registry.registerRecipeFiller(AlloyingRecipe.class, PrimevalRecipes.ALLOYING, AlloyingDisplay::new);
+        registry.registerRecipeFiller(OpenFireRecipe.class, PrimevalRecipes.OPEN_FIRE, OpenFireDisplay::new);
     }
 }

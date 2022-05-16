@@ -66,6 +66,7 @@
     "block.primeval.straw": "Straw",
     "block.primeval.crude_crafting_bench": "Crude Crafting Bench",
     "block.primeval.crude_torch": "Crude Torch",
+    "block.primeval.campfire": "Campfire",
     "block.primeval.oak_crate": "Oak Storage Crate",
     "block.primeval.birch_crate": "Birch Storage Crate",
     "block.primeval.large_clay_pot": "Large Clay Pot",
@@ -179,6 +180,7 @@
     "category.primeval.pit_kiln_firing": "Pit Firing",
     "category.primeval.melting": "Item Melting",
     "category.primeval.alloying": "Fluid Alloying",
+    "category.primeval.open_fire": "Open Fire Cooking",
     
     
     "text.primeval.fluid.contains": "Contains %ddb of %s",

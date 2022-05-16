@@ -1,6 +1,6 @@
 {
 	"credit": "Made by 24Chrome",
-	"parent": "primeval:block/template_large_clay_pot",
+    "parent": "block/block",
 	"textures": {
 		"0": "primeval:block/ash_pile_top",
 		"1": "primeval:block/campfire_stones",

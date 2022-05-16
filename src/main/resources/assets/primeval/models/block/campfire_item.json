@@ -1,12 +1,13 @@
 {
 	"credit": "Made by 24Chrome",
-    "parent": "block/block",
+	"parent": "block/block",
 	"textures": {
 		"0": "primeval:block/ash_pile_top",
 		"1": "primeval:block/campfire_stones",
 		"2": "primeval:block/cobblestone",
 		"3": "primeval:block/oak_log_2",
 		"4": "primeval:block/campfire_kindling",
+		"5": "minecraft:block/campfire_fire",
 		"particle": "primeval:block/ash_pile_top"
 	},
 	"elements": [
@@ -85,8 +86,8 @@
 			}
 		},
 		{
-			"from": [5, 2, 5],
-			"to": [11, 5, 11],
+			"from": [5, 1, 5],
+			"to": [11, 4, 11],
 			"faces": {
 				"north": {"uv": [5, 3, 11, 5], "texture": "#3"},
 				"east": {"uv": [5, 0, 11, 2], "texture": "#3"},
@@ -97,8 +98,8 @@
 			}
 		},
 		{
-			"from": [8, 2, 2],
-			"to": [8, 8, 14],
+			"from": [8, 1, 2],
+			"to": [8, 7, 14],
 			"faces": {
 				"north": {"uv": [0, 0, 0, 6], "texture": "#4"},
 				"east": {"uv": [2, 10, 14, 16], "texture": "#4"},
@@ -109,8 +110,8 @@
 			}
 		},
 		{
-			"from": [2, 1, 8],
-			"to": [14, 7, 8],
+			"from": [2, 0, 8],
+			"to": [14, 6, 8],
 			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 8]},
 			"faces": {
 				"north": {"uv": [2, 10, 14, 16], "texture": "#4"},
@@ -119,6 +120,32 @@
 				"west": {"uv": [0, 0, 0, 6], "texture": "#4"},
 				"up": {"uv": [0, 0, 0, 12], "rotation": 90, "texture": "#4"},
 				"down": {"uv": [0, 0, 0, 12], "rotation": 270, "texture": "#4"}
+			}
+		},
+		{
+			"from": [8, 0, 0],
+			"to": [8, 14, 16],
+			"rotation": {"angle": 45, "axis": "y", "origin": [8, -6, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 0, 14], "texture": "#5"},
+				"east": {"uv": [0, 0, 16, 14], "texture": "#5"},
+				"south": {"uv": [0, 0, 0, 14], "texture": "#5"},
+				"west": {"uv": [0, 0, 16, 14], "texture": "#5"},
+				"up": {"uv": [0, 0, 16, 0], "rotation": 90, "texture": "#5"},
+				"down": {"uv": [0, 0, 16, 0], "rotation": 270, "texture": "#5"}
+			}
+		},
+		{
+			"from": [8, 0, 0],
+			"to": [8, 14, 16],
+			"rotation": {"angle": -45, "axis": "y", "origin": [8, -6, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 0, 14], "texture": "#5"},
+				"east": {"uv": [0, 0, 16, 14], "texture": "#5"},
+				"south": {"uv": [0, 0, 0, 14], "texture": "#5"},
+				"west": {"uv": [0, 0, 16, 14], "texture": "#5"},
+				"up": {"uv": [0, 0, 16, 0], "rotation": 90, "texture": "#5"},
+				"down": {"uv": [0, 0, 16, 0], "rotation": 270, "texture": "#5"}
 			}
 		}
 	],
@@ -133,6 +160,8 @@
 		},
 		6,
 		7,
-		8
+		8,
+		9,
+		10
 	]
 }
