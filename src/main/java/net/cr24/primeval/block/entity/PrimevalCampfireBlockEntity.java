@@ -85,8 +85,8 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
     }
 
     public boolean addFuel(BlockState state, World world, BlockPos pos, int amount) {
-        if (this.fuel < MAX_FUEL) {
-            this.fuel = Math.min(MAX_FUEL, this.fuel + amount);
+        if (this.fuel + amount < MAX_FUEL) {
+            this.fuel += amount;
             this.updateListeners();
             updateKindling(state, world, pos, this.fuel);
             return true;

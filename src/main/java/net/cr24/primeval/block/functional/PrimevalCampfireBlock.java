@@ -16,6 +16,8 @@ import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.CampfireCookingRecipe;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.IntProperty;
@@ -48,22 +50,21 @@ public class PrimevalCampfireBlock extends BlockWithEntity {
 
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-        if (world.isClient) {
-            return;
-        }
         if (entity instanceof ItemEntity) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             boolean bl = false;
             if (blockEntity instanceof PrimevalCampfireBlockEntity) {
                 ItemStack stack = ((ItemEntity) entity).getStack();
                 if (stack.isIn(PrimevalItemTags.BURNABLE_LONG)) {
-                    bl = ((PrimevalCampfireBlockEntity) blockEntity).addFuel(state, world, pos, 2400);
+                    if (!world.isClient) bl = ((PrimevalCampfireBlockEntity) blockEntity).addFuel(state, world, pos, 2400);
                 } else if (stack.isIn(PrimevalItemTags.BURNABLE_SHORT)) {
-                    bl = ((PrimevalCampfireBlockEntity) blockEntity).addFuel(state, world, pos, 300);
+                    if (!world.isClient) bl = ((PrimevalCampfireBlockEntity) blockEntity).addFuel(state, world, pos, 300);
+                } else {
+                    entity.setFireTicks(20);
                 }
+                if (bl) stack.decrement(1);
             }
-            if (bl || state.get(LIT)) entity.damage(DamageSource.IN_FIRE, 10);
-        } else if (state.get(LIT)) {
+        } else if (state.get(LIT) && !world.isClient) {
             entity.damage(DamageSource.IN_FIRE, 1);
         }
     }
@@ -86,11 +87,13 @@ public class PrimevalCampfireBlock extends BlockWithEntity {
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof PrimevalCampfireBlockEntity) {
             if (itemStack == ItemStack.EMPTY && !world.isClient) {
+                boolean bl = false;
                 List<ItemStack> cooked = ((PrimevalCampfireBlockEntity) blockEntity).retrieveCookedItems();
                 for (ItemStack i : cooked) {
                     player.giveItemStack(i);
+                    bl = true;
                 }
-                return ActionResult.SUCCESS;
+                if (bl) return ActionResult.SUCCESS;
             } else if (itemStack.getItem() instanceof PrimevalShovelItem && !world.isClient && state.get(LIT)) {
                 ((PrimevalCampfireBlockEntity) blockEntity).setLit(false);
                 world.setBlockState(pos, state.with(LIT, false));
