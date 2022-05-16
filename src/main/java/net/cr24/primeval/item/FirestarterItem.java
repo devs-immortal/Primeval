@@ -1,5 +1,6 @@
 package net.cr24.primeval.item;
 
+import net.cr24.primeval.block.PrimevalBlockTags;
 import net.cr24.primeval.block.PrimevalBlocks;
 import net.cr24.primeval.block.entity.PrimevalCampfireBlockEntity;
 import net.cr24.primeval.block.functional.PrimevalCampfireBlock;
@@ -65,7 +66,7 @@ public class FirestarterItem extends WeightedItem {
             } else {
                 BlockPos pos2 = pos.offset(result.getSide());
 
-                if (PrimevalUtil.itemEntitiesInBlock(world, pos2, PrimevalItemTags.LOGS, PrimevalItemTags.ROCKS, PrimevalItemTags.ROCKS, PrimevalItemTags.CAMPFIRE_KINDLING)) {
+                if (world.getBlockState(pos2.down()).isIn(PrimevalBlockTags.CAMPFIRE_BASE) && PrimevalUtil.itemEntitiesInBlock(world, pos2, PrimevalItemTags.LOGS, PrimevalItemTags.ROCKS, PrimevalItemTags.ROCKS, PrimevalItemTags.CAMPFIRE_KINDLING)) {
                     world.setBlockState(pos2, PrimevalBlocks.CAMPFIRE.getDefaultState().with(PrimevalCampfireBlock.LIT, true));
                     BlockEntity blockEntity = world.getBlockEntity(pos2);
                     if (!world.isClient && blockEntity instanceof PrimevalCampfireBlockEntity) {

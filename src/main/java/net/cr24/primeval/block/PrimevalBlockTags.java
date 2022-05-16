@@ -15,6 +15,7 @@ public class PrimevalBlockTags {
     public static final TagKey<Block> HEAVY_SOIL = register("heavy_soil");
     public static final TagKey<Block> SOIL = register("soil");
     public static final TagKey<Block> NATURAL_STONE = register("natural_stone");
+    public static final TagKey<Block> CAMPFIRE_BASE = register("campfire_base");
 
     public static final TagKey<Block> TREE_TRUNKS = register("tree_trunks");
     public static final TagKey<Block> LEAVES = register("leaves");

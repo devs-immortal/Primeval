@@ -11,7 +11,6 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class PrimevalUtil {
@@ -35,7 +34,6 @@ public class PrimevalUtil {
                 }
             }
         }
-        System.out.println(Arrays.toString(checks));
         for (int i = 0; i < checks.length; i++) {
             if (!checks[i]) return false;
         }
