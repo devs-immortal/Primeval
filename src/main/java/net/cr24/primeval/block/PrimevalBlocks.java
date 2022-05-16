@@ -133,7 +133,7 @@ public class PrimevalBlocks {
     public static final Block CRUDE_CRAFTING_BENCH = registerBlock("crude_crafting_bench", new PrimevalCraftingTableBlock(SETTINGS_REFINED_WOOD), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
     public static final Block CRUDE_TORCH = registerBlock("crude_torch", new TimedTorchBlock(FabricBlockSettings.of(Material.WOOD, MapColor.OAK_TAN).sounds(BlockSoundGroup.WOOD).breakInstantly().noCollision().luminance(state -> TimedTorchBlock.getLuminanceFromState(state)).ticksRandomly()), Weight.LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
     public static final Item LIT_CRUDE_TORCH = Registry.register(Registry.ITEM, PrimevalMain.getId("crude_torch_lit"), new WeightedBlockItem(CRUDE_TORCH, new FabricItemSettings().maxCount(Size.SMALL.getStackSize()), Weight.LIGHT, Size.SMALL));
-    public static final Block CAMPFIRE = registerBlockWithoutItem("campfire", new PrimevalCampfireBlock(SETTINGS_STONE.nonOpaque()));
+    public static final Block CAMPFIRE = registerBlockWithoutItem("campfire", new PrimevalCampfireBlock(SETTINGS_STONE.luminance(state -> PrimevalCampfireBlock.getLuminanceFromState(state)).nonOpaque()));
 
     // Fluid Blocks
     public static final Block MOLTEN_COPPER = registerMoltenFluid("molten_copper", PrimevalFluids.MOLTEN_COPPER);

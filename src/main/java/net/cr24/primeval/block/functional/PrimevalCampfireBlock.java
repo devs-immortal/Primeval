@@ -1,5 +1,6 @@
 package net.cr24.primeval.block.functional;
 
+import net.cr24.primeval.block.PrimevalBlockTags;
 import net.cr24.primeval.block.PrimevalBlocks;
 import net.cr24.primeval.block.entity.PrimevalCampfireBlockEntity;
 import net.cr24.primeval.item.PrimevalItemTags;
@@ -29,9 +30,12 @@ import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
+import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -49,6 +53,25 @@ public class PrimevalCampfireBlock extends BlockWithEntity {
     public PrimevalCampfireBlock(Settings settings) {
         super(settings);
         this.setDefaultState(this.getDefaultState().with(FIRE_SCALE, 0).with(KINDLING, 0).with(LIT, false));
+    }
+
+    @Override
+    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
+        if (!canPlaceAt(state, world, pos)) {
+            BlockEntity blockEntity = world.getBlockEntity(pos);
+            if (blockEntity instanceof PrimevalCampfireBlockEntity) {
+                DefaultedList<ItemStack> items = ((PrimevalCampfireBlockEntity) blockEntity).getItemsBeingCooked();
+                ItemScatterer.spawn(world, pos, items);
+                blockEntity.markRemoved();
+            }
+            world.breakBlock(pos, true);
+        }
+        super.neighborUpdate(state, world, pos, block, fromPos, notify);
+    }
+
+    @Override
+    public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+        return world.getBlockState(pos.down()).isIn(PrimevalBlockTags.CAMPFIRE_BASE);
     }
 
     @Override
@@ -167,6 +190,18 @@ public class PrimevalCampfireBlock extends BlockWithEntity {
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         super.appendProperties(builder);
         builder.add(FIRE_SCALE, KINDLING, LIT);
+    }
+
+    public static int getLuminanceFromState(BlockState state) {
+        if (!state.get(LIT)) return 0;
+        int burnout = state.get(FIRE_SCALE);
+        switch (burnout) {
+            case 0: return 11;
+            case 1: return 13;
+            case 2: return 14;
+            case 3: return 16;
+        }
+        return 0;
     }
 
     @Override

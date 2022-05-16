@@ -255,7 +255,7 @@ public class PrimevalFeatures {
                 new ItemStack(PrimevalItems.FLINT)
         );
         public static final LayingItemPatchFeatureConfig ROCK_ITEM_PATCH = new LayingItemPatchFeatureConfig(
-                UniformIntProvider.create(3, 9),
+                UniformIntProvider.create(6, 12),
                 ConstantIntProvider.create(7),
                 ConstantIntProvider.create(3),
                 new ItemStack(PrimevalItems.ROCK),

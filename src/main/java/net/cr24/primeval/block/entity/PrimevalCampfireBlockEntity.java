@@ -5,6 +5,7 @@ import net.cr24.primeval.block.functional.PrimevalCampfireBlock;
 import net.cr24.primeval.recipe.PrimevalRecipes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.CampfireBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.CampfireBlockEntity;
 import net.minecraft.inventory.Inventories;
@@ -12,13 +13,16 @@ import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.Clearable;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearable {
 
@@ -144,6 +148,7 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
 
     public static void tick(World world, BlockPos pos, BlockState state, PrimevalCampfireBlockEntity blockEntity) {
         if (world.isClient) {
+            clientParticles(world, pos, state, blockEntity);
             return;
         }
         boolean bl = false;
@@ -155,7 +160,7 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
                 if (itemStack.isEmpty() || blockEntity.cookingTimes[i] == -1) continue;
                 blockEntity.cookingTimes[i] += blockEntity.updateFireHeight(state, world, pos, blockEntity.burnTime)+1;
                 if (blockEntity.cookingTimes[i] >= blockEntity.cookingTotalTimes[i]) {
-                    SimpleInventory inventory = new SimpleInventory(itemStack); //TODO
+                    SimpleInventory inventory = new SimpleInventory(itemStack);
                     ItemStack craftingResult = world.getRecipeManager().getFirstMatch(PrimevalRecipes.OPEN_FIRE, inventory, world).map(recipe -> recipe.craft(inventory)).orElse(itemStack);
                     blockEntity.itemsBeingCooked.set(i, craftingResult);
                     blockEntity.cookingTimes[i] = -1;
@@ -172,6 +177,21 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
         }
         if (bl) {
             CampfireBlockEntity.markDirty(world, pos, state);
+        }
+    }
+
+    private static void clientParticles(World world, BlockPos pos, BlockState state, PrimevalCampfireBlockEntity blockEntity) {
+        if (!state.get(PrimevalCampfireBlock.LIT)) return;
+        Random random = world.random;
+        for (int j = 0; j < blockEntity.itemsBeingCooked.size(); ++j) {
+            if (blockEntity.itemsBeingCooked.get(j).isEmpty() || random.nextFloat() < 0.95f) continue;
+            double d = (double)pos.getX() + 0.15 + 0.7*(j % 2);
+            double e = (double)pos.getY() + 0.3;
+            double g = (double)pos.getZ() + 0.15;
+            if (j > 1) g += 0.7;
+            for (int k = 0; k < 4; ++k) {
+                world.addParticle(ParticleTypes.SMOKE, d, e, g, 0.0, 5.0E-4, 0.0);
+            }
         }
     }
 
