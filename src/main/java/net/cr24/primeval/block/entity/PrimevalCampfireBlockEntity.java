@@ -28,6 +28,7 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
     private int burnTime = 0;
     private int fuel = 0;
     private boolean lit = false;
+    private static final int MAX_FUEL = 12000;
 
     public PrimevalCampfireBlockEntity(BlockPos pos, BlockState state) {
         super(PrimevalBlocks.CAMPFIRE_BLOCK_ENTITY, pos, state);
@@ -83,6 +84,44 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
         return arr;
     }
 
+    public boolean addFuel(BlockState state, World world, BlockPos pos, int amount) {
+        if (this.fuel < MAX_FUEL) {
+            this.fuel = Math.min(MAX_FUEL, this.fuel + amount);
+            this.updateListeners();
+            updateKindling(state, world, pos, this.fuel);
+            return true;
+        }
+        return false;
+    }
+
+    private void updateKindling(BlockState state, World world, BlockPos pos, int fuelAmount) {
+        int kState;
+        if (fuelAmount > 8000) {
+            kState = 3;
+        } else if (fuelAmount > 4000) {
+            kState = 2;
+        } else if (fuelAmount > 0) {
+            kState = 1;
+        } else {
+            kState = 0;
+        }
+        world.setBlockState(pos, state.with(PrimevalCampfireBlock.KINDLING, kState));
+    }
+
+    private void updateFireHeight(BlockState state, World world, BlockPos pos, int fireLevel) {
+        int fState;
+        if (fireLevel > 3600) {
+            fState = 3;
+        } else if (fireLevel > 3000) {
+            fState = 2;
+        } else if (fireLevel > 1800) {
+            fState = 1;
+        } else {
+            fState = 0;
+        }
+        world.setBlockState(pos, state.with(PrimevalCampfireBlock.FIRE_SCALE, fState));
+    }
+
     public boolean addItem(ItemStack item, int cookTime) {
         for (int i = 0; i < this.itemsBeingCooked.size(); ++i) {
             ItemStack itemStack = this.itemsBeingCooked.get(i);
@@ -96,9 +135,17 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
         return false;
     }
 
+    public void setLit(boolean lighted) {
+        this.lit = lighted;
+        this.updateListeners();
+    }
+
     public static void tick(World world, BlockPos pos, BlockState state, PrimevalCampfireBlockEntity blockEntity) {
+        if (world.isClient) {
+            return;
+        }
         boolean bl = false;
-        if (blockEntity.lit) {
+        if (blockEntity.lit && blockEntity.fuel > 0) {
             blockEntity.fuel--;
             blockEntity.burnTime++;
             for (int i = 0; i < blockEntity.itemsBeingCooked.size(); ++i) {
@@ -113,7 +160,12 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
                     bl = true;
                 }
             }
+            blockEntity.updateKindling(state, world, pos, blockEntity.fuel);
+            blockEntity.updateFireHeight(state, world, pos, blockEntity.burnTime);
             world.updateListeners(pos, state, state, Block.NOTIFY_ALL);
+        } else {
+            blockEntity.lit = false;
+            world.setBlockState(pos, world.getBlockState(pos).with(PrimevalCampfireBlock.LIT, false));
         }
         if (bl) {
             CampfireBlockEntity.markDirty(world, pos, state);

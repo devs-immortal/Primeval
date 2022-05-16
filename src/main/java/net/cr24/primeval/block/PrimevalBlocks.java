@@ -175,6 +175,7 @@ public class PrimevalBlocks {
         BlockRenderLayerMap.INSTANCE.putBlock(BIRCH_SAPLING, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BIRCH_LEAVES, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(CRUDE_TORCH, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(CAMPFIRE, RenderLayer.getCutout());
 
         // Color registry on items
         ColorProviderRegistry.ITEM.register((stack, tintIndex) -> 0x91BD59, GRASSY_DIRT.asItem());

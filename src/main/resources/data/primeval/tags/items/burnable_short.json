@@ -1,0 +1,18 @@
+{
+  "replace": false,
+  "values": [
+    "#primeval:saplings",
+    "primeval:straw",
+    "primeval:stick",
+    "primeval:straw_block",
+    "primeval:straw_stairs",
+    "primeval:straw_slab",
+    "primeval:straw_mat",
+    "primeval:oak_planks",
+    "primeval:oak_planks_stairs",
+    "primeval:oak_planks_slab",
+    "primeval:birch_planks",
+    "primeval:birch_planks_stairs",
+    "primeval:birch_planks_slab"
+  ]
+}

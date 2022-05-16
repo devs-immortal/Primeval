@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "#primeval:logs",
+    "#primeval:crates",
+    "primeval:straw_mesh"
+  ]
+}

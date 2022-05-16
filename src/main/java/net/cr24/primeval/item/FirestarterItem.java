@@ -1,6 +1,7 @@
 package net.cr24.primeval.item;
 
 import net.cr24.primeval.block.PrimevalBlocks;
+import net.cr24.primeval.block.functional.PrimevalCampfireBlock;
 import net.cr24.primeval.block.functional.TimedTorchBlock;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.AbstractFireBlock;
@@ -37,21 +38,6 @@ public class FirestarterItem extends WeightedItem {
         super(settings, weight, size);
     }
 
-//    public ActionResult useOnBlock(ItemUsageContext context) {
-//        ItemStack offHand = context.getPlayer().getStackInHand(Hand.OFF_HAND);
-//        if (offHand.getItem() == PrimevalItems.STICK) {
-//            World world = context.getWorld();
-//            BlockPos pos = context.getBlockPos();
-//            PlayerEntity playerEntity = context.getPlayer();
-//            BlockPos blockPos2 = pos.offset(context.getSide());
-//            if (AbstractFireBlock.canPlaceAt(world, blockPos2, context.getPlayerFacing())) {
-//                setFire(world, playerEntity, blockPos2);
-//                return ActionResult.SUCCESS;
-//            }
-//        }
-//        return ActionResult.PASS;
-//    }
-
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
         if (!(user instanceof PlayerEntity)) {
@@ -67,6 +53,8 @@ public class FirestarterItem extends WeightedItem {
                 if (burnoutStage != 5) {
                     world.setBlockState(pos, existingState.with(TimedTorchBlock.BURNOUT_STAGE, 1));
                 }
+            } else if (existingState.getBlock() == PrimevalBlocks.CAMPFIRE) {
+                PrimevalCampfireBlock.tryLight(world, pos, existingState);
             } else {
                 BlockPos pos2 = pos.offset(result.getSide());
                 if (AbstractFireBlock.canPlaceAt(world, pos2, result.getSide())) {
