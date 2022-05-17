@@ -1,0 +1,15 @@
+{
+    "type": "primeval:item_damaging",
+    "ingredients": [
+        {
+            "tag": "primeval:axes"
+        },
+        {
+            "item": "primeval:oak_log"
+        }
+    ],
+    "result": {
+        "item": "primeval:oak_planks",
+        "count": 4
+    }
+}

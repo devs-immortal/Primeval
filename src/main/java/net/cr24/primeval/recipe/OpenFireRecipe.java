@@ -56,6 +56,11 @@ public class OpenFireRecipe implements Recipe<Inventory>  {
     }
 
     @Override
+    public boolean isIgnoredInRecipeBook() {
+        return true;
+    }
+
+    @Override
     public ItemStack createIcon() {
         return new ItemStack(Blocks.CAMPFIRE);
     }
@@ -76,8 +81,7 @@ public class OpenFireRecipe implements Recipe<Inventory>  {
     }
 
     public static class Serializer implements RecipeSerializer<OpenFireRecipe> {
-        public Serializer() {
-        }
+        public Serializer() {}
 
         public OpenFireRecipe read(Identifier identifier, JsonObject jsonObject) {
             Ingredient in = Ingredient.fromJson(JsonHelper.getObject(jsonObject, "input"));

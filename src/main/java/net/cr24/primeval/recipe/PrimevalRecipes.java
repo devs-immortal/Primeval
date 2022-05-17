@@ -1,10 +1,7 @@
 package net.cr24.primeval.recipe;
 
 import net.cr24.primeval.PrimevalMain;
-import net.minecraft.recipe.CampfireCookingRecipe;
-import net.minecraft.recipe.CookingRecipeSerializer;
-import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.recipe.RecipeType;
+import net.minecraft.recipe.*;
 import net.minecraft.util.registry.Registry;
 public class PrimevalRecipes {
 
@@ -16,7 +13,12 @@ public class PrimevalRecipes {
     public static final RecipeSerializer<MeltingRecipe> MELTING_SERIALIZER;
     public static final RecipeType<AlloyingRecipe> ALLOYING;
     public static final RecipeSerializer<AlloyingRecipe> ALLOYING_SERIALIZER;
+
     public static final RecipeSerializer<ClayMoldCastingRecipe> CLAY_MOLD_CASTING_SERIALIZER;
+
+
+    public static final RecipeSerializer<ItemDamagingRecipe> ITEM_DAMAGING_SERIALIZER;
+
 
     static {
         PIT_KILN_FIRING = Registry.register(Registry.RECIPE_TYPE, PrimevalMain.getId("pit_kiln_firing"), new RecipeType<PitKilnFiringRecipe>() {
@@ -45,7 +47,7 @@ public class PrimevalRecipes {
 
         CLAY_MOLD_CASTING_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, PrimevalMain.getId("clay_mold_casting"), new ClayMoldCastingRecipe.Serializer());
 
-
+        ITEM_DAMAGING_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, PrimevalMain.getId("item_damaging"), new ItemDamagingRecipe.Serializer());
     }
 
     public static void init() {}
