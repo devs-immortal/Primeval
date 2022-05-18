@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "primeval:oak_fence",
+    "primeval:oak_log_fence",
+    "primeval:birch_fence",
+    "primeval:birch_log_fence"
+  ]
+}

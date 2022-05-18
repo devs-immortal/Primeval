@@ -114,8 +114,8 @@ public class PrimevalBlocks {
     public static final Block[] DRIED_BRICK_BLOCKS = registerBlockSet("dried_bricks", SETTINGS_FIRED_CLAY, Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block[] MUD_BRICKS = registerBlockSet("mud_bricks", SETTINGS_TOUGH_SOIL, Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block DAUB = registerBlock("daub", new Block(SETTINGS_REFINED_WOOD), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
-    public static final Block[] OAK_PLANK_BLOCKS = registerBlockSet("oak_planks", SETTINGS_REFINED_WOOD, Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
-    public static final Block[] BIRCH_PLANK_BLOCKS = registerBlockSet("birch_planks", SETTINGS_REFINED_WOOD, Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block[] OAK_PLANK_BLOCKS = registerWoodBlockSet("oak", SETTINGS_REFINED_WOOD, Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block[] BIRCH_PLANK_BLOCKS = registerWoodBlockSet("birch", SETTINGS_REFINED_WOOD, Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
 
     // Technical Blocks or Blocks with other BlockItems than themselves
     public static final Block STRAW_PILE = registerBlockWithoutItem("straw", new StrawLayeredBlock(FabricBlockSettings.of(Material.PLANT).strength(0.5F).sounds(BlockSoundGroup.GRASS)));
@@ -178,6 +178,9 @@ public class PrimevalBlocks {
         BlockRenderLayerMap.INSTANCE.putBlock(BIRCH_LEAVES, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(CRUDE_TORCH, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(CAMPFIRE, RenderLayer.getCutout());
+
+        BlockRenderLayerMap.INSTANCE.putBlock(OAK_PLANK_BLOCKS[6], RenderLayer.getCutout()); // Oak door
+        BlockRenderLayerMap.INSTANCE.putBlock(OAK_PLANK_BLOCKS[7], RenderLayer.getCutout()); // Oak trapdoor
 
         // Color registry on items
         ColorProviderRegistry.ITEM.register((stack, tintIndex) -> 0x91BD59, GRASSY_DIRT.asItem());
@@ -255,6 +258,22 @@ public class PrimevalBlocks {
         blocks[0] = registerBlock(base_id, new Block(settings), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
         blocks[1] = registerBlock(stairs_id, new PrimevalStairsBlock(blocks[0].getDefaultState(), settings), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
         blocks[2] = registerBlock(slab_id, new SlabBlock(settings), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
+        return blocks;
+    }
+
+    private static Block[] registerWoodBlockSet(String id, AbstractBlock.Settings settings, Weight weight, Size size, ItemGroup itemgroup) {
+        return registerWoodBlockSet(id+"_planks", id+"_stairs", id+"_slab", id+"_fence", id+"_log_fence", id+"_fence_gate", id+"_door", id+"_trapdoor", settings, weight, size, itemgroup);
+    }
+    private static Block[] registerWoodBlockSet(String block_id, String stairs_id, String slab_id, String fence_id, String log_fence_id, String fence_gate_id, String door_id, String trapdoor_id, AbstractBlock.Settings settings, Weight weight, Size size, ItemGroup itemgroup) {
+        Block[] blocks = new Block[8];
+        blocks[0] = registerBlock(block_id, new Block(settings), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
+        blocks[1] = registerBlock(stairs_id, new PrimevalStairsBlock(blocks[0].getDefaultState(), settings), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
+        blocks[2] = registerBlock(slab_id, new SlabBlock(settings), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
+        blocks[3] = registerBlock(fence_id, new FenceBlock(settings), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
+        blocks[4] = registerBlock(log_fence_id, new FenceBlock(settings), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
+        blocks[5] = registerBlock(fence_gate_id, new FenceGateBlock(settings), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
+        blocks[6] = registerBlock(door_id, new PrimevalDoorBlock(settings.nonOpaque()), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
+        blocks[7] = registerBlock(trapdoor_id, new PrimevalTrapdoorBlock(settings.nonOpaque()), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
         return blocks;
     }
 

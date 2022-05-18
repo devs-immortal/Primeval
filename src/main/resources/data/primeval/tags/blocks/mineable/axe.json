@@ -11,15 +11,28 @@
     "primeval:straw_mat",
     "primeval:straw",
     "primeval:daub",
+    
     "primeval:oak_planks",
-    "primeval:oak_planks_stairs",
-    "primeval:oak_planks_slab",
-    "primeval:birch_planks",
-    "primeval:birch_planks_stairs",
-    "primeval:birch_planks_slab",
-    "primeval:pit_kiln",
+    "primeval:oak_stairs",
+    "primeval:oak_slab",
+    "primeval:oak_fence",
+    "primeval:oak_log_fence",
+    "primeval:oak_fence_gate",
+    "primeval:oak_door",
+    "primeval:oak_trapdoor",
     "primeval:oak_crate",
+    
+    "primeval:birch_planks",
+    "primeval:birch_stairs",
+    "primeval:birch_slab",
+    "primeval:birch_fence",
+    "primeval:birch_log_fence",
+    "primeval:birch_fence_gate",
+    "primeval:birch_door",
+    "primeval:birch_trapdoor",
     "primeval:birch_crate",
+    
+    "primeval:pit_kiln",
     "primeval:crude_crafting_bench"
   ]
 }

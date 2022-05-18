@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PSP",
+    "PSP"
+  ],
+  "key": {
+    "P": {
+      "item": "primeval:oak_log"
+    },
+    "S": {
+      "item": "primeval:oak_slab"
+    }
+  },
+  "result": {
+    "item": "primeval:oak_log_fence",
+    "count": 6
+  }
+}

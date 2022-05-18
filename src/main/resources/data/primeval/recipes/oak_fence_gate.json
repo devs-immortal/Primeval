@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PSP",
+    "PSP"
+  ],
+  "key": {
+    "P": {
+      "item": "primeval:stick"
+    },
+    "S": {
+      "item": "primeval:oak_planks"
+    }
+  },
+  "result": {
+    "item": "primeval:oak_fence_gate",
+    "count": 2
+  }
+}

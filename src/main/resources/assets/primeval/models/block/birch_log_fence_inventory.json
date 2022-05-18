@@ -1,0 +1,8 @@
+{
+  "parent": "primeval:block/thick_fence_inventory",
+  "textures": {
+    "side": "primeval:block/birch_log_2",
+	"top": "primeval:block/birch_log_fence_top",
+    "plank": "primeval:block/birch_planks"
+  }
+}

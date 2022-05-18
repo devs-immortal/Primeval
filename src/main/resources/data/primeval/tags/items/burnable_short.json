@@ -9,10 +9,10 @@
     "primeval:straw_slab",
     "primeval:straw_mat",
     "primeval:oak_planks",
-    "primeval:oak_planks_stairs",
-    "primeval:oak_planks_slab",
+    "primeval:oak_stairs",
+    "primeval:oak_slab",
     "primeval:birch_planks",
-    "primeval:birch_planks_stairs",
-    "primeval:birch_planks_slab"
+    "primeval:birch_stairs",
+    "primeval:birch_slab"
   ]
 }

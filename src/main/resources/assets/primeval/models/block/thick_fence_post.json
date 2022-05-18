@@ -1,0 +1,23 @@
+{
+	"credit": "Made by 24Chrome",
+	"textures": {
+		"1": "#side",
+		"2": "#top",
+		"particle": "#top"
+	},
+	"elements": [
+		{
+			"name": "center_post",
+			"from": [5, 0, 5],
+			"to": [11, 16, 11],
+			"faces": {
+				"north": {"uv": [12, 0, 6, 16], "texture": "#1"},
+				"east": {"uv": [4, 0, 10, 16], "texture": "#1"},
+				"south": {"uv": [12, 0, 6, 16], "texture": "#1"},
+				"west": {"uv": [4, 0, 10, 16], "texture": "#1"},
+				"up": {"uv": [5, 5, 11, 11], "texture": "#2"},
+				"down": {"uv": [5, 5, 11, 11], "texture": "#2"}
+			}
+		}
+	]
+}
