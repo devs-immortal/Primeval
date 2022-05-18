@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-    "primeval:flint_knife"
+    "primeval:flint_knife",
+    "primeval:copper_knife",
+    "primeval:bronze_knife"
   ]
 }

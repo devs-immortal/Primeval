@@ -1,0 +1,15 @@
+{
+    "type": "primeval:item_damaging",
+    "ingredients": [
+        {
+            "tag": "primeval:knives"
+        },
+        {
+            "tag": "primeval:planks"
+        }
+    ],
+    "result": {
+        "item": "primeval:stick",
+        "count": 2
+    }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "H",
+    "S"
+  ],
+  "key": {
+    "H": {
+      "item": "primeval:copper_chisel_head"
+    },
+    "S": {
+      "item": "primeval:stick"
+    }
+  },
+  "result": {
+    "item": "primeval:copper_chisel",
+    "count": 1
+  }
+}

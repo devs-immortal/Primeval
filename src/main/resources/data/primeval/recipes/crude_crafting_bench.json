@@ -6,7 +6,7 @@
     ],
     "key": {
         "S": {
-            "item": "primeval:straw_mesh"
+            "item": "primeval:straw_block"
         },
         "#": {
             "tag": "primeval:planks"

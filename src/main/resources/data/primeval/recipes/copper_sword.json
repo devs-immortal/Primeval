@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "H",
+    "S"
+  ],
+  "key": {
+    "H": {
+      "item": "primeval:copper_sword_blade"
+    },
+    "S": {
+      "item": "primeval:stick"
+    }
+  },
+  "result": {
+    "item": "primeval:copper_sword",
+    "count": 1
+  }
+}

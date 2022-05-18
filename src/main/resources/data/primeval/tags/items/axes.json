@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-    "primeval:flint_axe"
+    "primeval:flint_axe",
+    "primeval:copper_axe",
+    "primeval:bronze_axe"
   ]
 }

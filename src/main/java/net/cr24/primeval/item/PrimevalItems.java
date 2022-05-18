@@ -79,6 +79,15 @@ public class PrimevalItems {
     public static final Item RAW_IRON_HEMATITE_MEDIUM = registerItem("raw_iron_hematite_medium", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
     public static final Item RAW_IRON_HEMATITE_LARGE = registerItem("raw_iron_hematite_large", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.LARGE));
 
+
+    // Tools
+    public static final Item FLINT_AXE = registerItem("flint_axe", new PrimevalAxeItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.FLINT.getAttackDamage(), -3.0f, new Item.Settings().group(PRIMEVAL_TOOLS), Weight.HEAVY, Size.LARGE));
+    public static final Item FLINT_KNIFE = registerItem("flint_knife", new PrimevalSwordItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.FLINT.getAttackDamage()*PrimevalToolMaterials.KNIFE_DAMAGE_MULTIPLIER, -3.0f, new Item.Settings().group(PRIMEVAL_TOOLS), Weight.HEAVY, Size.LARGE));
+    public static final Item FLINT_SHOVEL = registerItem("flint_shovel", new PrimevalShovelItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.FLINT.getAttackDamage()*PrimevalToolMaterials.BLUNT_DAMAGE_MULTIPLIER, -3.0f, new Item.Settings().group(PRIMEVAL_TOOLS), Weight.HEAVY, Size.LARGE));
+    public static final Item[] COPPER_TOOLS = registerToolSet("copper", PrimevalToolMaterials.COPPER, new Item.Settings().group(PRIMEVAL_TOOLS), Weight.HEAVY, Size.LARGE);
+    public static final Item[] BRONZE_TOOLS = registerToolSet("bronze", PrimevalToolMaterials.BRONZE, new Item.Settings().group(PRIMEVAL_TOOLS), Weight.HEAVY, Size.LARGE);
+
+
     // Metal Items
     // Primary
     public static final Item COPPER_INGOT = registerItem("copper_ingot", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
@@ -95,19 +104,8 @@ public class PrimevalItems {
     public static final Item BOTCHED_ALLOY_INGOT = registerItem("botched_alloy_ingot", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
     public static final Item BOTCHED_ALLOY_CHUNK = registerItem("botched_alloy_chunk", new WeightedItem(GROUP_ITEMS, Weight.LIGHT, Size.SMALL));
     // Tool Parts
-    public static final Item COPPER_AXE_HEAD = registerItem("copper_axe_head", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
-    public static final Item COPPER_CHISEL_HEAD = registerItem("copper_chisel_head", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
-    public static final Item COPPER_KNIFE_BLADE = registerItem("copper_knife_blade", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
-    public static final Item COPPER_PICKAXE_HEAD = registerItem("copper_pickaxe_head", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
-    public static final Item COPPER_SHOVEL_HEAD = registerItem("copper_shovel_head", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
-    public static final Item COPPER_SWORD_BLADE = registerItem("copper_sword_blade", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
-
-    public static final Item BRONZE_AXE_HEAD = registerItem("bronze_axe_head", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
-    public static final Item BRONZE_CHISEL_HEAD = registerItem("bronze_chisel_head", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
-    public static final Item BRONZE_KNIFE_BLADE = registerItem("bronze_knife_blade", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
-    public static final Item BRONZE_PICKAXE_HEAD = registerItem("bronze_pickaxe_head", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
-    public static final Item BRONZE_SHOVEL_HEAD = registerItem("bronze_shovel_head", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
-    public static final Item BRONZE_SWORD_BLADE = registerItem("bronze_sword_blade", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
+    public static final Item[] COPPER_TOOL_PARTS = registerToolPartSet("copper", GROUP_TOOLS, Weight.NORMAL, Size.MEDIUM);
+    public static final Item[] BRONZE_TOOL_PARTS = registerToolPartSet("bronze", GROUP_TOOLS, Weight.NORMAL, Size.MEDIUM);
 
 
     // Molds
@@ -132,12 +130,6 @@ public class PrimevalItems {
     // Utility items
     //public static final Item FIRED_CLAY_JUG = registerItem("fired_clay_jug", new JugItem(GROUP_TOOLS.maxDamage(0), Weight.NORMAL, Size.LARGE)); // TODO: add
     public static final Item FIRED_CLAY_VESSEL = registerItem("fired_clay_vessel", new VesselItem(new Item.Settings().group(PRIMEVAL_TOOLS).maxCount(1), Weight.NORMAL, Size.LARGE));
-
-
-    // Tools
-    public static final Item FLINT_KNIFE = registerItem("flint_knife", new PrimevalSwordItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.FLINT.getAttackDamage()*PrimevalToolMaterials.KNIFE_DAMAGE_MULTIPLIER, -3.0f, GROUP_TOOLS, Weight.HEAVY, Size.LARGE));
-    public static final Item FLINT_AXE = registerItem("flint_axe", new PrimevalAxeItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.FLINT.getAttackDamage(), -3.0f, new Item.Settings().group(PRIMEVAL_TOOLS), Weight.HEAVY, Size.LARGE));
-    public static final Item FLINT_SHOVEL = registerItem("flint_shovel", new PrimevalShovelItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.FLINT.getAttackDamage()*PrimevalToolMaterials.BLUNT_DAMAGE_MULTIPLIER, -3.0f, GROUP_TOOLS, Weight.HEAVY, Size.LARGE));
 
 
 
@@ -170,4 +162,27 @@ public class PrimevalItems {
         }
 
     }
+
+    private static Item[] registerToolPartSet(String material_id, Item.Settings group, Weight weight, Size size) {
+        Item[] items = new Item[6];
+        items[0] = registerItem(material_id+"_axe_head", new WeightedItem(group, weight, size));
+        items[1] = registerItem(material_id+"_chisel_head", new WeightedItem(group, weight, size));
+        items[2] = registerItem(material_id+"_knife_blade", new WeightedItem(group, weight, size));
+        items[3] = registerItem(material_id+"_pickaxe_head", new WeightedItem(group, weight, size));
+        items[4] = registerItem(material_id+"_shovel_head", new WeightedItem(group, weight, size));
+        items[5] = registerItem(material_id+"_sword_blade", new WeightedItem(group, weight, size));
+        return items;
+    }
+
+    private static Item[] registerToolSet(String material_id, ToolMaterial material, Item.Settings group, Weight weight, Size size) {
+        Item[] items = new Item[6];
+        items[0] = registerItem(material_id+"_axe", new PrimevalAxeItem(material, material.getAttackDamage(), -3.0f, group, weight, size));
+        items[1] = registerItem(material_id+"_chisel", new ChiselItem(material, group, weight, size));
+        items[2] = registerItem(material_id+"_knife", new PrimevalSwordItem(material, material.getAttackDamage()*PrimevalToolMaterials.KNIFE_DAMAGE_MULTIPLIER, -3.0f, group, weight, size));
+        items[3] = registerItem(material_id+"_pickaxe", new PrimevalPickaxeItem(material, material.getAttackDamage(), -3.0f, group, weight, size));
+        items[4] = registerItem(material_id+"_shovel", new PrimevalShovelItem(material, material.getAttackDamage()*PrimevalToolMaterials.BLUNT_DAMAGE_MULTIPLIER, -3.0f, group, weight, size));
+        items[5] = registerItem(material_id+"_sword", new PrimevalSwordItem(material, material.getAttackDamage()*PrimevalToolMaterials.SWORD_DAMAGE_MULTIPLIER, -2.5f, group, weight, size));
+        return items;
+    }
+
 }

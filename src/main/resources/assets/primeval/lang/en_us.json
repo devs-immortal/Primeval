@@ -171,9 +171,23 @@
     "item.primeval.fired_clay_mold_sword_blade": "Fired Clay Sword Blade Mold",
     
     
-    "item.primeval.flint_knife": "Flint Knife",
     "item.primeval.flint_axe": "Flint Hatchet",
+    "item.primeval.flint_knife": "Flint Knife",
     "item.primeval.flint_shovel": "Flint Shovel",
+    
+    "item.primeval.copper_axe": "Copper Axe",
+    "item.primeval.copper_chisel": "Copper Chisel",
+    "item.primeval.copper_knife": "Copper Knife",
+    "item.primeval.copper_pickaxe": "Copper Pickaxe",
+    "item.primeval.copper_shovel": "Copper Shovel",
+    "item.primeval.copper_sword": "Copper Shortsword",
+    
+    "item.primeval.bronze_axe": "Bronze Axe",
+    "item.primeval.bronze_chisel": "Bronze Chisel",
+    "item.primeval.bronze_knife": "Bronze Knife",
+    "item.primeval.bronze_pickaxe": "Bronze Pickaxe",
+    "item.primeval.bronze_shovel": "Bronze Shovel",
+    "item.primeval.bronze_sword": "Bronze Shortsword",
     
     "item.primeval.fired_clay_jug": "Fired Clay Jug",
     "item.primeval.fired_clay_vessel": "Fired Clay Vessel",
