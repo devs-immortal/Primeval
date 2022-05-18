@@ -74,6 +74,15 @@ public class PrimevalFeatures {
     private static final RegistryEntry<ConfiguredFeature<RandomPatchFeatureConfig, ?>> CONFIGURED_BUSH_PATCH = register("patch_bush", Feature.RANDOM_PATCH, Configs.BUSH_PATCH);
     public static final RegistryEntry<PlacedFeature> BUSH_PATCH = register("patch_bush", CONFIGURED_BUSH_PATCH, NoiseThresholdCountPlacementModifier.of(-0.8, 4, 5), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
 
+    private static final RegistryEntry<ConfiguredFeature<RandomPatchFeatureConfig, ?>> CONFIGURED_POPPY_PATCH = register("patch_poppy", Feature.RANDOM_PATCH, Configs.POPPY_PATCH);
+    public static final RegistryEntry<PlacedFeature> POPPY_PATCH = register("patch_poppy", CONFIGURED_POPPY_PATCH, NoiseThresholdCountPlacementModifier.of(-0.8, 1, 2), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
+
+    private static final RegistryEntry<ConfiguredFeature<RandomPatchFeatureConfig, ?>> CONFIGURED_DANDELION_PATCH = register("patch_dandelion", Feature.RANDOM_PATCH, Configs.DANDELION_PATCH);
+    public static final RegistryEntry<PlacedFeature> DANDELION_PATCH = register("patch_dandelion", CONFIGURED_DANDELION_PATCH, NoiseThresholdCountPlacementModifier.of(-0.8, 2, 3), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
+
+    private static final RegistryEntry<ConfiguredFeature<RandomPatchFeatureConfig, ?>> CONFIGURED_OXEYE_DAISY_PATCH = register("patch_oxeye_daisy", Feature.RANDOM_PATCH, Configs.OXEYE_DAISY_PATCH);
+    public static final RegistryEntry<PlacedFeature> OXEYE_DAISY_PATCH = register("patch_oxeye_daisy", CONFIGURED_OXEYE_DAISY_PATCH, NoiseThresholdCountPlacementModifier.of(-0.8, 1, 2), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
+
     // ITEM PATCHES
     private static final RegistryEntry<ConfiguredFeature<LayingItemPatchFeatureConfig, ?>> CONFIGURED_STICK_ITEM_PATCH = register("laying_item_patch_stick", LAYING_ITEM_PATCH_FEATURE, Configs.STICK_ITEM_PATCH);
     public static final RegistryEntry<PlacedFeature> STICK_ITEM_PATCH = register("laying_item_patch_stick", CONFIGURED_STICK_ITEM_PATCH, RarityFilterPlacementModifier.of(1), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
@@ -239,6 +248,24 @@ public class PrimevalFeatures {
                 7,
                 3,
                 blockProviderFeature(SimpleBlockStateProvider.of(PrimevalBlocks.BUSH.getDefaultState()))
+        );
+        public static final RandomPatchFeatureConfig POPPY_PATCH = new RandomPatchFeatureConfig(
+                6,
+                7,
+                3,
+                blockProviderFeature(SimpleBlockStateProvider.of(PrimevalBlocks.POPPY.getDefaultState()))
+        );
+        public static final RandomPatchFeatureConfig DANDELION_PATCH = new RandomPatchFeatureConfig(
+                9,
+                7,
+                3,
+                blockProviderFeature(SimpleBlockStateProvider.of(PrimevalBlocks.DANDELION.getDefaultState()))
+        );
+        public static final RandomPatchFeatureConfig OXEYE_DAISY_PATCH = new RandomPatchFeatureConfig(
+                6,
+                7,
+                3,
+                blockProviderFeature(SimpleBlockStateProvider.of(PrimevalBlocks.OXEYE_DAISY.getDefaultState()))
         );
         public static final LayingItemPatchFeatureConfig STICK_ITEM_PATCH = new LayingItemPatchFeatureConfig(
                 UniformIntProvider.create(8, 12),

@@ -39,7 +39,7 @@ public class PrimevalWorld {
                     List.of(PLAINS_OAK_TRUNKED_TREE,
                             STICK_ITEM_PATCH, FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
                             NATIVE_COPPER_ITEM_PATCH, MALACHITE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, SPHALERITE_ZINC_ITEM_PATCH,
-                            PLAINS_GRASS_PATCH, BUSH_PATCH
+                            PLAINS_GRASS_PATCH, BUSH_PATCH, POPPY_PATCH, DANDELION_PATCH, OXEYE_DAISY_PATCH
                     )
             ),
             Biome.Category.PLAINS
@@ -50,7 +50,7 @@ public class PrimevalWorld {
                     List.of(FOREST_OAK_TRUNKED_TREE,
                             STICK_ITEM_PATCH, FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
                             NATIVE_COPPER_ITEM_PATCH, MALACHITE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, CASSITERITE_TIN_ITEM_PATCH,
-                            OAK_FOREST_GRASS_PATCH, BUSH_PATCH
+                            OAK_FOREST_GRASS_PATCH, BUSH_PATCH, POPPY_PATCH
                     )
             ),
             Biome.Category.FOREST
@@ -61,7 +61,7 @@ public class PrimevalWorld {
                     List.of(FOREST_DENSE_OAK_TRUNKED_TREE,
                             STICK_ITEM_PATCH, FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
                             NATIVE_COPPER_ITEM_PATCH, MALACHITE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, CASSITERITE_TIN_ITEM_PATCH,
-                            SPARSE_GRASS_PATCH, BUSH_PATCH
+                            SPARSE_GRASS_PATCH, BUSH_PATCH, POPPY_PATCH
                     )
             ),
             Biome.Category.FOREST
@@ -72,7 +72,7 @@ public class PrimevalWorld {
                     List.of(FOREST_BIRCH_TRUNKED_TREE,
                             STICK_ITEM_PATCH, FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
                             NATIVE_COPPER_ITEM_PATCH, MALACHITE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, CASSITERITE_TIN_ITEM_PATCH,
-                            PLAINS_GRASS_PATCH
+                            PLAINS_GRASS_PATCH, DANDELION_PATCH, OXEYE_DAISY_PATCH
                     )
             ),
             Biome.Category.FOREST
@@ -82,7 +82,7 @@ public class PrimevalWorld {
                     UNDERGROUND_FEATURES_ALL,
                     List.of(FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
                             NATIVE_COPPER_ITEM_PATCH, MALACHITE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, CASSITERITE_TIN_ITEM_PATCH, SPHALERITE_ZINC_ITEM_PATCH,
-                            SPARSE_GRASS_PATCH
+                            SPARSE_GRASS_PATCH, OXEYE_DAISY_PATCH
                     )
             ),
             Biome.Category.EXTREME_HILLS
