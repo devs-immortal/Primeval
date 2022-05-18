@@ -78,6 +78,10 @@ public class PrimevalBlocks {
     public static final Block GRASS = registerBlock("grass", new GrowingGrassBlock(SETTINGS_PLANT.ticksRandomly()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
     public static final Block BUSH = registerBlock("bush", new PrimevalPlantBlock(SETTINGS_PLANT), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
     public static final Block MOSS = registerBlock("moss", new SpreadingMossBlock(SETTINGS_PLANT.ticksRandomly()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
+    // Flowers
+    public static final Block POPPY = registerBlock("poppy", new PrimevalPlantBlock(SETTINGS_PLANT), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
+    public static final Block DANDELION = registerBlock("dandelion", new PrimevalPlantBlock(SETTINGS_PLANT), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
+    public static final Block OXEYE_DAISY = registerBlock("oxeye_daisy", new PrimevalPlantBlock(SETTINGS_PLANT), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
 
 
     // Ore blocks
@@ -171,6 +175,9 @@ public class PrimevalBlocks {
         BlockRenderLayerMap.INSTANCE.putBlock(GRASSY_DIRT, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(GRASS, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BUSH, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(POPPY, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(DANDELION, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(OXEYE_DAISY, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(MOSS, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(OAK_SAPLING, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(OAK_LEAVES, RenderLayer.getCutout());
@@ -210,6 +217,9 @@ public class PrimevalBlocks {
 
         FlammableBlockRegistry.getDefaultInstance().add(GRASS, 60, 100);
         FlammableBlockRegistry.getDefaultInstance().add(BUSH, 60, 100);
+        FlammableBlockRegistry.getDefaultInstance().add(POPPY, 60, 100);
+        FlammableBlockRegistry.getDefaultInstance().add(DANDELION, 60, 100);
+        FlammableBlockRegistry.getDefaultInstance().add(OXEYE_DAISY, 60, 100);
 
         FlammableBlockRegistry.getDefaultInstance().add(STRAW_BLOCK, 10, 40);
         FlammableBlockRegistry.getDefaultInstance().add(STRAW_STAIRS, 10, 40);
