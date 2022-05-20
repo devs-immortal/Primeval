@@ -37,6 +37,7 @@ public class PrimevalWorld {
             buildGeneratorSettings(
                     UNDERGROUND_FEATURES_NO_TIN,
                     List.of(PLAINS_OAK_TRUNKED_TREE,
+                            MOSS_RARE,
                             STICK_ITEM_PATCH, FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
                             NATIVE_COPPER_ITEM_PATCH, MALACHITE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, SPHALERITE_ZINC_ITEM_PATCH,
                             PLAINS_GRASS_PATCH, BUSH_PATCH, POPPY_PATCH, DANDELION_PATCH, OXEYE_DAISY_PATCH
@@ -48,6 +49,7 @@ public class PrimevalWorld {
             buildGeneratorSettings(
                     UNDERGROUND_FEATURES_NO_ZINC,
                     List.of(FOREST_OAK_TRUNKED_TREE,
+                            MOSS_RARE,
                             STICK_ITEM_PATCH, FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
                             NATIVE_COPPER_ITEM_PATCH, MALACHITE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, CASSITERITE_TIN_ITEM_PATCH,
                             OAK_FOREST_GRASS_PATCH, BUSH_PATCH, POPPY_PATCH
@@ -59,6 +61,7 @@ public class PrimevalWorld {
             buildGeneratorSettings(
                     UNDERGROUND_FEATURES_NO_ZINC,
                     List.of(FOREST_DENSE_OAK_TRUNKED_TREE,
+                            MOSS_RARE,
                             STICK_ITEM_PATCH, FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
                             NATIVE_COPPER_ITEM_PATCH, MALACHITE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, CASSITERITE_TIN_ITEM_PATCH,
                             SPARSE_GRASS_PATCH, BUSH_PATCH, POPPY_PATCH
@@ -70,6 +73,7 @@ public class PrimevalWorld {
             buildGeneratorSettings(
                     UNDERGROUND_FEATURES_NO_ZINC,
                     List.of(FOREST_BIRCH_TRUNKED_TREE,
+                            MOSS_RARE,
                             STICK_ITEM_PATCH, FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
                             NATIVE_COPPER_ITEM_PATCH, MALACHITE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, CASSITERITE_TIN_ITEM_PATCH,
                             PLAINS_GRASS_PATCH, DANDELION_PATCH, OXEYE_DAISY_PATCH
@@ -80,7 +84,8 @@ public class PrimevalWorld {
     public static final RegistryEntry<Biome> ROCKY_OUTCROP = registerBiome(getBiomeKey("inland/rocky_outcrop"), createBiome(
             buildGeneratorSettings(
                     UNDERGROUND_FEATURES_ALL,
-                    List.of(FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
+                    List.of(MOSS_RARE,
+                            FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
                             NATIVE_COPPER_ITEM_PATCH, MALACHITE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, CASSITERITE_TIN_ITEM_PATCH, SPHALERITE_ZINC_ITEM_PATCH,
                             SPARSE_GRASS_PATCH, OXEYE_DAISY_PATCH
                     )
