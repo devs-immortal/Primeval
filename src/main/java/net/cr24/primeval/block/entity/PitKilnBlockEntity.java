@@ -19,8 +19,8 @@ import java.util.Stack;
 
 public class PitKilnBlockEntity extends BlockEntity implements Clearable {
 
-    //public static final int[] FIRING_TIMES = new int[] {-1, 9600, 13200, 16800, 19200};
-    public static final int[] FIRING_TIMES = new int[] {-1, 100, 100, 100, 100};
+    public static final int[] FIRING_TIMES = new int[] {-1, 9600, 13200, 16800, 19200};
+    //public static final int[] FIRING_TIMES = new int[] {-1, 100, 100, 100, 100};
 
     private Stack<ItemStack> logs;
     private ItemStack[] inventory;

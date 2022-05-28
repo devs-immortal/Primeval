@@ -1,0 +1,21 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "primeval:sand"
+        },
+        {
+            "item": "primeval:clay_ball"
+        },
+        {
+            "item": "primeval:stick"
+        },
+        {
+            "item": "primeval:straw"
+        }
+    ],
+    "result": {
+        "item": "primeval:daub",
+        "count": 4
+    }
+}
