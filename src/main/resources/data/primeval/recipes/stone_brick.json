@@ -1,0 +1,15 @@
+{
+    "type": "primeval:item_damaging",
+    "ingredients": [
+        {
+            "tag": "primeval:chisels"
+        },
+        {
+            "item": "primeval:rock"
+        }
+    ],
+    "result": {
+        "item": "primeval:stone_brick",
+        "count": 1
+    }
+}

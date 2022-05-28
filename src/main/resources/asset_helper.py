@@ -87,15 +87,9 @@ def create_ore_set(ore_type):
     generate_standard_block(ore_type+"_ore_large")
     generate_standard_item("raw_"+ore_type+"_large")
 
+generate_standard_item("stone_brick")
+generate_standard_block("stone_bricks")
 
-#generate_standard_block("framed_daub")
-generate_log_block("framed_pillar_daub")
-#generate_standard_block("framed_cross_daub")
-#generate_standard_block("framed_inverted_cross_daub")
-#generate_standard_block("framed_x_daub")
-#generate_standard_block("framed_plus_daub")
-#generate_standard_block("framed_divided_daub")
-
-#generate_stairs_block("mud_bricks_stairs", "mud_bricks")
-#generate_slab_block("mud_bricks_slab", "mud_bricks", "mud_bricks")
+generate_stairs_block("stone_bricks_stairs", "stone_bricks")
+generate_slab_block("stone_bricks_slab", "stone_bricks", "stone_bricks")
 #create_ore_set("zinc_sphalerite")

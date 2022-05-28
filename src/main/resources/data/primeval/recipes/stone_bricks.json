@@ -1,19 +1,19 @@
 {
     "type": "minecraft:crafting_shaped",
     "pattern": [
-        "MB",
-        "BM"
+        "BM",
+        "MB"
     ],
     "key": {
         "M": {
             "tag": "primeval:mortar"
         },
         "B": {
-            "item": "primeval:fired_clay_tile"
+            "item": "primeval:stone_brick"
         }
     },
     "result": {
-        "item": "primeval:fired_clay_tiles",
+        "item": "primeval:stone_bricks",
         "count": 2
     }
 }
