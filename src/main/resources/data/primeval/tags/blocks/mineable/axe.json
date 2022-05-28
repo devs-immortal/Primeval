@@ -10,7 +10,15 @@
     "primeval:straw_mesh",
     "primeval:straw_mat",
     "primeval:straw",
+    
     "primeval:daub",
+    "primeval:framed_daub",
+    "primeval:framed_pillar_daub",
+    "primeval:framed_cross_daub",
+    "primeval:framed_inverted_cross_daub",
+    "primeval:framed_x_daub",
+    "primeval:framed_plus_daub",
+    "primeval:framed_divided_daub",
     
     "primeval:oak_planks",
     "primeval:oak_stairs",
@@ -33,6 +41,9 @@
     "primeval:birch_crate",
     
     "primeval:pit_kiln",
-    "primeval:crude_crafting_bench"
+    "primeval:crude_crafting_bench",
+    
+    "primeval:rope",
+    "primeval:rope_ladder"
   ]
 }

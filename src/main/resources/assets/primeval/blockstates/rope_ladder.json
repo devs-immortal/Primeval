@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "primeval:block/rope_ladder",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "primeval:block/rope_ladder"
+    },
+    "facing=south": {
+      "model": "primeval:block/rope_ladder",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "primeval:block/rope_ladder",
+      "y": 270
+    }
+  }
+}

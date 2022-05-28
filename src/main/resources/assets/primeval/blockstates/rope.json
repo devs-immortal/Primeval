@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "primeval:block/rope",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "primeval:block/rope"
+    },
+    "axis=z": {
+      "model": "primeval:block/rope",
+      "x": 90
+    }
+  }
+}

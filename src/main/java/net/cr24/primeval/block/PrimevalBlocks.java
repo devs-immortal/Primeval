@@ -4,13 +4,11 @@ import net.cr24.primeval.PrimevalMain;
 import net.cr24.primeval.block.entity.*;
 import net.cr24.primeval.block.functional.*;
 import net.cr24.primeval.fluid.PrimevalFluids;
-import net.cr24.primeval.item.PrimevalItems;
 import net.cr24.primeval.item.Size;
 import net.cr24.primeval.item.Weight;
 import net.cr24.primeval.item.WeightedBlockItem;
 import net.cr24.primeval.screen.Primeval3x5ContainerScreen;
 import net.cr24.primeval.screen.PrimevalContainerScreenHandler;
-import net.cr24.primeval.screen.PrimevalCraftingScreenHandler;
 import net.cr24.primeval.world.gen.trunker.BirchTrunker;
 import net.cr24.primeval.world.gen.trunker.OakTrunker;
 import net.fabricmc.api.EnvType;
@@ -25,7 +23,6 @@ import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityT
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.block.*;
-import net.minecraft.block.entity.BarrelBlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.fluid.FlowableFluid;
@@ -125,8 +122,10 @@ public class PrimevalBlocks {
     public static final Block FRAMED_X_DAUB = registerBlock("framed_x_daub", new Block(SETTINGS_REFINED_WOOD), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block FRAMED_PLUS_DAUB = registerBlock("framed_plus_daub", new Block(SETTINGS_REFINED_WOOD), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block FRAMED_DIVIDED_DAUB = registerBlock("framed_divided_daub", new Block(SETTINGS_REFINED_WOOD), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
-    public static final Block[] OAK_PLANK_BLOCKS = registerWoodBlockSet("oak", SETTINGS_REFINED_WOOD, Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
-    public static final Block[] BIRCH_PLANK_BLOCKS = registerWoodBlockSet("birch", SETTINGS_REFINED_WOOD, Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block[] OAK_PLANK_BLOCKS = registerWoodBlockSet("oak", FabricBlockSettings.of(Material.WOOD, MapColor.OAK_TAN).strength(3.0f, 4.0f).sounds(BlockSoundGroup.WOOD).requiresTool(), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block[] BIRCH_PLANK_BLOCKS = registerWoodBlockSet("birch", FabricBlockSettings.of(Material.WOOD, MapColor.OAK_TAN).strength(3.0f, 4.0f).sounds(BlockSoundGroup.WOOD).requiresTool(), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block ROPE = registerBlock("rope", new ChainBlock(FabricBlockSettings.of(Material.PLANT).strength(0.2F).sounds(BlockSoundGroup.GRASS)), Weight.LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
+    public static final Block ROPE_LADDER = registerBlock("rope_ladder", new SuspendedLadderBlock(FabricBlockSettings.of(Material.WOOD, MapColor.OAK_TAN).strength(0.3F).sounds(BlockSoundGroup.WOOD).nonOpaque()), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
 
     // Technical Blocks or Blocks with other BlockItems than themselves
     public static final Block STRAW_PILE = registerBlockWithoutItem("straw", new StrawLayeredBlock(FabricBlockSettings.of(Material.PLANT).strength(0.5F).sounds(BlockSoundGroup.GRASS)));
@@ -192,6 +191,8 @@ public class PrimevalBlocks {
         BlockRenderLayerMap.INSTANCE.putBlock(BIRCH_LEAVES, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(CRUDE_TORCH, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(CAMPFIRE, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(ROPE, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(ROPE_LADDER, RenderLayer.getCutout());
 
         BlockRenderLayerMap.INSTANCE.putBlock(OAK_PLANK_BLOCKS[6], RenderLayer.getCutout()); // Oak door
         BlockRenderLayerMap.INSTANCE.putBlock(OAK_PLANK_BLOCKS[7], RenderLayer.getCutout()); // Oak trapdoor
@@ -237,6 +238,13 @@ public class PrimevalBlocks {
         FlammableBlockRegistry.getDefaultInstance().add(STRAW_PILE, 10, 40);
 
         FlammableBlockRegistry.getDefaultInstance().add(DAUB, 2, 6);
+        FlammableBlockRegistry.getDefaultInstance().add(FRAMED_DAUB, 2, 6);
+        FlammableBlockRegistry.getDefaultInstance().add(FRAMED_PILLAR_DAUB, 2, 6);
+        FlammableBlockRegistry.getDefaultInstance().add(FRAMED_CROSS_DAUB, 2, 6);
+        FlammableBlockRegistry.getDefaultInstance().add(FRAMED_INVERTED_CROSS_DAUB, 2, 6);
+        FlammableBlockRegistry.getDefaultInstance().add(FRAMED_X_DAUB, 2, 6);
+        FlammableBlockRegistry.getDefaultInstance().add(FRAMED_PLUS_DAUB, 2, 6);
+        FlammableBlockRegistry.getDefaultInstance().add(FRAMED_DIVIDED_DAUB, 2, 6);
 
         for (Block b : OAK_PLANK_BLOCKS) {
             FlammableBlockRegistry.getDefaultInstance().add(b, 5, 20);

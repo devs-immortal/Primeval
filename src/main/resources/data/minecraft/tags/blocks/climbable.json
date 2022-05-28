@@ -9,6 +9,8 @@
     "minecraft:twisting_vines",
     "minecraft:twisting_vines_plant",
     "minecraft:cave_vines",
-    "minecraft:cave_vines_plant"
+    "minecraft:cave_vines_plant",
+    "primeval:rope",
+    "primeval:rope_ladder"
   ]
 }
