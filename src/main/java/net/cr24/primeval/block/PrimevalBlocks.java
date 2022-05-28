@@ -118,6 +118,13 @@ public class PrimevalBlocks {
     public static final Block[] DRIED_BRICK_BLOCKS = registerBlockSet("dried_bricks", SETTINGS_FIRED_CLAY, Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block[] MUD_BRICKS = registerBlockSet("mud_bricks", SETTINGS_TOUGH_SOIL, Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block DAUB = registerBlock("daub", new Block(SETTINGS_REFINED_WOOD), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block FRAMED_DAUB = registerBlock("framed_daub", new Block(SETTINGS_REFINED_WOOD), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block FRAMED_PILLAR_DAUB = registerBlock("framed_pillar_daub", new PillarBlock(SETTINGS_REFINED_WOOD), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block FRAMED_CROSS_DAUB = registerBlock("framed_cross_daub", new Block(SETTINGS_REFINED_WOOD), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block FRAMED_INVERTED_CROSS_DAUB = registerBlock("framed_inverted_cross_daub", new Block(SETTINGS_REFINED_WOOD), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block FRAMED_X_DAUB = registerBlock("framed_x_daub", new Block(SETTINGS_REFINED_WOOD), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block FRAMED_PLUS_DAUB = registerBlock("framed_plus_daub", new Block(SETTINGS_REFINED_WOOD), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block FRAMED_DIVIDED_DAUB = registerBlock("framed_divided_daub", new Block(SETTINGS_REFINED_WOOD), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block[] OAK_PLANK_BLOCKS = registerWoodBlockSet("oak", SETTINGS_REFINED_WOOD, Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block[] BIRCH_PLANK_BLOCKS = registerWoodBlockSet("birch", SETTINGS_REFINED_WOOD, Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
 
