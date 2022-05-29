@@ -14,7 +14,13 @@ repositories {
 	// REI
 	maven { url "https://maven.shedaniel.me" }
 	// Incubus
-	maven { url "https://jitpack.io" }
+	maven {
+		name = "JitPack"
+		url = 'https://jitpack.io/'
+		metadataSources {
+			artifact() //Look directly for artifact
+		}
+	}
 	// Mod Menu
 	maven {
 		name = "TerraformersMC"
