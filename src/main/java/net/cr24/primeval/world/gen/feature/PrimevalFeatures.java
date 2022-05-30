@@ -79,13 +79,13 @@ public class PrimevalFeatures {
     public static final RegistryEntry<PlacedFeature> BUSH_PATCH = register("patch_bush", CONFIGURED_BUSH_PATCH, NoiseThresholdCountPlacementModifier.of(-0.8, 4, 5), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
 
     private static final RegistryEntry<ConfiguredFeature<RandomPatchFeatureConfig, ?>> CONFIGURED_POPPY_PATCH = register("patch_poppy", Feature.RANDOM_PATCH, Configs.POPPY_PATCH);
-    public static final RegistryEntry<PlacedFeature> POPPY_PATCH = register("patch_poppy", CONFIGURED_POPPY_PATCH, NoiseThresholdCountPlacementModifier.of(-0.8, 1, 2), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
+    public static final RegistryEntry<PlacedFeature> POPPY_PATCH = register("patch_poppy", CONFIGURED_POPPY_PATCH, RarityFilterPlacementModifier.of(8), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
 
     private static final RegistryEntry<ConfiguredFeature<RandomPatchFeatureConfig, ?>> CONFIGURED_DANDELION_PATCH = register("patch_dandelion", Feature.RANDOM_PATCH, Configs.DANDELION_PATCH);
-    public static final RegistryEntry<PlacedFeature> DANDELION_PATCH = register("patch_dandelion", CONFIGURED_DANDELION_PATCH, NoiseThresholdCountPlacementModifier.of(-0.8, 2, 3), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
+    public static final RegistryEntry<PlacedFeature> DANDELION_PATCH = register("patch_dandelion", CONFIGURED_DANDELION_PATCH, RarityFilterPlacementModifier.of(4), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
 
     private static final RegistryEntry<ConfiguredFeature<RandomPatchFeatureConfig, ?>> CONFIGURED_OXEYE_DAISY_PATCH = register("patch_oxeye_daisy", Feature.RANDOM_PATCH, Configs.OXEYE_DAISY_PATCH);
-    public static final RegistryEntry<PlacedFeature> OXEYE_DAISY_PATCH = register("patch_oxeye_daisy", CONFIGURED_OXEYE_DAISY_PATCH, NoiseThresholdCountPlacementModifier.of(-0.8, 1, 2), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
+    public static final RegistryEntry<PlacedFeature> OXEYE_DAISY_PATCH = register("patch_oxeye_daisy", CONFIGURED_OXEYE_DAISY_PATCH, RarityFilterPlacementModifier.of(6), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
 
 
     private static final RegistryEntry<ConfiguredFeature<GlowLichenFeatureConfig, ?>> CONFIGURED_MOSS_RARE = register("moss_rare", PrimevalFeatures.MOSS_FEATURE, Configs.MOSS_RARE);

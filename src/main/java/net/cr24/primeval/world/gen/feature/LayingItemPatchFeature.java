@@ -3,6 +3,7 @@ package net.cr24.primeval.world.gen.feature;
 import com.mojang.serialization.Codec;
 import net.cr24.primeval.block.PrimevalBlocks;
 import net.cr24.primeval.block.entity.LayingItemBlockEntity;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -43,6 +44,10 @@ public class LayingItemPatchFeature extends Feature<LayingItemPatchFeatureConfig
         if (world.getBlockState(pos).isAir() && world.getBlockState(pos.down()).isOpaqueFullCube(world, pos)) {
             world.setBlockState(pos, PrimevalBlocks.LAYING_ITEM.getDefaultState(), 4);
             LayingItemBlockEntity ent = (LayingItemBlockEntity) world.getBlockEntity(pos);
+            if (ent == null) {
+                world.setBlockState(pos, Blocks.AIR.getDefaultState(), 4);
+                return false;
+            }
             if (random.nextInt(5) < 2) {
                 ent.setItem(new ItemStack(item2));
             } else {
