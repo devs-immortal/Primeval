@@ -62,7 +62,6 @@ def generate_stairs_block(block_id, texture):
     outer_block_model_file.close()
     item_model_file.close()
     
-   
 def generate_slab_block(block_id, base_block_id, texture):
     blockstate_file = open(get_asset_path()+MOD_ID+"/blockstates/"+block_id+".json", "w")
     bottom_block_model_file = open(get_asset_path()+MOD_ID+"/models/block/"+block_id+".json", "w")
@@ -87,7 +86,7 @@ def create_ore_set(ore_type):
     generate_standard_block(ore_type+"_ore_large")
     generate_standard_item("raw_"+ore_type+"_large")
 
-generate_standard_item("stone_brick")
+generate_standard_block("spruce_crate")
 generate_standard_block("stone_bricks")
 
 generate_stairs_block("stone_bricks_stairs", "stone_bricks")

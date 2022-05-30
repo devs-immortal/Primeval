@@ -13,6 +13,9 @@
     "primeval:oak_slab",
     "primeval:birch_planks",
     "primeval:birch_stairs",
-    "primeval:birch_slab"
+    "primeval:birch_slab",
+    "primeval:spruce_planks",
+    "primeval:spruce_stairs",
+    "primeval:spruce_slab"
   ]
 }

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_top_rh",
+  "textures": {
+    "top": "primeval:block/spruce_door_top",
+    "bottom": "primeval:block/spruce_door_bottom"
+  }
+}

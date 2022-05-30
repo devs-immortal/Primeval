@@ -1,0 +1,13 @@
+{
+	"variants": {
+		"type=bottom": {
+			"model": "primeval:block/spruce_planks_slab"
+		},
+		"type=double": {
+			"model": "primeval:block/spruce_planks"
+		},
+		"type=top": {
+			"model": "primeval:block/spruce_planks_slab_top"
+		}
+	}
+}

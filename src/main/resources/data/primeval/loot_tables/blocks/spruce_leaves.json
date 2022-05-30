@@ -1,0 +1,45 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "primeval:stick"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:random_chance",
+          "chance": 0.05
+        },
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:match_tool",
+              "predicate": {
+                "tag": "primeval:knives"
+              }
+            },
+            {
+              "condition": "minecraft:random_chance",
+              "chance": 0.1
+            }
+          ],
+          "name": "primeval:spruce_sapling"
+        }
+      ]
+    }
+  ]
+}

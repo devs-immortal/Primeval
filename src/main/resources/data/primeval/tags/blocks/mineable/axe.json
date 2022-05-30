@@ -40,6 +40,16 @@
     "primeval:birch_trapdoor",
     "primeval:birch_crate",
     
+    "primeval:spruce_planks",
+    "primeval:spruce_stairs",
+    "primeval:spruce_slab",
+    "primeval:spruce_fence",
+    "primeval:spruce_log_fence",
+    "primeval:spruce_fence_gate",
+    "primeval:spruce_door",
+    "primeval:spruce_trapdoor",
+    "primeval:spruce_crate",
+    
     "primeval:pit_kiln",
     "primeval:crude_crafting_bench",
     

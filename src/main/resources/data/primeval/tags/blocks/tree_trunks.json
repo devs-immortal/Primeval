@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "primeval:oak_trunk",
-    "primeval:birch_trunk"
+    "primeval:birch_trunk",
+    "primeval:spruce_trunk"
   ]
 }
