@@ -50,6 +50,10 @@ public abstract class AbstractTrunker {
     /*
      * Defines what a trunk should do when it is randomly
      * ticked, expanding the branches, etc
+     *
+     * Returns a list of newly created branch block positions
+     * that can still be ticked, including the currently
+     * ticked position, if it is still tickable
      */
     public abstract List<BlockPos> tickTrunk(BlockState state, WorldAccess world, BlockPos pos, Random random, Direction[] directions);
 

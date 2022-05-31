@@ -36,6 +36,10 @@ public class BlockColorsMixin {
                 ((state, world, pos, tintIndex) ->  world != null && pos != null ? BiomeColors.getFoliageColor(world, pos)+2621440 : FoliageColors.getColor(0.5D, 1.0D)),
                 PrimevalBlocks.BIRCH_LEAVES
         );
+        origin.registerColorProvider(
+                ((state, world, pos, tintIndex) ->  world != null && pos != null ? BiomeColors.getFoliageColor(world, pos)-4280351 : FoliageColors.getColor(0.5D, 1.0D)),
+                PrimevalBlocks.SPRUCE_LEAVES
+        );
         info.setReturnValue(origin);
     }
 }
