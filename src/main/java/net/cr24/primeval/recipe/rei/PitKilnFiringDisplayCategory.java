@@ -11,8 +11,7 @@ import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.cr24.primeval.item.PrimevalItems;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
-
+import net.minecraft.text.TranslatableTextContent;
 import java.util.List;
 
 public class PitKilnFiringDisplayCategory implements DisplayCategory<PitKilnFiringDisplay> {
@@ -23,7 +22,7 @@ public class PitKilnFiringDisplayCategory implements DisplayCategory<PitKilnFiri
 
     @Override
     public Text getTitle() {
-        return new TranslatableText("category.primeval.pit_kiln_firing");
+        return Text.translatable("category.primeval.pit_kiln_firing");
     }
 
     @Override

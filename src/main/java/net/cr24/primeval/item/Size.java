@@ -1,6 +1,7 @@
 package net.cr24.primeval.item;
 
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableTextContent;
 
 public enum Size {
     SMALL,      // normal 64 stack
@@ -8,18 +9,18 @@ public enum Size {
     LARGE,      // max 16 in stack
     VERY_LARGE;  // max 1 in stack
 
-    public TranslatableText getText() {
+    public Text getText() {
         switch(this) {
             case SMALL:
-                return new TranslatableText("text.primeval.size.small");
+                return Text.translatable("text.primeval.size.small");
             case MEDIUM:
-                return new TranslatableText("text.primeval.size.medium");
+                return Text.translatable("text.primeval.size.medium");
             case LARGE:
-                return new TranslatableText("text.primeval.size.large");
+                return Text.translatable("text.primeval.size.large");
             case VERY_LARGE:
-                return new TranslatableText("text.primeval.size.very_large");
+                return Text.translatable("text.primeval.size.very_large");
         }
-        return new TranslatableText("text.primeval.size.medium");
+        return Text.translatable("text.primeval.size.medium");
     }
 
     public int getStackSize() {

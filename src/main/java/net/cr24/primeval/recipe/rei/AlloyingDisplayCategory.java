@@ -15,8 +15,7 @@ import net.cr24.primeval.item.PrimevalItems;
 import net.cr24.primeval.util.RangedValue;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
-
+import net.minecraft.text.TranslatableTextContent;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,7 +27,7 @@ public class AlloyingDisplayCategory implements DisplayCategory<AlloyingDisplay>
 
     @Override
     public Text getTitle() {
-        return new TranslatableText("category.primeval.alloying");
+        return Text.translatable("category.primeval.alloying");
     }
 
     @Override

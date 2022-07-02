@@ -2,7 +2,7 @@ package net.cr24.primeval.util;
 
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.TranslatableTextContent;
 
 public class RangedValue {
     private double upper;
@@ -32,9 +32,9 @@ public class RangedValue {
         return "RangedValue between "+this.upper+" and "+this.lower;
     }
 
-    public TranslatableText toPercentLabel() {
+    public Text toPercentLabel() {
         int upperPercent = (int) (100 * this.upper);
         int lowerPercent = (int) (100 * this.lower);
-        return new TranslatableText("" + upperPercent + "-" + lowerPercent + "%");
+        return Text.translatable("" + upperPercent + "-" + lowerPercent + "%");
     }
 }

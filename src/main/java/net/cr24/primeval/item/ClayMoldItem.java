@@ -18,7 +18,7 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.screen.CraftingScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.TranslatableTextContent;
 import net.minecraft.util.ClickType;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Pair;
@@ -105,12 +105,12 @@ public class ClayMoldItem extends WeightedItem {
         int fluidAmount = fluidNbt.getInt("Amount");
         if (fluidAmount > 0) {
             tooltip.add(
-                    ( new TranslatableText("text.primeval.fluid.contains", fluidAmount, new TranslatableText(
+                    (Text.translatable("text.primeval.fluid.contains", fluidAmount, new TranslatableTextContent(
                             "block."+fluidNbt.getString("fluid").replace(':', '.')
                     ))
                     ).formatted(Formatting.GRAY));
         }
-        tooltip.add((new TranslatableText("⚖ ").append(this.weight.getText()).append(" ⤧ ").append(this.size.getText())).formatted(Formatting.GRAY));
+        tooltip.add((Text.translatable("⚖ ").append(this.weight.getText()).append(" ⤧ ").append(this.size.getText())).formatted(Formatting.GRAY));
     }
 
 

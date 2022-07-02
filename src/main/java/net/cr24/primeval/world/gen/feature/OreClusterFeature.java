@@ -5,14 +5,12 @@ import net.cr24.primeval.util.IntPoint2D;
 import net.cr24.primeval.util.ShapesUtil;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.OrePlacedFeatures;
-import net.minecraft.world.gen.feature.PlacedFeature;
 import net.minecraft.world.gen.feature.util.FeatureContext;
 import net.minecraft.world.gen.stateprovider.BlockStateProvider;
 
-import java.util.Random;
 
 public class OreClusterFeature extends Feature<OreClusterFeatureConfig> {
 

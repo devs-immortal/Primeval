@@ -13,8 +13,7 @@ import me.shedaniel.rei.plugin.client.categories.DefaultCampfireCategory;
 import net.cr24.primeval.block.PrimevalBlocks;
 import net.cr24.primeval.item.PrimevalItems;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
-
+import net.minecraft.text.TranslatableTextContent;
 import java.text.DecimalFormat;
 import java.util.Collection;
 import java.util.List;
@@ -28,7 +27,7 @@ public class OpenFireDisplayCategory implements DisplayCategory<OpenFireDisplay>
 
     @Override
     public Text getTitle() {
-        return new TranslatableText("category.primeval.open_fire");
+        return Text.translatable("category.primeval.open_fire");
     }
 
     @Override

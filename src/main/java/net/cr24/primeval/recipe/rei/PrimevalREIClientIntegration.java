@@ -27,11 +27,6 @@ public class PrimevalREIClientIntegration implements REIClientPlugin {
         registry.addWorkstations(PrimevalREIIntegration.ALLOYING, EntryStacks.of(PrimevalItems.FIRED_CLAY_VESSEL));
         registry.addWorkstations(PrimevalREIIntegration.OPEN_FIRE, EntryStacks.of(PrimevalBlocks.CAMPFIRE));
         registry.addWorkstations(CRAFTING, EntryStacks.of(PrimevalBlocks.CRUDE_CRAFTING_BENCH));
-
-        registry.removePlusButton(PrimevalREIIntegration.PIT_KILN_FIRING);
-        registry.removePlusButton(PrimevalREIIntegration.MELTING);
-        registry.removePlusButton(PrimevalREIIntegration.ALLOYING);
-        registry.removePlusButton(PrimevalREIIntegration.OPEN_FIRE);
     }
 
     @Override

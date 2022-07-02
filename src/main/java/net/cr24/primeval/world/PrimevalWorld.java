@@ -42,8 +42,7 @@ public class PrimevalWorld {
                             NATIVE_COPPER_ITEM_PATCH, MALACHITE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, SPHALERITE_ZINC_ITEM_PATCH,
                             PLAINS_GRASS_PATCH, BUSH_PATCH, POPPY_PATCH, DANDELION_PATCH, OXEYE_DAISY_PATCH
                     )
-            ),
-            Biome.Category.PLAINS
+            )
     ));
     public static final RegistryEntry<Biome> OAK_FOREST = registerBiome(getBiomeKey("inland/oak_forest"), createBiome(
             buildGeneratorSettings(
@@ -54,8 +53,7 @@ public class PrimevalWorld {
                             NATIVE_COPPER_ITEM_PATCH, MALACHITE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, CASSITERITE_TIN_ITEM_PATCH,
                             OAK_FOREST_GRASS_PATCH, BUSH_PATCH, POPPY_PATCH
                     )
-            ),
-            Biome.Category.FOREST
+            )
     ));
     public static final RegistryEntry<Biome> DENSE_OAK_FOREST = registerBiome(getBiomeKey("inland/dense_oak_forest"), createBiome(
             buildGeneratorSettings(
@@ -66,8 +64,7 @@ public class PrimevalWorld {
                             NATIVE_COPPER_ITEM_PATCH, MALACHITE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, CASSITERITE_TIN_ITEM_PATCH,
                             SPARSE_GRASS_PATCH, BUSH_PATCH, POPPY_PATCH
                     )
-            ),
-            Biome.Category.FOREST
+            )
     ));
     public static final RegistryEntry<Biome> BIRCH_FOREST = registerBiome(getBiomeKey("inland/birch_forest"), createBiome(
             buildGeneratorSettings(
@@ -78,8 +75,7 @@ public class PrimevalWorld {
                             NATIVE_COPPER_ITEM_PATCH, MALACHITE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, CASSITERITE_TIN_ITEM_PATCH,
                             PLAINS_GRASS_PATCH, DANDELION_PATCH, OXEYE_DAISY_PATCH
                     )
-            ),
-            Biome.Category.FOREST
+            )
     ));
     public static final RegistryEntry<Biome> ROCKY_OUTCROP = registerBiome(getBiomeKey("inland/rocky_outcrop"), createBiome(
             buildGeneratorSettings(
@@ -89,8 +85,7 @@ public class PrimevalWorld {
                             NATIVE_COPPER_ITEM_PATCH, MALACHITE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, CASSITERITE_TIN_ITEM_PATCH, SPHALERITE_ZINC_ITEM_PATCH,
                             SPARSE_GRASS_PATCH, OXEYE_DAISY_PATCH
                     )
-            ),
-            Biome.Category.EXTREME_HILLS
+            )
     ));
     public static final RegistryEntry<Biome> CRUMBLING_CLIFFS = registerBiome(getBiomeKey("inland/crumbling_cliffs"), createBiome(
             buildGeneratorSettings(
@@ -98,8 +93,7 @@ public class PrimevalWorld {
                     List.of(FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
                             NATIVE_COPPER_ITEM_PATCH, MALACHITE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, CASSITERITE_TIN_ITEM_PATCH, SPHALERITE_ZINC_ITEM_PATCH
                     )
-            ),
-            Biome.Category.MOUNTAIN
+            )
     ));
 
     // COASTAL
@@ -109,16 +103,14 @@ public class PrimevalWorld {
                     List.of(STICK_ITEM_PATCH, ROCK_ITEM_PATCH,
                             SPARSE_GRASS_PATCH
                     )
-            ),
-            Biome.Category.BEACH
+            )
     ));
     public static final RegistryEntry<Biome> ROCKY_SHORE = registerBiome(getBiomeKey("coastal/rocky_shore"), createBiome(
             buildGeneratorSettings(
                     UNDERGROUND_FEATURES_NO_TIN,
                     List.of(STICK_ITEM_PATCH, FLINT_ITEM_PATCH, ROCK_ITEM_PATCH
                     )
-            ),
-            Biome.Category.BEACH
+            )
     ));
 
     // ETC
@@ -126,14 +118,13 @@ public class PrimevalWorld {
             buildGeneratorSettings(
                     UNDERGROUND_FEATURES_ALL,
                     List.of()
-            ),
-            Biome.Category.OCEAN
+            )
     ));
 
 
     public static void init() {}
 
-    private static Biome createBiome(GenerationSettings g, Biome.Category c) {
+    private static Biome createBiome(GenerationSettings g) {
         return new Biome.Builder()
                 .effects(UNIVERSAL_EFFECTS)
                 .generationSettings(g)
@@ -141,7 +132,6 @@ public class PrimevalWorld {
                 .precipitation(Biome.Precipitation.RAIN)
                 .temperature(0.8f)
                 .downfall(0.4f)
-                .category(c)
                 .build();
     }
 

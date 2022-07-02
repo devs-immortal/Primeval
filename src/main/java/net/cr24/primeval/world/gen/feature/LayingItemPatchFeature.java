@@ -7,12 +7,12 @@ import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.util.FeatureContext;
 
-import java.util.Random;
 
 public class LayingItemPatchFeature extends Feature<LayingItemPatchFeatureConfig> {
     public LayingItemPatchFeature(Codec<LayingItemPatchFeatureConfig> codec) {

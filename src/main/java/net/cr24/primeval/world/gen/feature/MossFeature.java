@@ -9,28 +9,28 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.GlowLichenFeatureConfig;
+import net.minecraft.world.gen.feature.MultifaceGrowthFeatureConfig;
 import net.minecraft.world.gen.feature.util.FeatureContext;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
 
-public class MossFeature extends Feature<GlowLichenFeatureConfig> {
-    public MossFeature(Codec<GlowLichenFeatureConfig> configCodec) {
+public class MossFeature extends Feature<MultifaceGrowthFeatureConfig> {
+    public MossFeature(Codec<MultifaceGrowthFeatureConfig> configCodec) {
         super(configCodec);
     }
 
     @Override
-    public boolean generate(FeatureContext<GlowLichenFeatureConfig> context) {
+    public boolean generate(FeatureContext<MultifaceGrowthFeatureConfig> context) {
         StructureWorldAccess structureWorldAccess = context.getWorld();
         BlockPos blockPos = context.getOrigin();
         Random random = context.getRandom();
-        GlowLichenFeatureConfig glowLichenFeatureConfig = context.getConfig();
+        MultifaceGrowthFeatureConfig glowLichenFeatureConfig = context.getConfig();
         if (!isAirOrWater(structureWorldAccess.getBlockState(blockPos))) {
             return false;
         }
@@ -53,7 +53,7 @@ public class MossFeature extends Feature<GlowLichenFeatureConfig> {
         return false;
     }
 
-    public static boolean generate(StructureWorldAccess world, BlockPos pos, BlockState state, GlowLichenFeatureConfig config, Random random, List<Direction> directions) {
+    public static boolean generate(StructureWorldAccess world, BlockPos pos, BlockState state, MultifaceGrowthFeatureConfig config, Random random, List<Direction> directions) {
         BlockPos.Mutable mutable = pos.mutableCopy();
         for (Direction direction : directions) {
             BlockState blockState = world.getBlockState(mutable.set(pos, direction));
@@ -66,23 +66,19 @@ public class MossFeature extends Feature<GlowLichenFeatureConfig> {
             world.setBlockState(pos, blockState2, Block.NOTIFY_ALL);
             world.getChunk(pos).markBlockForPostProcessing(pos);
             if (random.nextFloat() < config.spreadChance) {
-                mossBlock.trySpreadRandomly(blockState2, world, pos, direction, random, true);
+                mossBlock.grower.grow(blockState2, world, pos, direction, random, true);
             }
             return true;
         }
         return false;
     }
 
-    public static List<Direction> shuffleDirections(GlowLichenFeatureConfig config, Random random) {
-        ArrayList<Direction> list = Lists.newArrayList(config.directions);
-        Collections.shuffle(list, random);
-        return list;
+    public static List<Direction> shuffleDirections(MultifaceGrowthFeatureConfig config, Random random) {
+        return config.shuffleDirections(random);
     }
 
-    public static List<Direction> shuffleDirections(GlowLichenFeatureConfig config, Random random, Direction excluded) {
-        List<Direction> list = config.directions.stream().filter(direction -> direction != excluded).collect(Collectors.toList());
-        Collections.shuffle(list, random);
-        return list;
+    public static List<Direction> shuffleDirections(MultifaceGrowthFeatureConfig config, Random random, Direction excluded) {
+        return config.shuffleDirections(random, excluded);
     }
 
     private static boolean isAirOrWater(BlockState state) {

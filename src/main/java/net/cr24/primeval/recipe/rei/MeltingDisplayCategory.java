@@ -11,8 +11,7 @@ import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.cr24.primeval.item.PrimevalItems;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
-
+import net.minecraft.text.TranslatableTextContent;
 import java.util.List;
 
 public class MeltingDisplayCategory implements DisplayCategory<MeltingDisplay> {
@@ -23,7 +22,7 @@ public class MeltingDisplayCategory implements DisplayCategory<MeltingDisplay> {
 
     @Override
     public Text getTitle() {
-        return new TranslatableText("category.primeval.melting");
+        return Text.translatable("category.primeval.melting");
     }
 
     @Override
