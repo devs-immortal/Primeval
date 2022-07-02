@@ -23,7 +23,7 @@
     "client": [
       "net.cr24.primeval.PrimevalMain"
     ],
-    "rei_plugins": [
+    "rei_client": [
       "net.cr24.primeval.recipe.rei.PrimevalREIClientIntegration"
     ]
   },
