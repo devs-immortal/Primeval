@@ -105,7 +105,7 @@ public class ClayMoldItem extends WeightedItem {
         int fluidAmount = fluidNbt.getInt("Amount");
         if (fluidAmount > 0) {
             tooltip.add(
-                    (Text.translatable("text.primeval.fluid.contains", fluidAmount, new TranslatableTextContent(
+                    (Text.translatable("text.primeval.fluid.contains", fluidAmount, Text.translatable(
                             "block."+fluidNbt.getString("fluid").replace(':', '.')
                     ))
                     ).formatted(Formatting.GRAY));
