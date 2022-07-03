@@ -3,12 +3,12 @@ package net.cr24.primeval.block;
 import net.minecraft.block.Block;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 public class CascadingBlock extends SemiSupportedBlock {
 

@@ -6,20 +6,12 @@ import net.cr24.primeval.block.PrimevalBlocks;
 import net.cr24.primeval.block.entity.PitKilnBlockEntity;
 import net.cr24.primeval.item.PrimevalItemTags;
 import net.cr24.primeval.item.PrimevalItems;
-import net.cr24.primeval.recipe.PitKilnFiringRecipe;
-import net.cr24.primeval.recipe.PrimevalRecipes;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.SimpleInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.CampfireCookingRecipe;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
@@ -29,18 +21,11 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.Random;
 
 public class PitKilnBlock extends BlockWithEntity {
 
