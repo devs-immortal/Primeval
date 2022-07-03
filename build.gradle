@@ -21,7 +21,7 @@ repositories {
 			artifact() //Look directly for artifact
 		}
 	}
-	// Mod Menu
+	// Mod Menu + Trinkets
 	maven {
 		name = "TerraformersMC"
 		url = "https://maven.terraformersmc.com/releases/"
@@ -47,6 +47,9 @@ dependencies {
 
 	// Mod Menu
 	modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
+
+	// Trinkets
+	modImplementation(include("dev.emi:trinkets:${project.trinkets_version}"))
 
 	// Cardinal Components
 	modImplementation(include("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cc_version}"))
