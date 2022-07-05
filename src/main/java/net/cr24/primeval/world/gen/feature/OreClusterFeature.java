@@ -11,7 +11,6 @@ import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.util.FeatureContext;
 import net.minecraft.world.gen.stateprovider.BlockStateProvider;
 
-
 public class OreClusterFeature extends Feature<OreClusterFeatureConfig> {
 
     public OreClusterFeature(Codec<OreClusterFeatureConfig> configCodec) {
@@ -33,12 +32,12 @@ public class OreClusterFeature extends Feature<OreClusterFeatureConfig> {
         float density = config.density().get(random);
         float richness = config.richness().get(random);
 
-        IntPoint2D[] circleCoords = ShapesUtil.getCoordinatesInCircle(radius);
+        IntPoint2D[] circleCoords = ShapesUtil.Companion.getCoordinatesInCircle(radius);
         float oreRichness;
         for (IntPoint2D point : circleCoords) { // for each height step
             for (int y = 0; y < height; y++) { // for each coord in circle
                 if (random.nextFloat() < density) { // density check
-                    oreRichness = (richness + ((random.nextFloat()*2.0f)-1.0f)*richness);
+                    oreRichness = (richness + ((random.nextFloat() * 2.0f) - 1.0f) * richness);
                     if (oreRichness > 0.75) {
                         setBlockIfAble(structureWorldAccess, point.getOffsetBlockPos(blockPos).up(y), largeState, random);
                     } else if (oreRichness > 0.3) {
