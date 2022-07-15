@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "primeval:smooth_stone"
+    }
+  },
+  "result": {
+    "item": "primeval:smooth_stone_stairs",
+    "count": 8
+  }
+}

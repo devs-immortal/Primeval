@@ -178,7 +178,7 @@ public class PrimevalItems {
     private static Item[] registerToolSet(String material_id, ToolMaterial material, Item.Settings group, Weight weight, Size size) {
         Item[] items = new Item[6];
         items[0] = registerItem(material_id+"_axe", new PrimevalAxeItem(material, material.getAttackDamage(), -3.0f, group, weight, size));
-        items[1] = registerItem(material_id+"_chisel", new ChiselItem(material, group, weight, size));
+        items[1] = registerItem(material_id+"_chisel", new ChiselItem(material, material.getAttackDamage()*PrimevalToolMaterials.BLUNT_DAMAGE_MULTIPLIER, -3.0f, group, weight, size));
         items[2] = registerItem(material_id+"_knife", new PrimevalSwordItem(material, material.getAttackDamage()*PrimevalToolMaterials.KNIFE_DAMAGE_MULTIPLIER, -3.0f, group, weight, size));
         items[3] = registerItem(material_id+"_pickaxe", new PrimevalPickaxeItem(material, material.getAttackDamage(), -3.0f, group, weight, size));
         items[4] = registerItem(material_id+"_shovel", new PrimevalShovelItem(material, material.getAttackDamage()*PrimevalToolMaterials.BLUNT_DAMAGE_MULTIPLIER, -3.0f, group, weight, size));

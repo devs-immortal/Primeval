@@ -1,0 +1,8 @@
+{
+	"parent": "minecraft:block/slab",
+	"textures": {
+		"bottom": "primeval:block/smooth_stone",
+		"top": "primeval:block/smooth_stone",
+		"side": "primeval:block/smooth_stone_slab"
+	}
+}

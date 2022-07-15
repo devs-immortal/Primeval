@@ -25,6 +25,8 @@ public class PrimevalBlockTags {
     public static final TagKey<Block> IRON_ORES = register("ores_iron");
     public static final TagKey<Block> TIN_ORES = register("ores_tin");
 
+    public static final TagKey<Block> MINEABLE_CHISEL = register("mineable/chisel");
+
     private static TagKey<Block> register(String id) {
         return TagKey.of(Registry.BLOCK_KEY, PrimevalMain.getId(id));
     }

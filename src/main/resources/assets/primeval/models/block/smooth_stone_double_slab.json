@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "primeval:block/smooth_stone",
+    "side": "primeval:block/smooth_stone_slab"
+  }
+}

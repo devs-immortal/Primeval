@@ -19,7 +19,6 @@ public class PrimevalUtil {
     public static boolean itemEntitiesInBlock(World world, BlockPos pos, TagKey<Item>... tags) {
         boolean[] checks = new boolean[tags.length];
         List<Entity> itemEntities = world.getOtherEntities(null, Box.from(new Vec3d(pos.getX(), pos.getY(), pos.getZ())), entity -> entity instanceof ItemEntity);
-        System.out.println(itemEntities);
         for (Entity ent : itemEntities) {
             ItemEntity itemEnt = (ItemEntity) ent;
             ItemStack stack = itemEnt.getStack();
