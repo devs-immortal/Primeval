@@ -29,6 +29,7 @@ public class PrimevalItems {
     public static final ItemGroup PRIMEVAL_ITEMS = FabricItemGroupBuilder.build(PrimevalMain.getId("items"), () -> new ItemStack(PrimevalItems.STRAW));
     public static final ItemGroup PRIMEVAL_BLOCKS = FabricItemGroupBuilder.build(PrimevalMain.getId("blocks"), () -> new ItemStack(PrimevalBlocks.DIRT));
     public static final ItemGroup PRIMEVAL_TOOLS = FabricItemGroupBuilder.build(PrimevalMain.getId("tools"), () -> new ItemStack(PrimevalItems.FLINT_AXE));
+    public static final ItemGroup PRIMEVAL_FOODS = FabricItemGroupBuilder.build(PrimevalMain.getId("foods"), () -> new ItemStack(PrimevalItems.FLINT_AXE));
 
     private static final Item.Settings GROUP_ITEMS = new Item.Settings().group(PRIMEVAL_ITEMS);
     private static final Item.Settings GROUP_TOOLS = new Item.Settings().group(PRIMEVAL_TOOLS);
@@ -38,10 +39,13 @@ public class PrimevalItems {
     // Crafting materials
     public static final Item STRAW = registerItem("straw", new WeightedBlockItem(STRAW_PILE, GROUP_ITEMS, Weight.VERY_LIGHT, Size.SMALL));
     public static final Item STICK = registerItem("stick", new FirestarterItem(GROUP_ITEMS, Weight.VERY_LIGHT, Size.SMALL));
+    public static final Item STRING = registerItem("string", new FirestarterItem(GROUP_ITEMS, Weight.VERY_LIGHT, Size.SMALL));
     public static final Item FLINT = registerItem("flint", new WeightedItem(GROUP_ITEMS, Weight.LIGHT, Size.SMALL));
     public static final Item ROCK = registerItem("rock", new WeightedItem(GROUP_ITEMS, Weight.LIGHT, Size.SMALL));
     public static final Item STONE_BRICK = registerItem("stone_brick", new WeightedItem(GROUP_ITEMS, Weight.LIGHT, Size.SMALL));
     public static final Item ASHES = registerItem("ashes", new WeightedItem(GROUP_ITEMS, Weight.VERY_LIGHT, Size.SMALL));
+    public static final Item BONE = registerItem("bone", new WeightedItem(GROUP_ITEMS, Weight.VERY_LIGHT, Size.SMALL));
+    public static final Item ANIMAL_FAT = registerItem("animal_fat", new WeightedItem(GROUP_ITEMS, Weight.VERY_LIGHT, Size.SMALL));
 
     public static final Item SANDY_CLAY_BALL = registerItem("sandy_clay_ball", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
     public static final Item SANDY_CLAY_BRICK = registerItem("sandy_clay_brick", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
@@ -58,6 +62,11 @@ public class PrimevalItems {
     public static final Item FIRED_CLAY_TILE = registerItem("fired_clay_tile", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
     //public static final Item CLAY_JUG = registerItem("clay_jug", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM)); // TODO: add
     public static final Item CLAY_VESSEL = registerItem("clay_vessel", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
+
+    // Edible Items
+    public static final Item PORKCHOP = registerItem("porkchop", new WeightedItem(new Item.Settings().group(PRIMEVAL_FOODS).food(PrimevalFoodComponents.PORKCHOP), Weight.NORMAL, Size.MEDIUM));
+    public static final Item COOKED_PORKCHOP = registerItem("cooked_porkchop", new WeightedItem(new Item.Settings().group(PRIMEVAL_FOODS).food(PrimevalFoodComponents.COOKED_PORKCHOP), Weight.NORMAL, Size.MEDIUM));
+    public static final Item ROTTEN_FLESH = registerItem("rotten_flesh", new WeightedItem(new Item.Settings().group(PRIMEVAL_FOODS).food(PrimevalFoodComponents.ROTTEN_FLESH), Weight.NORMAL, Size.MEDIUM));
 
     // Ore Items
     public static final Item RAW_COPPER_MALACHITE_SMALL = registerItem("raw_copper_malachite_small", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
@@ -145,7 +154,9 @@ public class PrimevalItems {
     }
 
 
-    public static void init() {}
+    public static void init() {
+        PrimevalFoodComponents.init();
+    }
 
     @Environment(EnvType.CLIENT)
     public static void initClient() {
@@ -161,7 +172,6 @@ public class PrimevalItems {
                 return 0;
             });
         }
-
     }
 
     private static Item[] registerToolPartSet(String material_id, Item.Settings group, Weight weight, Size size) {

@@ -128,6 +128,8 @@
     "item.primeval.rock": "Rock",
     "item.primeval.stone_brick": "Stone Brick",
     "item.primeval.ashes": "Ashes",
+    "item.primeval.bone": "Bone",
+    "item.primeval.animal_fat": "Animal Fat",
     "item.primeval.sandy_clay_ball": "Sandy Clay Ball",
     "item.primeval.sandy_clay_brick": "Sandy Clay Brick",
     "item.primeval.dried_brick": "Fired Sandy Clay Brick",
@@ -142,6 +144,11 @@
     "item.primeval.fired_clay_tile": "Fired Clay Tile",
     "item.primeval.clay_jug": "Clay Jug",
     "item.primeval.clay_vessel": "Clay Vessel",
+    
+    "item.primeval.porkchop": "Raw Porkchop",
+    "item.primeval.cooked_porkchop": "Cooked Porkchop",
+    "item.primeval.rotten_flesh": "Rotten Flest",
+    
     "item.primeval.raw_copper_native_small": "Small Raw Native Copper",
     "item.primeval.raw_copper_native_medium": "Medium Raw Native Copper",
     "item.primeval.raw_copper_native_large": "Large Raw Native Copper",

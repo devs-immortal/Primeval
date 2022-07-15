@@ -2,6 +2,7 @@ package net.cr24.primeval;
 
 import net.cr24.primeval.block.PrimevalBlocks;
 import net.cr24.primeval.fluid.PrimevalFluids;
+import net.cr24.primeval.item.PrimevalFoodComponents;
 import net.cr24.primeval.item.PrimevalItems;
 import net.cr24.primeval.recipe.PrimevalRecipes;
 import net.cr24.primeval.recipe.rei.PrimevalREIIntegration;
