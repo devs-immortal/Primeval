@@ -170,7 +170,7 @@ public class PrimevalCampfireBlock extends BlockWithEntity {
 
     @Override
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
-        if (!state.get(LIT).booleanValue()) {
+        if (!state.get(LIT)) {
             return;
         }
         if (random.nextInt(6) == 0) {
@@ -196,7 +196,7 @@ public class PrimevalCampfireBlock extends BlockWithEntity {
             case 0: return 11;
             case 1: return 13;
             case 2: return 14;
-            case 3: return 16;
+            case 3: return 15;
         }
         return 0;
     }
