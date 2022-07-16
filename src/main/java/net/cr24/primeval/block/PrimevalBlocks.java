@@ -86,6 +86,8 @@ public class PrimevalBlocks {
     public static final Block DANDELION = registerBlock("dandelion", new PrimevalPlantBlock(SETTINGS_PLANT), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
     public static final Block OXEYE_DAISY = registerBlock("oxeye_daisy", new PrimevalPlantBlock(SETTINGS_PLANT), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
 
+    public static final Block WILD_CARROTS = registerBlockWithoutItem("wild_carrots", new PrimevalPlantBlock(SETTINGS_PLANT));
+
 
     // Ore blocks
     public static final Block COPPER_MALACHITE_ORE_SMALL = registerBlock("copper_malachite_ore_small", new SemiSupportedBlock(SETTINGS_STONE, 0.35f, COBBLESTONE), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
@@ -195,6 +197,7 @@ public class PrimevalBlocks {
         BlockRenderLayerMap.INSTANCE.putBlock(POPPY, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(DANDELION, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(OXEYE_DAISY, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(WILD_CARROTS, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(MOSS, RenderLayer.getCutout());
 
         BlockRenderLayerMap.INSTANCE.putBlock(OAK_SAPLING, RenderLayer.getCutout());

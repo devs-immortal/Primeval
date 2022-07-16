@@ -67,6 +67,7 @@ public class PrimevalItems {
     // Edible Items
     public static final Item PORKCHOP = registerItem("porkchop", new WeightedItem(new Item.Settings().group(PRIMEVAL_FOODS).food(PrimevalFoodComponents.PORKCHOP), Weight.NORMAL, Size.MEDIUM));
     public static final Item COOKED_PORKCHOP = registerItem("cooked_porkchop", new WeightedItem(new Item.Settings().group(PRIMEVAL_FOODS).food(PrimevalFoodComponents.COOKED_PORKCHOP), Weight.NORMAL, Size.MEDIUM));
+    public static final Item CARROT = registerItem("carrot", new WeightedItem(new Item.Settings().group(PRIMEVAL_FOODS).food(PrimevalFoodComponents.CARROT), Weight.LIGHT, Size.SMALL));
     public static final Item ROTTEN_FLESH = registerItem("rotten_flesh", new WeightedItem(new Item.Settings().group(PRIMEVAL_FOODS).food(PrimevalFoodComponents.ROTTEN_FLESH), Weight.NORMAL, Size.MEDIUM));
     public static final Item SPIDER_EYE = registerItem("spider_eye", new WeightedItem(new Item.Settings().group(PRIMEVAL_FOODS).food(PrimevalFoodComponents.SPIDER_EYE), Weight.LIGHT, Size.SMALL));
 

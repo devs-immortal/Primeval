@@ -89,6 +89,9 @@ public class PrimevalFeatures {
     private static final RegistryEntry<ConfiguredFeature<RandomPatchFeatureConfig, ?>> CONFIGURED_OXEYE_DAISY_PATCH = register("patch_oxeye_daisy", Feature.RANDOM_PATCH, Configs.OXEYE_DAISY_PATCH);
     public static final RegistryEntry<PlacedFeature> OXEYE_DAISY_PATCH = register("patch_oxeye_daisy", CONFIGURED_OXEYE_DAISY_PATCH, RarityFilterPlacementModifier.of(6), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
 
+    private static final RegistryEntry<ConfiguredFeature<RandomPatchFeatureConfig, ?>> CONFIGURED_WILD_CARROTS_PATCH = register("patch_wild_carrots", Feature.RANDOM_PATCH, Configs.WILD_CARROTS_PATCH);
+    public static final RegistryEntry<PlacedFeature> WILD_CARROTS_PATCH = register("patch_wild_carrots", CONFIGURED_WILD_CARROTS_PATCH, RarityFilterPlacementModifier.of(30), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
+
 
     private static final RegistryEntry<ConfiguredFeature<MultifaceGrowthFeatureConfig, ?>> CONFIGURED_MOSS_RARE = register("moss_rare", PrimevalFeatures.MOSS_FEATURE, Configs.MOSS_RARE);
     public static final RegistryEntry<PlacedFeature> MOSS_RARE = register("moss_rare", CONFIGURED_MOSS_RARE, CountPlacementModifier.of(UniformIntProvider.create(50, 100)), HeightRangePlacementModifier.uniform(YOffset.fixed(60), YOffset.getTop()), SquarePlacementModifier.of(), SurfaceThresholdFilterPlacementModifier.of(Heightmap.Type.OCEAN_FLOOR_WG, Integer.MIN_VALUE, -13), BiomePlacementModifier.of());
@@ -276,6 +279,12 @@ public class PrimevalFeatures {
                 7,
                 3,
                 blockProviderFeature(SimpleBlockStateProvider.of(PrimevalBlocks.OXEYE_DAISY.getDefaultState()))
+        );
+        public static final RandomPatchFeatureConfig WILD_CARROTS_PATCH = new RandomPatchFeatureConfig(
+                12,
+                7,
+                3,
+                blockProviderFeature(SimpleBlockStateProvider.of(PrimevalBlocks.WILD_CARROTS.getDefaultState()))
         );
         public static final MultifaceGrowthFeatureConfig MOSS_RARE = new MultifaceGrowthFeatureConfig(
                 (MultifaceGrowthBlock) PrimevalBlocks.MOSS,

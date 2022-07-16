@@ -6,7 +6,8 @@
   "mixins": [
     "world.gen.trunk.TrunkPlacerTypeMixin",
     "entity.mob.AbstractSkeletonEntityMixin",
-    "entity.mob.ZombieEntityMixin"
+    "entity.mob.ZombieEntityMixin",
+    "entity.passive.PigEntityMixin"
   ],
   "client": [
     "client.color.block.BlockColorsMixin"
