@@ -4,6 +4,9 @@ import net.cr24.primeval.PrimevalMain;
 import net.cr24.primeval.world.gen.feature.PrimevalFeatures;
 import net.minecraft.client.gui.screen.world.CreateWorldScreen;
 import net.minecraft.client.realms.dto.RealmsServer;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnGroup;
+import net.minecraft.entity.passive.PigEntity;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryEntry;
@@ -130,7 +133,15 @@ public class PrimevalWorld {
         return new Biome.Builder()
                 .effects(UNIVERSAL_EFFECTS)
                 .generationSettings(g)
-                .spawnSettings(new SpawnSettings.Builder().build())
+                .spawnSettings(
+                        new SpawnSettings.Builder()
+                                .spawn(SpawnGroup.MONSTER, new SpawnSettings.SpawnEntry(EntityType.SPIDER, 50, 3, 4))
+                                .spawn(SpawnGroup.MONSTER, new SpawnSettings.SpawnEntry(EntityType.CREEPER, 75, 1, 3))
+                                .spawn(SpawnGroup.MONSTER, new SpawnSettings.SpawnEntry(EntityType.SKELETON, 100, 2, 3))
+                                .spawn(SpawnGroup.MONSTER, new SpawnSettings.SpawnEntry(EntityType.ZOMBIE, 200, 4, 5))
+                                .spawn(SpawnGroup.CREATURE, new SpawnSettings.SpawnEntry(EntityType.PIG, 20, 5, 10))
+                        .build()
+                )
                 .precipitation(Biome.Precipitation.RAIN)
                 .temperature(0.8f)
                 .downfall(0.4f)

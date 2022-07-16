@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-    "minecraft:grass_block"
+    "primeval:grassy_dirt",
+    "primeval:dirt",
+    "primeval:coarse_dirt"
   ]
 }

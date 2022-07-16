@@ -4,7 +4,9 @@
   "package": "net.cr24.primeval.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "world.gen.trunk.TrunkPlacerTypeMixin"
+    "world.gen.trunk.TrunkPlacerTypeMixin",
+    "entity.mob.AbstractSkeletonEntityMixin",
+    "entity.mob.ZombieEntityMixin"
   ],
   "client": [
     "client.color.block.BlockColorsMixin"

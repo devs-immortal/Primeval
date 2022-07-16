@@ -17,6 +17,10 @@ public class PrimevalFoodComponents {
             .statusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 300, 1), 0.8F)
             .statusEffect(new StatusEffectInstance(StatusEffects.POISON, 100, 0), 0.8F)
             .meat().build();
+    public static final FoodComponent SPIDER_EYE = createFoodComponent(4, 0.1f)
+            .statusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 100, 0), 0.4F)
+            .statusEffect(new StatusEffectInstance(StatusEffects.POISON, 300, 1), 0.8F)
+            .meat().build();
 
 
     public static void init() {}

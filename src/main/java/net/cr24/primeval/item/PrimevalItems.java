@@ -46,6 +46,7 @@ public class PrimevalItems {
     public static final Item ASHES = registerItem("ashes", new WeightedItem(GROUP_ITEMS, Weight.VERY_LIGHT, Size.SMALL));
     public static final Item BONE = registerItem("bone", new WeightedItem(GROUP_ITEMS, Weight.VERY_LIGHT, Size.SMALL));
     public static final Item ANIMAL_FAT = registerItem("animal_fat", new WeightedItem(GROUP_ITEMS, Weight.VERY_LIGHT, Size.SMALL));
+    public static final Item GUNPOWDER = registerItem("gunpowder", new WeightedItem(GROUP_ITEMS, Weight.VERY_LIGHT, Size.SMALL));
 
     public static final Item SANDY_CLAY_BALL = registerItem("sandy_clay_ball", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
     public static final Item SANDY_CLAY_BRICK = registerItem("sandy_clay_brick", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
@@ -67,6 +68,7 @@ public class PrimevalItems {
     public static final Item PORKCHOP = registerItem("porkchop", new WeightedItem(new Item.Settings().group(PRIMEVAL_FOODS).food(PrimevalFoodComponents.PORKCHOP), Weight.NORMAL, Size.MEDIUM));
     public static final Item COOKED_PORKCHOP = registerItem("cooked_porkchop", new WeightedItem(new Item.Settings().group(PRIMEVAL_FOODS).food(PrimevalFoodComponents.COOKED_PORKCHOP), Weight.NORMAL, Size.MEDIUM));
     public static final Item ROTTEN_FLESH = registerItem("rotten_flesh", new WeightedItem(new Item.Settings().group(PRIMEVAL_FOODS).food(PrimevalFoodComponents.ROTTEN_FLESH), Weight.NORMAL, Size.MEDIUM));
+    public static final Item SPIDER_EYE = registerItem("spider_eye", new WeightedItem(new Item.Settings().group(PRIMEVAL_FOODS).food(PrimevalFoodComponents.SPIDER_EYE), Weight.LIGHT, Size.SMALL));
 
     // Ore Items
     public static final Item RAW_COPPER_MALACHITE_SMALL = registerItem("raw_copper_malachite_small", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));

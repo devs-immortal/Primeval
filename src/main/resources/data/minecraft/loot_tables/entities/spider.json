@@ -15,28 +15,15 @@
                 "min": 0.0
               },
               "function": "minecraft:set_count"
-            },
-            {
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 1.0,
-                "min": 0.0
-              },
-              "function": "minecraft:looting_enchant"
             }
           ],
-          "name": "minecraft:string"
+          "name": "primeval:string"
         }
       ],
       "rolls": 1.0
     },
     {
       "bonus_rolls": 0.0,
-      "conditions": [
-        {
-          "condition": "minecraft:killed_by_player"
-        }
-      ],
       "entries": [
         {
           "type": "minecraft:item",
@@ -46,20 +33,12 @@
               "count": {
                 "type": "minecraft:uniform",
                 "max": 1.0,
-                "min": -1.0
-              },
-              "function": "minecraft:set_count"
-            },
-            {
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 1.0,
                 "min": 0.0
               },
-              "function": "minecraft:looting_enchant"
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:spider_eye"
+          "name": "primeval:spider_eye"
         }
       ],
       "rolls": 1.0
