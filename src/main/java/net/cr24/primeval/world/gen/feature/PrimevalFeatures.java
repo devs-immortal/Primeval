@@ -80,6 +80,9 @@ public class PrimevalFeatures {
     private static final RegistryEntry<ConfiguredFeature<RandomPatchFeatureConfig, ?>> CONFIGURED_BUSH_PATCH = register("patch_bush", Feature.RANDOM_PATCH, Configs.BUSH_PATCH);
     public static final RegistryEntry<PlacedFeature> BUSH_PATCH = register("patch_bush", CONFIGURED_BUSH_PATCH, NoiseThresholdCountPlacementModifier.of(-0.8, 4, 5), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
 
+    private static final RegistryEntry<ConfiguredFeature<RandomPatchFeatureConfig, ?>> CONFIGURED_SHRUB_PATCH = register("patch_shrub", Feature.RANDOM_PATCH, Configs.SHRUB_PATCH);
+    public static final RegistryEntry<PlacedFeature> SHRUB_PATCH = register("patch_shrub", CONFIGURED_SHRUB_PATCH, RarityFilterPlacementModifier.of(6), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
+
     private static final RegistryEntry<ConfiguredFeature<RandomPatchFeatureConfig, ?>> CONFIGURED_POPPY_PATCH = register("patch_poppy", Feature.RANDOM_PATCH, Configs.POPPY_PATCH);
     public static final RegistryEntry<PlacedFeature> POPPY_PATCH = register("patch_poppy", CONFIGURED_POPPY_PATCH, RarityFilterPlacementModifier.of(8), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
 
@@ -261,6 +264,12 @@ public class PrimevalFeatures {
                 7,
                 3,
                 blockProviderFeature(SimpleBlockStateProvider.of(PrimevalBlocks.BUSH.getDefaultState()))
+        );
+        public static final RandomPatchFeatureConfig SHRUB_PATCH = new RandomPatchFeatureConfig(
+                6,
+                5,
+                3,
+                blockProviderFeature(SimpleBlockStateProvider.of(PrimevalBlocks.SHRUB.getDefaultState()))
         );
         public static final RandomPatchFeatureConfig POPPY_PATCH = new RandomPatchFeatureConfig(
                 6,

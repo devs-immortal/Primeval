@@ -45,7 +45,7 @@ public class PrimevalWorld {
                             MOSS_RARE,
                             STICK_ITEM_PATCH, FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
                             NATIVE_COPPER_ITEM_PATCH, MALACHITE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, SPHALERITE_ZINC_ITEM_PATCH,
-                            PLAINS_GRASS_PATCH, BUSH_PATCH, POPPY_PATCH, DANDELION_PATCH, OXEYE_DAISY_PATCH,
+                            PLAINS_GRASS_PATCH, BUSH_PATCH, SHRUB_PATCH, POPPY_PATCH, DANDELION_PATCH, OXEYE_DAISY_PATCH,
                             WILD_CARROTS_PATCH
                     )
             )
@@ -69,7 +69,7 @@ public class PrimevalWorld {
                             MOSS_RARE,
                             STICK_ITEM_PATCH, FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
                             NATIVE_COPPER_ITEM_PATCH, MALACHITE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, CASSITERITE_TIN_ITEM_PATCH,
-                            SPARSE_GRASS_PATCH, BUSH_PATCH, POPPY_PATCH
+                            SPARSE_GRASS_PATCH, BUSH_PATCH, SHRUB_PATCH, POPPY_PATCH
                     )
             )
     ));
