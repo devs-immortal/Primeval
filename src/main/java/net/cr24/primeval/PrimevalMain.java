@@ -1,6 +1,7 @@
 package net.cr24.primeval;
 
 import net.cr24.primeval.block.PrimevalBlocks;
+import net.cr24.primeval.entity.PrimevalVillagerTrades;
 import net.cr24.primeval.fluid.PrimevalFluids;
 import net.cr24.primeval.item.PrimevalFoodComponents;
 import net.cr24.primeval.item.PrimevalItems;
@@ -24,6 +25,7 @@ public class PrimevalMain implements ModInitializer, ClientModInitializer {
         PrimevalFluids.init();
         PrimevalRecipes.init();
         PrimevalWorld.init();
+        PrimevalVillagerTrades.init();
     }
 
     @Override

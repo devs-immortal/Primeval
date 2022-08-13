@@ -127,6 +127,8 @@ public class PrimevalItems {
     public static final Item BRASS_CHUNK = registerItem("brass_chunk", new WeightedItem(GROUP_ITEMS, Weight.LIGHT, Size.SMALL));
     public static final Item BOTCHED_ALLOY_INGOT = registerItem("botched_alloy_ingot", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
     public static final Item BOTCHED_ALLOY_CHUNK = registerItem("botched_alloy_chunk", new WeightedItem(GROUP_ITEMS, Weight.LIGHT, Size.SMALL));
+    // Currency
+    public static final Item COPPER_COIN = registerItem("copper_coin", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
     // Tool Parts
     public static final Item[] COPPER_TOOL_PARTS = registerToolPartSet("copper", GROUP_TOOLS, Weight.NORMAL, Size.MEDIUM);
     public static final Item[] BRONZE_TOOL_PARTS = registerToolPartSet("bronze", GROUP_TOOLS, Weight.NORMAL, Size.MEDIUM);
