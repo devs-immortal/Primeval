@@ -13,7 +13,7 @@ import net.minecraft.village.TradeOffers;
 public class PrimevalVillagerTrades {
 
     public static void init() {
-
+        // Clear vanilla trades
         TradeOffers.WANDERING_TRADER_TRADES.clear();
 
         TradeOfferHelper.registerWanderingTraderOffers(
@@ -21,24 +21,6 @@ public class PrimevalVillagerTrades {
                 factories -> factories.add(new PrimevalTradeFactory(
                         new ItemStack(PrimevalItems.COPPER_COIN, 1),
                         new ItemStack(PrimevalItems.CARROT, 2),
-                        12, 2
-                ))
-        );
-
-        TradeOfferHelper.registerWanderingTraderOffers(
-                1,
-                factories -> factories.add(new PrimevalTradeFactory(
-                        new ItemStack(PrimevalItems.COPPER_COIN, 4),
-                        new ItemStack(PrimevalBlocks.OAK_SAPLING, 1),
-                        12, 2
-                ))
-        );
-
-        TradeOfferHelper.registerWanderingTraderOffers(
-                1,
-                factories -> factories.add(new PrimevalTradeFactory(
-                        new ItemStack(PrimevalItems.COPPER_COIN, 4),
-                        new ItemStack(PrimevalBlocks.BIRCH_SAPLING, 1),
                         12, 2
                 ))
         );
@@ -69,17 +51,6 @@ public class PrimevalVillagerTrades {
                         12, 2
                 ))
         );
-
-        for (Item item : PrimevalItems.COPPER_TOOL_PARTS) {
-            TradeOfferHelper.registerWanderingTraderOffers(
-                    2,
-                    factories -> factories.add(new PrimevalTradeFactory(
-                            new ItemStack(PrimevalItems.COPPER_COIN, 8),
-                            new ItemStack(item, 1),
-                            1, 6
-                    ))
-            );
-        }
 
         TradeOfferHelper.registerWanderingTraderOffers(
                 1,
@@ -123,6 +94,37 @@ public class PrimevalVillagerTrades {
                         new ItemStack(PrimevalItems.GUNPOWDER, 1),
                         new ItemStack(PrimevalItems.COPPER_COIN, 1),
                         6, 2
+                ))
+        );
+
+        // Final Trades
+
+        for (Item item : PrimevalItems.COPPER_TOOL_PARTS) {
+            TradeOfferHelper.registerWanderingTraderOffers(
+                    2,
+                    factories -> factories.add(new PrimevalTradeFactory(
+                            new ItemStack(PrimevalItems.COPPER_COIN, 8),
+                            new ItemStack(item, 1),
+                            1, 6
+                    ))
+            );
+        }
+
+        TradeOfferHelper.registerWanderingTraderOffers(
+                2,
+                factories -> factories.add(new PrimevalTradeFactory(
+                        new ItemStack(PrimevalItems.COPPER_COIN, 4),
+                        new ItemStack(PrimevalBlocks.OAK_SAPLING, 1),
+                        12, 2
+                ))
+        );
+
+        TradeOfferHelper.registerWanderingTraderOffers(
+                2,
+                factories -> factories.add(new PrimevalTradeFactory(
+                        new ItemStack(PrimevalItems.COPPER_COIN, 4),
+                        new ItemStack(PrimevalBlocks.BIRCH_SAPLING, 1),
+                        12, 2
                 ))
         );
 
