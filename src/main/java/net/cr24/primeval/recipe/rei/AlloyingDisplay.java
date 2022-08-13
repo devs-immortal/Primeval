@@ -5,15 +5,12 @@ import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
-import me.shedaniel.rei.plugin.common.displays.cooking.DefaultSmeltingDisplay;
 import net.cr24.primeval.recipe.AlloyingRecipe;
-import net.cr24.primeval.recipe.MeltingRecipe;
 import net.cr24.primeval.util.RangedValue;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 public class AlloyingDisplay implements Display {

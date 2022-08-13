@@ -3,10 +3,6 @@ plugins {
 	id 'maven-publish'
 }
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
-
-archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
@@ -56,7 +52,7 @@ dependencies {
 	modImplementation(include("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cc_version}"))
 
 	// REI
-	modCompileOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
+	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
 	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
 
 	// Satin

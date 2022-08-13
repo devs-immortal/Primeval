@@ -10,12 +10,9 @@ import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryStacks;
-import me.shedaniel.rei.plugin.common.displays.cooking.DefaultSmeltingDisplay;
 import net.cr24.primeval.item.PrimevalItems;
 import net.cr24.primeval.util.RangedValue;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableTextContent;
 import java.util.HashMap;
 import java.util.List;
 

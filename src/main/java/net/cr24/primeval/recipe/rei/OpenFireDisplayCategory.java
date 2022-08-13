@@ -9,13 +9,8 @@ import me.shedaniel.rei.api.client.gui.widgets.Widgets;
 import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryStacks;
-import me.shedaniel.rei.plugin.client.categories.DefaultCampfireCategory;
 import net.cr24.primeval.block.PrimevalBlocks;
-import net.cr24.primeval.item.PrimevalItems;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableTextContent;
-import java.text.DecimalFormat;
-import java.util.Collection;
 import java.util.List;
 
 public class OpenFireDisplayCategory implements DisplayCategory<OpenFireDisplay> {

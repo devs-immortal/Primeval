@@ -10,7 +10,7 @@ import net.cr24.primeval.recipe.*;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-import static me.shedaniel.rei.plugin.common.BuiltinPlugin.CRAFTING;
+//import static me.shedaniel.rei.plugin.common.BuiltinPlugin.CRAFTING;
 
 @Environment(EnvType.CLIENT)
 public class PrimevalREIClientIntegration implements REIClientPlugin {
@@ -26,7 +26,7 @@ public class PrimevalREIClientIntegration implements REIClientPlugin {
         registry.addWorkstations(PrimevalREIIntegration.MELTING, EntryStacks.of(PrimevalItems.FIRED_CLAY_VESSEL));
         registry.addWorkstations(PrimevalREIIntegration.ALLOYING, EntryStacks.of(PrimevalItems.FIRED_CLAY_VESSEL));
         registry.addWorkstations(PrimevalREIIntegration.OPEN_FIRE, EntryStacks.of(PrimevalBlocks.CAMPFIRE));
-        registry.addWorkstations(CRAFTING, EntryStacks.of(PrimevalBlocks.CRUDE_CRAFTING_BENCH));
+        //registry.addWorkstations(CRAFTING, EntryStacks.of(PrimevalBlocks.CRUDE_CRAFTING_BENCH));
     }
 
     @Override
