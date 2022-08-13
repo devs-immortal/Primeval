@@ -10,7 +10,8 @@
     "entity.passive.PigEntityMixin"
   ],
   "client": [
-    "client.color.block.BlockColorsMixin"
+    "client.color.block.BlockColorsMixin",
+    "item.LeadItemMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/door_bottom",
-  "textures": {
-    "top": "primeval:block/birch_door_top",
-    "bottom": "primeval:block/birch_door_bottom"
-  }
-}

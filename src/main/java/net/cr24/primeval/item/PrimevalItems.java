@@ -12,6 +12,7 @@ import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredica
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.mixin.client.indigo.renderer.MixinItemRenderer;
 import net.minecraft.client.item.UnclampedModelPredicateProvider;
+import net.minecraft.entity.decoration.LeashKnotEntity;
 import net.minecraft.item.*;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
@@ -28,7 +29,18 @@ public class PrimevalItems {
     /* Item Groups */
     public static final ItemGroup PRIMEVAL_ITEMS = FabricItemGroupBuilder.build(PrimevalMain.getId("items"), () -> new ItemStack(PrimevalItems.STRAW));
     public static final ItemGroup PRIMEVAL_BLOCKS = FabricItemGroupBuilder.build(PrimevalMain.getId("blocks"), () -> new ItemStack(PrimevalBlocks.DIRT));
-    public static final ItemGroup PRIMEVAL_TOOLS = FabricItemGroupBuilder.build(PrimevalMain.getId("tools"), () -> new ItemStack(PrimevalItems.FLINT_AXE));
+    public static final ItemGroup PRIMEVAL_TOOLS = FabricItemGroupBuilder.create(
+            PrimevalMain.getId("tools"))
+            .icon(() -> new ItemStack(PrimevalItems.FLINT_AXE))
+            .appendItems((stacks, itemGroup) -> {
+                stacks.add(new ItemStack(Items.LEAD));
+                for (Item item : Registry.ITEM) {
+                    if (item.getGroup() == itemGroup) {
+                        stacks.add(new ItemStack(item));
+                    }
+                }
+            })
+            .build();
     public static final ItemGroup PRIMEVAL_FOODS = FabricItemGroupBuilder.build(PrimevalMain.getId("foods"), () -> new ItemStack(PrimevalItems.FLINT_AXE));
 
     private static final Item.Settings GROUP_ITEMS = new Item.Settings().group(PRIMEVAL_ITEMS);
@@ -91,7 +103,6 @@ public class PrimevalItems {
     public static final Item RAW_IRON_HEMATITE_SMALL = registerItem("raw_iron_hematite_small", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
     public static final Item RAW_IRON_HEMATITE_MEDIUM = registerItem("raw_iron_hematite_medium", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
     public static final Item RAW_IRON_HEMATITE_LARGE = registerItem("raw_iron_hematite_large", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.LARGE));
-
 
     // Tools
     public static final Item FLINT_AXE = registerItem("flint_axe", new PrimevalAxeItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.FLINT.getAttackDamage(), -3.0f, new Item.Settings().group(PRIMEVAL_TOOLS), Weight.HEAVY, Size.LARGE));
