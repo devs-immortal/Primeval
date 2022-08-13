@@ -7,6 +7,8 @@ version = project.mod_version
 group = project.maven_group
 
 repositories {
+	// Architectury
+	maven { url "https://maven.architectury.dev/" }
 	// REI
 	maven { url "https://maven.shedaniel.me" }
 	// Incubus
@@ -50,6 +52,10 @@ dependencies {
 	// Cardinal Components
 	modImplementation(include("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cc_version}"))
 	modImplementation(include("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cc_version}"))
+
+	// Architectury
+	modCompileOnly "dev.architectury:architectury-fabric:${project.architectury_version}"
+	modRuntimeOnly "dev.architectury:architectury-fabric:${project.architectury_version}"
 
 	// REI
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
