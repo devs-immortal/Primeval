@@ -80,6 +80,7 @@ public class PrimevalBlocks {
     public static final Block SPRUCE_SAPLING = registerBlock("spruce_sapling", new GrowingSaplingBlock(SETTINGS_PLANT.ticksRandomly(), SpruceTrunker.INSTANCE), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
     public static final Block GRASS = registerBlock("grass", new GrowingGrassBlock(SETTINGS_PLANT.ticksRandomly()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
     public static final Block BUSH = registerBlock("bush", new PrimevalPlantBlock(SETTINGS_PLANT), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
+    public static final Block SHRUB = registerBlock("shrub", new PrimevalPlantBlock(SETTINGS_PLANT), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block MOSS = registerBlock("moss", new SpreadingMossBlock(SETTINGS_PLANT.ticksRandomly()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
     // Flowers
     public static final Block POPPY = registerBlock("poppy", new PrimevalPlantBlock(SETTINGS_PLANT), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
@@ -194,6 +195,7 @@ public class PrimevalBlocks {
         BlockRenderLayerMap.INSTANCE.putBlock(GRASSY_DIRT, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(GRASS, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BUSH, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(SHRUB, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(POPPY, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(DANDELION, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(OXEYE_DAISY, RenderLayer.getCutout());
