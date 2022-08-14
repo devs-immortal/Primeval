@@ -41,7 +41,7 @@ public class PrimevalItems {
                 }
             })
             .build();
-    public static final ItemGroup PRIMEVAL_FOODS = FabricItemGroupBuilder.build(PrimevalMain.getId("foods"), () -> new ItemStack(PrimevalItems.FLINT_AXE));
+    public static final ItemGroup PRIMEVAL_FOODS = FabricItemGroupBuilder.build(PrimevalMain.getId("foods"), () -> new ItemStack(PrimevalItems.COOKED_PORKCHOP));
 
     private static final Item.Settings GROUP_ITEMS = new Item.Settings().group(PRIMEVAL_ITEMS);
     private static final Item.Settings GROUP_TOOLS = new Item.Settings().group(PRIMEVAL_TOOLS);
