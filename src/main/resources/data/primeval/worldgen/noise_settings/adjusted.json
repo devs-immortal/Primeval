@@ -3117,7 +3117,8 @@
               "type": "minecraft:biome",
               "biome_is": [
                 "primeval:inland/oak_forest",
-                "primeval:inland/dense_oak_forest"
+                "primeval:inland/dense_oak_forest",
+                "primeval:inland/taiga"
               ]
             },
             "then_run": {
@@ -3328,6 +3329,7 @@
                       "primeval:inland/oak_forest",
                       "primeval:inland/dense_oak_forest",
                       "primeval:inland/birch_forest",
+                      "primeval:inland/taiga",
                       "primeval:inland/plains",
                       "primeval:inland/rocky_outcrop"
                     ]

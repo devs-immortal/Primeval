@@ -41,7 +41,7 @@ public class BlockColorsMixin {
                 PrimevalBlocks.BIRCH_LEAVES
         );
         origin.registerColorProvider(
-                ((state, world, pos, tintIndex) ->  world != null && pos != null ? BiomeColors.getFoliageColor(world, pos)-4280351 : FoliageColors.getColor(0.5D, 1.0D)),
+                ((state, world, pos, tintIndex) ->  world != null && pos != null ? BiomeColors.getFoliageColor(world, pos)-4082973 : FoliageColors.getColor(0.5D, 1.0D)),
                 PrimevalBlocks.SPRUCE_LEAVES
         );
         info.setReturnValue(origin);

@@ -101,6 +101,7 @@ public class SpruceTrunker extends AbstractTrunker {
                         3
                 );
                 placeLeaves(world, pos.up(2), Direction.DOWN);
+                posList.add(pos.up());
             }
 
             if (stillGrowing) {

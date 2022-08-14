@@ -129,10 +129,13 @@ public class PrimevalFeatures {
     private static final RegistryEntry<ConfiguredFeature<TrunkedTreeFeatureConfig, ?>> CONFIGURED_OAK_TRUNKED_TREE = register("trunked_tree_oak", TRUNKED_TREE_FEATURE, Configs.OAK_TRUNKED_TREE);
     private static final RegistryEntry<ConfiguredFeature<TrunkedTreeFeatureConfig, ?>> CONFIGURED_BIRCH_TRUNKED_TREE = register("trunked_tree_birch", TRUNKED_TREE_FEATURE, Configs.BIRCH_TRUNKED_TREE);
 
+    private static final RegistryEntry<ConfiguredFeature<TrunkedTreeFeatureConfig, ?>> CONFIGURED_SPRUCE_TRUNKED_TREE = register("trunked_tree_spruce", TRUNKED_TREE_FEATURE, Configs.SPRUCE_TRUNKED_TREE);
+
     public static final RegistryEntry<PlacedFeature> PLAINS_OAK_TRUNKED_TREE = register("trunked_tree_oak_plains", CONFIGURED_OAK_TRUNKED_TREE, getWeightedCountPlacementModifier(57, 2, 1), SquarePlacementModifier.of(), SurfaceWaterDepthFilterPlacementModifier.of(0), HeightmapPlacementModifier.of(Heightmap.Type.OCEAN_FLOOR), BlockFilterPlacementModifier.of(BlockPredicate.wouldSurvive(PrimevalBlocks.OAK_SAPLING.getDefaultState(), Vec3i.ZERO)), BiomePlacementModifier.of());
     public static final RegistryEntry<PlacedFeature> FOREST_OAK_TRUNKED_TREE = register("trunked_tree_oak_forest", CONFIGURED_OAK_TRUNKED_TREE, getWeightedCountPlacementModifier(5, 1, 2), SquarePlacementModifier.of(), SurfaceWaterDepthFilterPlacementModifier.of(0), HeightmapPlacementModifier.of(Heightmap.Type.OCEAN_FLOOR), BlockFilterPlacementModifier.of(BlockPredicate.wouldSurvive(PrimevalBlocks.OAK_SAPLING.getDefaultState(), Vec3i.ZERO)), BiomePlacementModifier.of());
     public static final RegistryEntry<PlacedFeature> FOREST_DENSE_OAK_TRUNKED_TREE = register("trunked_tree_dense_oak_forest", CONFIGURED_OAK_TRUNKED_TREE, getCommonWeightedCountPlacementModifier(1, 3), SquarePlacementModifier.of(), SurfaceWaterDepthFilterPlacementModifier.of(0), HeightmapPlacementModifier.of(Heightmap.Type.OCEAN_FLOOR), BlockFilterPlacementModifier.of(BlockPredicate.wouldSurvive(PrimevalBlocks.OAK_SAPLING.getDefaultState(), Vec3i.ZERO)), BiomePlacementModifier.of());
     public static final RegistryEntry<PlacedFeature> FOREST_BIRCH_TRUNKED_TREE = register("trunked_tree_birch_forest", CONFIGURED_BIRCH_TRUNKED_TREE, getWeightedCountPlacementModifier(1, 2, 6), SquarePlacementModifier.of(), SurfaceWaterDepthFilterPlacementModifier.of(0), HeightmapPlacementModifier.of(Heightmap.Type.OCEAN_FLOOR), BlockFilterPlacementModifier.of(BlockPredicate.wouldSurvive(PrimevalBlocks.BIRCH_SAPLING.getDefaultState(), Vec3i.ZERO)), BiomePlacementModifier.of());
+    public static final RegistryEntry<PlacedFeature> FOREST_SPRUCE_TRUNKED_TREE = register("trunked_tree_taiga", CONFIGURED_SPRUCE_TRUNKED_TREE, getWeightedCountPlacementModifier(1, 2, 6), SquarePlacementModifier.of(), SurfaceWaterDepthFilterPlacementModifier.of(0), HeightmapPlacementModifier.of(Heightmap.Type.OCEAN_FLOOR), BlockFilterPlacementModifier.of(BlockPredicate.wouldSurvive(PrimevalBlocks.SPRUCE_SAPLING.getDefaultState(), Vec3i.ZERO)), BiomePlacementModifier.of());
 
 
     protected static <FC extends FeatureConfig, F extends Feature<FC>> RegistryEntry<ConfiguredFeature<FC, ?>> register(String id, F feature, FC featureConfig) {
@@ -369,6 +372,10 @@ public class PrimevalFeatures {
         public static final TrunkedTreeFeatureConfig BIRCH_TRUNKED_TREE = new TrunkedTreeFeatureConfig(
                 SimpleBlockStateProvider.of(PrimevalBlocks.BIRCH_SAPLING),
                 UniformIntProvider.create(110, 150)
+        );
+        public static final TrunkedTreeFeatureConfig SPRUCE_TRUNKED_TREE = new TrunkedTreeFeatureConfig(
+                SimpleBlockStateProvider.of(PrimevalBlocks.SPRUCE_SAPLING),
+                UniformIntProvider.create(120, 180)
         );
     }
 
