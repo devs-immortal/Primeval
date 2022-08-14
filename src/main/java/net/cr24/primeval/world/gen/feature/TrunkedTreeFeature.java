@@ -32,7 +32,7 @@ public class TrunkedTreeFeature extends Feature<TrunkedTreeFeatureConfig> {
         GrowingSaplingBlock saplingBlock = (GrowingSaplingBlock) saplingState.getBlock();
 
         structureWorldAccess.setBlockState(blockPos, saplingState, 4);
-        List<BlockPos> posList = saplingBlock.trunker.growSapling(structureWorldAccess, blockPos);
+        List<BlockPos> posList = saplingBlock.trunker.growSapling(structureWorldAccess, blockPos, random);
         int step = 0;
         while (!posList.isEmpty() && step < tries) {
             int randomIndex = random.nextInt(posList.size());

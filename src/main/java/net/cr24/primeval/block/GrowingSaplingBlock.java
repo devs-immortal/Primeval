@@ -21,7 +21,7 @@ public class GrowingSaplingBlock extends PrimevalPlantBlock {
 
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (inGrowableArea(world, pos)) {
-            trunker.growSapling(world, pos);
+            trunker.growSapling(world, pos, random);
         }
     }
 

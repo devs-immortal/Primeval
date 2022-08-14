@@ -36,7 +36,7 @@ public abstract class AbstractTrunker {
      * Should replace the sapling block at 'pos' or
      * set that block to air
      */
-    public List<BlockPos> growSapling(WorldAccess world, BlockPos pos) {
+    public List<BlockPos> growSapling(WorldAccess world, BlockPos pos, Random random) {
         world.setBlockState(pos, logBlockState.with(TrunkBlock.AGE, 0).with(TrunkBlock.UP, true).with(TrunkBlock.DOWN, true).with(TrunkBlock.SIZE, 2), 3);
         world.setBlockState(pos.up(), logBlockState.with(TrunkBlock.AGE, 1).with(TrunkBlock.DOWN, true), 3);
         placeLeaves(world, pos.up(2), Direction.DOWN);
@@ -54,6 +54,12 @@ public abstract class AbstractTrunker {
      * Returns a list of newly created branch block positions
      * that can still be ticked, including the currently
      * ticked position, if it is still tickable
+     *
+     * state        : Blockstate of ticking block
+     * world        : World containing this tree
+     * pos          : Position of block
+     * random       : Random instance from world
+     * directions   : Connected leaves to this block
      */
     public abstract List<BlockPos> tickTrunk(BlockState state, WorldAccess world, BlockPos pos, Random random, Direction[] directions);
 
