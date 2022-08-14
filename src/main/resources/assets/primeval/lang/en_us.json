@@ -255,7 +255,7 @@
     "category.primeval.open_fire": "Open Fire Cooking",
     
     
-    "text.primeval.fluid.contains": "Contains %ddb of %s",
+    "text.primeval.fluid.contains": "Contains %d Units of %s",
     "text.primeval.size.small": "Small",
     "text.primeval.size.medium": "Medium",
     "text.primeval.size.large": "Large",
