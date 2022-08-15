@@ -187,36 +187,28 @@ public class PrimevalFeatures {
 
         // Ores
         public static final OreClusterFeatureConfig NATIVE_COPPER_ORE_CLUSTER = new OreClusterFeatureConfig(
-                SimpleBlockStateProvider.of(PrimevalBlocks.COPPER_NATIVE_ORE_LARGE),
-                SimpleBlockStateProvider.of(PrimevalBlocks.COPPER_NATIVE_ORE_MEDIUM),
-                SimpleBlockStateProvider.of(PrimevalBlocks.COPPER_NATIVE_ORE_SMALL),
+                PrimevalBlocks.COPPER_NATIVE_ORE,
                 UniformIntProvider.create(6, 9),
                 UniformIntProvider.create(4, 9),
                 UniformFloatProvider.create(0.15f, 0.2f),
                 UniformFloatProvider.create(0.25f, 0.4f)
         );
         public static final OreClusterFeatureConfig MALACHITE_COPPER_ORE_CLUSTER = new OreClusterFeatureConfig(
-                SimpleBlockStateProvider.of(PrimevalBlocks.COPPER_MALACHITE_ORE_LARGE),
-                SimpleBlockStateProvider.of(PrimevalBlocks.COPPER_MALACHITE_ORE_MEDIUM),
-                SimpleBlockStateProvider.of(PrimevalBlocks.COPPER_MALACHITE_ORE_SMALL),
+                PrimevalBlocks.COPPER_MALACHITE_ORE,
                 UniformIntProvider.create(5, 8),
                 UniformIntProvider.create(3, 5),
                 UniformFloatProvider.create(0.15f, 0.35f),
                 UniformFloatProvider.create(0.3f, 0.5f)
         );
         public static final OreClusterFeatureConfig CASSITERITE_TIN_ORE_CLUSTER = new OreClusterFeatureConfig(
-                SimpleBlockStateProvider.of(PrimevalBlocks.TIN_CASSITERITE_ORE_LARGE),
-                SimpleBlockStateProvider.of(PrimevalBlocks.TIN_CASSITERITE_ORE_MEDIUM),
-                SimpleBlockStateProvider.of(PrimevalBlocks.TIN_CASSITERITE_ORE_SMALL),
+                PrimevalBlocks.TIN_CASSITERITE_ORE,
                 UniformIntProvider.create(5, 8),
                 UniformIntProvider.create(3, 5),
                 UniformFloatProvider.create(0.15f, 0.35f),
                 UniformFloatProvider.create(0.3f, 0.5f)
         );
         public static final OreClusterFeatureConfig SPHALERITE_ZINC_ORE_CLUSTER = new OreClusterFeatureConfig(
-                SimpleBlockStateProvider.of(PrimevalBlocks.ZINC_SPHALERITE_ORE_LARGE),
-                SimpleBlockStateProvider.of(PrimevalBlocks.ZINC_SPHALERITE_ORE_MEDIUM),
-                SimpleBlockStateProvider.of(PrimevalBlocks.ZINC_SPHALERITE_ORE_SMALL),
+                PrimevalBlocks.ZINC_SPHALERITE_ORE,
                 UniformIntProvider.create(3, 6),
                 UniformIntProvider.create(2, 3),
                 UniformFloatProvider.create(0.2f, 0.4f),

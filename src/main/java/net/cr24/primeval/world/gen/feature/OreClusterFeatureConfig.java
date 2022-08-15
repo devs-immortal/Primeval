@@ -2,6 +2,7 @@ package net.cr24.primeval.world.gen.feature;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.cr24.primeval.block.PrimevalBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.floatprovider.FloatProvider;
 import net.minecraft.util.math.intprovider.IntProvider;
@@ -9,6 +10,7 @@ import net.minecraft.world.gen.feature.DiskFeatureConfig;
 import net.minecraft.world.gen.feature.FeatureConfig;
 import net.minecraft.world.gen.feature.SimpleBlockFeatureConfig;
 import net.minecraft.world.gen.stateprovider.BlockStateProvider;
+import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider;
 
 public record OreClusterFeatureConfig(BlockStateProvider largeState,
                                       BlockStateProvider mediumState,
@@ -17,6 +19,7 @@ public record OreClusterFeatureConfig(BlockStateProvider largeState,
                                       IntProvider height,
                                       FloatProvider density,
                                       FloatProvider richness) implements FeatureConfig {
+
     /*
      * Ore Cluster Feature Configuration:
      * large_ore    :   Blockstate for the large ore
@@ -39,4 +42,10 @@ public record OreClusterFeatureConfig(BlockStateProvider largeState,
         ).apply(instance, OreClusterFeatureConfig::new);
     });
 
+    public OreClusterFeatureConfig(PrimevalBlocks.OreBlockSet ore, IntProvider radius, IntProvider height, FloatProvider density, FloatProvider richness) {
+        this(SimpleBlockStateProvider.of(ore.large()),
+                SimpleBlockStateProvider.of(ore.medium()),
+                SimpleBlockStateProvider.of(ore.small()),
+                radius, height, density, richness);
+    }
 }
