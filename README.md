@@ -4,7 +4,9 @@ Primeval, for the Minecraft Fabric Modloader is an interpretation of mods like T
 
 Start in the stone age and work your way up through many anchient and medieval technologies and processes, constructing your own medieval world.
 
+Found on Modrinth and Curseforge:
 
-
+https://modrinth.com/mod/primeval
+https://www.curseforge.com/minecraft/mc-mods/id-primeval
 
 
