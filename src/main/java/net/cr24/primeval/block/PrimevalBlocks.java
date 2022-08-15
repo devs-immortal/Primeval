@@ -192,35 +192,32 @@ public class PrimevalBlocks {
     @Environment(EnvType.CLIENT)
     public static void initClient() {
         // Render Layers
-        BlockRenderLayerMap.INSTANCE.putBlock(GRASSY_DIRT, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(GRASS, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(BUSH, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(SHRUB, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(POPPY, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(DANDELION, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(OXEYE_DAISY, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(WILD_CARROTS, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(MOSS, RenderLayer.getCutout());
-
-        BlockRenderLayerMap.INSTANCE.putBlock(OAK_SAPLING, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(OAK_LEAVES, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(BIRCH_SAPLING, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(BIRCH_LEAVES, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(SPRUCE_SAPLING, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(SPRUCE_LEAVES, RenderLayer.getCutout());
-
-        BlockRenderLayerMap.INSTANCE.putBlock(CRUDE_TORCH, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(CAMPFIRE, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(ROPE, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(ROPE_LADDER, RenderLayer.getCutout());
-
-        BlockRenderLayerMap.INSTANCE.putBlock(OAK_PLANK_BLOCKS[6], RenderLayer.getCutout()); // Oak door
-        BlockRenderLayerMap.INSTANCE.putBlock(OAK_PLANK_BLOCKS[7], RenderLayer.getCutout()); // Oak trapdoor
+        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
+                GRASSY_DIRT,
+                GRASS, BUSH, SHRUB,
+                POPPY, DANDELION, OXEYE_DAISY,
+                WILD_CARROTS,
+                MOSS,
+                /* Tree */
+                OAK_SAPLING,
+                OAK_LEAVES,
+                BIRCH_SAPLING,
+                BIRCH_LEAVES,
+                SPRUCE_SAPLING,
+                SPRUCE_LEAVES,
+                /* Misc */
+                CRUDE_TORCH,
+                CAMPFIRE,
+                ROPE,
+                ROPE_LADDER,
+                OAK_PLANK_BLOCKS[6],   // Door
+                OAK_PLANK_BLOCKS[7]);  // Trapdoor
 
         // Color registry on items
-        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> 0x91BD59, GRASSY_DIRT.asItem());
-        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> 0x91BD59, GRASS.asItem());
-        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> 0x91BD59, BUSH.asItem());
+        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> 0x91BD59,
+                GRASSY_DIRT.asItem(),
+                GRASS.asItem(),
+                BUSH.asItem());
 
         // Block Renderers
         BlockEntityRendererRegistry.register(PIT_KILN_BLOCK_ENTITY, PitKilnBlockEntityRenderer::new);
