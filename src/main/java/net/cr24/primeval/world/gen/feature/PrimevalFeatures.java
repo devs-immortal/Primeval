@@ -2,13 +2,11 @@ package net.cr24.primeval.world.gen.feature;
 
 import net.cr24.primeval.PrimevalMain;
 import net.cr24.primeval.block.GrowingGrassBlock;
-import net.cr24.primeval.block.PrimevalBlockTags;
+import net.cr24.primeval.tag.PrimevalBlockTags;
 import net.cr24.primeval.block.PrimevalBlocks;
-import net.cr24.primeval.block.SpreadingMossBlock;
 import net.cr24.primeval.item.PrimevalItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.MultifaceGrowthBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.structure.rule.TagMatchRuleTest;

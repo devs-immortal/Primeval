@@ -1,5 +1,6 @@
 package net.cr24.primeval.block;
 
+import net.cr24.primeval.tag.PrimevalBlockTags;
 import net.minecraft.block.*;
 import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.server.world.ServerWorld;

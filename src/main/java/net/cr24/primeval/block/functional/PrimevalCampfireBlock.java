@@ -1,9 +1,9 @@
 package net.cr24.primeval.block.functional;
 
-import net.cr24.primeval.block.PrimevalBlockTags;
+import net.cr24.primeval.tag.PrimevalBlockTags;
 import net.cr24.primeval.block.PrimevalBlocks;
 import net.cr24.primeval.block.entity.PrimevalCampfireBlockEntity;
-import net.cr24.primeval.item.PrimevalItemTags;
+import net.cr24.primeval.tag.PrimevalItemTags;
 import net.cr24.primeval.item.PrimevalShovelItem;
 import net.cr24.primeval.recipe.OpenFireRecipe;
 import net.cr24.primeval.recipe.PrimevalRecipes;

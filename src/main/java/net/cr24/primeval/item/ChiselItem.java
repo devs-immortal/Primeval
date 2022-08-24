@@ -1,13 +1,12 @@
 package net.cr24.primeval.item;
 
-import net.cr24.primeval.block.PrimevalBlockTags;
+import net.cr24.primeval.tag.PrimevalBlockTags;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.*;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableTextContent;
 import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -19,7 +18,7 @@ public class ChiselItem extends MiningToolItem implements IWeightedItem {
     private final Size size;
 
     public ChiselItem(ToolMaterial material, float attackDamage, float attackSpeed, Item.Settings settings, Weight weight, Size size) {
-        super(attackDamage, attackSpeed, material, PrimevalBlockTags.MINEABLE_CHISEL, settings);
+        super(attackDamage, attackSpeed, material, PrimevalBlockTags.CHISEL_MINEABLE, settings);
         this.weight = weight;
         this.size = size;
     }

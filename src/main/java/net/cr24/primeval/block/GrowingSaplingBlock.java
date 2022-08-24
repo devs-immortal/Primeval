@@ -1,5 +1,6 @@
 package net.cr24.primeval.block;
 
+import net.cr24.primeval.tag.PrimevalBlockTags;
 import net.cr24.primeval.world.gen.trunker.AbstractTrunker;
 import net.minecraft.block.BlockState;
 import net.minecraft.server.world.ServerWorld;

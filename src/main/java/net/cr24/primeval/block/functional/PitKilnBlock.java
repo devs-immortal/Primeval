@@ -1,10 +1,10 @@
 package net.cr24.primeval.block.functional;
 
 import net.cr24.primeval.block.LayeredBlock;
-import net.cr24.primeval.block.PrimevalBlockTags;
+import net.cr24.primeval.tag.PrimevalBlockTags;
 import net.cr24.primeval.block.PrimevalBlocks;
 import net.cr24.primeval.block.entity.PitKilnBlockEntity;
-import net.cr24.primeval.item.PrimevalItemTags;
+import net.cr24.primeval.tag.PrimevalItemTags;
 import net.cr24.primeval.item.PrimevalItems;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;

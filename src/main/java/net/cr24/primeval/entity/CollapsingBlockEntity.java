@@ -1,7 +1,7 @@
 package net.cr24.primeval.entity;
 
 import com.google.common.collect.Lists;
-import net.cr24.primeval.block.PrimevalBlockTags;
+import net.cr24.primeval.tag.PrimevalBlockTags;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
@@ -11,7 +11,6 @@ import net.minecraft.entity.MovementType;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
 import net.minecraft.state.property.Properties;
 import net.minecraft.tag.FluidTags;
 import net.minecraft.util.hit.BlockHitResult;
