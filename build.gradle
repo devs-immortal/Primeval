@@ -65,11 +65,34 @@ dependencies {
 	modImplementation(include("io.github.ladysnake:satin:${project.satin_version}"))
 }
 
-processResources {
-	inputs.property "version", project.version
+sourceSets {
+	main {
+		resources {
+			srcDirs += [
+					'src/main/generated'
+			]
+		}
+	}
+}
 
+loom {
+	runs {
+		datagenClient {
+			inherit client
+			name "Minecraft Datagen"
+			vmArg "-Dfabric-api.datagen"
+			vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/generated")}"
+			runDir "build/datagen"
+		}
+	}
+}
+
+assemble.dependsOn runDatagenClient
+
+processResources {
+	duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
 	filesMatching("fabric.mod.json") {
-		expand "version": project.version
+		expand project.properties
 	}
 }
 

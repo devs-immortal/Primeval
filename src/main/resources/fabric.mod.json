@@ -23,6 +23,9 @@
     "client": [
       "net.cr24.primeval.PrimevalMain"
     ],
+    "fabric-datagen": [
+      "net.cr24.primeval.PrimevalMain"
+    ],
     "rei_client": [
       "net.cr24.primeval.recipe.rei.PrimevalREIClientIntegration"
     ]
