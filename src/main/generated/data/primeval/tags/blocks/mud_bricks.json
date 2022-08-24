@@ -1,0 +1,26 @@
+{
+  "replace": false,
+  "values": [
+    "primeval:mud_bricks",
+    "primeval:mud_bricks_stairs",
+    "primeval:mud_bricks_slab",
+    "primeval:smooth_stone",
+    "primeval:smooth_stone_stairs",
+    "primeval:smooth_stone_slab",
+    "primeval:stone_bricks",
+    "primeval:stone_bricks_stairs",
+    "primeval:stone_bricks_slab",
+    "primeval:fired_clay_shingles",
+    "primeval:fired_clay_shingles_stairs",
+    "primeval:fired_clay_shingles_slab",
+    "primeval:fired_clay_bricks",
+    "primeval:fired_clay_bricks_stairs",
+    "primeval:fired_clay_bricks_slab",
+    "primeval:fired_clay_tiles",
+    "primeval:fired_clay_tiles_stairs",
+    "primeval:fired_clay_tiles_slab",
+    "primeval:dried_bricks",
+    "primeval:dried_bricks_stairs",
+    "primeval:dried_bricks_slab"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "primeval:straw_block",
+    "primeval:straw_stairs",
+    "primeval:straw_slab",
+    "primeval:straw_mesh",
+    "primeval:straw_mat"
+  ]
+}

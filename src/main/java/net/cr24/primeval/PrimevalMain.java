@@ -37,8 +37,12 @@ public class PrimevalMain implements ModInitializer, ClientModInitializer, DataG
         PrimevalFluids.clientInit();
     }
 
+    @Override
+    public void onInitializeDataGenerator(FabricDataGenerator dataGenerator) {
+        dataGenerator.addProvider(new PrimevalBlockTagProvider(dataGenerator));
+    }
+
     public static Identifier getId(String id) {
         return new Identifier(MODID, id);
     }
-
 }

@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "primeval:oak_planks",
+    "primeval:oak_stairs",
+    "primeval:oak_slab",
+    "primeval:oak_fence",
+    "primeval:oak_log_fence",
+    "primeval:oak_fence_gate",
+    "primeval:oak_door",
+    "primeval:oak_trapdoor"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "replace": false,
+  "values": [
+    "#primeval:tree_trunks",
+    "#primeval:logs",
+    "#primeval:leaves",
+    "#primeval:straw_blocks",
+    "#primeval:daub_blocks",
+    "#primeval:crates",
+    "#primeval:oak_planks",
+    "#primeval:birch_planks",
+    "#primeval:spruce_planks",
+    "primeval:pit_kiln",
+    "primeval:crude_crafting_bench",
+    "primeval:rope",
+    "primeval:rope_ladder"
+  ]
+}

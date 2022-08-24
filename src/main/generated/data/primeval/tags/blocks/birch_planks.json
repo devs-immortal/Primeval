@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "primeval:birch_planks",
+    "primeval:birch_stairs",
+    "primeval:birch_slab",
+    "primeval:birch_fence",
+    "primeval:birch_log_fence",
+    "primeval:birch_fence_gate",
+    "primeval:birch_door",
+    "primeval:birch_trapdoor"
+  ]
+}
