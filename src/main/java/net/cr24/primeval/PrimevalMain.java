@@ -40,6 +40,7 @@ public class PrimevalMain implements ModInitializer, ClientModInitializer, DataG
     @Override
     public void onInitializeDataGenerator(FabricDataGenerator dataGenerator) {
         dataGenerator.addProvider(new PrimevalBlockTagProvider(dataGenerator));
+        dataGenerator.addProvider(new PrimevalItemTagProvider(dataGenerator));
     }
 
     public static Identifier getId(String id) {
