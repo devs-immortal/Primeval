@@ -1,0 +1,80 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "block": "primeval:spruce_log",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "size": "0"
+                  }
+                }
+              ],
+              "name": "primeval:spruce_log"
+            },
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "block": "primeval:spruce_log",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "size": "1"
+                  }
+                },
+                {
+                  "chance": 0.75,
+                  "condition": "minecraft:random_chance"
+                }
+              ],
+              "name": "primeval:spruce_log"
+            },
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "block": "primeval:spruce_log",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "size": "2"
+                  }
+                },
+                {
+                  "chance": 0.5,
+                  "condition": "minecraft:random_chance"
+                }
+              ],
+              "name": "primeval:spruce_log"
+            },
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "block": "primeval:spruce_log",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "size": "3"
+                  }
+                },
+                {
+                  "chance": 0.25,
+                  "condition": "minecraft:random_chance"
+                }
+              ],
+              "name": "primeval:spruce_log"
+            }
+          ]
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}

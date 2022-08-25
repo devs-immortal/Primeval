@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "primeval:gravel",
+          "weight": 6
+        },
+        {
+          "type": "minecraft:item",
+          "name": "primeval:flint"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}

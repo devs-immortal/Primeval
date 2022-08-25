@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "block": "primeval:crude_torch",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "burnout_stage": "0"
+                  }
+                }
+              ],
+              "name": "primeval:crude_torch_lit"
+            },
+            {
+              "type": "minecraft:item",
+              "name": "primeval:stick"
+            }
+          ]
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}
