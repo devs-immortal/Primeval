@@ -1,12 +1,12 @@
 {
   "replace": false,
   "values": [
-    "#primeval:mud_bricks",
-    "#primeval:mud_bricks",
-    "#primeval:mud_bricks",
-    "#primeval:mud_bricks",
-    "#primeval:mud_bricks",
-    "#primeval:mud_bricks",
+    "#primeval:smooth_stone_blocks",
+    "#primeval:stone_bricks",
+    "#primeval:fired_shingle_blocks",
+    "#primeval:fired_bricks",
+    "#primeval:fired_tile_blocks",
+    "#primeval:dried_bricks",
     "#primeval:copper_ores",
     "#primeval:iron_ores",
     "#primeval:tin_ores",

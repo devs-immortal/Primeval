@@ -40,7 +40,7 @@ public class PrimevalBlockLootTableProvider extends FabricBlockLootTableProvider
         addDrop(PrimevalBlocks.GRAVEL, PrimevalBlockLootTableProvider::gravelDrops);
         addDrop(PrimevalBlocks.CLAY_BLOCK, drops(PrimevalItems.CLAY_BALL, UniformLootNumberProvider.create(3.0f, 4.0f)));
         addDrop(PrimevalBlocks.OAK_LEAVES, leaveDrops(PrimevalBlocks.OAK_SAPLING));
-        addDrop(PrimevalBlocks.OAK_TRUNK, trunkDrops(PrimevalBlocks.OAK_LOG));
+        addDrop(PrimevalBlocks.OAK_TRUNK, (Block block) -> trunkDrops(block, PrimevalBlocks.OAK_LOG));
         addDrop(PrimevalBlocks.OAK_LOG);
         addDrop(PrimevalBlocks.OAK_SAPLING);
         addDrop(PrimevalBlocks.OAK_PLANK_BLOCKS.block());
@@ -53,7 +53,7 @@ public class PrimevalBlockLootTableProvider extends FabricBlockLootTableProvider
         addDrop(PrimevalBlocks.OAK_PLANK_BLOCKS.trapdoor());
         addDrop(PrimevalBlocks.OAK_CRATE, BlockLootTableGenerator::drops);
         addDrop(PrimevalBlocks.BIRCH_LEAVES, leaveDrops(PrimevalBlocks.BIRCH_SAPLING));
-        addDrop(PrimevalBlocks.BIRCH_TRUNK, trunkDrops(PrimevalBlocks.BIRCH_LOG));
+        addDrop(PrimevalBlocks.BIRCH_TRUNK, (Block block) -> trunkDrops(block, PrimevalBlocks.BIRCH_LOG));
         addDrop(PrimevalBlocks.BIRCH_LOG);
         addDrop(PrimevalBlocks.BIRCH_SAPLING);
         addDrop(PrimevalBlocks.BIRCH_PLANK_BLOCKS.block());
@@ -66,7 +66,7 @@ public class PrimevalBlockLootTableProvider extends FabricBlockLootTableProvider
         addDrop(PrimevalBlocks.BIRCH_PLANK_BLOCKS.trapdoor());
         addDrop(PrimevalBlocks.BIRCH_CRATE, BlockLootTableGenerator::drops);
         addDrop(PrimevalBlocks.SPRUCE_LEAVES, leaveDrops(PrimevalBlocks.SPRUCE_SAPLING));
-        addDrop(PrimevalBlocks.SPRUCE_TRUNK, trunkDrops(PrimevalBlocks.SPRUCE_LOG));
+        addDrop(PrimevalBlocks.SPRUCE_TRUNK, (Block block) -> trunkDrops(block, PrimevalBlocks.SPRUCE_LOG));
         addDrop(PrimevalBlocks.SPRUCE_LOG);
         addDrop(PrimevalBlocks.SPRUCE_SAPLING);
         addDrop(PrimevalBlocks.SPRUCE_PLANK_BLOCKS.block());
@@ -104,7 +104,7 @@ public class PrimevalBlockLootTableProvider extends FabricBlockLootTableProvider
         addDrop(PrimevalBlocks.STRAW_STAIRS);
         addDrop(PrimevalBlocks.ASH_PILE, drops(PrimevalItems.ASHES, UniformLootNumberProvider.create(1.0f, 3.0f)));
         addDrop(PrimevalBlocks.CAMPFIRE, campfireDrops());
-        addDrop(PrimevalBlocks.CRUDE_TORCH, PrimevalBlockLootTableProvider::torchDrops);
+        addDrop(PrimevalBlocks.CRUDE_TORCH, crudeTorchDrops());
         addDrop(PrimevalBlocks.CRUDE_CRAFTING_BENCH);
         addDrop(PrimevalBlocks.ROPE);
         addDrop(PrimevalBlocks.ROPE_LADDER);
@@ -160,18 +160,18 @@ public class PrimevalBlockLootTableProvider extends FabricBlockLootTableProvider
                 .with(ItemEntry.builder(PrimevalItems.FLINT).weight(1)));
     }
 
-    //need fix
     public static LootTable.Builder leaveDrops(ItemConvertible sapling) {
-        return PrimevalBlockLootTableProvider.dropsWithKnife(sapling, BlockLootTableGenerator.addSurvivesExplosionCondition(sapling, ItemEntry.builder(PrimevalItems.STICK).conditionally(RandomChanceLootCondition.builder(0.05f))));
+        return LootTable.builder().pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0f))
+                .with(ItemEntry.builder(PrimevalItems.STICK).conditionally(SurvivesExplosionLootCondition.builder()).conditionally(RandomChanceLootCondition.builder(0.05f)))
+                .with(ItemEntry.builder(sapling).conditionally(WITH_KNIFE).conditionally(RandomChanceLootCondition.builder(0.1f))));
     }
 
-    //needs fix
-    public static LootTable.Builder trunkDrops(Block log) {
+    public static LootTable.Builder trunkDrops(Block trunk, Block log) {
         return LootTable.builder().pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1))
-                .with(ItemEntry.builder(log).conditionally(exactMatchBlockStateLootCondition(log, TrunkBlock.SIZE, 0))
-                .alternatively(ItemEntry.builder(log).conditionally(exactMatchBlockStateLootCondition(log, TrunkBlock.SIZE, 1)).conditionally(RandomChanceLootCondition.builder(0.75f)))
-                .alternatively(ItemEntry.builder(log).conditionally(exactMatchBlockStateLootCondition(log, TrunkBlock.SIZE, 2)).conditionally(RandomChanceLootCondition.builder(0.5f)))
-                .alternatively(ItemEntry.builder(log).conditionally(exactMatchBlockStateLootCondition(log, TrunkBlock.SIZE, 3)).conditionally(RandomChanceLootCondition.builder(0.25f)))
+                .with(ItemEntry.builder(log).conditionally(exactMatchBlockStateLootCondition(trunk, TrunkBlock.SIZE, 0))
+                .alternatively(ItemEntry.builder(log).conditionally(exactMatchBlockStateLootCondition(trunk, TrunkBlock.SIZE, 1)).conditionally(RandomChanceLootCondition.builder(0.75f)))
+                .alternatively(ItemEntry.builder(log).conditionally(exactMatchBlockStateLootCondition(trunk, TrunkBlock.SIZE, 2)).conditionally(RandomChanceLootCondition.builder(0.5f)))
+                .alternatively(ItemEntry.builder(log).conditionally(exactMatchBlockStateLootCondition(trunk, TrunkBlock.SIZE, 3)).conditionally(RandomChanceLootCondition.builder(0.25f)))
         ));
     }
 
@@ -181,9 +181,9 @@ public class PrimevalBlockLootTableProvider extends FabricBlockLootTableProvider
                 .with(ItemEntry.builder(PrimevalItems.ASHES).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(0.0f, 2.0f)))));
     }
 
-    public static LootTable.Builder torchDrops(Block torch) {
+    public static LootTable.Builder crudeTorchDrops() {
         return LootTable.builder().pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1))
-                .with(ItemEntry.builder(torch).conditionally(exactMatchBlockStateLootCondition(torch, TimedTorchBlock.BURNOUT_STAGE, 0))
+                .with(ItemEntry.builder(PrimevalBlocks.CRUDE_TORCH).conditionally(exactMatchBlockStateLootCondition(PrimevalBlocks.CRUDE_TORCH, TimedTorchBlock.BURNOUT_STAGE, 0))
                 .alternatively(ItemEntry.builder(PrimevalItems.STICK))
         ));
     }

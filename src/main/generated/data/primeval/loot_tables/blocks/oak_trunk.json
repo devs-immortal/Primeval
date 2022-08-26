@@ -11,7 +11,7 @@
               "type": "minecraft:item",
               "conditions": [
                 {
-                  "block": "primeval:oak_log",
+                  "block": "primeval:oak_trunk",
                   "condition": "minecraft:block_state_property",
                   "properties": {
                     "size": "0"
@@ -24,7 +24,7 @@
               "type": "minecraft:item",
               "conditions": [
                 {
-                  "block": "primeval:oak_log",
+                  "block": "primeval:oak_trunk",
                   "condition": "minecraft:block_state_property",
                   "properties": {
                     "size": "1"
@@ -41,7 +41,7 @@
               "type": "minecraft:item",
               "conditions": [
                 {
-                  "block": "primeval:oak_log",
+                  "block": "primeval:oak_trunk",
                   "condition": "minecraft:block_state_property",
                   "properties": {
                     "size": "2"
@@ -58,7 +58,7 @@
               "type": "minecraft:item",
               "conditions": [
                 {
-                  "block": "primeval:oak_log",
+                  "block": "primeval:oak_trunk",
                   "condition": "minecraft:block_state_property",
                   "properties": {
                     "size": "3"
