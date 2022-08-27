@@ -326,7 +326,7 @@ public class PrimevalBlocks {
         );
     }
 
-    public static final record BlockSet(Block block, StairsBlock stairs, SlabBlock slab) {
+    public static final record BlockSet(Block block, StairsBlock stairs, SlabBlock slab) implements Iterable<Block> {
         public @NotNull Iterator<Block> iterator() {
             return Arrays.stream(new Block[]{block, stairs, slab}).iterator();
         }
@@ -336,7 +336,7 @@ public class PrimevalBlocks {
             return Arrays.stream(new Block[]{block, stairs, slab, fence, logFence, fenceGate, door, trapdoor}).iterator();
         }
     }
-    public static final record OreBlockSet(Block small, Block medium, Block large) {
+    public static final record OreBlockSet(Block small, Block medium, Block large) implements Iterable<Block> {
         public @NotNull Iterator<Block> iterator() {
             return Arrays.stream(new Block[]{small, medium, large}).iterator();
         }
