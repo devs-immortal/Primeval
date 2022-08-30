@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
+      "item": "primeval:stick"
+    },
+    "W": {
+      "item": "primeval:oak_planks"
+    }
+  },
+  "pattern": [
+    "W#W",
+    "W#W"
+  ],
+  "result": {
+    "count": 6,
+    "item": "primeval:oak_fence"
+  }
+}

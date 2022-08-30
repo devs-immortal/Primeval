@@ -39,7 +39,9 @@ public class PrimevalMain implements ModInitializer, ClientModInitializer, DataG
 
     @Override
     public void onInitializeDataGenerator(FabricDataGenerator dataGenerator) {
+        dataGenerator.addProvider(new PrimevalModelProvider(dataGenerator));
         dataGenerator.addProvider(new PrimevalBlockLootTableProvider(dataGenerator));
+        dataGenerator.addProvider(new PrimevalRecipeProvider(dataGenerator));
         dataGenerator.addProvider(new PrimevalBlockTagProvider(dataGenerator));
         dataGenerator.addProvider(new PrimevalItemTagProvider(dataGenerator));
     }

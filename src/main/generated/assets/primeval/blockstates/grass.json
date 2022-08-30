@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "growth=0": {
+      "model": "primeval:block/grass_growth0"
+    },
+    "growth=1": {
+      "model": "primeval:block/grass_growth1"
+    },
+    "growth=2": {
+      "model": "primeval:block/grass_growth2"
+    },
+    "growth=3": {
+      "model": "primeval:block/grass_growth3"
+    },
+    "growth=4": {
+      "model": "primeval:block/grass_growth4"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
+      "item": "primeval:bronze_shovel_head"
+    },
+    "S": {
+      "item": "primeval:stick"
+    }
+  },
+  "pattern": [
+    "#",
+    "S"
+  ],
+  "result": {
+    "item": "primeval:bronze_shovel"
+  }
+}

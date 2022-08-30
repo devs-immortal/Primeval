@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "primeval:block/oak_slab"
+    },
+    "type=double": {
+      "model": "primeval:block/oak_planks"
+    },
+    "type=top": {
+      "model": "primeval:block/oak_slab_top"
+    }
+  }
+}

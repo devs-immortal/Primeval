@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "primeval:block_of_clay"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "item": "primeval:clay_ball"
+  }
+}

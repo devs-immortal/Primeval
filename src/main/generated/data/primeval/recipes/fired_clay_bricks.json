@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
+      "item": "primeval:fired_clay_brick"
+    },
+    "S": {
+      "tag": "primeval:mortar"
+    }
+  },
+  "pattern": [
+    "S#",
+    "#S"
+  ],
+  "result": {
+    "count": 2,
+    "item": "primeval:fired_clay_bricks"
+  }
+}

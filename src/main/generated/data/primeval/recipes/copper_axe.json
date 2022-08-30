@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
+      "item": "primeval:copper_axe_head"
+    },
+    "S": {
+      "item": "primeval:stick"
+    }
+  },
+  "pattern": [
+    "#",
+    "S"
+  ],
+  "result": {
+    "item": "primeval:copper_axe"
+  }
+}

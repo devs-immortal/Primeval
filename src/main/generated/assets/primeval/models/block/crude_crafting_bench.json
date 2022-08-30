@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "primeval:block/crude_crafting_bench_bottom",
+    "side": "primeval:block/crude_crafting_bench_side",
+    "top": "primeval:block/crude_crafting_bench_top"
+  }
+}

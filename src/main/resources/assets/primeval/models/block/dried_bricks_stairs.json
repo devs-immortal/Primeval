@@ -1,8 +1,0 @@
-{
-	"parent": "minecraft:block/stairs",
-	"textures": {
-		"bottom": "primeval:block/dried_bricks",
-		"top": "primeval:block/dried_bricks",
-		"side": "primeval:block/dried_bricks"
-	}
-}

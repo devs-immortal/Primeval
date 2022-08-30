@@ -1,0 +1,76 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "primeval:block/straw_height2"
+      },
+      "when": {
+        "build_step": "0"
+      }
+    },
+    {
+      "apply": {
+        "model": "primeval:block/straw_height4"
+      },
+      "when": {
+        "build_step": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "primeval:block/straw_height6"
+      },
+      "when": {
+        "build_step": "2"
+      }
+    },
+    {
+      "apply": {
+        "model": "primeval:block/straw_height8"
+      },
+      "when": {
+        "build_step": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "primeval:block/straw_height10"
+      },
+      "when": {
+        "build_step": "4"
+      }
+    },
+    {
+      "apply": {
+        "model": "primeval:block/pit_kiln_1log"
+      },
+      "when": {
+        "build_step": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "primeval:block/pit_kiln_2log"
+      },
+      "when": {
+        "build_step": "6"
+      }
+    },
+    {
+      "apply": {
+        "model": "primeval:block/pit_kiln_3log"
+      },
+      "when": {
+        "build_step": "7"
+      }
+    },
+    {
+      "apply": {
+        "model": "primeval:block/pit_kiln_4log"
+      },
+      "when": {
+        "build_step": "8"
+      }
+    }
+  ]
+}

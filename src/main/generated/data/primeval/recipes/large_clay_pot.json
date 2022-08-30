@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": {
+      "item": "primeval:block_of_clay"
+    },
+    "C": {
+      "item": "primeval:clay_ball"
+    }
+  },
+  "pattern": [
+    "C C",
+    "C C",
+    "CBC"
+  ],
+  "result": {
+    "item": "primeval:large_clay_pot"
+  }
+}

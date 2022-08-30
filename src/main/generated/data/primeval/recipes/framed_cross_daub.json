@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "D": {
+      "item": "primeval:daub"
+    },
+    "S": {
+      "item": "primeval:stick"
+    }
+  },
+  "pattern": [
+    "DS",
+    "SD"
+  ],
+  "result": {
+    "count": 2,
+    "item": "primeval:framed_cross_daub"
+  }
+}

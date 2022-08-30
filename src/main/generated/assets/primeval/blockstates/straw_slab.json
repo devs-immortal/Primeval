@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "primeval:block/straw_slab"
+    },
+    "type=double": {
+      "model": "primeval:block/straw_block"
+    },
+    "type=top": {
+      "model": "primeval:block/straw_slab_top"
+    }
+  }
+}

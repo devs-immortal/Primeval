@@ -1,0 +1,45 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_dried_brick": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "primeval:dried_brick"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_mortar": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "primeval:mortar"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "primeval:dried_bricks"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_dried_brick",
+      "has_mortar",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "primeval:dried_bricks"
+    ]
+  }
+}

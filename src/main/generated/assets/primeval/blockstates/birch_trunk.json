@@ -1,0 +1,216 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "primeval:block/birch_trunk_0"
+      },
+      "when": {
+        "size": "0"
+      }
+    },
+    {
+      "apply": {
+        "model": "primeval:block/birch_trunk_1_core"
+      },
+      "when": {
+        "size": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "primeval:block/birch_trunk_1_ns"
+      },
+      "when": {
+        "north": "true",
+        "size": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "primeval:block/birch_trunk_1_ew"
+      },
+      "when": {
+        "east": "true",
+        "size": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "primeval:block/birch_trunk_1_ns",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "size": "1",
+        "south": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "primeval:block/birch_trunk_1_ew",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "size": "1",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "primeval:block/birch_trunk_1_ud"
+      },
+      "when": {
+        "size": "1",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "primeval:block/birch_trunk_1_ud",
+        "uvlock": true,
+        "x": 180
+      },
+      "when": {
+        "down": "true",
+        "size": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "primeval:block/birch_trunk_2_core"
+      },
+      "when": {
+        "size": "2"
+      }
+    },
+    {
+      "apply": {
+        "model": "primeval:block/birch_trunk_2_ns"
+      },
+      "when": {
+        "north": "true",
+        "size": "2"
+      }
+    },
+    {
+      "apply": {
+        "model": "primeval:block/birch_trunk_2_ew"
+      },
+      "when": {
+        "east": "true",
+        "size": "2"
+      }
+    },
+    {
+      "apply": {
+        "model": "primeval:block/birch_trunk_2_ns",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "size": "2",
+        "south": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "primeval:block/birch_trunk_2_ew",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "size": "2",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "primeval:block/birch_trunk_2_ud"
+      },
+      "when": {
+        "size": "2",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "primeval:block/birch_trunk_2_ud",
+        "uvlock": true,
+        "x": 180
+      },
+      "when": {
+        "down": "true",
+        "size": "2"
+      }
+    },
+    {
+      "apply": {
+        "model": "primeval:block/birch_trunk_3_core"
+      },
+      "when": {
+        "size": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "primeval:block/birch_trunk_3_ns"
+      },
+      "when": {
+        "north": "true",
+        "size": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "primeval:block/birch_trunk_3_ew"
+      },
+      "when": {
+        "east": "true",
+        "size": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "primeval:block/birch_trunk_3_ns",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "size": "3",
+        "south": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "primeval:block/birch_trunk_3_ew",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "size": "3",
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "primeval:block/birch_trunk_3_ud"
+      },
+      "when": {
+        "size": "3",
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "primeval:block/birch_trunk_3_ud",
+        "uvlock": true,
+        "x": 180
+      },
+      "when": {
+        "down": "true",
+        "size": "3"
+      }
+    }
+  ]
+}

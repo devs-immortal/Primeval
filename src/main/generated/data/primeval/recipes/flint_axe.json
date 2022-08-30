@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
+      "item": "primeval:flint"
+    },
+    "/": {
+      "item": "primeval:stick"
+    },
+    "S": {
+      "item": "primeval:straw"
+    }
+  },
+  "pattern": [
+    "#S",
+    "#/"
+  ],
+  "result": {
+    "item": "primeval:flint_axe"
+  }
+}

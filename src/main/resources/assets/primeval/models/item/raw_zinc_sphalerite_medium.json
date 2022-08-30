@@ -1,6 +1,0 @@
-{
-	"parent": "minecraft:item/generated",
-	"textures": {
-		"layer0": "primeval:item/raw_zinc_sphalerite_medium"
-	}
-}

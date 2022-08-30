@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "primeval:block/framed_pillar_daub_top",
+    "side": "primeval:block/framed_pillar_daub_side"
+  }
+}

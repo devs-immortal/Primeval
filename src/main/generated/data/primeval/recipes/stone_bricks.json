@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
+      "item": "primeval:stone_brick"
+    },
+    "S": {
+      "tag": "primeval:mortar"
+    }
+  },
+  "pattern": [
+    "S#",
+    "#S"
+  ],
+  "result": {
+    "count": 2,
+    "item": "primeval:stone_bricks"
+  }
+}

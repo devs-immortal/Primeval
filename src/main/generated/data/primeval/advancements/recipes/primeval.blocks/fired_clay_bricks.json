@@ -1,0 +1,45 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_fired_clay_brick": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "primeval:fired_clay_brick"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_mortar": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "primeval:mortar"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "primeval:fired_clay_bricks"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_fired_clay_brick",
+      "has_mortar",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "primeval:fired_clay_bricks"
+    ]
+  }
+}
