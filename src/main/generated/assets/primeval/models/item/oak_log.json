@@ -1,3 +1,6 @@
 {
-  "parent": "primeval:block/oak_log"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "primeval:item/oak_log"
+  }
 }

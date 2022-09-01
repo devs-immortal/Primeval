@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "layers=1": {
+      "model": "primeval:block/straw_height2"
+    },
+    "layers=2": {
+      "model": "primeval:block/straw_height4"
+    },
+    "layers=3": {
+      "model": "primeval:block/straw_height6"
+    },
+    "layers=4": {
+      "model": "primeval:block/straw_height8"
+    },
+    "layers=5": {
+      "model": "primeval:block/straw_height10"
+    },
+    "layers=6": {
+      "model": "primeval:block/straw_height12"
+    },
+    "layers=7": {
+      "model": "primeval:block/straw_height14"
+    },
+    "layers=8": {
+      "model": "primeval:block/straw_block"
+    }
+  }
+}

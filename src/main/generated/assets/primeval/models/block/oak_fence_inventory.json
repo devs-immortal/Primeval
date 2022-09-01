@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/fence_inventory",
   "textures": {
-    "texture": "primeval:block/oak_fence"
+    "texture": "minecraft:block/oak_planks"
   }
 }

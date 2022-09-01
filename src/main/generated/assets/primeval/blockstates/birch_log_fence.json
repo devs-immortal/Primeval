@@ -7,7 +7,7 @@
     },
     {
       "apply": {
-        "model": "primeval:block/birch_planks_fence_side",
+        "model": "primeval:block/birch_fence_side",
         "uvlock": true
       },
       "when": {
@@ -16,7 +16,7 @@
     },
     {
       "apply": {
-        "model": "primeval:block/birch_planks_fence_side",
+        "model": "primeval:block/birch_fence_side",
         "uvlock": true,
         "y": 90
       },
@@ -26,7 +26,7 @@
     },
     {
       "apply": {
-        "model": "primeval:block/birch_planks_fence_side",
+        "model": "primeval:block/birch_fence_side",
         "uvlock": true,
         "y": 180
       },
@@ -36,7 +36,7 @@
     },
     {
       "apply": {
-        "model": "primeval:block/birch_planks_fence_side",
+        "model": "primeval:block/birch_fence_side",
         "uvlock": true,
         "y": 270
       },

@@ -1,3 +1,6 @@
 {
-  "parent": "primeval:block/spruce_log"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "primeval:item/spruce_log"
+  }
 }

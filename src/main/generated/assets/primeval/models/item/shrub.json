@@ -1,3 +1,6 @@
 {
-  "parent": "primeval:block/shrub"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "primeval:item/shrub"
+  }
 }

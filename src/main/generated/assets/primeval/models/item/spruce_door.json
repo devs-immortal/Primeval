@@ -1,6 +1,3 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "primeval:item/spruce_door"
-  }
+  "parent": "minecraft:item/spruce_door"
 }

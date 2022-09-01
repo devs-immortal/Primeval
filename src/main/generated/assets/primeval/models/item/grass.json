@@ -1,3 +1,6 @@
 {
-  "parent": "primeval:block/grass"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:block/grass"
+  }
 }

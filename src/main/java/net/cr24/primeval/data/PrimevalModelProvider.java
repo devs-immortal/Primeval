@@ -27,9 +27,6 @@ public class PrimevalModelProvider extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator modelGenerator) {
-        // FIXME:
-        //  - "Straw.json" block model has no identifier in code (registerLayered(PrimevalBlocks.STRAW, modelGenerator);)
-
         registerParentedSingletonWithoutItem(PrimevalBlocks.LAYING_ITEM, Blocks.AIR, modelGenerator);
 
         registerFlower(PrimevalBlocks.OAK_SAPLING, Blocks.OAK_SAPLING, modelGenerator);
@@ -37,21 +34,21 @@ public class PrimevalModelProvider extends FabricModelProvider {
         registerTrunk(PrimevalBlocks.OAK_TRUNK, modelGenerator);
         registerLog(PrimevalBlocks.OAK_LOG, PrimevalBlocks.OAK_TRUNK, modelGenerator);
         registerCrate(PrimevalBlocks.OAK_CRATE, modelGenerator);
-        registerWoodBlockSet(PrimevalBlocks.OAK_PLANK_BLOCKS, Blocks.OAK_PLANKS, modelGenerator);
+        registerWoodBlockSet(PrimevalBlocks.OAK_PLANK_BLOCKS, Blocks.OAK_PLANKS, Blocks.OAK_DOOR, Blocks.OAK_TRAPDOOR, true, modelGenerator);
         registerFlower(PrimevalBlocks.BIRCH_SAPLING, Blocks.BIRCH_SAPLING, modelGenerator);
         registerParentedSingleton(PrimevalBlocks.BIRCH_LEAVES, Blocks.BIRCH_LEAVES, modelGenerator);
         registerTrunk(PrimevalBlocks.BIRCH_TRUNK, modelGenerator);
         registerLog(PrimevalBlocks.BIRCH_LOG, PrimevalBlocks.BIRCH_TRUNK, modelGenerator);
         registerCrate(PrimevalBlocks.BIRCH_CRATE, modelGenerator);
-        registerWoodBlockSet(PrimevalBlocks.BIRCH_PLANK_BLOCKS, Blocks.BIRCH_PLANKS, modelGenerator);
+        registerWoodBlockSet(PrimevalBlocks.BIRCH_PLANK_BLOCKS, Blocks.BIRCH_PLANKS, Blocks.BIRCH_DOOR, Blocks.BIRCH_TRAPDOOR, false, modelGenerator);
         registerFlower(PrimevalBlocks.SPRUCE_SAPLING, Blocks.SPRUCE_SAPLING, modelGenerator);
         registerParentedSingleton(PrimevalBlocks.SPRUCE_LEAVES, Blocks.SPRUCE_LEAVES, modelGenerator);
         registerTrunk(PrimevalBlocks.SPRUCE_TRUNK, modelGenerator);
         registerLog(PrimevalBlocks.SPRUCE_LOG, PrimevalBlocks.SPRUCE_TRUNK, modelGenerator);
         registerCrate(PrimevalBlocks.SPRUCE_CRATE, modelGenerator);
-        registerWoodBlockSet(PrimevalBlocks.SPRUCE_PLANK_BLOCKS, Blocks.SPRUCE_PLANKS, modelGenerator);
+        registerWoodBlockSet(PrimevalBlocks.SPRUCE_PLANK_BLOCKS, Blocks.SPRUCE_PLANKS, Blocks.SPRUCE_DOOR, Blocks.SPRUCE_TRAPDOOR, false, modelGenerator);
 
-        registerGrass(PrimevalBlocks.GRASS, modelGenerator);
+        registerGrass(PrimevalBlocks.GRASS, Blocks.GRASS, modelGenerator);
         registerGrassyDirt(PrimevalBlocks.GRASSY_DIRT, modelGenerator);
         modelGenerator.registerRandomHorizontalRotations(TexturedModel.CUBE_ALL, PrimevalBlocks.DIRT, PrimevalBlocks.COARSE_DIRT, PrimevalBlocks.SAND);
         registerSingleton(PrimevalBlocks.GRAVEL, modelGenerator);
@@ -62,7 +59,7 @@ public class PrimevalModelProvider extends FabricModelProvider {
         registerBlockSet(PrimevalBlocks.STONE_BRICKS, modelGenerator);
         registerSingleton(PrimevalBlocks.TERRACOTTA, modelGenerator);
 
-        registerSingleton(PrimevalBlocks.SHRUB, modelGenerator);
+        registerShrub(PrimevalBlocks.SHRUB, modelGenerator);
         registerBush(PrimevalBlocks.BUSH, modelGenerator);
         registerCampfire(PrimevalBlocks.CAMPFIRE, modelGenerator);
         registerTorch(PrimevalBlocks.CRUDE_TORCH, modelGenerator);
@@ -111,22 +108,16 @@ public class PrimevalModelProvider extends FabricModelProvider {
         registerSingleton(PrimevalBlocks.LARGE_DECORATIVE_FIRED_CLAY_POT, modelGenerator);
         registerSingleton(PrimevalBlocks.LARGE_CLAY_POT, modelGenerator);
 
+        registerLayered(PrimevalBlocks.STRAW_PILE, PrimevalBlocks.STRAW_BLOCK, modelGenerator);
         modelGenerator.registerAxisRotated(PrimevalBlocks.STRAW_BLOCK, TexturedModel.CUBE_COLUMN);
         modelGenerator.registerSingleton(PrimevalBlocks.STRAW_MAT, TextureMap.wool(PrimevalBlocks.STRAW_MESH), Models.CARPET);
         registerSingleton(PrimevalBlocks.STRAW_MESH, modelGenerator);
-        registerSlab(PrimevalBlocks.STRAW_SLAB, PrimevalBlocks.STRAW_BLOCK, modelGenerator);
-        registerStairs(PrimevalBlocks.STRAW_STAIRS, PrimevalBlocks.STRAW_BLOCK, modelGenerator);
+        registerPillarSlab(PrimevalBlocks.STRAW_SLAB, PrimevalBlocks.STRAW_BLOCK, modelGenerator);
+        registerPillarStairs(PrimevalBlocks.STRAW_STAIRS, PrimevalBlocks.STRAW_BLOCK, modelGenerator);
     }
 
     @Override
     public void generateItemModels(ItemModelGenerator modelGenerator) {
-        // TODO:
-        //  - Add tem model overrides for FiredClayMolds using model templates
-
-        // FIXME:
-        //  - "clay_jug" and "fired_clay_jug" don't exist
-        //  - Fix "crude_torch" and "lit_crude_torch" identifier mess...
-
         modelGenerator.register(PrimevalItems.ANIMAL_FAT, Models.GENERATED);
         modelGenerator.register(PrimevalItems.ASHES, Models.GENERATED);
         modelGenerator.register(PrimevalItems.BONE, Items.BONE, Models.GENERATED);
@@ -224,10 +215,6 @@ public class PrimevalModelProvider extends FabricModelProvider {
         registerToolPartSet(PrimevalItems.COPPER_TOOL_PARTS, modelGenerator);
     }
 
-//    public final void registerParentedItem(Item item, Item parent, Model model) {
-//        model.upload(ModelIds.getItemModelId(item), TextureMap.layer0(item), this.writer);
-//    }
-
     public void registerToolSet(Item[] toolSet, ItemModelGenerator modelGenerator) {
         for (Item item : toolSet) modelGenerator.register(item, Models.HANDHELD);
     }
@@ -252,22 +239,15 @@ public class PrimevalModelProvider extends FabricModelProvider {
         modelGenerator.excludeFromSimpleItemModelGeneration(block);
     }
 
-    public void registerFlower(Block block, Block parent, BlockStateModelGenerator modelGenerator) {
-        Identifier model = ModelIds.getBlockModelId(parent);
-        modelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(block, model));
-        Models.GENERATED.upload(ModelIds.getItemModelId(block.asItem()), TextureMap.layer0(parent), modelGenerator.modelCollector);
-    }
-
     public void registerRandomMirroredInversion(Block block, BlockStateModelGenerator modelGenerator) {
         Identifier model = ModelIds.getBlockModelId(block);
         Identifier mirror = Models.CUBE_MIRRORED_ALL.upload(block, TextureMap.all(block), modelGenerator.modelCollector);
         modelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createBlockStateWithTwoModelAndRandomInversion(block, model, mirror));
     }
 
-    public void registerLayered(Block block, BlockStateModelGenerator modelGenerator) {
-        Identifier identifier = Models.CUBE_ALL.upload(block, TextureMap.all(block), modelGenerator.modelCollector);
-        modelGenerator.blockStateCollector.accept(VariantsBlockStateSupplier.create(block).coordinate(BlockStateVariantMap.create(Properties.LAYERS).register(height -> BlockStateVariant.create().put(VariantSettings.MODEL, height < 8 ? ModelIds.getBlockSubModelId(block, "_height" + height * 2) : identifier))));
-//        this.blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(Blocks.SNOW_BLOCK, identifier));
+    public void registerLayered(Block layerBlock, Block fullBlock, BlockStateModelGenerator modelGenerator) {
+        Identifier identifier = ModelIds.getBlockModelId(fullBlock);
+        modelGenerator.blockStateCollector.accept(VariantsBlockStateSupplier.create(layerBlock).coordinate(BlockStateVariantMap.create(Properties.LAYERS).register(height -> BlockStateVariant.create().put(VariantSettings.MODEL, height < 8 ? ModelIds.getBlockSubModelId(layerBlock, "_height" + height * 2) : identifier))));
     }
 
     public void registerBlockSet(PrimevalBlocks.BlockSet blockSet, BlockStateModelGenerator modelGenerator) {
@@ -276,15 +256,15 @@ public class PrimevalModelProvider extends FabricModelProvider {
         registerStairs(blockSet.stairs(), blockSet.block(), modelGenerator);
     }
 
-    public void registerWoodBlockSet(PrimevalBlocks.WoodBlockSet woodBlockSet, Block texture, BlockStateModelGenerator modelGenerator) {
+    public void registerWoodBlockSet(PrimevalBlocks.WoodBlockSet woodBlockSet, Block texture, Block doorTexture, Block trapdoorTexture, boolean orientableTrapdoor, BlockStateModelGenerator modelGenerator) {
         registerParentedSingleton(woodBlockSet.block(), texture, modelGenerator);
         registerSlab(woodBlockSet.slab(), woodBlockSet.block(), modelGenerator);
         registerStairs(woodBlockSet.stairs(), woodBlockSet.block(), modelGenerator);
-        modelGenerator.registerTrapdoor(woodBlockSet.trapdoor());
-        modelGenerator.registerDoor(woodBlockSet.door());
-        registerFence(woodBlockSet.fence(), woodBlockSet.block(), modelGenerator);
+        registerTrapdoor(woodBlockSet.trapdoor(), trapdoorTexture, orientableTrapdoor, modelGenerator);
+        registerDoor(woodBlockSet.door(), doorTexture, modelGenerator);
+        registerLogFence(woodBlockSet.logFence(), woodBlockSet.fence(), modelGenerator);
+        registerFence(woodBlockSet.fence(), texture, modelGenerator);
         registerFenceGate(woodBlockSet.fenceGate(), woodBlockSet.block(), modelGenerator);
-        registerLogFence(woodBlockSet.logFence(), woodBlockSet.block(), modelGenerator);
     }
 
     public void registerOreBlockSet(PrimevalBlocks.OreBlockSet oreBlockSet, BlockStateModelGenerator modelGenerator) {
@@ -305,7 +285,13 @@ public class PrimevalModelProvider extends FabricModelProvider {
         modelGenerator.registerItemModel(block);
     }
 
-    public void registerGrass(Block block, BlockStateModelGenerator modelGenerator) {
+    public void registerFlower(Block block, Block parent, BlockStateModelGenerator modelGenerator) {
+        Identifier model = ModelIds.getBlockModelId(parent);
+        modelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(block, model));
+        Models.GENERATED.upload(ModelIds.getItemModelId(block.asItem()), TextureMap.layer0(parent), modelGenerator.modelCollector);
+    }
+
+    public void registerGrass(Block block, Block parent, BlockStateModelGenerator modelGenerator) {
         Identifier growth0 = ModelIds.getBlockSubModelId(block, "_growth0");
         Identifier growth1 = ModelIds.getBlockSubModelId(block, "_growth1");
         Identifier growth2 = ModelIds.getBlockSubModelId(block, "_growth2");
@@ -318,6 +304,7 @@ public class PrimevalModelProvider extends FabricModelProvider {
                 .register(3, BlockStateVariant.create().put(VariantSettings.MODEL, growth3))
                 .register(4, BlockStateVariant.create().put(VariantSettings.MODEL, growth4))
         ));
+        Models.GENERATED.upload(ModelIds.getItemModelId(block.asItem()), TextureMap.layer0(parent), modelGenerator.modelCollector);
     }
 
     public void registerGrassyDirt(Block block, BlockStateModelGenerator modelGenerator) {
@@ -329,7 +316,6 @@ public class PrimevalModelProvider extends FabricModelProvider {
         modelGenerator.blockStateCollector.accept(VariantsBlockStateSupplier.create(block).coordinate(BlockStateVariantMap.create(Properties.SNOWY)
                         .register(false, list)
                         .register(true, BlockStateVariant.create().put(VariantSettings.MODEL, ModelIds.getBlockSubModelId(block, "_snowy")))
-
         ));
     }
 
@@ -337,6 +323,13 @@ public class PrimevalModelProvider extends FabricModelProvider {
         Identifier big = ModelIds.getBlockSubModelId(block, "_big");
         Identifier small = ModelIds.getBlockSubModelId(block, "_small");
         modelGenerator.blockStateCollector.accept(VariantsBlockStateSupplier.create(block, BlockStateVariant.create().put(VariantSettings.MODEL, big), BlockStateVariant.create().put(VariantSettings.MODEL, small)));
+        modelGenerator.registerItemModel(block, "_big");
+    }
+
+    public void registerShrub(Block block, BlockStateModelGenerator modelGenerator) {
+        Identifier model = ModelIds.getBlockModelId(block);
+        modelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(block, model));
+        modelGenerator.registerItemModel(block.asItem());
     }
 
     public void registerCrate(Block block, BlockStateModelGenerator modelGenerator) {
@@ -346,51 +339,91 @@ public class PrimevalModelProvider extends FabricModelProvider {
                 .register(true, BlockStateVariant.create().put(VariantSettings.MODEL, TexturedModel.CUBE_BOTTOM_TOP.get(block).textures(textureMap -> textureMap.put(TextureKey.TOP, identifier)).upload(block, "_open", modelGenerator.modelCollector)))));
     }
 
-    //maybe need fixing
-    public void registerLogFence(Block block, Block base, BlockStateModelGenerator modelGenerator) {
-        Identifier identifier = ModelIds.getBlockSubModelId(block, "_post");
-        Identifier identifier2 = ModelIds.getBlockSubModelId(base, "_fence_side");
-        modelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createFenceBlockState(block, identifier, identifier2));
-        Identifier identifier3 = Models.FENCE_INVENTORY.upload(block, TextureMap.texture(block), modelGenerator.modelCollector);
-        modelGenerator.registerParentedItemModel(block, identifier3);
+    public void registerLogFence(Block logFence, Block fence, BlockStateModelGenerator modelGenerator) {
+        Identifier identifier = ModelIds.getBlockSubModelId(logFence, "_post");
+        Identifier identifier2 = ModelIds.getBlockSubModelId(fence, "_side");
+        modelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createFenceBlockState(logFence, identifier, identifier2));
+        Identifier identifier3 = ModelIds.getBlockSubModelId(logFence, "_inventory");
+        modelGenerator.registerParentedItemModel(logFence, identifier3);
     }
 
-    public void registerFence(Block block, Block base, BlockStateModelGenerator modelGenerator) {
-        Identifier identifier = Models.FENCE_POST.upload(block, TextureMap.texture(base), modelGenerator.modelCollector);
-        Identifier identifier2 = Models.FENCE_SIDE.upload(block, TextureMap.texture(base), modelGenerator.modelCollector);
-        modelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createFenceBlockState(block, identifier, identifier2));
-        Identifier identifier3 = Models.FENCE_INVENTORY.upload(block, TextureMap.texture(block), modelGenerator.modelCollector);
-        modelGenerator.registerParentedItemModel(block, identifier3);
+    public void registerFence(Block fence, Block texture, BlockStateModelGenerator modelGenerator) {
+        Identifier identifier = Models.FENCE_POST.upload(fence, TextureMap.texture(texture), modelGenerator.modelCollector);
+        Identifier identifier2 = Models.FENCE_SIDE.upload(fence, TextureMap.texture(texture), modelGenerator.modelCollector);
+        modelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createFenceBlockState(fence, identifier, identifier2));
+        Identifier identifier3 = Models.FENCE_INVENTORY.upload(fence, TextureMap.texture(texture), modelGenerator.modelCollector);
+        modelGenerator.registerParentedItemModel(fence, identifier3);
     }
 
-    public void registerFenceGate(Block block, Block base, BlockStateModelGenerator modelGenerator) {
-        Identifier identifier = Models.TEMPLATE_FENCE_GATE_OPEN.upload(block, TextureMap.texture(base), modelGenerator.modelCollector);
-        Identifier identifier2 = Models.TEMPLATE_FENCE_GATE.upload(block, TextureMap.texture(base), modelGenerator.modelCollector);
-        Identifier identifier3 = Models.TEMPLATE_FENCE_GATE_WALL_OPEN.upload(block, TextureMap.texture(base), modelGenerator.modelCollector);
-        Identifier identifier4 = Models.TEMPLATE_FENCE_GATE_WALL.upload(block, TextureMap.texture(base), modelGenerator.modelCollector);
-        modelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createFenceGateBlockState(block, identifier, identifier2, identifier3, identifier4));
+    public void registerFenceGate(Block fenceGate, Block texture, BlockStateModelGenerator modelGenerator) {
+        Identifier identifier = Models.TEMPLATE_FENCE_GATE_OPEN.upload(fenceGate, TextureMap.texture(texture), modelGenerator.modelCollector);
+        Identifier identifier2 = Models.TEMPLATE_FENCE_GATE.upload(fenceGate, TextureMap.texture(texture), modelGenerator.modelCollector);
+        Identifier identifier3 = Models.TEMPLATE_FENCE_GATE_WALL_OPEN.upload(fenceGate, TextureMap.texture(texture), modelGenerator.modelCollector);
+        Identifier identifier4 = Models.TEMPLATE_FENCE_GATE_WALL.upload(fenceGate, TextureMap.texture(texture), modelGenerator.modelCollector);
+        modelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createFenceGateBlockState(fenceGate, identifier, identifier2, identifier3, identifier4));
     }
 
-    //maybe need fix
-    public void registerSlab(Block block, Block base, BlockStateModelGenerator modelGenerator) {
-        Identifier identifier = Models.SLAB.upload(block, TextureMap.all(base), modelGenerator.modelCollector);
-        Identifier identifier2 = Models.SLAB_TOP.upload(block, TextureMap.all(base), modelGenerator.modelCollector);
-        modelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createSlabBlockState(block, identifier, identifier2, ModelIds.getBlockModelId(base)));
-        modelGenerator.registerParentedItemModel(block, identifier);
+    public void registerSlab(Block slab, Block texture, BlockStateModelGenerator modelGenerator) {
+        Identifier identifier = Models.SLAB.upload(slab, TextureMap.all(texture), modelGenerator.modelCollector);
+        Identifier identifier2 = Models.SLAB_TOP.upload(slab, TextureMap.all(texture), modelGenerator.modelCollector);
+        modelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createSlabBlockState(slab, identifier, identifier2, ModelIds.getBlockModelId(texture)));
+        modelGenerator.registerParentedItemModel(slab, identifier);
     }
 
-    //maybe need fix
-    public void registerStairs(Block block, Block base, BlockStateModelGenerator modelGenerator) {
-        Identifier identifier = Models.INNER_STAIRS.upload(block, TextureMap.all(base), modelGenerator.modelCollector);
-        Identifier identifier2 = Models.STAIRS.upload(block, TextureMap.all(base), modelGenerator.modelCollector);
-        Identifier identifier3 = Models.OUTER_STAIRS.upload(block, TextureMap.all(base), modelGenerator.modelCollector);
-        modelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createStairsBlockState(block, identifier, identifier2, identifier3));
-        modelGenerator.registerParentedItemModel(block, identifier2);
+    public void registerStairs(Block stairs, Block texture, BlockStateModelGenerator modelGenerator) {
+        Identifier identifier = Models.INNER_STAIRS.upload(stairs, TextureMap.all(texture), modelGenerator.modelCollector);
+        Identifier identifier2 = Models.STAIRS.upload(stairs, TextureMap.all(texture), modelGenerator.modelCollector);
+        Identifier identifier3 = Models.OUTER_STAIRS.upload(stairs, TextureMap.all(texture), modelGenerator.modelCollector);
+        modelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createStairsBlockState(stairs, identifier, identifier2, identifier3));
+        modelGenerator.registerParentedItemModel(stairs, identifier2);
     }
 
-    public void registerLog(Block block, Block trunk, BlockStateModelGenerator modelGenerator) {
+    public void registerPillarSlab(Block slab, Block texture, BlockStateModelGenerator modelGenerator) {
+        Identifier identifier = Models.SLAB.upload(slab, TextureMap.sideTopBottom(texture), modelGenerator.modelCollector);
+        Identifier identifier2 = Models.SLAB_TOP.upload(slab, TextureMap.sideTopBottom(texture), modelGenerator.modelCollector);
+        modelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createSlabBlockState(slab, identifier, identifier2, ModelIds.getBlockModelId(texture)));
+        modelGenerator.registerParentedItemModel(slab, identifier);
+    }
+
+    public void registerPillarStairs(Block stairs, Block texture, BlockStateModelGenerator modelGenerator) {
+        Identifier identifier = Models.INNER_STAIRS.upload(stairs, TextureMap.sideTopBottom(texture), modelGenerator.modelCollector);
+        Identifier identifier2 = Models.STAIRS.upload(stairs, TextureMap.sideTopBottom(texture), modelGenerator.modelCollector);
+        Identifier identifier3 = Models.OUTER_STAIRS.upload(stairs, TextureMap.sideTopBottom(texture), modelGenerator.modelCollector);
+        modelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createStairsBlockState(stairs, identifier, identifier2, identifier3));
+        modelGenerator.registerParentedItemModel(stairs, identifier2);
+    }
+
+    public void registerDoor(Block door, Block texture, BlockStateModelGenerator modelGenerator) {
+        TextureMap textureMap = TextureMap.topBottom(texture);
+        Identifier identifier = Models.DOOR_BOTTOM_LEFT.upload(door, textureMap, modelGenerator.modelCollector);
+        Identifier identifier2 = Models.DOOR_BOTTOM_LEFT_OPEN.upload(door, textureMap, modelGenerator.modelCollector);
+        Identifier identifier3 = Models.DOOR_BOTTOM_RIGHT.upload(door, textureMap, modelGenerator.modelCollector);
+        Identifier identifier4 = Models.DOOR_BOTTOM_RIGHT_OPEN.upload(door, textureMap, modelGenerator.modelCollector);
+        Identifier identifier5 = Models.DOOR_TOP_LEFT.upload(door, textureMap, modelGenerator.modelCollector);
+        Identifier identifier6 = Models.DOOR_TOP_LEFT_OPEN.upload(door, textureMap, modelGenerator.modelCollector);
+        Identifier identifier7 = Models.DOOR_TOP_RIGHT.upload(door, textureMap, modelGenerator.modelCollector);
+        Identifier identifier8 = Models.DOOR_TOP_RIGHT_OPEN.upload(door, textureMap, modelGenerator.modelCollector);
+        modelGenerator.registerParentedItemModel(door, ModelIds.getItemModelId(texture.asItem()));
+        modelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createDoorBlockState(door, identifier, identifier2, identifier3, identifier4, identifier5, identifier6, identifier7, identifier8));
+    }
+
+    public void registerTrapdoor(Block trapdoor, Block texture, boolean orientable, BlockStateModelGenerator modelGenerator) {
+        TextureMap textureMap = TextureMap.texture(texture);
+        Identifier identifier = Models.TEMPLATE_TRAPDOOR_TOP.upload(trapdoor, textureMap, modelGenerator.modelCollector);
+        Identifier identifier2 = Models.TEMPLATE_TRAPDOOR_BOTTOM.upload(trapdoor, textureMap, modelGenerator.modelCollector);
+        Identifier identifier3 = Models.TEMPLATE_TRAPDOOR_OPEN.upload(trapdoor, textureMap, modelGenerator.modelCollector);
+        modelGenerator.registerParentedItemModel(trapdoor, identifier2);
+        if (orientable) {
+            modelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createOrientableTrapdoorBlockState(trapdoor, identifier, identifier2, identifier3));
+        } else {
+            modelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createTrapdoorBlockState(trapdoor, identifier, identifier2, identifier3));
+        }
+    }
+
+    public void registerLog(Block log, Block trunk, BlockStateModelGenerator modelGenerator) {
         Identifier identifier = ModelIds.getBlockSubModelId(trunk, "_0");
-        modelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createAxisRotatedBlockState(block, identifier, identifier));
+        modelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createAxisRotatedBlockState(log, identifier, identifier));
+        modelGenerator.registerItemModel(log.asItem());
     }
 
     public void registerTrunk(Block block, BlockStateModelGenerator modelGenerator) {
@@ -454,13 +487,14 @@ public class PrimevalModelProvider extends FabricModelProvider {
         );
     }
 
-    private void registerTorch(Block block, BlockStateModelGenerator modelGenerator) {
+    public void registerTorch(Block block, BlockStateModelGenerator modelGenerator) {
         Identifier unlit_ground = ModelIds.getBlockSubModelId(block, "_unlit_ground");
         Identifier unlit_wall = ModelIds.getBlockSubModelId(block, "_unlit_wall");
         Identifier ground = ModelIds.getBlockSubModelId(block, "_ground");
         Identifier wall = ModelIds.getBlockSubModelId(block, "_wall");
         Identifier burnt_ground = ModelIds.getBlockSubModelId(block, "_burnt_ground");
         Identifier burnt_wall = ModelIds.getBlockSubModelId(block, "_burnt_wall");
+        modelGenerator.registerItemModel(block, "_unlit");
         modelGenerator.blockStateCollector.accept(VariantsBlockStateSupplier.create(block).coordinate(BlockStateVariantMap.create(TimedTorchBlock.BURNOUT_STAGE, TimedTorchBlock.DIRECTION)
                 .register(0, Direction.DOWN, BlockStateVariant.create().put(VariantSettings.MODEL, unlit_ground))
                 .register(0, Direction.NORTH, BlockStateVariant.create().put(VariantSettings.MODEL, unlit_wall).put(VariantSettings.Y, VariantSettings.Rotation.R180))
@@ -517,5 +551,4 @@ public class PrimevalModelProvider extends FabricModelProvider {
                 .with(When.create().set(PitKilnBlock.BUILD_STEP, 8), BlockStateVariant.create().put(VariantSettings.MODEL, log4))
         );
     }
-
 }

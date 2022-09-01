@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/fence_inventory",
   "textures": {
-    "texture": "primeval:block/spruce_fence"
+    "texture": "minecraft:block/spruce_planks"
   }
 }
