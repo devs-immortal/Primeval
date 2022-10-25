@@ -19,12 +19,6 @@ public class PrimevalSwordItem extends SwordItem implements IWeightedItem {
     private final Weight weight;
     private final Size size;
 
-    public PrimevalSwordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings, Weight weight, Size size) {
-        super(toolMaterial, attackDamage, attackSpeed, settings);
-        this.weight = weight;
-        this.size = size;
-    }
-
     public PrimevalSwordItem(ToolMaterial toolMaterial, float attackDamage, float attackSpeed, Settings settings, Weight weight, Size size) {
         super(toolMaterial, (int) attackDamage, attackSpeed, settings);
         this.weight = weight;

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "primeval:wicker"
+    }
+  },
+  "result": {
+    "item": "primeval:wicker_slab",
+    "count": 6
+  }
+}

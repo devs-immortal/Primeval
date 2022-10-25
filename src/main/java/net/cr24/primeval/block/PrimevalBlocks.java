@@ -106,6 +106,7 @@ public class PrimevalBlocks {
     public static final Block STRAW_SLAB = registerBlock("straw_slab", new SlabBlock(FabricBlockSettings.of(Material.PLANT).strength(0.5F).sounds(BlockSoundGroup.GRASS)), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block STRAW_MESH = registerBlock("straw_mesh", new Block(FabricBlockSettings.of(Material.PLANT).strength(0.5F).sounds(BlockSoundGroup.GRASS)), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block STRAW_MAT = registerBlock("straw_mat", new CarpetBlock(FabricBlockSettings.of(Material.PLANT).strength(0.3F).sounds(BlockSoundGroup.GRASS)), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final BlockSet WICKER = registerBlockSet("wicker", SETTINGS_REFINED_WOOD, Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block TERRACOTTA = registerBlock("terracotta", new Block(SETTINGS_FIRED_CLAY), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final BlockSet FIRED_CLAY_SHINGLE_BLOCKS = registerBlockSet("fired_clay_shingles", SETTINGS_FIRED_CLAY, Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final BlockSet FIRED_CLAY_BRICK_BLOCKS = registerBlockSet("fired_clay_bricks", SETTINGS_FIRED_CLAY, Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
@@ -243,6 +244,10 @@ public class PrimevalBlocks {
         FlammableBlockRegistry.getDefaultInstance().add(STRAW_STAIRS, 10, 40);
         FlammableBlockRegistry.getDefaultInstance().add(STRAW_SLAB, 10, 40);
 
+        for (Block b : WICKER) {
+            FlammableBlockRegistry.getDefaultInstance().add(b, 10, 40);
+        }
+
         FlammableBlockRegistry.getDefaultInstance().add(STRAW_MESH, 10, 40);
         FlammableBlockRegistry.getDefaultInstance().add(STRAW_MAT, 10, 40);
         FlammableBlockRegistry.getDefaultInstance().add(STRAW_PILE, 10, 40);
@@ -326,7 +331,7 @@ public class PrimevalBlocks {
         );
     }
 
-    private static final record BlockSet(Block block, StairsBlock stairs, SlabBlock slab) {
+    private static final record BlockSet(Block block, StairsBlock stairs, SlabBlock slab) implements Iterable<Block> {
         public @NotNull Iterator<Block> iterator() {
             return Arrays.stream(new Block[]{block, stairs, slab}).iterator();
         }

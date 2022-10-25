@@ -30,6 +30,13 @@ repositories {
 		url = 'https://ladysnake.jfrog.io/artifactory/mods'
 	}
 
+	maven {
+		url "https://maven.jamieswhiteshirt.com/libs-release"
+		content {
+			includeGroup "com.jamieswhiteshirt"
+		}
+	}
+
 }
 
 dependencies {
@@ -63,6 +70,9 @@ dependencies {
 
 	// Satin
 	modImplementation(include("io.github.ladysnake:satin:${project.satin_version}"))
+
+	// Entity Reach Attributes
+	modImplementation("com.jamieswhiteshirt:reach-entity-attributes:${project.reach_version}")
 }
 
 processResources {

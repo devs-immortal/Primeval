@@ -87,8 +87,8 @@ def create_ore_set(ore_type):
     generate_standard_item("raw_"+ore_type+"_large")
 
 #generate_standard_block("spruce_crate")
-generate_standard_block("smooth_stone")
 
-generate_stairs_block("smooth_stone_stairs", "smooth_stone")
-generate_slab_block("smooth_stone_slab", "smooth_stone", "smooth_stone")
+generate_standard_block("wicker")
+generate_stairs_block("wicker_stairs", "wicker")
+generate_slab_block("wicker_slab", "wicker", "wicker")
 #create_ore_set("zinc_sphalerite")
