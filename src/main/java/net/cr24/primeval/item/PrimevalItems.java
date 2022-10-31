@@ -43,38 +43,38 @@ public class PrimevalItems {
             .build();
     public static final ItemGroup PRIMEVAL_FOODS = FabricItemGroupBuilder.build(PrimevalMain.getId("foods"), () -> new ItemStack(PrimevalItems.COOKED_PORKCHOP));
 
-    private static final Item.Settings GROUP_ITEMS = new Item.Settings().group(PRIMEVAL_ITEMS);
-    private static final Item.Settings GROUP_TOOLS = new Item.Settings().group(PRIMEVAL_TOOLS);
+    private static final Item.Settings GROUP_ITEMS() { return new Item.Settings().group(PRIMEVAL_ITEMS);}
+    private static final Item.Settings GROUP_TOOLS() { return new Item.Settings().group(PRIMEVAL_TOOLS);}
 
 
     /* Items */
     // Crafting materials
-    public static final Item STRAW = registerItem("straw", new WeightedBlockItem(STRAW_PILE, GROUP_ITEMS, Weight.VERY_LIGHT, Size.SMALL));
-    public static final Item STICK = registerItem("stick", new FirestarterItem(GROUP_ITEMS, Weight.VERY_LIGHT, Size.SMALL));
-    public static final Item STRING = registerItem("string", new FirestarterItem(GROUP_ITEMS, Weight.VERY_LIGHT, Size.SMALL));
-    public static final Item FLINT = registerItem("flint", new WeightedItem(GROUP_ITEMS, Weight.LIGHT, Size.SMALL));
-    public static final Item ROCK = registerItem("rock", new WeightedItem(GROUP_ITEMS, Weight.LIGHT, Size.SMALL));
-    public static final Item STONE_BRICK = registerItem("stone_brick", new WeightedItem(GROUP_ITEMS, Weight.LIGHT, Size.SMALL));
-    public static final Item ASHES = registerItem("ashes", new WeightedItem(GROUP_ITEMS, Weight.VERY_LIGHT, Size.SMALL));
-    public static final Item BONE = registerItem("bone", new WeightedItem(GROUP_ITEMS, Weight.VERY_LIGHT, Size.SMALL));
-    public static final Item ANIMAL_FAT = registerItem("animal_fat", new WeightedItem(GROUP_ITEMS, Weight.VERY_LIGHT, Size.SMALL));
-    public static final Item GUNPOWDER = registerItem("gunpowder", new WeightedItem(GROUP_ITEMS, Weight.VERY_LIGHT, Size.SMALL));
+    public static final Item STRAW = registerItem("straw", new WeightedBlockItem(STRAW_PILE, GROUP_ITEMS(), Weight.VERY_LIGHT, Size.SMALL));
+    public static final Item STICK = registerItem("stick", new FirestarterItem(GROUP_ITEMS(), Weight.VERY_LIGHT, Size.SMALL));
+    public static final Item STRING = registerItem("string", new FirestarterItem(GROUP_ITEMS(), Weight.VERY_LIGHT, Size.SMALL));
+    public static final Item FLINT = registerItem("flint", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
+    public static final Item ROCK = registerItem("rock", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
+    public static final Item STONE_BRICK = registerItem("stone_brick", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
+    public static final Item ASHES = registerItem("ashes", new WeightedItem(GROUP_ITEMS(), Weight.VERY_LIGHT, Size.SMALL));
+    public static final Item BONE = registerItem("bone", new WeightedItem(GROUP_ITEMS(), Weight.VERY_LIGHT, Size.SMALL));
+    public static final Item ANIMAL_FAT = registerItem("animal_fat", new WeightedItem(GROUP_ITEMS(), Weight.VERY_LIGHT, Size.SMALL));
+    public static final Item GUNPOWDER = registerItem("gunpowder", new WeightedItem(GROUP_ITEMS(), Weight.VERY_LIGHT, Size.SMALL));
 
-    public static final Item SANDY_CLAY_BALL = registerItem("sandy_clay_ball", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
-    public static final Item SANDY_CLAY_BRICK = registerItem("sandy_clay_brick", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
-    public static final Item DRIED_BRICK = registerItem("dried_brick", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
+    public static final Item SANDY_CLAY_BALL = registerItem("sandy_clay_ball", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.SMALL));
+    public static final Item SANDY_CLAY_BRICK = registerItem("sandy_clay_brick", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.SMALL));
+    public static final Item DRIED_BRICK = registerItem("dried_brick", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.SMALL));
 
-    public static final Item MUD_BALL = registerItem("mud_ball", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
-    public static final Item MUD_BRICK = registerItem("mud_brick", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
-    public static final Item CLAY_BALL = registerItem("clay_ball", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
-    public static final Item CLAY_BRICK = registerItem("clay_brick", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
-    public static final Item FIRED_CLAY_BRICK = registerItem("fired_clay_brick", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
-    public static final Item CLAY_BOWL = registerItem("clay_bowl", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
-    public static final Item FIRED_CLAY_BOWL = registerItem("fired_clay_bowl", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
-    public static final Item CLAY_TILE = registerItem("clay_tile", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
-    public static final Item FIRED_CLAY_TILE = registerItem("fired_clay_tile", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
-    //public static final Item CLAY_JUG = registerItem("clay_jug", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM)); // TODO: add
-    public static final Item CLAY_VESSEL = registerItem("clay_vessel", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
+    public static final Item MUD_BALL = registerItem("mud_ball", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.SMALL));
+    public static final Item MUD_BRICK = registerItem("mud_brick", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.SMALL));
+    public static final Item CLAY_BALL = registerItem("clay_ball", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.SMALL));
+    public static final Item CLAY_BRICK = registerItem("clay_brick", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.SMALL));
+    public static final Item FIRED_CLAY_BRICK = registerItem("fired_clay_brick", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.SMALL));
+    public static final Item CLAY_BOWL = registerItem("clay_bowl", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.SMALL));
+    public static final Item FIRED_CLAY_BOWL = registerItem("fired_clay_bowl", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.SMALL));
+    public static final Item CLAY_TILE = registerItem("clay_tile", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.SMALL));
+    public static final Item FIRED_CLAY_TILE = registerItem("fired_clay_tile", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.SMALL));
+    //public static final Item CLAY_JUG = registerItem("clay_jug", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM)); // TODO: add
+    public static final Item CLAY_VESSEL = registerItem("clay_vessel", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
 
     // Edible Items
     public static final Item PORKCHOP = registerItem("porkchop", new WeightedItem(new Item.Settings().group(PRIMEVAL_FOODS).food(PrimevalFoodComponents.PORKCHOP), Weight.NORMAL, Size.MEDIUM));
@@ -84,80 +84,78 @@ public class PrimevalItems {
     public static final Item SPIDER_EYE = registerItem("spider_eye", new WeightedItem(new Item.Settings().group(PRIMEVAL_FOODS).food(PrimevalFoodComponents.SPIDER_EYE), Weight.LIGHT, Size.SMALL));
 
     // Ore Items
-    public static final Item RAW_COPPER_MALACHITE_SMALL = registerItem("raw_copper_malachite_small", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
-    public static final Item RAW_COPPER_MALACHITE_MEDIUM = registerItem("raw_copper_malachite_medium", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
-    public static final Item RAW_COPPER_MALACHITE_LARGE = registerItem("raw_copper_malachite_large", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.LARGE));
+    public static final Item RAW_COPPER_MALACHITE_SMALL = registerItem("raw_copper_malachite_small", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.SMALL));
+    public static final Item RAW_COPPER_MALACHITE_MEDIUM = registerItem("raw_copper_malachite_medium", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
+    public static final Item RAW_COPPER_MALACHITE_LARGE = registerItem("raw_copper_malachite_large", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.LARGE));
 
-    public static final Item RAW_COPPER_NATIVE_SMALL = registerItem("raw_copper_native_small", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
-    public static final Item RAW_COPPER_NATIVE_MEDIUM = registerItem("raw_copper_native_medium", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
-    public static final Item RAW_COPPER_NATIVE_LARGE = registerItem("raw_copper_native_large", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.LARGE));
+    public static final Item RAW_COPPER_NATIVE_SMALL = registerItem("raw_copper_native_small", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.SMALL));
+    public static final Item RAW_COPPER_NATIVE_MEDIUM = registerItem("raw_copper_native_medium", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
+    public static final Item RAW_COPPER_NATIVE_LARGE = registerItem("raw_copper_native_large", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.LARGE));
 
-    public static final Item RAW_TIN_CASSITERITE_SMALL = registerItem("raw_tin_cassiterite_small", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
-    public static final Item RAW_TIN_CASSITERITE_MEDIUM = registerItem("raw_tin_cassiterite_medium", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
-    public static final Item RAW_TIN_CASSITERITE_LARGE = registerItem("raw_tin_cassiterite_large", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.LARGE));
+    public static final Item RAW_TIN_CASSITERITE_SMALL = registerItem("raw_tin_cassiterite_small", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.SMALL));
+    public static final Item RAW_TIN_CASSITERITE_MEDIUM = registerItem("raw_tin_cassiterite_medium", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
+    public static final Item RAW_TIN_CASSITERITE_LARGE = registerItem("raw_tin_cassiterite_large", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.LARGE));
 
-    public static final Item RAW_ZINC_SPHALERITE_SMALL = registerItem("raw_zinc_sphalerite_small", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
-    public static final Item RAW_ZINC_SPHALERITE_MEDIUM = registerItem("raw_zinc_sphalerite_medium", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
-    public static final Item RAW_ZINC_SPHALERITE_LARGE = registerItem("raw_zinc_sphalerite_large", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.LARGE));
+    public static final Item RAW_ZINC_SPHALERITE_SMALL = registerItem("raw_zinc_sphalerite_small", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.SMALL));
+    public static final Item RAW_ZINC_SPHALERITE_MEDIUM = registerItem("raw_zinc_sphalerite_medium", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
+    public static final Item RAW_ZINC_SPHALERITE_LARGE = registerItem("raw_zinc_sphalerite_large", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.LARGE));
 
-    public static final Item RAW_IRON_HEMATITE_SMALL = registerItem("raw_iron_hematite_small", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
-    public static final Item RAW_IRON_HEMATITE_MEDIUM = registerItem("raw_iron_hematite_medium", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
-    public static final Item RAW_IRON_HEMATITE_LARGE = registerItem("raw_iron_hematite_large", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.LARGE));
+    public static final Item RAW_IRON_HEMATITE_SMALL = registerItem("raw_iron_hematite_small", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.SMALL));
+    public static final Item RAW_IRON_HEMATITE_MEDIUM = registerItem("raw_iron_hematite_medium", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
+    public static final Item RAW_IRON_HEMATITE_LARGE = registerItem("raw_iron_hematite_large", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.LARGE));
 
     // Tools
-    public static final Item FLINT_AXE = registerItem("flint_axe", new PrimevalAxeItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.FLINT.getAttackDamage(), -3.0f, new Item.Settings().group(PRIMEVAL_TOOLS), Weight.HEAVY, Size.LARGE));
-    public static final Item FLINT_KNIFE = registerItem("flint_knife", new PrimevalSwordItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.FLINT.getAttackDamage()*PrimevalToolMaterials.KNIFE_DAMAGE_MULTIPLIER, -3.0f, new Item.Settings().group(PRIMEVAL_TOOLS), Weight.HEAVY, Size.LARGE));
-    public static final Item FLINT_SHOVEL = registerItem("flint_shovel", new PrimevalShovelItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.FLINT.getAttackDamage()*PrimevalToolMaterials.BLUNT_DAMAGE_MULTIPLIER, -3.0f, new Item.Settings().group(PRIMEVAL_TOOLS), Weight.HEAVY, Size.LARGE));
-    public static final Item[] COPPER_TOOLS = registerToolSet("copper", PrimevalToolMaterials.COPPER, new Item.Settings().group(PRIMEVAL_TOOLS), Weight.HEAVY, Size.LARGE);
-    public static final Item[] BRONZE_TOOLS = registerToolSet("bronze", PrimevalToolMaterials.BRONZE, new Item.Settings().group(PRIMEVAL_TOOLS), Weight.HEAVY, Size.LARGE);
+    public static final Item FLINT_AXE = registerItem("flint_axe", new PrimevalAxeItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.FLINT.getAttackDamage(), -3.0f, GROUP_TOOLS(), Weight.HEAVY, Size.LARGE));
+    public static final Item FLINT_KNIFE = registerItem("flint_knife", new PrimevalSwordItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.FLINT.getAttackDamage()*PrimevalToolMaterials.KNIFE_DAMAGE_MULTIPLIER, -3.0f, GROUP_TOOLS(), Weight.HEAVY, Size.LARGE));
+    public static final Item FLINT_SHOVEL = registerItem("flint_shovel", new PrimevalShovelItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.FLINT.getAttackDamage()*PrimevalToolMaterials.BLUNT_DAMAGE_MULTIPLIER, -3.0f, GROUP_TOOLS(), Weight.HEAVY, Size.LARGE));
+    public static final Item[] COPPER_TOOLS = registerToolSet("copper", PrimevalToolMaterials.COPPER, GROUP_TOOLS(), Weight.HEAVY, Size.LARGE);
+    public static final Item[] BRONZE_TOOLS = registerToolSet("bronze", PrimevalToolMaterials.BRONZE, GROUP_TOOLS(), Weight.HEAVY, Size.LARGE);
 
+    // Tool Parts
+    public static final Item[] COPPER_TOOL_PARTS = registerToolPartSet("copper", GROUP_TOOLS(), Weight.NORMAL, Size.MEDIUM);
+    public static final Item[] BRONZE_TOOL_PARTS = registerToolPartSet("bronze", GROUP_TOOLS(), Weight.NORMAL, Size.MEDIUM);
+
+    // Other
+    public static final Item QUERN_WHEEL = registerItem("quern_wheel", new WeightedItem(GROUP_TOOLS().maxDamage(99), Weight.HEAVY, Size.MEDIUM, true));
+    //public static final Item FIRED_CLAY_JUG = registerItem("fired_clay_jug", new JugItem(GROUP_TOOLS().maxDamage(0), Weight.NORMAL, Size.LARGE)); // TODO: add
+    public static final Item FIRED_CLAY_VESSEL = registerItem("fired_clay_vessel", new VesselItem(GROUP_TOOLS().maxCount(1), Weight.NORMAL, Size.LARGE));
 
     // Metal Items
     // Primary
-    public static final Item COPPER_INGOT = registerItem("copper_ingot", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
-    public static final Item COPPER_CHUNK = registerItem("copper_chunk", new WeightedItem(GROUP_ITEMS, Weight.LIGHT, Size.SMALL));
-    public static final Item TIN_INGOT = registerItem("tin_ingot", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
-    public static final Item TIN_CHUNK = registerItem("tin_chunk", new WeightedItem(GROUP_ITEMS, Weight.LIGHT, Size.SMALL));
-    public static final Item ZINC_INGOT = registerItem("zinc_ingot", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
-    public static final Item ZINC_CHUNK = registerItem("zinc_chunk", new WeightedItem(GROUP_ITEMS, Weight.LIGHT, Size.SMALL));
+    public static final Item COPPER_INGOT = registerItem("copper_ingot", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
+    public static final Item COPPER_CHUNK = registerItem("copper_chunk", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
+    public static final Item TIN_INGOT = registerItem("tin_ingot", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
+    public static final Item TIN_CHUNK = registerItem("tin_chunk", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
+    public static final Item ZINC_INGOT = registerItem("zinc_ingot", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
+    public static final Item ZINC_CHUNK = registerItem("zinc_chunk", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
     // Alloys
-    public static final Item BRONZE_INGOT = registerItem("bronze_ingot", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
-    public static final Item BRONZE_CHUNK = registerItem("bronze_chunk", new WeightedItem(GROUP_ITEMS, Weight.LIGHT, Size.SMALL));
-    public static final Item BRASS_INGOT = registerItem("brass_ingot", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
-    public static final Item BRASS_CHUNK = registerItem("brass_chunk", new WeightedItem(GROUP_ITEMS, Weight.LIGHT, Size.SMALL));
-    public static final Item BOTCHED_ALLOY_INGOT = registerItem("botched_alloy_ingot", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
-    public static final Item BOTCHED_ALLOY_CHUNK = registerItem("botched_alloy_chunk", new WeightedItem(GROUP_ITEMS, Weight.LIGHT, Size.SMALL));
+    public static final Item BRONZE_INGOT = registerItem("bronze_ingot", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
+    public static final Item BRONZE_CHUNK = registerItem("bronze_chunk", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
+    public static final Item BRASS_INGOT = registerItem("brass_ingot", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
+    public static final Item BRASS_CHUNK = registerItem("brass_chunk", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
+    public static final Item BOTCHED_ALLOY_INGOT = registerItem("botched_alloy_ingot", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
+    public static final Item BOTCHED_ALLOY_CHUNK = registerItem("botched_alloy_chunk", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
     // Currency
-    public static final Item COPPER_COIN = registerItem("copper_coin", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.SMALL));
-    // Tool Parts
-    public static final Item[] COPPER_TOOL_PARTS = registerToolPartSet("copper", GROUP_TOOLS, Weight.NORMAL, Size.MEDIUM);
-    public static final Item[] BRONZE_TOOL_PARTS = registerToolPartSet("bronze", GROUP_TOOLS, Weight.NORMAL, Size.MEDIUM);
+    public static final Item COPPER_COIN = registerItem("copper_coin", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.SMALL));
 
 
     // Molds
-    public static final Item CLAY_INGOT_MOLD = registerItem("clay_mold_ingot", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
-    public static final Item CLAY_AXE_HEAD_MOLD = registerItem("clay_mold_axe_head", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
-    public static final Item CLAY_CHISEL_HEAD_MOLD = registerItem("clay_mold_chisel_head", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
-    public static final Item CLAY_KNIFE_BLADE_MOLD = registerItem("clay_mold_knife_blade", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
-    public static final Item CLAY_PICKAXE_HEAD_MOLD = registerItem("clay_mold_pickaxe_head", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
-    public static final Item CLAY_SHOVEL_HEAD_MOLD = registerItem("clay_mold_shovel_head", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
-    public static final Item CLAY_SWORD_BLADE_MOLD = registerItem("clay_mold_sword_blade", new WeightedItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM));
+    public static final Item CLAY_INGOT_MOLD = registerItem("clay_mold_ingot", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
+    public static final Item CLAY_AXE_HEAD_MOLD = registerItem("clay_mold_axe_head", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
+    public static final Item CLAY_CHISEL_HEAD_MOLD = registerItem("clay_mold_chisel_head", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
+    public static final Item CLAY_KNIFE_BLADE_MOLD = registerItem("clay_mold_knife_blade", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
+    public static final Item CLAY_PICKAXE_HEAD_MOLD = registerItem("clay_mold_pickaxe_head", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
+    public static final Item CLAY_SHOVEL_HEAD_MOLD = registerItem("clay_mold_shovel_head", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
+    public static final Item CLAY_SWORD_BLADE_MOLD = registerItem("clay_mold_sword_blade", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
 
     public static final List<Item> FIRED_MOLDS = new ArrayList<>();
-    public static final Item FIRED_CLAY_INGOT_MOLD = registerMoldItem("fired_clay_mold_ingot", new ClayMoldItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM, 9000));
-    public static final Item FIRED_CLAY_AXE_HEAD_MOLD = registerMoldItem("fired_clay_mold_axe_head", new ClayMoldItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM, 9000*3));
-    public static final Item FIRED_CLAY_CHISEL_HEAD_MOLD = registerMoldItem("fired_clay_mold_chisel_head", new ClayMoldItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM, 9000*2));
-    public static final Item FIRED_CLAY_KNIFE_BLADE_MOLD = registerMoldItem("fired_clay_mold_knife_blade", new ClayMoldItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM, 9000*2));
-    public static final Item FIRED_CLAY_PICKAXE_HEAD_MOLD = registerMoldItem("fired_clay_mold_pickaxe_head", new ClayMoldItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM, 9000*3));
-    public static final Item FIRED_CLAY_SHOVEL_HEAD_MOLD = registerMoldItem("fired_clay_mold_shovel_head", new ClayMoldItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM, 9000));
-    public static final Item FIRED_CLAY_SWORD_BLADE_MOLD = registerMoldItem("fired_clay_mold_sword_blade", new ClayMoldItem(GROUP_ITEMS, Weight.NORMAL, Size.MEDIUM, 9000*2));
-
-
-    // Utility items
-    //public static final Item FIRED_CLAY_JUG = registerItem("fired_clay_jug", new JugItem(GROUP_TOOLS.maxDamage(0), Weight.NORMAL, Size.LARGE)); // TODO: add
-    public static final Item FIRED_CLAY_VESSEL = registerItem("fired_clay_vessel", new VesselItem(new Item.Settings().group(PRIMEVAL_TOOLS).maxCount(1), Weight.NORMAL, Size.LARGE));
-
-
+    public static final Item FIRED_CLAY_INGOT_MOLD = registerMoldItem("fired_clay_mold_ingot", new ClayMoldItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM, 9000));
+    public static final Item FIRED_CLAY_AXE_HEAD_MOLD = registerMoldItem("fired_clay_mold_axe_head", new ClayMoldItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM, 9000*3));
+    public static final Item FIRED_CLAY_CHISEL_HEAD_MOLD = registerMoldItem("fired_clay_mold_chisel_head", new ClayMoldItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM, 9000*2));
+    public static final Item FIRED_CLAY_KNIFE_BLADE_MOLD = registerMoldItem("fired_clay_mold_knife_blade", new ClayMoldItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM, 9000*2));
+    public static final Item FIRED_CLAY_PICKAXE_HEAD_MOLD = registerMoldItem("fired_clay_mold_pickaxe_head", new ClayMoldItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM, 9000*3));
+    public static final Item FIRED_CLAY_SHOVEL_HEAD_MOLD = registerMoldItem("fired_clay_mold_shovel_head", new ClayMoldItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM, 9000));
+    public static final Item FIRED_CLAY_SWORD_BLADE_MOLD = registerMoldItem("fired_clay_mold_sword_blade", new ClayMoldItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM, 9000*2));
 
     private static Item registerItem(String id, Item item) {
         return Registry.register(Registry.ITEM, PrimevalMain.getId(id), item);

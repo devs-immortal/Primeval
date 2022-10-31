@@ -12,7 +12,7 @@ import net.minecraft.util.math.BlockPos;
 public class LayingItemBlockEntity extends BlockEntity implements Clearable {
 
     private ItemStack item;
-    public final int randomInt;
+    private final int randomInt;
 
     public LayingItemBlockEntity(BlockPos pos, BlockState state) {
         super(PrimevalBlocks.LAYING_ITEM_BLOCK_ENTITY, pos, state);

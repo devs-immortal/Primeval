@@ -22,16 +22,6 @@ public class PitKilnFiringRecipe extends SimpleOneToOneRecipe {
     }
 
     @Override
-    public ItemStack getOutput() {
-        return this.result.copy();
-    }
-
-    @Override
-    public boolean isIgnoredInRecipeBook() {
-        return true;
-    }
-
-    @Override
     public ItemStack createIcon() {
         return new ItemStack(PrimevalItems.STRAW);
     }

@@ -30,6 +30,12 @@ public class WeightedItem extends Item implements IWeightedItem {
         this.size = size;
     }
 
+    public WeightedItem(Settings settings, Weight weight, Size size, boolean b) {
+        super(settings);
+        this.weight = weight;
+        this.size = size;
+    }
+
     @Environment(EnvType.CLIENT)
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         tooltip.add((Text.translatable("⚖ ").append(this.weight.getText()).append(" ⤧ ").append(this.size.getText())).formatted(Formatting.GRAY));

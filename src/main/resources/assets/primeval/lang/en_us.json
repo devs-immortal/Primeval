@@ -118,6 +118,7 @@
     "block.primeval.large_clay_pot": "Large Clay Pot",
     "block.primeval.fired_large_clay_pot": "Large Fired Clay Pot",
     "block.primeval.fired_large_decorative_clay_pot": "Large Filled Fired Clay Pot",
+    "block.primeval.quern": "Quern Base",
     
     "block.primeval.molten_copper": "Molten Copper",
     "block.primeval.molten_tin": "Molten Tin",
@@ -237,6 +238,8 @@
     "item.primeval.bronze_pickaxe": "Bronze Pickaxe",
     "item.primeval.bronze_shovel": "Bronze Shovel",
     "item.primeval.bronze_sword": "Bronze Shortsword",
+    
+    "item.primeval.quern_wheel": "Quern Wheel",
     
     "item.primeval.fired_clay_jug": "Fired Clay Jug",
     "item.primeval.fired_clay_vessel": "Fired Clay Vessel",

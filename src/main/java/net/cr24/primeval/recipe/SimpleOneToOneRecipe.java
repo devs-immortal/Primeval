@@ -31,7 +31,13 @@ public abstract class SimpleOneToOneRecipe implements Recipe<Inventory> {
             return width * height >= 2;
     }
 
-    public abstract ItemStack getOutput();
+    public ItemStack getOutput() {
+        return this.result.copy();
+    }
+
+    public boolean isIgnoredInRecipeBook() {
+        return true;
+    }
 
     public abstract ItemStack createIcon();
 
