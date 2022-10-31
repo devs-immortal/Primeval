@@ -48,7 +48,7 @@ public class AlloyingDisplayCategory implements DisplayCategory<AlloyingDisplay>
             xOffset += 41;
         }
 
-        widgets.add(Widgets.createArrow(new Point(startPoint.x + 55, startPoint.y - 1)));
+        widgets.add(Widgets.createArrow(new Point(startPoint.x + 51, startPoint.y - 1)));
         widgets.add(Widgets.createResultSlotBackground(new Point(startPoint.x + 86, startPoint.y)));
         widgets.add(Widgets.createSlot(new Point(startPoint.x + 86, startPoint.y)).entries(display.getOut()).disableBackground().markOutput());
         return widgets;

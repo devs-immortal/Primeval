@@ -37,11 +37,11 @@ public class QuernDisplayCategory implements DisplayCategory<QuernDisplay> {
         Point startPoint = new Point(bounds.getCenterX() - 41, bounds.getCenterY() - 13);
         List<Widget> widgets = Lists.newArrayList();
         widgets.add(Widgets.createRecipeBase(bounds));
-        widgets.add(Widgets.createTexturedWidget(PrimevalMain.getId("textures/gui/quern_wheel_widget.png"), startPoint.x + 27, startPoint.y + 4, 0, 0, 23, 17, 23, 17));
+        widgets.add(Widgets.createTexturedWidget(PrimevalMain.getId("textures/gui/quern_wheel_widget.png"), startPoint.x + 13, startPoint.y + 4, 0, 0, 51, 17, 51, 17));
         widgets.add(Widgets.createLabel(new Point(startPoint.x+40, startPoint.y+19), Text.of(display.getWheelDamage()+"*")));
-        widgets.add(Widgets.createResultSlotBackground(new Point(startPoint.x + 61, startPoint.y + 5)));
-        widgets.add(Widgets.createSlot(new Point(startPoint.x + 4, startPoint.y + 5)).entries(display.getIn()).markInput());
-        widgets.add(Widgets.createSlot(new Point(startPoint.x + 61, startPoint.y + 5)).entries(display.getOut()).disableBackground().markOutput());
+        widgets.add(Widgets.createResultSlotBackground(new Point(startPoint.x + 75, startPoint.y + 5)));
+        widgets.add(Widgets.createSlot(new Point(startPoint.x - 10, startPoint.y + 5)).entries(display.getIn()).markInput());
+        widgets.add(Widgets.createSlot(new Point(startPoint.x + 75, startPoint.y + 5)).entries(display.getOut()).disableBackground().markOutput());
         return widgets;
     }
 
