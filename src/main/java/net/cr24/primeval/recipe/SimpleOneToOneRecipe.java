@@ -31,6 +31,8 @@ public abstract class SimpleOneToOneRecipe implements Recipe<Inventory> {
             return width * height >= 2;
     }
 
+    public Ingredient getInput() {return this.input;}
+
     public ItemStack getOutput() {
         return this.result.copy();
     }

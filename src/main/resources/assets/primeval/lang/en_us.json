@@ -259,6 +259,7 @@
     "category.primeval.melting": "Item Melting",
     "category.primeval.alloying": "Fluid Alloying",
     "category.primeval.open_fire": "Open Fire Cooking",
+    "category.primeval.quern": "Quern Grinding",
     
     
     "text.primeval.fluid.contains": "Contains %d Units of %s",

@@ -9,5 +9,6 @@ public class PrimevalREIIntegration {
     public static final CategoryIdentifier<MeltingDisplay> MELTING = CategoryIdentifier.of(PrimevalMain.getId("melting"));
     public static final CategoryIdentifier<AlloyingDisplay> ALLOYING = CategoryIdentifier.of(PrimevalMain.getId("alloying"));
     public static final CategoryIdentifier<OpenFireDisplay> OPEN_FIRE = CategoryIdentifier.of(PrimevalMain.getId("open_fire"));
+    public static final CategoryIdentifier<QuernDisplay> QUERN = CategoryIdentifier.of(PrimevalMain.getId("quern"));
 
 }
