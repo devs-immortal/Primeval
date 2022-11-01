@@ -1,11 +1,11 @@
 {
   "type": "primeval:quern_grinding",
   "input": {
-    "item": "primeval:porkchop"
+    "item": "primeval:bone"
   },
   "result": {
-    "item": "primeval:cooked_porkchop",
-    "count": 2
+    "item": "primeval:bonemeal",
+    "count": 3
   },
   "wheelDamage":1
 }

@@ -57,6 +57,7 @@ public class PrimevalItems {
     public static final Item STONE_BRICK = registerItem("stone_brick", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
     public static final Item ASHES = registerItem("ashes", new WeightedItem(GROUP_ITEMS(), Weight.VERY_LIGHT, Size.SMALL));
     public static final Item BONE = registerItem("bone", new WeightedItem(GROUP_ITEMS(), Weight.VERY_LIGHT, Size.SMALL));
+    public static final Item BONEMEAL = registerItem("bonemeal", new WeightedItem(GROUP_ITEMS(), Weight.VERY_LIGHT, Size.SMALL));
     public static final Item ANIMAL_FAT = registerItem("animal_fat", new WeightedItem(GROUP_ITEMS(), Weight.VERY_LIGHT, Size.SMALL));
     public static final Item GUNPOWDER = registerItem("gunpowder", new WeightedItem(GROUP_ITEMS(), Weight.VERY_LIGHT, Size.SMALL));
 
