@@ -102,6 +102,10 @@ public class PrimevalItems {
     public static final Item RAW_ZINC_SPHALERITE_MEDIUM = registerItem("raw_zinc_sphalerite_medium", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
     public static final Item RAW_ZINC_SPHALERITE_LARGE = registerItem("raw_zinc_sphalerite_large", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.LARGE));
 
+    public static final Item RAW_GOLD_NATIVE_SMALL = registerItem("raw_gold_native_small", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.SMALL));
+    public static final Item RAW_GOLD_NATIVE_MEDIUM = registerItem("raw_gold_native_medium", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
+    public static final Item RAW_GOLD_NATIVE_LARGE = registerItem("raw_gold_native_large", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.LARGE));
+
     public static final Item RAW_IRON_HEMATITE_SMALL = registerItem("raw_iron_hematite_small", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.SMALL));
     public static final Item RAW_IRON_HEMATITE_MEDIUM = registerItem("raw_iron_hematite_medium", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
     public static final Item RAW_IRON_HEMATITE_LARGE = registerItem("raw_iron_hematite_large", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.LARGE));

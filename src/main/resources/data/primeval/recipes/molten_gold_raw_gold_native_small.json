@@ -1,0 +1,10 @@
+{
+  "type": "primeval:melting",
+  "input": {
+    "item": "primeval:raw_gold_native_small"
+  },
+  "result": {
+    "fluid": "primeval:molten_gold",
+    "amount": 1000
+  }
+}

@@ -29,6 +29,7 @@
     "#primeval:ores_copper",
     "#primeval:ores_iron",
     "#primeval:ores_tin",
-    "#primeval:ores_zinc"
+    "#primeval:ores_zinc",
+    "#primeval:ores_gold"
   ]
 }
