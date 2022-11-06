@@ -11,6 +11,7 @@ import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.mixin.client.indigo.renderer.MixinItemRenderer;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.item.UnclampedModelPredicateProvider;
 import net.minecraft.entity.decoration.LeashKnotEntity;
 import net.minecraft.item.*;
@@ -134,11 +135,16 @@ public class PrimevalItems {
     public static final Item BRONZE_CHUNK = registerItem("bronze_chunk", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
     public static final Item BRASS_INGOT = registerItem("brass_ingot", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
     public static final Item BRASS_CHUNK = registerItem("brass_chunk", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
+    public static final Item PEWTER_INGOT = registerItem("pewter_ingot", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
+    public static final Item PEWTER_CHUNK = registerItem("pewter_chunk", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
+    public static final Item GOLD_INGOT = registerItem("gold_ingot", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
+    public static final Item GOLD_CHUNK = registerItem("gold_chunk", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
     public static final Item BOTCHED_ALLOY_INGOT = registerItem("botched_alloy_ingot", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
     public static final Item BOTCHED_ALLOY_CHUNK = registerItem("botched_alloy_chunk", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
+
     // Currency
     public static final Item COPPER_COIN = registerItem("copper_coin", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.SMALL));
-
+    public static final Item GOLD_COIN = registerItem("gold_coin", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.SMALL));
 
     // Molds
     public static final Item CLAY_INGOT_MOLD = registerItem("clay_mold_ingot", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
@@ -148,6 +154,7 @@ public class PrimevalItems {
     public static final Item CLAY_PICKAXE_HEAD_MOLD = registerItem("clay_mold_pickaxe_head", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
     public static final Item CLAY_SHOVEL_HEAD_MOLD = registerItem("clay_mold_shovel_head", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
     public static final Item CLAY_SWORD_BLADE_MOLD = registerItem("clay_mold_sword_blade", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
+    public static final Item CLAY_HOE_HEAD_MOLD = registerItem("clay_mold_hoe_head", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
 
     public static final List<Item> FIRED_MOLDS = new ArrayList<>();
     public static final Item FIRED_CLAY_INGOT_MOLD = registerMoldItem("fired_clay_mold_ingot", new ClayMoldItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM, 9000));
@@ -157,6 +164,7 @@ public class PrimevalItems {
     public static final Item FIRED_CLAY_PICKAXE_HEAD_MOLD = registerMoldItem("fired_clay_mold_pickaxe_head", new ClayMoldItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM, 9000*3));
     public static final Item FIRED_CLAY_SHOVEL_HEAD_MOLD = registerMoldItem("fired_clay_mold_shovel_head", new ClayMoldItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM, 9000));
     public static final Item FIRED_CLAY_SWORD_BLADE_MOLD = registerMoldItem("fired_clay_mold_sword_blade", new ClayMoldItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM, 9000*2));
+    public static final Item FIRED_CLAY_HOE_HEAD_MOLD = registerMoldItem("fired_clay_mold_hoe_head", new ClayMoldItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM, 9000*2));
 
     private static Item registerItem(String id, Item item) {
         return Registry.register(Registry.ITEM, PrimevalMain.getId(id), item);
@@ -190,13 +198,14 @@ public class PrimevalItems {
     }
 
     private static Item[] registerToolPartSet(String material_id, Item.Settings group, Weight weight, Size size) {
-        Item[] items = new Item[6];
+        Item[] items = new Item[7];
         items[0] = registerItem(material_id+"_axe_head", new WeightedItem(group, weight, size));
         items[1] = registerItem(material_id+"_chisel_head", new WeightedItem(group, weight, size));
         items[2] = registerItem(material_id+"_knife_blade", new WeightedItem(group, weight, size));
         items[3] = registerItem(material_id+"_pickaxe_head", new WeightedItem(group, weight, size));
         items[4] = registerItem(material_id+"_shovel_head", new WeightedItem(group, weight, size));
         items[5] = registerItem(material_id+"_sword_blade", new WeightedItem(group, weight, size));
+        items[6] = registerItem(material_id+"_hoe_head", new WeightedItem(group, weight, size));
         return items;
     }
 

@@ -1,0 +1,10 @@
+{
+  "type": "primeval:clay_mold_casting",
+  "input": {
+    "mold": "primeval:fired_clay_mold_ingot",
+    "fluid": "primeval:molten_pewter"
+  },
+  "result": {
+    "item": "primeval:pewter_ingot"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "primeval:melting",
+  "input": {
+    "item": "primeval:pewter_ingot"
+  },
+  "result": {
+    "fluid": "primeval:molten_pewter",
+    "amount": 9000
+  }
+}

@@ -157,6 +157,8 @@ public class PrimevalBlocks {
 
     public static final Block MOLTEN_BRONZE = registerMoltenFluid("molten_bronze", PrimevalFluids.MOLTEN_BRONZE);
     public static final Block MOLTEN_BRASS = registerMoltenFluid("molten_brass", PrimevalFluids.MOLTEN_BRASS);
+    public static final Block MOLTEN_PEWTER = registerMoltenFluid("molten_pewter", PrimevalFluids.MOLTEN_PEWTER);
+    public static final Block MOLTEN_GOLD = registerMoltenFluid("molten_gold", PrimevalFluids.MOLTEN_GOLD);
     public static final Block MOLTEN_BOTCHED_ALLOY = registerMoltenFluid("molten_botched_alloy", PrimevalFluids.MOLTEN_BOTCHED_ALLOY);
 
 

@@ -1,0 +1,10 @@
+{
+  "type": "primeval:clay_mold_casting",
+  "input": {
+    "mold": "primeval:fired_clay_mold_hoe_head",
+    "fluid": "primeval:molten_bronze"
+  },
+  "result": {
+    "item": "primeval:bronze_hoe_head"
+  }
+}

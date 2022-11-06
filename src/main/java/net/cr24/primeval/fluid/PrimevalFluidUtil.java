@@ -19,6 +19,10 @@ public class PrimevalFluidUtil {
             return 0.04F;
         } else if (f == PrimevalFluids.MOLTEN_BRASS) {
             return 0.05F;
+        } else if (f == PrimevalFluids.MOLTEN_PEWTER) {
+            return 0.06F;
+        } else if (f == PrimevalFluids.MOLTEN_GOLD) {
+            return 0.07F;
         } else if (f == PrimevalFluids.MOLTEN_BOTCHED_ALLOY) {
             return 1F;
         }

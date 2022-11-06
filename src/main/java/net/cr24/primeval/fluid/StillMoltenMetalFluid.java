@@ -113,6 +113,36 @@ abstract class StillMoltenMetalFluid extends LavaFluid implements FallbackFluid 
         }
     }
 
+    public static class Pewter extends StillMoltenMetalFluid {
+
+        public Fluid getStill() {
+            return PrimevalFluids.MOLTEN_PEWTER;
+        }
+
+        public BlockState toBlockState(FluidState state) {
+            return PrimevalBlocks.MOLTEN_PEWTER.getDefaultState().with(FluidBlock.LEVEL, getBlockStateLevel(state));
+        }
+
+        public Item getFallbackItem() {
+            return PrimevalItems.PEWTER_CHUNK;
+        }
+    }
+
+    public static class Gold extends StillMoltenMetalFluid {
+
+        public Fluid getStill() {
+            return PrimevalFluids.MOLTEN_GOLD;
+        }
+
+        public BlockState toBlockState(FluidState state) {
+            return PrimevalBlocks.MOLTEN_GOLD.getDefaultState().with(FluidBlock.LEVEL, getBlockStateLevel(state));
+        }
+
+        public Item getFallbackItem() {
+            return PrimevalItems.GOLD_CHUNK;
+        }
+    }
+
     public static class Botched extends StillMoltenMetalFluid {
 
         public Fluid getStill() {

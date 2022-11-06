@@ -1,0 +1,10 @@
+{
+  "type": "primeval:melting",
+  "input": {
+    "item": "primeval:gold_ingot"
+  },
+  "result": {
+    "fluid": "primeval:molten_gold",
+    "amount": 9000
+  }
+}

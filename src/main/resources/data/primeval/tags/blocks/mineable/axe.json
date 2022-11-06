@@ -10,9 +10,6 @@
     "primeval:straw_mesh",
     "primeval:straw_mat",
     "primeval:straw",
-    "primeval:wicker",
-    "primeval:wicker_stairs",
-    "primeval:wicker_slab",
     
     "primeval:daub",
     "primeval:framed_daub",
@@ -52,6 +49,10 @@
     "primeval:spruce_door",
     "primeval:spruce_trapdoor",
     "primeval:spruce_crate",
+    
+    "primeval:wicker",
+    "primeval:wicker_stairs",
+    "primeval:wicker_slab",
     
     "primeval:pit_kiln",
     "primeval:crude_crafting_bench",
