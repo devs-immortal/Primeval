@@ -47,9 +47,6 @@
     "block.primeval.straw_slab": "Straw Slab",
     "block.primeval.straw_mesh": "Straw Mesh Block",
     "block.primeval.straw_mat": "Straw Mat",
-    "block.primeval.wicker": "Wicker Block",
-    "block.primeval.wicker_stairs": "Wicker Stairs",
-    "block.primeval.wicker_slab": "Wicker Slab",
     "block.primeval.terracotta": "Fired Clay Block",
     "block.primeval.fired_clay_shingles": "Fired Clay Shingles",
     "block.primeval.fired_clay_shingles_stairs": "Fired Clay Shingles Stairs",
@@ -80,6 +77,7 @@
     "block.primeval.framed_x_daub": "Framed Daub X",
     "block.primeval.framed_plus_daub": "Framed Daub Plus",
     "block.primeval.framed_divided_daub": "Framed Daub Segment",
+    
     "block.primeval.oak_planks": "Oak Planks",
     "block.primeval.oak_stairs": "Oak Stairs",
     "block.primeval.oak_slab": "Oak Slab",
@@ -88,6 +86,7 @@
     "block.primeval.oak_fence_gate": "Oak Fence Gate",
     "block.primeval.oak_door": "Oak Door",
     "block.primeval.oak_trapdoor": "Oak Trapdoor",
+    
     "block.primeval.birch_planks": "Birch Planks",
     "block.primeval.birch_stairs": "Birch Stairs",
     "block.primeval.birch_slab": "Birch Slab",
@@ -105,6 +104,14 @@
     "block.primeval.spruce_fence_gate": "Spruce Fence Gate",
     "block.primeval.spruce_door": "Spruce Door",
     "block.primeval.spruce_trapdoor": "Spruce Trapdoor",
+    
+    "block.primeval.wicker": "Wicker Block",
+    "block.primeval.wicker_stairs": "Wicker Stairs",
+    "block.primeval.wicker_slab": "Wicker Slab",
+    "block.primeval.wicker_door": "Wicker Door",
+    "block.primeval.wicker_trapdoor": "Wicker Trapdoor",
+    
+    
     "block.primeval.rope": "Rope",
     "block.primeval.rope_ladder": "Rope Ladder",
     

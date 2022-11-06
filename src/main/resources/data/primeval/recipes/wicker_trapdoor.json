@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "primeval:wicker"
+    }
+  },
+  "result": {
+    "item": "primeval:wicker_trapdoor",
+    "count": 2
+  }
+}

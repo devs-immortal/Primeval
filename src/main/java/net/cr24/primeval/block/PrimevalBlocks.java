@@ -106,7 +106,6 @@ public class PrimevalBlocks {
     public static final Block STRAW_SLAB = registerBlock("straw_slab", new SlabBlock(FabricBlockSettings.of(Material.PLANT).strength(0.5F).sounds(BlockSoundGroup.GRASS)), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block STRAW_MESH = registerBlock("straw_mesh", new Block(FabricBlockSettings.of(Material.PLANT).strength(0.5F).sounds(BlockSoundGroup.GRASS)), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block STRAW_MAT = registerBlock("straw_mat", new CarpetBlock(FabricBlockSettings.of(Material.PLANT).strength(0.3F).sounds(BlockSoundGroup.GRASS)), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
-    public static final BlockSet WICKER = registerBlockSet("wicker", SETTINGS_REFINED_WOOD(), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block TERRACOTTA = registerBlock("terracotta", new Block(SETTINGS_FIRED_CLAY()), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final BlockSet FIRED_CLAY_SHINGLE_BLOCKS = registerBlockSet("fired_clay_shingles", SETTINGS_FIRED_CLAY(), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final BlockSet FIRED_CLAY_BRICK_BLOCKS = registerBlockSet("fired_clay_bricks", SETTINGS_FIRED_CLAY(), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
@@ -126,6 +125,9 @@ public class PrimevalBlocks {
     public static final WoodBlockSet OAK_PLANK_BLOCKS = registerWoodBlockSet("oak", FabricBlockSettings.of(Material.WOOD, MapColor.OAK_TAN).strength(3.0f, 4.0f).sounds(BlockSoundGroup.WOOD).requiresTool(), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final WoodBlockSet BIRCH_PLANK_BLOCKS = registerWoodBlockSet("birch", FabricBlockSettings.of(Material.WOOD, MapColor.YELLOW).strength(3.0f, 4.0f).sounds(BlockSoundGroup.WOOD).requiresTool(), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final WoodBlockSet SPRUCE_PLANK_BLOCKS = registerWoodBlockSet("spruce", FabricBlockSettings.of(Material.WOOD, MapColor.DIRT_BROWN).strength(3.0f, 4.0f).sounds(BlockSoundGroup.WOOD).requiresTool(), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final BlockSet WICKER = registerBlockSet("wicker", SETTINGS_REFINED_WOOD(), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block WICKER_DOOR = registerBlock("wicker_door", new PrimevalDoorBlock(SETTINGS_REFINED_WOOD().nonOpaque()), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block WICKER_TRAPDOOR = registerBlock("wicker_trapdoor", new PrimevalTrapdoorBlock(SETTINGS_REFINED_WOOD().nonOpaque()), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block ROPE = registerBlock("rope", new ChainBlock(FabricBlockSettings.of(Material.PLANT).strength(0.2F).sounds(BlockSoundGroup.GRASS)), Weight.LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
     public static final Block ROPE_LADDER = registerBlock("rope_ladder", new SuspendedLadderBlock(FabricBlockSettings.of(Material.WOOD, MapColor.OAK_TAN).strength(0.3F).sounds(BlockSoundGroup.WOOD).nonOpaque()), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
 
@@ -204,8 +206,11 @@ public class PrimevalBlocks {
                 CAMPFIRE,
                 ROPE,
                 ROPE_LADDER,
-                OAK_PLANK_BLOCKS.door,   // Door
-                OAK_PLANK_BLOCKS.trapdoor);  // Trapdoor
+                OAK_PLANK_BLOCKS.door,
+                OAK_PLANK_BLOCKS.trapdoor,
+                WICKER_DOOR,
+                WICKER_TRAPDOOR
+        );
 
         // Color registry on items
         ColorProviderRegistry.ITEM.register((stack, tintIndex) -> 0x91BD59,
@@ -249,10 +254,6 @@ public class PrimevalBlocks {
         FlammableBlockRegistry.getDefaultInstance().add(STRAW_STAIRS, 10, 40);
         FlammableBlockRegistry.getDefaultInstance().add(STRAW_SLAB, 10, 40);
 
-        for (Block b : WICKER) {
-            FlammableBlockRegistry.getDefaultInstance().add(b, 10, 40);
-        }
-
         FlammableBlockRegistry.getDefaultInstance().add(STRAW_MESH, 10, 40);
         FlammableBlockRegistry.getDefaultInstance().add(STRAW_MAT, 10, 40);
         FlammableBlockRegistry.getDefaultInstance().add(STRAW_PILE, 10, 40);
@@ -275,6 +276,12 @@ public class PrimevalBlocks {
         for (Block b : SPRUCE_PLANK_BLOCKS) {
             FlammableBlockRegistry.getDefaultInstance().add(b, 5, 20);
         }
+
+        for (Block b : WICKER) {
+            FlammableBlockRegistry.getDefaultInstance().add(b, 10, 40);
+        }
+        FlammableBlockRegistry.getDefaultInstance().add(WICKER_DOOR, 10, 40);
+        FlammableBlockRegistry.getDefaultInstance().add(WICKER_TRAPDOOR, 10, 40);
 
         FlammableBlockRegistry.getDefaultInstance().add(CRUDE_CRAFTING_BENCH, 2, 6);
     }
@@ -336,17 +343,17 @@ public class PrimevalBlocks {
         );
     }
 
-    public static final record BlockSet(Block block, StairsBlock stairs, SlabBlock slab) implements Iterable<Block> {
+    public record BlockSet(Block block, StairsBlock stairs, SlabBlock slab) implements Iterable<Block> {
         public @NotNull Iterator<Block> iterator() {
             return Arrays.stream(new Block[]{block, stairs, slab}).iterator();
         }
     }
-    public static final record WoodBlockSet(Block block, StairsBlock stairs, SlabBlock slab, FenceBlock fence, FenceBlock logFence, FenceGateBlock fenceGate, DoorBlock door, TrapdoorBlock trapdoor) implements Iterable<Block> {
+    public record WoodBlockSet(Block block, StairsBlock stairs, SlabBlock slab, FenceBlock fence, FenceBlock logFence, FenceGateBlock fenceGate, DoorBlock door, TrapdoorBlock trapdoor) implements Iterable<Block> {
         public @NotNull Iterator<Block> iterator() {
             return Arrays.stream(new Block[]{block, stairs, slab, fence, logFence, fenceGate, door, trapdoor}).iterator();
         }
     }
-    public static final record OreBlockSet(Block small, Block medium, Block large) {
+    public record OreBlockSet(Block small, Block medium, Block large) {
         public @NotNull Iterator<Block> iterator() {
             return Arrays.stream(new Block[]{small, medium, large}).iterator();
         }
