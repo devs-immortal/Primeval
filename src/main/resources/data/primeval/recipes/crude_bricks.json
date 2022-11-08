@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "BM",
+        "MB"
+    ],
+    "key": {
+        "M": {
+            "tag": "primeval:mortar"
+        },
+        "B": {
+            "item": "primeval:rock"
+        }
+    },
+    "result": {
+        "item": "primeval:crude_bricks",
+        "count": 2
+    }
+}

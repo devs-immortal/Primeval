@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "primeval:crude_bricks"
+    }
+  },
+  "result": {
+    "item": "primeval:crude_bricks_stairs",
+    "count": 8
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "moisture=0": {
+      "model": "primeval:block/farmland_clay"
+    },
+    "moisture=1": {
+      "model": "primeval:block/farmland_clay"
+    },
+    "moisture=2": {
+      "model": "primeval:block/farmland_clay"
+    },
+    "moisture=3": {
+      "model": "primeval:block/farmland_clay"
+    },
+    "moisture=4": {
+      "model": "primeval:block/farmland_clay"
+    },
+    "moisture=5": {
+      "model": "primeval:block/farmland_clay"
+    },
+    "moisture=6": {
+      "model": "primeval:block/farmland_clay"
+    },
+    "moisture=7": {
+      "model": "primeval:block/farmland_clay_moist"
+    }
+  }
+}

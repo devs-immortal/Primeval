@@ -28,6 +28,7 @@
     "primeval:oak_fence_gate",
     "primeval:oak_door",
     "primeval:oak_trapdoor",
+    "primeval:oak_panel",
     "primeval:oak_crate",
     
     "primeval:birch_planks",
@@ -38,6 +39,7 @@
     "primeval:birch_fence_gate",
     "primeval:birch_door",
     "primeval:birch_trapdoor",
+    "primeval:birch_panel",
     "primeval:birch_crate",
     
     "primeval:spruce_planks",
@@ -48,6 +50,7 @@
     "primeval:spruce_fence_gate",
     "primeval:spruce_door",
     "primeval:spruce_trapdoor",
+    "primeval:spruce_panel",
     "primeval:spruce_crate",
     
     "primeval:wicker",

@@ -43,16 +43,16 @@ import static net.cr24.primeval.item.PrimevalItems.PRIMEVAL_BLOCKS;
 public class PrimevalBlocks {
 
     // Block Settings
-    private static final FabricBlockSettings SETTINGS_SOIL() { return FabricBlockSettings.of(Material.SOIL, MapColor.DIRT_BROWN).strength(2.1f, 2.0f).sounds(BlockSoundGroup.GRAVEL);}
-    private static final FabricBlockSettings SETTINGS_TOUGH_SOIL() { return FabricBlockSettings.of(Material.SOIL, MapColor.DIRT_BROWN).strength(3f, 2.0f).sounds(BlockSoundGroup.GRAVEL);}
-    private static final FabricBlockSettings SETTINGS_GRASSY() { return FabricBlockSettings.of(Material.SOLID_ORGANIC, MapColor.TERRACOTTA_GREEN).strength(2.5f, 2.0f).sounds(BlockSoundGroup.GRASS);}
-    private static final FabricBlockSettings SETTINGS_SAND() { return FabricBlockSettings.of(Material.AGGREGATE, MapColor.PALE_YELLOW).strength(1.8f, 2.0f).sounds(BlockSoundGroup.SAND);}
-    private static final FabricBlockSettings SETTINGS_STONE() { return FabricBlockSettings.of(Material.STONE, MapColor.DEEPSLATE_GRAY).strength(4.5f, 6.0f).requiresTool();}
-    private static final FabricBlockSettings SETTINGS_PLANT() { return FabricBlockSettings.of(Material.REPLACEABLE_PLANT, MapColor.GREEN).strength(0.05f, 0f).sounds(BlockSoundGroup.GRASS).noCollision();}
-    private static final FabricBlockSettings SETTINGS_LOG() { return FabricBlockSettings.of(Material.WOOD, MapColor.BROWN).strength(5.0f, 6.0f).sounds(BlockSoundGroup.WOOD).requiresTool();}
-    private static final FabricBlockSettings SETTINGS_TRUNK() { return FabricBlockSettings.of(Material.WOOD, MapColor.BROWN).strength(8.0f, 8.0f).sounds(BlockSoundGroup.WOOD).requiresTool();}
-    private static final FabricBlockSettings SETTINGS_FIRED_CLAY() { return FabricBlockSettings.of(Material.STONE, MapColor.ORANGE).strength(4.0f, 6.0f).sounds(BlockSoundGroup.STONE).requiresTool();}
-    private static final FabricBlockSettings SETTINGS_REFINED_WOOD() { return FabricBlockSettings.of(Material.WOOD, MapColor.OAK_TAN).strength(3.0f, 4.0f).sounds(BlockSoundGroup.WOOD).requiresTool();}
+    private static FabricBlockSettings SETTINGS_SOIL() { return FabricBlockSettings.of(Material.SOIL, MapColor.DIRT_BROWN).strength(2.1f, 2.0f).sounds(BlockSoundGroup.GRAVEL);}
+    private static FabricBlockSettings SETTINGS_TOUGH_SOIL() { return FabricBlockSettings.of(Material.SOIL, MapColor.DIRT_BROWN).strength(3f, 2.0f).sounds(BlockSoundGroup.GRAVEL);}
+    private static FabricBlockSettings SETTINGS_GRASSY() { return FabricBlockSettings.of(Material.SOLID_ORGANIC, MapColor.TERRACOTTA_GREEN).strength(2.5f, 2.0f).sounds(BlockSoundGroup.GRASS);}
+    private static FabricBlockSettings SETTINGS_SAND() { return FabricBlockSettings.of(Material.AGGREGATE, MapColor.PALE_YELLOW).strength(1.8f, 2.0f).sounds(BlockSoundGroup.SAND);}
+    private static FabricBlockSettings SETTINGS_STONE() { return FabricBlockSettings.of(Material.STONE, MapColor.DEEPSLATE_GRAY).strength(4.5f, 6.0f).requiresTool();}
+    private static FabricBlockSettings SETTINGS_PLANT() { return FabricBlockSettings.of(Material.REPLACEABLE_PLANT, MapColor.GREEN).strength(0.05f, 0f).sounds(BlockSoundGroup.GRASS).noCollision();}
+    private static FabricBlockSettings SETTINGS_LOG() { return FabricBlockSettings.of(Material.WOOD, MapColor.BROWN).strength(5.0f, 6.0f).sounds(BlockSoundGroup.WOOD).requiresTool();}
+    private static FabricBlockSettings SETTINGS_TRUNK() { return FabricBlockSettings.of(Material.WOOD, MapColor.BROWN).strength(8.0f, 8.0f).sounds(BlockSoundGroup.WOOD).requiresTool();}
+    private static FabricBlockSettings SETTINGS_FIRED_CLAY() { return FabricBlockSettings.of(Material.STONE, MapColor.ORANGE).strength(4.0f, 6.0f).sounds(BlockSoundGroup.STONE).requiresTool();}
+    private static FabricBlockSettings SETTINGS_REFINED_WOOD() { return FabricBlockSettings.of(Material.WOOD, MapColor.OAK_TAN).strength(3.0f, 4.0f).sounds(BlockSoundGroup.WOOD).requiresTool();}
 
     // Terrain blocks
     public static final Block DIRT = registerBlock("dirt", new SemiSupportedBlock(SETTINGS_SOIL(), 0.2f), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
@@ -64,6 +64,8 @@ public class PrimevalBlocks {
     public static final Block CLAY_BLOCK = registerBlock("block_of_clay", new SemiSupportedBlock(SETTINGS_SOIL(), 0.3f), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block COBBLESTONE = registerBlock("cobblestone", new SemiSupportedBlock(SETTINGS_STONE().strength(5.0f, 6.0f), 0.1f), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block STONE = registerBlock("stone", new CascadingBlock(SETTINGS_STONE(), 0.35f, COBBLESTONE), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block DIRT_FARMLAND = registerBlockWithoutItem("farmland_dirt", new PrimevalFarmlandBlock(SETTINGS_SOIL(), 0.2f, DIRT));
+    public static final Block CLAY_FARMLAND = registerBlockWithoutItem("farmland_clay", new PrimevalFarmlandBlock(SETTINGS_SOIL(), 0.3f, CLAY_BLOCK));
 
     //// Plant blocks
     // Oak Trees
@@ -113,6 +115,7 @@ public class PrimevalBlocks {
     public static final BlockSet FIRED_CLAY_TILES_BLOCKS = registerBlockSet("fired_clay_tiles", SETTINGS_FIRED_CLAY(), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final BlockSet DRIED_BRICK_BLOCKS = registerBlockSet("dried_bricks", SETTINGS_FIRED_CLAY(), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final BlockSet MUD_BRICKS = registerBlockSet("mud_bricks", SETTINGS_TOUGH_SOIL(), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final BlockSet CRUDE_BRICKS = registerBlockSet("crude_bricks", SETTINGS_STONE(), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final BlockSet STONE_BRICKS = registerBlockSet("stone_bricks", SETTINGS_STONE(), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final BlockSet SMOOTH_STONE = registerBlockSet("smooth_stone", SETTINGS_STONE(), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block DAUB = registerBlock("daub", new Block(SETTINGS_REFINED_WOOD()), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
@@ -319,15 +322,16 @@ public class PrimevalBlocks {
     }
 
     private static WoodBlockSet registerWoodBlockSet(String id, AbstractBlock.Settings settings, Weight weight, Size size, ItemGroup itemgroup) {
-        return registerWoodBlockSet(id+"_planks", id+"_stairs", id+"_slab", id+"_fence", id+"_log_fence", id+"_fence_gate", id+"_door", id+"_trapdoor", settings, weight, size, itemgroup);
+        return registerWoodBlockSet(id+"_planks", id+"_stairs", id+"_slab", id+"_panel", id+"_fence", id+"_log_fence", id+"_fence_gate", id+"_door", id+"_trapdoor", settings, weight, size, itemgroup);
     }
-    private static WoodBlockSet registerWoodBlockSet(String block_id, String stairs_id, String slab_id, String fence_id, String log_fence_id, String fence_gate_id, String door_id, String trapdoor_id, AbstractBlock.Settings settings, Weight weight, Size size, ItemGroup itemgroup) {
+    private static WoodBlockSet registerWoodBlockSet(String block_id, String stairs_id, String slab_id, String panel_id, String fence_id, String log_fence_id, String fence_gate_id, String door_id, String trapdoor_id, AbstractBlock.Settings settings, Weight weight, Size size, ItemGroup itemgroup) {
         Block base = registerBlock(block_id, new Block(settings), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
 
         return new WoodBlockSet(
                 base,
                 registerBlock(stairs_id, new PrimevalStairsBlock(base.getDefaultState(), settings), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS),
                 registerBlock(slab_id, new SlabBlock(settings), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS),
+                registerBlock(panel_id, new Block(settings), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS),
                 registerBlock(fence_id, new FenceBlock(settings), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS),
                 registerBlock(log_fence_id, new FenceBlock(settings), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS),
                 registerBlock(fence_gate_id, new FenceGateBlock(settings), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS),
@@ -349,9 +353,9 @@ public class PrimevalBlocks {
             return Arrays.stream(new Block[]{block, stairs, slab}).iterator();
         }
     }
-    public record WoodBlockSet(Block block, StairsBlock stairs, SlabBlock slab, FenceBlock fence, FenceBlock logFence, FenceGateBlock fenceGate, DoorBlock door, TrapdoorBlock trapdoor) implements Iterable<Block> {
+    public record WoodBlockSet(Block block, StairsBlock stairs, SlabBlock slab, Block panel, FenceBlock fence, FenceBlock logFence, FenceGateBlock fenceGate, DoorBlock door, TrapdoorBlock trapdoor) implements Iterable<Block> {
         public @NotNull Iterator<Block> iterator() {
-            return Arrays.stream(new Block[]{block, stairs, slab, fence, logFence, fenceGate, door, trapdoor}).iterator();
+            return Arrays.stream(new Block[]{block, stairs, slab, panel, fence, logFence, fenceGate, door, trapdoor}).iterator();
         }
     }
     public record OreBlockSet(Block small, Block medium, Block large) {

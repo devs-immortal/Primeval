@@ -12,6 +12,8 @@
     "primeval:mud_bricks_stairs",
     "primeval:mud_bricks_slab",
     "primeval:ash_pile",
-    "primeval:large_clay_pot"
+    "primeval:large_clay_pot",
+    "primeval:farmland_dirt",
+    "primeval:farmland_clay"
   ]
 }

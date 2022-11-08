@@ -66,6 +66,9 @@
     "block.primeval.mud_bricks": "Mud Bricks",
     "block.primeval.mud_bricks_stairs": "Mud Brick Stairs",
     "block.primeval.mud_bricks_slab": "Mud Brick Slab",
+    "block.primeval.crude_bricks": "Crude Bricks",
+    "block.primeval.crude_bricks_stairs": "Crude Brick Stairs",
+    "block.primeval.crude_bricks_slab": "Crude Brick Slab",
     "block.primeval.stone_bricks": "Stone Bricks",
     "block.primeval.stone_bricks_stairs": "Stone Brick Stairs",
     "block.primeval.stone_bricks_slab": "Stone Brick Slab",
@@ -89,6 +92,7 @@
     "block.primeval.oak_fence_gate": "Oak Fence Gate",
     "block.primeval.oak_door": "Oak Door",
     "block.primeval.oak_trapdoor": "Oak Trapdoor",
+    "block.primeval.oak_panel": "Oak Panel",
     
     "block.primeval.birch_planks": "Birch Planks",
     "block.primeval.birch_stairs": "Birch Stairs",
@@ -98,6 +102,7 @@
     "block.primeval.birch_fence_gate": "Birch Fence Gate",
     "block.primeval.birch_door": "Birch Door",
     "block.primeval.birch_trapdoor": "Birch Trapdoor",
+    "block.primeval.birch_panel": "Birch Panel",
     
     "block.primeval.spruce_planks": "Spruce Planks",
     "block.primeval.spruce_stairs": "Spruce Stairs",
@@ -107,6 +112,7 @@
     "block.primeval.spruce_fence_gate": "Spruce Fence Gate",
     "block.primeval.spruce_door": "Spruce Door",
     "block.primeval.spruce_trapdoor": "Spruce Trapdoor",
+    "block.primeval.spruce_panel": "Spruce Panel",
     
     "block.primeval.wicker": "Wicker Block",
     "block.primeval.wicker_stairs": "Wicker Stairs",

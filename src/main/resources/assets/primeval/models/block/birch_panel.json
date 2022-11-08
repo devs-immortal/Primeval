@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "primeval:block/birch_planks",
+    "side": "primeval:block/birch_panel"
+  }
+}

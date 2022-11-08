@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP",
+    "SSS",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "primeval:spruce_planks"
+    },
+    "S": {
+      "item": "primeval:stick"
+    }
+  },
+  "result": {
+    "item": "primeval:spruce_panel",
+    "count": 4
+  }
+}
