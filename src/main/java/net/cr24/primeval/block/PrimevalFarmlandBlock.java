@@ -1,5 +1,6 @@
 package net.cr24.primeval.block;
 
+import net.cr24.primeval.item.PrimevalHoeItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -17,8 +18,11 @@ public class PrimevalFarmlandBlock extends SemiSupportedBlock {
     public final Block turnsTo;
     protected static final VoxelShape SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 15.0, 16.0);
 
-    public PrimevalFarmlandBlock(Settings settings, float percentPerSide, Block resultBlock) {
+    public PrimevalFarmlandBlock(Settings settings, float percentPerSide, Block resultBlock, Block[] sourceBlocks) {
         this(settings, percentPerSide, resultBlock, resultBlock);
+        for (Block b : sourceBlocks) {
+            PrimevalHoeItem.hoeables.put(b, this);
+        }
     }
 
     public PrimevalFarmlandBlock(Settings settings, float percentPerSide, Block fallBlock, Block turnsTo) {

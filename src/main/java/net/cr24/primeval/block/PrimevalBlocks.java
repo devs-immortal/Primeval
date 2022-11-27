@@ -38,6 +38,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 import static net.cr24.primeval.item.PrimevalItems.PRIMEVAL_BLOCKS;
+import static net.cr24.primeval.item.PrimevalHoeItem.hoeables;
 
 @SuppressWarnings("unused")
 public class PrimevalBlocks {
@@ -64,8 +65,8 @@ public class PrimevalBlocks {
     public static final Block CLAY_BLOCK = registerBlock("block_of_clay", new SemiSupportedBlock(SETTINGS_SOIL(), 0.3f), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block COBBLESTONE = registerBlock("cobblestone", new SemiSupportedBlock(SETTINGS_STONE().strength(5.0f, 6.0f), 0.1f), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block STONE = registerBlock("stone", new CascadingBlock(SETTINGS_STONE(), 0.35f, COBBLESTONE), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
-    public static final Block DIRT_FARMLAND = registerBlockWithoutItem("farmland_dirt", new PrimevalFarmlandBlock(SETTINGS_SOIL(), 0.2f, DIRT));
-    public static final Block CLAY_FARMLAND = registerBlockWithoutItem("farmland_clay", new PrimevalFarmlandBlock(SETTINGS_SOIL(), 0.3f, CLAY_BLOCK));
+    public static final Block DIRT_FARMLAND = registerBlockWithoutItem("farmland_dirt", new PrimevalFarmlandBlock(SETTINGS_SOIL(), 0.2f, DIRT, new Block[]{DIRT, GRASSY_DIRT}));
+    public static final Block CLAY_FARMLAND = registerBlockWithoutItem("farmland_clay", new PrimevalFarmlandBlock(SETTINGS_SOIL(), 0.3f, CLAY_BLOCK, new Block[]{CLAY_BLOCK}));
 
     //// Plant blocks
     // Oak Trees
@@ -187,6 +188,7 @@ public class PrimevalBlocks {
         SpruceTrunker.INSTANCE.build();
 
         registerFlammables();
+        registerHoeables();
     }
 
     @Environment(EnvType.CLIENT)
@@ -288,6 +290,10 @@ public class PrimevalBlocks {
         FlammableBlockRegistry.getDefaultInstance().add(WICKER_TRAPDOOR, 10, 40);
 
         FlammableBlockRegistry.getDefaultInstance().add(CRUDE_CRAFTING_BENCH, 2, 6);
+    }
+
+    private static void registerHoeables() {
+        hoeables.put(COARSE_DIRT, DIRT);
     }
 
 

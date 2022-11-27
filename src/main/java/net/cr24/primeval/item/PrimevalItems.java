@@ -232,13 +232,14 @@ public class PrimevalItems {
     }
 
     private static Item[] registerToolSet(String material_id, ToolMaterial material, Item.Settings group, Weight weight, Size size) {
-        Item[] items = new Item[6];
+        Item[] items = new Item[7];
         items[0] = registerItem(material_id+"_axe", new PrimevalAxeItem(material, material.getAttackDamage(), -3.0f, group, weight, size));
         items[1] = registerItem(material_id+"_chisel", new ChiselItem(material, material.getAttackDamage()*PrimevalToolMaterials.BLUNT_DAMAGE_MULTIPLIER, -3.0f, group, weight, size));
         items[2] = registerItem(material_id+"_knife", new PrimevalKnifeItem(material, material.getAttackDamage()*PrimevalToolMaterials.KNIFE_DAMAGE_MULTIPLIER, -3.0f, group, weight, size));
         items[3] = registerItem(material_id+"_pickaxe", new PrimevalPickaxeItem(material, material.getAttackDamage(), -3.0f, group, weight, size));
         items[4] = registerItem(material_id+"_shovel", new PrimevalShovelItem(material, material.getAttackDamage()*PrimevalToolMaterials.BLUNT_DAMAGE_MULTIPLIER, -3.0f, group, weight, size));
         items[5] = registerItem(material_id+"_sword", new PrimevalSwordItem(material, material.getAttackDamage()*PrimevalToolMaterials.SWORD_DAMAGE_MULTIPLIER, -2.5f, group, weight, size));
+        items[6] = registerItem(material_id+"_hoe", new PrimevalHoeItem(material, group, weight, size));
         return items;
     }
 
