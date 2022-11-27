@@ -62,7 +62,6 @@ public class PrimevalFarmlandBlock extends SemiSupportedBlock {
             }
         }
         world.setBlockState(pos, state.with(MOISTURE, highest));
-
         if (!isWaterInRange(world, pos) && state.get(MOISTURE) == 0 && highest == 0) {
             world.setBlockState(pos, turnsTo.getDefaultState());
         }
