@@ -1,0 +1,18 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "primeval:dye_black"
+        },
+        {
+            "item": "primeval:dye_white"
+        },
+        {
+            "item": "primeval:dye_white"
+        }
+    ],
+    "result": {
+        "item": "primeval:dye_light_gray",
+        "count": 3
+    }
+}

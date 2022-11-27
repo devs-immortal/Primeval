@@ -150,6 +150,24 @@ public class PrimevalItems {
     public static final Item COPPER_COIN = registerItem("copper_coin", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.SMALL));
     public static final Item GOLD_COIN = registerItem("gold_coin", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.SMALL));
 
+    // Pigments
+    public static final Item WHITE_DYE = registerItem("dye_white", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
+    public static final Item ORANGE_DYE = registerItem("dye_orange", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
+    public static final Item MAGENTA_DYE = registerItem("dye_magenta", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
+    public static final Item LIGHT_BLUE_DYE = registerItem("dye_light_blue", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
+    public static final Item YELLOW_DYE = registerItem("dye_yellow", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
+    public static final Item LIME_DYE = registerItem("dye_lime", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
+    public static final Item PINK_DYE = registerItem("dye_pink", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
+    public static final Item DARK_GRAY_DYE = registerItem("dye_dark_gray", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
+    public static final Item LIGHT_GRAY_DYE = registerItem("dye_light_gray", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
+    public static final Item CYAN_DYE = registerItem("dye_cyan", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
+    public static final Item PURPLE_DYE = registerItem("dye_purple", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
+    public static final Item BLUE_DYE = registerItem("dye_blue", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
+    public static final Item BROWN_DYE = registerItem("dye_brown", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
+    public static final Item GREEN_DYE = registerItem("dye_green", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
+    public static final Item RED_DYE = registerItem("dye_red", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
+    public static final Item BLACK_DYE = registerItem("dye_black", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
+
     // Molds
     public static final Item CLAY_INGOT_MOLD = registerItem("clay_mold_ingot", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
     public static final Item CLAY_AXE_HEAD_MOLD = registerItem("clay_mold_axe_head", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));

@@ -1,0 +1,11 @@
+{
+  "type": "primeval:quern_grinding",
+  "input": {
+    "item": "primeval:raw_zinc_sphalerite_medium"
+  },
+  "result": {
+    "item": "primeval:dye_white",
+    "count": 5
+  },
+  "wheelDamage":4
+}

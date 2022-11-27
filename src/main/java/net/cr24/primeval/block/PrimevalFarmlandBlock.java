@@ -26,9 +26,6 @@ public class PrimevalFarmlandBlock extends SemiSupportedBlock {
         this.turnsTo = turnsTo;
     }
 
-
-
-
     @Override
     public boolean hasSidedTransparency(BlockState state) {
         return true;
