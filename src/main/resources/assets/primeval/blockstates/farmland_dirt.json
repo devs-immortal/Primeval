@@ -4,24 +4,12 @@
       "model": "primeval:block/farmland_dirt"
     },
     "moisture=1": {
-      "model": "primeval:block/farmland_dirt"
+      "model": "primeval:block/farmland_dirt_moist"
     },
     "moisture=2": {
-      "model": "primeval:block/farmland_dirt"
+      "model": "primeval:block/farmland_dirt_moist"
     },
     "moisture=3": {
-      "model": "primeval:block/farmland_dirt"
-    },
-    "moisture=4": {
-      "model": "primeval:block/farmland_dirt"
-    },
-    "moisture=5": {
-      "model": "primeval:block/farmland_dirt"
-    },
-    "moisture=6": {
-      "model": "primeval:block/farmland_dirt"
-    },
-    "moisture=7": {
       "model": "primeval:block/farmland_dirt_moist"
     }
   }
