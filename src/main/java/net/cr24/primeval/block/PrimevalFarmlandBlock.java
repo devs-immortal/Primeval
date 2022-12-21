@@ -1,9 +1,10 @@
 package net.cr24.primeval.block;
 
-import net.cr24.primeval.item.PrimevalHoeItem;
+import net.cr24.primeval.item.tool.PrimevalHoeItem;
 import net.minecraft.block.*;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
+import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
@@ -18,6 +19,7 @@ public class PrimevalFarmlandBlock extends SemiSupportedBlock {
 
     public static final IntProperty MOISTURE;
     public static final IntProperty FERTILIZED;
+    public static final EnumProperty<PrimevalFarmlandBlockFertilizerType> TYPE;
     public final Block turnsTo;
     protected static final VoxelShape SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 15.0, 16.0);
 
@@ -35,8 +37,10 @@ public class PrimevalFarmlandBlock extends SemiSupportedBlock {
 
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
-        if (direction == Direction.UP && (!neighborState.getMaterial().isSolid() || neighborState.getBlock() instanceof FenceGateBlock)) {
-            world.setBlockState(pos, turnsTo.getDefaultState(), Block.NOTIFY_ALL);
+        if (direction == Direction.UP) {
+            if (!(neighborState.getBlock() instanceof FenceGateBlock) && neighborState.getMaterial().isSolid()) {
+                world.setBlockState(pos, turnsTo.getDefaultState(), Block.NOTIFY_ALL);
+            }
         }
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
     }
@@ -53,7 +57,7 @@ public class PrimevalFarmlandBlock extends SemiSupportedBlock {
         int highest = 0;
         for (BlockPos b : adjacent) {
             if (world.getFluidState(b).isIn(FluidTags.WATER)) {
-                highest = 3;
+                highest = 4;
             } else {
                 BlockState dest = world.getBlockState(b);
                 if (dest.getBlock() instanceof PrimevalFarmlandBlock && highest < dest.get(MOISTURE)) {
@@ -68,7 +72,7 @@ public class PrimevalFarmlandBlock extends SemiSupportedBlock {
     }
 
     private boolean isWaterInRange(World world, BlockPos pos) {
-        int maxRange = 3;
+        int maxRange = 4;
 
         int step = -maxRange;
 
@@ -99,12 +103,13 @@ public class PrimevalFarmlandBlock extends SemiSupportedBlock {
     }
 
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(MOISTURE, FERTILIZED);
+        builder.add(MOISTURE, FERTILIZED, TYPE);
     }
 
     static {
-        MOISTURE = IntProperty.of("moisture", 0, 3);
+        MOISTURE = IntProperty.of("moisture", 0, 4);
         FERTILIZED = IntProperty.of("fertilized", 0, 15);
+        TYPE = EnumProperty.of("fertilizer_type", PrimevalFarmlandBlockFertilizerType.class);
     }
 
 }

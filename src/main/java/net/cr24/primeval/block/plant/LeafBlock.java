@@ -1,4 +1,4 @@
-package net.cr24.primeval.block;
+package net.cr24.primeval.block.plant;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

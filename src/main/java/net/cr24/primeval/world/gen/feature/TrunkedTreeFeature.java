@@ -1,9 +1,9 @@
 package net.cr24.primeval.world.gen.feature;
 
 import com.mojang.serialization.Codec;
-import net.cr24.primeval.block.GrowingSaplingBlock;
-import net.cr24.primeval.block.LeafBlock;
-import net.cr24.primeval.block.TrunkBlock;
+import net.cr24.primeval.block.plant.GrowingSaplingBlock;
+import net.cr24.primeval.block.plant.LeafBlock;
+import net.cr24.primeval.block.plant.TrunkBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;

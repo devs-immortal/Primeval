@@ -1,13 +1,11 @@
 package net.cr24.primeval.world.gen.trunker;
 
-import net.cr24.primeval.block.TrunkBlock;
+import net.cr24.primeval.block.plant.TrunkBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.LeavesBlock;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 
 import java.util.LinkedList;

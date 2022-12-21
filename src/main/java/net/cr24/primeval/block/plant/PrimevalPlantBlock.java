@@ -1,5 +1,6 @@
-package net.cr24.primeval.block;
+package net.cr24.primeval.block.plant;
 
+import net.cr24.primeval.block.PrimevalBlockTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.PlantBlock;
@@ -12,10 +13,9 @@ import net.minecraft.world.BlockView;
 
 public class PrimevalPlantBlock extends PlantBlock {
 
-    public static final IntProperty AGE = Properties.AGE_3;
     protected static final VoxelShape SHAPE = Block.createCuboidShape(2.0, 0.0, 2.0, 14.0, 12.0, 14.0);
 
-    protected PrimevalPlantBlock(Settings settings) {
+    public PrimevalPlantBlock(Settings settings) {
         super(settings);
     }
 

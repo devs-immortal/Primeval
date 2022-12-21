@@ -2,18 +2,14 @@ package net.cr24.primeval.item;
 
 import net.cr24.primeval.PrimevalMain;
 import net.cr24.primeval.block.PrimevalBlocks;
+import net.cr24.primeval.block.PrimevalFarmlandBlockFertilizerType;
 import net.cr24.primeval.fluid.PrimevalFluidUtil;
-import net.cr24.primeval.fluid.PrimevalFluids;
+import net.cr24.primeval.item.tool.*;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
-import net.fabricmc.fabric.mixin.client.indigo.renderer.MixinItemRenderer;
-import net.minecraft.block.Blocks;
-import net.minecraft.client.item.UnclampedModelPredicateProvider;
-import net.minecraft.entity.decoration.LeashKnotEntity;
 import net.minecraft.item.*;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
@@ -58,7 +54,7 @@ public class PrimevalItems {
     public static final Item STONE_BRICK = registerItem("stone_brick", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
     public static final Item ASHES = registerItem("ashes", new WeightedItem(GROUP_ITEMS(), Weight.VERY_LIGHT, Size.SMALL));
     public static final Item BONE = registerItem("bone", new WeightedItem(GROUP_ITEMS(), Weight.VERY_LIGHT, Size.SMALL));
-    public static final Item BONEMEAL = registerItem("bonemeal", new WeightedItem(GROUP_ITEMS(), Weight.VERY_LIGHT, Size.SMALL));
+    public static final Item BONEMEAL = registerItem("bonemeal", new FertilizerItem(GROUP_ITEMS(), Weight.VERY_LIGHT, Size.SMALL, 4, PrimevalFarmlandBlockFertilizerType.BONEMEAL));
     public static final Item ANIMAL_FAT = registerItem("animal_fat", new WeightedItem(GROUP_ITEMS(), Weight.VERY_LIGHT, Size.SMALL));
     public static final Item GUNPOWDER = registerItem("gunpowder", new WeightedItem(GROUP_ITEMS(), Weight.VERY_LIGHT, Size.SMALL));
 
@@ -81,9 +77,10 @@ public class PrimevalItems {
     // Edible Items
     public static final Item PORKCHOP = registerItem("porkchop", new WeightedItem(new Item.Settings().group(PRIMEVAL_FOODS).food(PrimevalFoodComponents.PORKCHOP), Weight.NORMAL, Size.MEDIUM));
     public static final Item COOKED_PORKCHOP = registerItem("cooked_porkchop", new WeightedItem(new Item.Settings().group(PRIMEVAL_FOODS).food(PrimevalFoodComponents.COOKED_PORKCHOP), Weight.NORMAL, Size.MEDIUM));
-    public static final Item CARROT = registerItem("carrot", new WeightedItem(new Item.Settings().group(PRIMEVAL_FOODS).food(PrimevalFoodComponents.CARROT), Weight.LIGHT, Size.SMALL));
     public static final Item ROTTEN_FLESH = registerItem("rotten_flesh", new WeightedItem(new Item.Settings().group(PRIMEVAL_FOODS).food(PrimevalFoodComponents.ROTTEN_FLESH), Weight.NORMAL, Size.MEDIUM));
     public static final Item SPIDER_EYE = registerItem("spider_eye", new WeightedItem(new Item.Settings().group(PRIMEVAL_FOODS).food(PrimevalFoodComponents.SPIDER_EYE), Weight.LIGHT, Size.SMALL));
+
+    public static final Item CARROT = registerItem("carrot", new WeightedBlockItem(CARROT_CROP, new Item.Settings().group(PRIMEVAL_FOODS).food(PrimevalFoodComponents.CARROT), Weight.LIGHT, Size.SMALL));
 
     // Ore Items
     public static final Item RAW_COPPER_MALACHITE_SMALL = registerItem("raw_copper_malachite_small", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.SMALL));

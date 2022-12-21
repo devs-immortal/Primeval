@@ -1,10 +1,11 @@
-package net.cr24.primeval.item;
+package net.cr24.primeval.item.tool;
 
 import net.cr24.primeval.block.PrimevalBlockTags;
 import net.cr24.primeval.block.PrimevalBlocks;
 import net.cr24.primeval.block.entity.PrimevalCampfireBlockEntity;
 import net.cr24.primeval.block.functional.PrimevalCampfireBlock;
 import net.cr24.primeval.block.functional.TimedTorchBlock;
+import net.cr24.primeval.item.*;
 import net.cr24.primeval.util.PrimevalUtil;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.AbstractFireBlock;

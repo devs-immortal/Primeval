@@ -173,9 +173,9 @@
     
     "item.primeval.porkchop": "Raw Porkchop",
     "item.primeval.cooked_porkchop": "Cooked Porkchop",
-    "item.primeval.carrot": "Carrot",
     "item.primeval.rotten_flesh": "Rotten Flesh",
     "item.primeval.spider_eye": "Spider Eye",
+    "block.primeval.crop_carrot": "Carrot",
     
     "item.primeval.raw_copper_native_small": "Small Raw Native Copper",
     "item.primeval.raw_copper_native_medium": "Medium Raw Native Copper",

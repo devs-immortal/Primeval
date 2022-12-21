@@ -1,5 +1,6 @@
-package net.cr24.primeval.block;
+package net.cr24.primeval.block.plant;
 
+import net.cr24.primeval.block.PrimevalBlockTags;
 import net.minecraft.block.*;
 import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.server.world.ServerWorld;
@@ -20,7 +21,7 @@ public class GrowingGrassBlock extends Block {
     public static final BooleanProperty GROWING;
     protected static final VoxelShape[] SHAPES;
 
-    protected GrowingGrassBlock(Settings settings) {
+    public GrowingGrassBlock(Settings settings) {
         super(settings);
         this.setDefaultState(this.getDefaultState().with(GROWTH_STATE, 0).with(GROWING, true));
     }

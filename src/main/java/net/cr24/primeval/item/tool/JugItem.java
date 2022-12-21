@@ -1,5 +1,8 @@
-package net.cr24.primeval.item;
+package net.cr24.primeval.item.tool;
 
+import net.cr24.primeval.item.IWeightedItem;
+import net.cr24.primeval.item.Size;
+import net.cr24.primeval.item.Weight;
 import net.minecraft.item.Item;
 
 public class JugItem extends Item implements IWeightedItem {

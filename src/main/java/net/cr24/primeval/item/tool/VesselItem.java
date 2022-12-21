@@ -1,8 +1,12 @@
-package net.cr24.primeval.item;
+package net.cr24.primeval.item.tool;
 
 import net.cr24.primeval.fluid.FluidInventory;
 import net.cr24.primeval.fluid.PrimevalFluidUtil;
 import net.cr24.primeval.fluid.PrimevalFluids;
+import net.cr24.primeval.item.ClayMoldItem;
+import net.cr24.primeval.item.IWeightedItem;
+import net.cr24.primeval.item.Size;
+import net.cr24.primeval.item.Weight;
 import net.cr24.primeval.recipe.AlloyingRecipe;
 import net.cr24.primeval.recipe.MeltingRecipe;
 import net.cr24.primeval.recipe.PitKilnFiringRecipe;

@@ -3,6 +3,7 @@ package net.cr24.primeval.block;
 import net.cr24.primeval.PrimevalMain;
 import net.cr24.primeval.block.entity.*;
 import net.cr24.primeval.block.functional.*;
+import net.cr24.primeval.block.plant.*;
 import net.cr24.primeval.fluid.PrimevalFluids;
 import net.cr24.primeval.item.Size;
 import net.cr24.primeval.item.Weight;
@@ -38,7 +39,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 import static net.cr24.primeval.item.PrimevalItems.PRIMEVAL_BLOCKS;
-import static net.cr24.primeval.item.PrimevalHoeItem.hoeables;
+import static net.cr24.primeval.item.tool.PrimevalHoeItem.hoeables;
 
 @SuppressWarnings("unused")
 public class PrimevalBlocks {
@@ -50,6 +51,7 @@ public class PrimevalBlocks {
     private static FabricBlockSettings SETTINGS_SAND() { return FabricBlockSettings.of(Material.AGGREGATE, MapColor.PALE_YELLOW).strength(1.8f, 2.0f).sounds(BlockSoundGroup.SAND);}
     private static FabricBlockSettings SETTINGS_STONE() { return FabricBlockSettings.of(Material.STONE, MapColor.DEEPSLATE_GRAY).strength(4.5f, 6.0f).requiresTool();}
     private static FabricBlockSettings SETTINGS_PLANT() { return FabricBlockSettings.of(Material.REPLACEABLE_PLANT, MapColor.GREEN).strength(0.05f, 0f).sounds(BlockSoundGroup.GRASS).noCollision();}
+    private static FabricBlockSettings SETTINGS_CROP() { return FabricBlockSettings.of(Material.PLANT, MapColor.GREEN).strength(0.05f, 0f).sounds(BlockSoundGroup.GRASS).noCollision().ticksRandomly();}
     private static FabricBlockSettings SETTINGS_LOG() { return FabricBlockSettings.of(Material.WOOD, MapColor.BROWN).strength(5.0f, 6.0f).sounds(BlockSoundGroup.WOOD).requiresTool();}
     private static FabricBlockSettings SETTINGS_TRUNK() { return FabricBlockSettings.of(Material.WOOD, MapColor.BROWN).strength(8.0f, 8.0f).sounds(BlockSoundGroup.WOOD).requiresTool();}
     private static FabricBlockSettings SETTINGS_FIRED_CLAY() { return FabricBlockSettings.of(Material.STONE, MapColor.ORANGE).strength(4.0f, 6.0f).sounds(BlockSoundGroup.STONE).requiresTool();}
@@ -136,6 +138,9 @@ public class PrimevalBlocks {
     public static final Block ROPE = registerBlock("rope", new ChainBlock(FabricBlockSettings.of(Material.PLANT).strength(0.2F).sounds(BlockSoundGroup.GRASS)), Weight.LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
     public static final Block ROPE_LADDER = registerBlock("rope_ladder", new SuspendedLadderBlock(FabricBlockSettings.of(Material.WOOD, MapColor.OAK_TAN).strength(0.3F).sounds(BlockSoundGroup.WOOD).nonOpaque()), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
 
+    // Crops
+    public static final Block CARROT_CROP = registerBlockWithoutItem("crop_carrot", new PrimevalCropBlock(SETTINGS_CROP()));
+
     // Technical Blocks or Blocks with other BlockItems than themselves
     public static final Block STRAW_PILE = registerBlockWithoutItem("straw", new StrawLayeredBlock(FabricBlockSettings.of(Material.PLANT).strength(0.5F).sounds(BlockSoundGroup.GRASS)));
     public static final Block ASH_PILE = registerBlockWithoutItem("ash_pile", new AshPileBlock(FabricBlockSettings.of(Material.AGGREGATE).strength(0.5F).sounds(BlockSoundGroup.SAND)));
@@ -200,6 +205,8 @@ public class PrimevalBlocks {
                 POPPY, DANDELION, OXEYE_DAISY,
                 WILD_CARROTS,
                 MOSS,
+                /* Crop */
+                CARROT_CROP,
                 /* Tree */
                 OAK_SAPLING,
                 OAK_LEAVES,

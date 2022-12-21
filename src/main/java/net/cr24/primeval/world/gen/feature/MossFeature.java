@@ -1,9 +1,8 @@
 package net.cr24.primeval.world.gen.feature;
 
-import com.google.common.collect.Lists;
 import com.mojang.serialization.Codec;
 import net.cr24.primeval.block.PrimevalBlocks;
-import net.cr24.primeval.block.SpreadingMossBlock;
+import net.cr24.primeval.block.plant.SpreadingMossBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -15,10 +14,7 @@ import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.MultifaceGrowthFeatureConfig;
 import net.minecraft.world.gen.feature.util.FeatureContext;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class MossFeature extends Feature<MultifaceGrowthFeatureConfig> {
     public MossFeature(Codec<MultifaceGrowthFeatureConfig> configCodec) {

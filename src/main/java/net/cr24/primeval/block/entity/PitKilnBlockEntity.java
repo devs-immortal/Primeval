@@ -1,7 +1,7 @@
 package net.cr24.primeval.block.entity;
 
 import net.cr24.primeval.block.PrimevalBlocks;
-import net.cr24.primeval.item.VesselItem;
+import net.cr24.primeval.item.tool.VesselItem;
 import net.cr24.primeval.recipe.PitKilnFiringRecipe;
 import net.cr24.primeval.recipe.PrimevalRecipes;
 import net.minecraft.block.BlockState;

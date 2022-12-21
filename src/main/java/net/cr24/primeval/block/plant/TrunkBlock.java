@@ -1,5 +1,6 @@
-package net.cr24.primeval.block;
+package net.cr24.primeval.block.plant;
 
+import net.cr24.primeval.block.PrimevalBlockTags;
 import net.cr24.primeval.world.gen.trunker.AbstractTrunker;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
