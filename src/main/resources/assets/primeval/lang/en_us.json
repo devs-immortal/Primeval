@@ -176,6 +176,12 @@
     "item.primeval.rotten_flesh": "Rotten Flesh",
     "item.primeval.spider_eye": "Spider Eye",
     "block.primeval.crop_carrot": "Carrot",
+    "item.primeval.wheat": "Wheat",
+    "item.primeval.cabbage": "Cabbage",
+    "block.primeval.crop_beans": "Beans",
+    "block.primeval.crop_potato": "Potato",
+    "block.primeval.crop_wheat": "Wheat Seeds",
+    "block.primeval.crop_cabbage": "Cabbage Seeds",
     
     "item.primeval.raw_copper_native_small": "Small Raw Native Copper",
     "item.primeval.raw_copper_native_medium": "Medium Raw Native Copper",

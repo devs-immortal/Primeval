@@ -81,6 +81,13 @@ public class PrimevalItems {
     public static final Item SPIDER_EYE = registerItem("spider_eye", new WeightedItem(new Item.Settings().group(PRIMEVAL_FOODS).food(PrimevalFoodComponents.SPIDER_EYE), Weight.LIGHT, Size.SMALL));
 
     public static final Item CARROT = registerItem("carrot", new WeightedBlockItem(CARROT_CROP, new Item.Settings().group(PRIMEVAL_FOODS).food(PrimevalFoodComponents.CARROT), Weight.LIGHT, Size.SMALL));
+    public static final Item WHEAT = registerItem("wheat", new WeightedItem(new Item.Settings().group(PRIMEVAL_FOODS), Weight.LIGHT, Size.SMALL));
+    public static final Item CABBAGE = registerItem("cabbage", new WeightedItem(new Item.Settings().group(PRIMEVAL_FOODS).food(PrimevalFoodComponents.CABBAGE), Weight.LIGHT, Size.SMALL));
+    public static final Item BEANS = registerItem("beans", new WeightedBlockItem(BEANS_CROP, new Item.Settings().group(PRIMEVAL_FOODS).food(PrimevalFoodComponents.BEANS), Weight.LIGHT, Size.SMALL));
+    public static final Item POTATO = registerItem("potato", new WeightedBlockItem(POTATO_CROP, new Item.Settings().group(PRIMEVAL_FOODS).food(PrimevalFoodComponents.POTATO), Weight.LIGHT, Size.SMALL));
+    // Seeds
+    public static final Item WHEAT_SEEDS = registerItem("wheat_seeds", new WeightedBlockItem(WHEAT_CROP, new Item.Settings().group(PRIMEVAL_FOODS), Weight.LIGHT, Size.SMALL));
+    public static final Item CABBAGE_SEEDS = registerItem("cabbage_seeds", new WeightedBlockItem(CABBAGE_CROP, new Item.Settings().group(PRIMEVAL_FOODS), Weight.LIGHT, Size.SMALL));
 
     // Ore Items
     public static final Item RAW_COPPER_MALACHITE_SMALL = registerItem("raw_copper_malachite_small", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.SMALL));

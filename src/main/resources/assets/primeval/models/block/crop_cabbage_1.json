@@ -1,0 +1,6 @@
+{
+  "parent": "primeval:block/cross_crop",
+  "textures": {
+    "crop": "primeval:block/cabbage_stage1"
+  }
+}

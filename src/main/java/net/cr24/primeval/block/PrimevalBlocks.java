@@ -96,7 +96,6 @@ public class PrimevalBlocks {
     public static final Block DANDELION = registerBlock("dandelion", new PrimevalPlantBlock(SETTINGS_PLANT()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
     public static final Block OXEYE_DAISY = registerBlock("oxeye_daisy", new PrimevalPlantBlock(SETTINGS_PLANT()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
 
-    public static final Block WILD_CARROTS = registerBlockWithoutItem("wild_carrots", new PrimevalPlantBlock(SETTINGS_PLANT()));
 
     // Ore blocks
     public static final OreBlockSet COPPER_MALACHITE_ORE = registerOreBlockSet("copper_malachite_ore", SETTINGS_STONE(), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
@@ -105,6 +104,7 @@ public class PrimevalBlocks {
     public static final OreBlockSet ZINC_SPHALERITE_ORE = registerOreBlockSet("zinc_sphalerite_ore", SETTINGS_STONE(), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
     public static final OreBlockSet GOLD_NATIVE_ORE = registerOreBlockSet("gold_native_ore", SETTINGS_STONE(), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
     public static final OreBlockSet IRON_HEMATITE_ORE = registerOreBlockSet("iron_hematite_ore", SETTINGS_STONE(), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
+
 
     // Crafted Blocks
     public static final Block STRAW_BLOCK = registerBlock("straw_block", new PillarBlock(FabricBlockSettings.of(Material.PLANT).strength(0.5F).sounds(BlockSoundGroup.GRASS)), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
@@ -138,8 +138,19 @@ public class PrimevalBlocks {
     public static final Block ROPE = registerBlock("rope", new ChainBlock(FabricBlockSettings.of(Material.PLANT).strength(0.2F).sounds(BlockSoundGroup.GRASS)), Weight.LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
     public static final Block ROPE_LADDER = registerBlock("rope_ladder", new SuspendedLadderBlock(FabricBlockSettings.of(Material.WOOD, MapColor.OAK_TAN).strength(0.3F).sounds(BlockSoundGroup.WOOD).nonOpaque()), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
 
+
     // Crops
-    public static final Block CARROT_CROP = registerBlockWithoutItem("crop_carrot", new PrimevalCropBlock(SETTINGS_CROP()));
+    public static final Block CARROT_CROP = registerBlockWithoutItem("crop_carrot", new PrimevalCropBlock(SETTINGS_CROP(), 3, new double[]{4, 6, 10, 14} ));
+    public static final Block WILD_CARROTS = registerBlockWithoutItem("wild_carrots", new PrimevalPlantBlock(SETTINGS_PLANT()));
+    public static final Block WHEAT_CROP = registerBlockWithoutItem("crop_wheat", new PrimevalCropBlock(SETTINGS_CROP(), 7, new double[]{3, 5, 7, 9, 12, 14, 15, 16} ));
+    public static final Block WILD_WHEAT = registerBlockWithoutItem("wild_wheat", new PrimevalPlantBlock(SETTINGS_PLANT()));
+    public static final Block CABBAGE_CROP = registerBlockWithoutItem("crop_cabbage", new PrimevalCropBlock(SETTINGS_CROP(), 3, new double[]{4, 7, 9, 11} ));
+    public static final Block WILD_CABBAGE = registerBlockWithoutItem("wild_cabbage", new PrimevalPlantBlock(SETTINGS_PLANT()));
+    public static final Block BEANS_CROP = registerBlockWithoutItem("crop_beans", new PrimevalCropBlock(SETTINGS_CROP(), 3, new double[]{5, 8, 11, 14} ));
+    public static final Block WILD_BEANS = registerBlockWithoutItem("wild_beans", new PrimevalPlantBlock(SETTINGS_PLANT()));
+    public static final Block POTATO_CROP = registerBlockWithoutItem("crop_potato", new PrimevalCropBlock(SETTINGS_CROP(), 3, new double[]{5, 8, 11, 16} ));
+    public static final Block WILD_POTATOES = registerBlockWithoutItem("wild_potatoes", new PrimevalPlantBlock(SETTINGS_PLANT()));
+
 
     // Technical Blocks or Blocks with other BlockItems than themselves
     public static final Block STRAW_PILE = registerBlockWithoutItem("straw", new StrawLayeredBlock(FabricBlockSettings.of(Material.PLANT).strength(0.5F).sounds(BlockSoundGroup.GRASS)));
@@ -203,10 +214,13 @@ public class PrimevalBlocks {
                 GRASSY_DIRT,
                 GRASS, BUSH, SHRUB,
                 POPPY, DANDELION, OXEYE_DAISY,
-                WILD_CARROTS,
                 MOSS,
                 /* Crop */
-                CARROT_CROP,
+                CARROT_CROP, WILD_CARROTS,
+                WHEAT_CROP, WILD_WHEAT,
+                CABBAGE_CROP, WILD_CABBAGE,
+                BEANS_CROP, WILD_BEANS,
+                POTATO_CROP, WILD_POTATOES,
                 /* Tree */
                 OAK_SAPLING,
                 OAK_LEAVES,

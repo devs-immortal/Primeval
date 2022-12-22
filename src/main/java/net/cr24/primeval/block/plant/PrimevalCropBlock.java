@@ -23,13 +23,12 @@ public class PrimevalCropBlock extends PlantBlock {
     private final int maxAge;
     private final VoxelShape[] heights;
 
-    public PrimevalCropBlock(Settings settings) {
+    public PrimevalCropBlock(Settings settings, int maxAge, double[] heightArray) {
         super(settings);
-        maxAge = 3;
-        double[] Theights = new double[]{4, 6, 10, 14};
-        heights = new VoxelShape[Theights.length];
-        for (int i = 0; i < Theights.length; i++) {
-            heights[i] = getShapeWithHeight(Theights[i]);
+        this.maxAge = maxAge;
+        heights = new VoxelShape[heightArray.length];
+        for (int i = 0; i < heightArray.length; i++) {
+            heights[i] = getShapeWithHeight(heightArray[i]);
         }
         if (heights.length != maxAge+1) {
             System.err.println("Crop Block age and height array does not match: "+ maxAge + " " + Arrays.toString(heights));

@@ -50,7 +50,7 @@ public class FertilizerItem extends WeightedItem {
                 ItemStack stack = playerEntity.getStackInHand(hand);
                 stack.decrement(1);
             }
-            world.playSound(playerEntity, pos, SoundEvents.BLOCK_COMPOSTER_READY, SoundCategory.BLOCKS, 1.0f, 1.0f);
+            world.playSound(playerEntity, pos, SoundEvents.BLOCK_COMPOSTER_READY, SoundCategory.BLOCKS, 1.0f, 1.4f);
             world.setBlockState(farmlandPos, farmlandState.with(PrimevalFarmlandBlock.FERTILIZED, fertilizeAmount).with(PrimevalFarmlandBlock.TYPE, type));
             return ActionResult.SUCCESS;
         }

@@ -13,6 +13,12 @@ public class PrimevalFoodComponents {
             .meat().build();
     public static final FoodComponent CARROT = createFoodComponent(4, 1f)
             .build();
+    public static final FoodComponent CABBAGE = createFoodComponent(2, 4f)
+            .build();
+    public static final FoodComponent BEANS = createFoodComponent(1, 2f)
+            .build();
+    public static final FoodComponent POTATO = createFoodComponent(3, 0f)
+            .build();
     public static final FoodComponent ROTTEN_FLESH = createFoodComponent(4, 0.1f)
             .statusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 300, 1), 0.8F)
             .statusEffect(new StatusEffectInstance(StatusEffects.POISON, 100, 0), 0.8F)
