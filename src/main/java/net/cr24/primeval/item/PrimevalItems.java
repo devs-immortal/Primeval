@@ -126,9 +126,11 @@ public class PrimevalItems {
     public static final Item[] BRONZE_TOOL_PARTS = registerToolPartSet("bronze", GROUP_TOOLS(), Weight.NORMAL, Size.MEDIUM);
 
     // Other
-    public static final Item QUERN_WHEEL = registerItem("quern_wheel", new WeightedItem(GROUP_TOOLS().maxDamage(99), Weight.HEAVY, Size.MEDIUM, true));
+    public static final Item WOODEN_BUCKET = registerItem("wooden_bucket", new WoodenBucketItem(GROUP_TOOLS(), Weight.NORMAL, Size.MEDIUM, 4));
+    public static final Item WATER_WOODEN_BUCKET = registerItem("water_wooden_bucket", new WaterWoodenBucketItem(GROUP_TOOLS(), Weight.HEAVY, Size.MEDIUM));
     //public static final Item FIRED_CLAY_JUG = registerItem("fired_clay_jug", new JugItem(GROUP_TOOLS().maxDamage(0), Weight.NORMAL, Size.LARGE)); // TODO: add
     public static final Item FIRED_CLAY_VESSEL = registerItem("fired_clay_vessel", new VesselItem(GROUP_TOOLS().maxCount(1), Weight.NORMAL, Size.LARGE));
+    public static final Item QUERN_WHEEL = registerItem("quern_wheel", new WeightedItem(GROUP_TOOLS().maxDamage(99), Weight.HEAVY, Size.MEDIUM, true));
 
     // Metal Items
     // Primary

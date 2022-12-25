@@ -295,10 +295,11 @@
     "item.primeval.bronze_sword": "Bronze Shortsword",
     "item.primeval.bronze_hoe": "Bronze Hoe",
     
-    "item.primeval.quern_wheel": "Quern Wheel",
-    
+    "item.primeval.wooden_bucket": "Wooden Bucket",
+    "item.primeval.water_wooden_bucket": "Wooden Bucket of Water",
     "item.primeval.fired_clay_jug": "Fired Clay Jug",
     "item.primeval.fired_clay_vessel": "Fired Clay Vessel",
+    "item.primeval.quern_wheel": "Quern Wheel",
     
     
     "container.primeval.crate": "Crate",
