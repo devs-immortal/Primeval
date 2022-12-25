@@ -19,8 +19,17 @@ public class PrimevalVillagerTrades {
         TradeOfferHelper.registerWanderingTraderOffers(
                 1,
                 factories -> factories.add(new PrimevalTradeFactory(
-                        new ItemStack(PrimevalItems.COPPER_COIN, 1),
-                        new ItemStack(PrimevalItems.CARROT, 2),
+                        new ItemStack(PrimevalItems.COPPER_COIN, 8),
+                        new ItemStack(PrimevalItems.CABBAGE_SEEDS, 1),
+                        12, 2
+                ))
+        );
+
+        TradeOfferHelper.registerWanderingTraderOffers(
+                1,
+                factories -> factories.add(new PrimevalTradeFactory(
+                        new ItemStack(PrimevalItems.COPPER_COIN, 8),
+                        new ItemStack(PrimevalItems.WHEAT_SEEDS, 1),
                         12, 2
                 ))
         );
@@ -124,6 +133,15 @@ public class PrimevalVillagerTrades {
                 factories -> factories.add(new PrimevalTradeFactory(
                         new ItemStack(PrimevalItems.COPPER_COIN, 4),
                         new ItemStack(PrimevalBlocks.BIRCH_SAPLING, 1),
+                        12, 2
+                ))
+        );
+
+        TradeOfferHelper.registerWanderingTraderOffers(
+                2,
+                factories -> factories.add(new PrimevalTradeFactory(
+                        new ItemStack(PrimevalItems.COPPER_COIN, 4),
+                        new ItemStack(PrimevalBlocks.SPRUCE_SAPLING, 1),
                         12, 2
                 ))
         );
