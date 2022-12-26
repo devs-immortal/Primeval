@@ -60,11 +60,12 @@ public class PrimevalBlocks {
     // Terrain blocks
     public static final Block DIRT = registerBlock("dirt", new SemiSupportedBlock(SETTINGS_SOIL(), 0.2f), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block COARSE_DIRT = registerBlock("coarse_dirt", new SemiSupportedBlock(SETTINGS_SOIL(), 0.2f), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block CLAY_BLOCK = registerBlock("block_of_clay", new SemiSupportedBlock(SETTINGS_SOIL(), 0.3f), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block MUD = registerBlock("mud", new MudBlock(SETTINGS_SOIL().velocityMultiplier(0.4f), 0.25f), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
-    public static final Block GRASSY_DIRT = registerBlock("grassy_dirt", new GrassyDirtBlock(SETTINGS_GRASSY().ticksRandomly(), 0.35f), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block GRASSY_DIRT = registerBlock("grassy_dirt", new GrassySoilBlock(SETTINGS_GRASSY().ticksRandomly(), 0.35f, PrimevalBlocks.DIRT, new Block[]{DIRT}), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block GRASSY_CLAY = registerBlock("grassy_clay", new GrassySoilBlock(SETTINGS_GRASSY().ticksRandomly(), 0.45f, PrimevalBlocks.CLAY_BLOCK, new Block[]{CLAY_BLOCK}), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block SAND = registerBlock("sand", new SemiSupportedBlock(SETTINGS_SAND(), 0.1f), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block GRAVEL = registerBlock("gravel", new SemiSupportedBlock(SETTINGS_SAND(), 0.1f), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
-    public static final Block CLAY_BLOCK = registerBlock("block_of_clay", new SemiSupportedBlock(SETTINGS_SOIL(), 0.3f), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block COBBLESTONE = registerBlock("cobblestone", new SemiSupportedBlock(SETTINGS_STONE().strength(5.0f, 6.0f), 0.1f), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block STONE = registerBlock("stone", new CascadingBlock(SETTINGS_STONE(), 0.35f, COBBLESTONE), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block DIRT_FARMLAND = registerBlockWithoutItem("farmland_dirt", new PrimevalFarmlandBlock(SETTINGS_SOIL().ticksRandomly(), 0.2f, DIRT, new Block[]{DIRT, GRASSY_DIRT}));
@@ -121,6 +122,7 @@ public class PrimevalBlocks {
     public static final BlockSet CRUDE_BRICKS = registerBlockSet("crude_bricks", SETTINGS_STONE(), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final BlockSet STONE_BRICKS = registerBlockSet("stone_bricks", SETTINGS_STONE(), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final BlockSet SMOOTH_STONE = registerBlockSet("smooth_stone", SETTINGS_STONE(), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final BlockSet STONE_PAVER = registerBlockSet("stone_paver", SETTINGS_STONE(), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block DAUB = registerBlock("daub", new Block(SETTINGS_REFINED_WOOD()), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block FRAMED_DAUB = registerBlock("framed_daub", new Block(SETTINGS_REFINED_WOOD()), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block FRAMED_PILLAR_DAUB = registerBlock("framed_pillar_daub", new PillarBlock(SETTINGS_REFINED_WOOD()), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
@@ -211,7 +213,7 @@ public class PrimevalBlocks {
     public static void initClient() {
         // Render Layers
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
-                GRASSY_DIRT,
+                GRASSY_DIRT, GRASSY_CLAY,
                 GRASS, BUSH, SHRUB,
                 POPPY, DANDELION, OXEYE_DAISY,
                 MOSS,
@@ -242,6 +244,7 @@ public class PrimevalBlocks {
         // Color registry on items
         ColorProviderRegistry.ITEM.register((stack, tintIndex) -> 0x91BD59,
                 GRASSY_DIRT.asItem(),
+                GRASSY_CLAY.asItem(),
                 GRASS.asItem(),
                 BUSH.asItem());
 
@@ -316,7 +319,6 @@ public class PrimevalBlocks {
     private static void registerHoeables() {
         hoeables.put(COARSE_DIRT, DIRT);
     }
-
 
     private static Block registerBlockWithoutItem(String id, Block block) {
         return Registry.register(Registry.BLOCK, PrimevalMain.getId(id), block);

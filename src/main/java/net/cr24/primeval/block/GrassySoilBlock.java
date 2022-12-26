@@ -6,7 +6,6 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
-import net.minecraft.state.property.Property;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
@@ -15,17 +14,26 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.chunk.light.ChunkLightProvider;
-public class GrassyDirtBlock extends SemiSupportedBlock {
+
+import java.util.HashMap;
+
+public class GrassySoilBlock extends SemiSupportedBlock {
     public static final BooleanProperty SNOWY;
 
-    public GrassyDirtBlock(Settings settings, float percentPerSide) {
-        super(settings, percentPerSide, PrimevalBlocks.DIRT);
+    // Set of source -> grassy version
+    public static HashMap<Block, Block> grass_spreadable = new HashMap<>();
+
+    public GrassySoilBlock(Settings settings, float percentPerSide, Block fallBlock, Block[] sourceBlocks) {
+        super(settings, percentPerSide, fallBlock);
+        for (Block b : sourceBlocks) {
+            grass_spreadable.put(b, this);
+        }
     }
 
     private static boolean canSurvive(BlockState state, WorldView world, BlockPos pos) {
         BlockPos blockPos = pos.up();
         BlockState blockState = world.getBlockState(blockPos);
-        if (blockState.isOf(Blocks.SNOW) && (Integer)blockState.get(SnowBlock.LAYERS) == 1) {
+        if (blockState.isOf(Blocks.SNOW) && blockState.get(SnowBlock.LAYERS) == 1) {
             return true;
         } else if (blockState.getFluidState().getLevel() == 8) {
             return false;
@@ -42,15 +50,16 @@ public class GrassyDirtBlock extends SemiSupportedBlock {
 
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (!canSurvive(state, world, pos)) {
-            world.setBlockState(pos, PrimevalBlocks.DIRT.getDefaultState());
+            world.setBlockState(pos, this.fallBlock.getDefaultState());
         } else {
             if (world.getLightLevel(pos.up()) >= 9) {
                 BlockState blockState = this.getDefaultState();
 
                 for(int i = 0; i < 4; ++i) {
                     BlockPos blockPos = pos.add(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1);
-                    if (world.getBlockState(blockPos).isOf(PrimevalBlocks.DIRT) && canSpread(blockState, world, blockPos)) {
-                        world.setBlockState(blockPos, blockState.with(SNOWY, world.getBlockState(blockPos.up()).isOf(Blocks.SNOW)));
+                    Block block = world.getBlockState(blockPos).getBlock();
+                    if (grass_spreadable.containsKey(block) && canSpread(blockState, world, blockPos)) {
+                        world.setBlockState(blockPos, grass_spreadable.get(block).getDefaultState().with(SNOWY, world.getBlockState(blockPos.up()).isOf(Blocks.SNOW)));
                         if (random.nextInt(3) == 0 && world.getBlockState(pos.up()).isAir()) {
                             world.setBlockState(pos.up(), PrimevalBlocks.GRASS.getDefaultState());
                         }
@@ -62,12 +71,12 @@ public class GrassyDirtBlock extends SemiSupportedBlock {
     }
 
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
-        return direction == Direction.UP ? (BlockState)state.with(SNOWY, isSnow(neighborState)) : super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
+        return direction == Direction.UP ? state.with(SNOWY, isSnow(neighborState)) : super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
     }
 
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         BlockState blockState = ctx.getWorld().getBlockState(ctx.getBlockPos().up());
-        return (BlockState)this.getDefaultState().with(SNOWY, isSnow(blockState));
+        return this.getDefaultState().with(SNOWY, isSnow(blockState));
     }
 
     private static boolean isSnow(BlockState state) {
@@ -75,7 +84,7 @@ public class GrassyDirtBlock extends SemiSupportedBlock {
     }
 
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(new Property[]{SNOWY});
+        builder.add(SNOWY);
     }
 
     static {

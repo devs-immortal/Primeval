@@ -1,11 +1,12 @@
 {
     "block.primeval.dirt": "Dirt",
     "block.primeval.coarse_dirt": "Coarse Dirt",
+    "block.primeval.block_of_clay": "Block of Clay",
     "block.primeval.mud": "Mud",
     "block.primeval.grassy_dirt": "Grassy Dirt",
+    "block.primeval.grassy_clay": "Grassy Clay",
     "block.primeval.sand": "Sand",
     "block.primeval.gravel": "Gravel",
-    "block.primeval.block_of_clay": "Block of Clay",
     "block.primeval.cobblestone": "Cobblestone",
     "block.primeval.stone": "Stone",
     
@@ -72,6 +73,9 @@
     "block.primeval.stone_bricks": "Stone Bricks",
     "block.primeval.stone_bricks_stairs": "Stone Brick Stairs",
     "block.primeval.stone_bricks_slab": "Stone Brick Slab",
+    "block.primeval.stone_paver": "Stone Paver",
+    "block.primeval.stone_paver_stairs": "Stone Paver Stairs",
+    "block.primeval.stone_paver_slab": "Stone Paver Slab",
     "block.primeval.smooth_stone": "Smooth Stone",
     "block.primeval.smooth_stone_stairs": "Smooth Stone Stairs",
     "block.primeval.smooth_stone_slab": "Smooth Stone Slab",

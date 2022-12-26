@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "primeval:stone_paver"
+    }
+  },
+  "result": {
+    "item": "primeval:stone_paver_stairs",
+    "count": 8
+  }
+}
