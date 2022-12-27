@@ -1,0 +1,18 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "primeval:block/fossil_0"
+      },
+      {
+        "model": "primeval:block/fossil_1"
+      },
+      {
+        "model": "primeval:block/fossil_2"
+      },
+      {
+        "model": "primeval:block/fossil_3"
+      }
+    ]
+  }
+}

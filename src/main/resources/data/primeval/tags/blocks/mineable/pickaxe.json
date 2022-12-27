@@ -3,6 +3,7 @@
   "values": [
     "primeval:cobblestone",
     "primeval:stone",
+    "primeval:fossil",
     "primeval:terracotta",
     "primeval:fired_clay_shingles",
     "primeval:fired_clay_shingles_stairs",
@@ -22,6 +23,9 @@
     "primeval:stone_bricks",
     "primeval:stone_bricks_stairs",
     "primeval:stone_bricks_slab",
+    "primeval:stone_paver",
+    "primeval:stone_paver_stairs",
+    "primeval:stone_paver_slab",
     "primeval:smooth_stone",
     "primeval:smooth_stone_stairs",
     "primeval:smooth_stone_slab",
