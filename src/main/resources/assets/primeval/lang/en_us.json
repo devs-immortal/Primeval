@@ -165,6 +165,7 @@
     "item.primeval.bonemeal": "Bonemeal",
     "item.primeval.animal_fat": "Animal Fat",
     "item.primeval.gunpowder": "Gunpowder",
+    "item.primeval.charred_bone": "Charred Bone",
     "item.primeval.sandy_clay_ball": "Sandy Clay Ball",
     "item.primeval.sandy_clay_brick": "Sandy Clay Brick",
     "item.primeval.dried_brick": "Fired Sandy Clay Brick",
@@ -178,6 +179,8 @@
     "item.primeval.clay_tile": "Clay Tile",
     "item.primeval.fired_clay_tile": "Fired Clay Tile",
     "item.primeval.clay_jug": "Clay Jug",
+    "item.primeval.fired_clay_jug": "Fired Clay Jug",
+    "item.primeval.fired_clay_jug_filled": "Clay Jug of Water",
     "item.primeval.clay_vessel": "Clay Vessel",
     
     "item.primeval.porkchop": "Raw Porkchop",

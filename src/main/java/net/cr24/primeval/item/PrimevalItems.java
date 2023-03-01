@@ -40,8 +40,8 @@ public class PrimevalItems {
             .build();
     public static final ItemGroup PRIMEVAL_FOODS = FabricItemGroupBuilder.build(PrimevalMain.getId("foods"), () -> new ItemStack(PrimevalItems.COOKED_PORKCHOP));
 
-    private static final Item.Settings GROUP_ITEMS() { return new Item.Settings().group(PRIMEVAL_ITEMS);}
-    private static final Item.Settings GROUP_TOOLS() { return new Item.Settings().group(PRIMEVAL_TOOLS);}
+    private static Item.Settings GROUP_ITEMS() { return new Item.Settings().group(PRIMEVAL_ITEMS);}
+    private static Item.Settings GROUP_TOOLS() { return new Item.Settings().group(PRIMEVAL_TOOLS);}
 
 
     /* Items */
@@ -57,6 +57,7 @@ public class PrimevalItems {
     public static final Item BONEMEAL = registerItem("bonemeal", new FertilizerItem(GROUP_ITEMS(), Weight.VERY_LIGHT, Size.SMALL, 4, PrimevalFarmlandBlockFertilizerType.BONEMEAL));
     public static final Item ANIMAL_FAT = registerItem("animal_fat", new WeightedItem(GROUP_ITEMS(), Weight.VERY_LIGHT, Size.SMALL));
     public static final Item GUNPOWDER = registerItem("gunpowder", new WeightedItem(GROUP_ITEMS(), Weight.VERY_LIGHT, Size.SMALL));
+    public static final Item CHARRED_BONE = registerItem("charred_bone", new WeightedItem(GROUP_ITEMS(), Weight.VERY_LIGHT, Size.SMALL));
 
     public static final Item SANDY_CLAY_BALL = registerItem("sandy_clay_ball", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.SMALL));
     public static final Item SANDY_CLAY_BRICK = registerItem("sandy_clay_brick", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.SMALL));
@@ -71,7 +72,7 @@ public class PrimevalItems {
     public static final Item FIRED_CLAY_BOWL = registerItem("fired_clay_bowl", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.SMALL));
     public static final Item CLAY_TILE = registerItem("clay_tile", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.SMALL));
     public static final Item FIRED_CLAY_TILE = registerItem("fired_clay_tile", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.SMALL));
-    //public static final Item CLAY_JUG = registerItem("clay_jug", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM)); // TODO: add
+    public static final Item CLAY_JUG = registerItem("clay_jug", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
     public static final Item CLAY_VESSEL = registerItem("clay_vessel", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
 
     // Edible Items
@@ -132,7 +133,8 @@ public class PrimevalItems {
     // Other
     public static final Item WOODEN_BUCKET = registerItem("wooden_bucket", new WoodenBucketItem(GROUP_TOOLS(), Weight.NORMAL, Size.MEDIUM, 4));
     public static final Item WATER_WOODEN_BUCKET = registerItem("water_wooden_bucket", new WaterWoodenBucketItem(GROUP_TOOLS(), Weight.HEAVY, Size.MEDIUM));
-    //public static final Item FIRED_CLAY_JUG = registerItem("fired_clay_jug", new JugItem(GROUP_TOOLS().maxDamage(0), Weight.NORMAL, Size.LARGE)); // TODO: add
+    public static final Item FIRED_CLAY_JUG = registerItem("fired_clay_jug", new EmptyJugItem(GROUP_TOOLS(), Weight.NORMAL, Size.LARGE));
+    public static final Item FIRED_CLAY_WATER_JUG = registerItem("fired_clay_jug_filled", new JugItem(GROUP_TOOLS(), Weight.NORMAL, Size.LARGE));
     public static final Item FIRED_CLAY_VESSEL = registerItem("fired_clay_vessel", new VesselItem(GROUP_TOOLS().maxCount(1), Weight.NORMAL, Size.LARGE));
     public static final Item QUERN_WHEEL = registerItem("quern_wheel", new WeightedItem(GROUP_TOOLS().maxDamage(99), Weight.HEAVY, Size.MEDIUM, true));
 

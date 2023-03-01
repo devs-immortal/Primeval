@@ -147,11 +147,12 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
     }
 
     public static void tick(World world, BlockPos pos, BlockState state, PrimevalCampfireBlockEntity blockEntity) {
+        // If client, just make particles
         if (world.isClient) {
             clientParticles(world, pos, state, blockEntity);
             return;
         }
-        boolean bl = false;
+        boolean bl = false; // Marked true if something needs to be updated- ie item has cooked
         if (blockEntity.lit && blockEntity.fuel > 0) {
             blockEntity.fuel--;
             blockEntity.burnTime++;

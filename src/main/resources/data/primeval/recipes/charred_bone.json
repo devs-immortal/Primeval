@@ -1,0 +1,10 @@
+{
+  "type": "primeval:open_fire",
+  "input": {
+    "item": "primeval:bone"
+  },
+  "result": {
+    "item": "primeval:charred_bone"
+  },
+  "cook_time": 300
+}
