@@ -25,20 +25,20 @@ public class PrimevalWorld {
     public static final BiomeEffects UNIVERSAL_EFFECTS = new BiomeEffects.Builder() .skyColor(7907327).fogColor(12638463).grassColor(9551193).waterColor(5404090).waterFogColor(329011).build();
 
     public static final List<RegistryEntry<PlacedFeature>> UNDERGROUND_FEATURES_NO_ZINC = List.of(
-            NATIVE_COPPER_ORE_CLUSTER, MALACHITE_COPPER_ORE_CLUSTER, CASSITERITE_TIN_ORE_CLUSTER,
-            DIRT_ORE_BLOBS, GRAVEL_ORE_BLOBS
+            NATIVE_COPPER_ORE_CLUSTER, MALACHITE_COPPER_ORE_CLUSTER, CASSITERITE_TIN_ORE_CLUSTER, LAZURITE_ORE_CLUSTER,
+            DIRT_ORE_BLOBS, GRAVEL_ORE_BLOBS, FOSSIL_ORE_BLOBS
     );
     public static final List<RegistryEntry<PlacedFeature>> UNDERGROUND_FEATURES_NO_TIN = List.of(
-            NATIVE_COPPER_ORE_CLUSTER, MALACHITE_COPPER_ORE_CLUSTER, SPHALERITE_ZINC_ORE_CLUSTER,
-            DIRT_ORE_BLOBS, GRAVEL_ORE_BLOBS
+            NATIVE_COPPER_ORE_CLUSTER, MALACHITE_COPPER_ORE_CLUSTER, SPHALERITE_ZINC_ORE_CLUSTER, LAZURITE_ORE_CLUSTER,
+            DIRT_ORE_BLOBS, GRAVEL_ORE_BLOBS, FOSSIL_ORE_BLOBS
     );
     public static final List<RegistryEntry<PlacedFeature>> UNDERGROUND_FEATURES_NO_COPPER = List.of(
-            CASSITERITE_TIN_ORE_CLUSTER, SPHALERITE_ZINC_ORE_CLUSTER,
-            DIRT_ORE_BLOBS, GRAVEL_ORE_BLOBS
+            CASSITERITE_TIN_ORE_CLUSTER, SPHALERITE_ZINC_ORE_CLUSTER, LAZURITE_ORE_CLUSTER,
+            DIRT_ORE_BLOBS, GRAVEL_ORE_BLOBS, FOSSIL_ORE_BLOBS
     );
     public static final List<RegistryEntry<PlacedFeature>> UNDERGROUND_FEATURES_ALL = List.of(
-            NATIVE_COPPER_ORE_CLUSTER, MALACHITE_COPPER_ORE_CLUSTER, CASSITERITE_TIN_ORE_CLUSTER, SPHALERITE_ZINC_ORE_CLUSTER,
-            DIRT_ORE_BLOBS, GRAVEL_ORE_BLOBS
+            NATIVE_COPPER_ORE_CLUSTER, MALACHITE_COPPER_ORE_CLUSTER, CASSITERITE_TIN_ORE_CLUSTER, SPHALERITE_ZINC_ORE_CLUSTER, LAZURITE_ORE_CLUSTER,
+            DIRT_ORE_BLOBS, GRAVEL_ORE_BLOBS, FOSSIL_ORE_BLOBS
     );
 
     // INLAND
@@ -50,7 +50,7 @@ public class PrimevalWorld {
                             STICK_ITEM_PATCH, FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
                             NATIVE_COPPER_ITEM_PATCH, MALACHITE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, SPHALERITE_ZINC_ITEM_PATCH,
                             PLAINS_GRASS_PATCH, BUSH_PATCH, SHRUB_PATCH, POPPY_PATCH, DANDELION_PATCH, OXEYE_DAISY_PATCH,
-                            WILD_CARROTS_PATCH
+                            WILD_CARROTS_PATCH, WILD_WHEAT_PATCH
                     )
             )
     ));
@@ -62,7 +62,7 @@ public class PrimevalWorld {
                             STICK_ITEM_PATCH, FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
                             NATIVE_COPPER_ITEM_PATCH, MALACHITE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, CASSITERITE_TIN_ITEM_PATCH,
                             OAK_FOREST_GRASS_PATCH, BUSH_PATCH, POPPY_PATCH,
-                            WILD_CARROTS_PATCH
+                            WILD_BEANS_PATCH, WILD_POTATO_PATCH
                     )
             )
     ));
@@ -73,7 +73,8 @@ public class PrimevalWorld {
                             MOSS_RARE,
                             STICK_ITEM_PATCH, FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
                             NATIVE_COPPER_ITEM_PATCH, MALACHITE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, CASSITERITE_TIN_ITEM_PATCH,
-                            SPARSE_GRASS_PATCH, BUSH_PATCH, SHRUB_PATCH, POPPY_PATCH
+                            SPARSE_GRASS_PATCH, BUSH_PATCH, SHRUB_PATCH, POPPY_PATCH,
+                            WILD_BEANS_PATCH, WILD_POTATO_PATCH
                     )
             )
     ));
@@ -84,7 +85,8 @@ public class PrimevalWorld {
                             MOSS_RARE,
                             STICK_ITEM_PATCH, FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
                             NATIVE_COPPER_ITEM_PATCH, MALACHITE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, CASSITERITE_TIN_ITEM_PATCH,
-                            PLAINS_GRASS_PATCH, DANDELION_PATCH, OXEYE_DAISY_PATCH
+                            PLAINS_GRASS_PATCH, DANDELION_PATCH, OXEYE_DAISY_PATCH,
+                            WILD_CABBAGE_PATCH
                     )
             )
     ));
@@ -95,7 +97,8 @@ public class PrimevalWorld {
                             MOSS_RARE,
                             STICK_ITEM_PATCH, FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
                             NATIVE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, CASSITERITE_TIN_ITEM_PATCH, SPHALERITE_ZINC_ITEM_PATCH,
-                            SPARSE_GRASS_PATCH, BUSH_PATCH, SHRUB_PATCH, DANDELION_PATCH
+                            SPARSE_GRASS_PATCH, BUSH_PATCH, SHRUB_PATCH, DANDELION_PATCH,
+                            WILD_CARROTS_PATCH, WILD_BEANS_PATCH
                     )
             )
     ));
@@ -105,7 +108,8 @@ public class PrimevalWorld {
                     List.of(MOSS_RARE,
                             FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
                             NATIVE_COPPER_ITEM_PATCH, MALACHITE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, CASSITERITE_TIN_ITEM_PATCH, SPHALERITE_ZINC_ITEM_PATCH,
-                            SPARSE_GRASS_PATCH, OXEYE_DAISY_PATCH
+                            SPARSE_GRASS_PATCH, OXEYE_DAISY_PATCH,
+                            WILD_WHEAT_PATCH
                     )
             )
     ));

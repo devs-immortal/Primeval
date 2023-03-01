@@ -48,16 +48,22 @@ public class PrimevalFeatures {
     /* CONFIGURED FEATURES */
     // ORES
     private static final RegistryEntry<ConfiguredFeature<OreClusterFeatureConfig, ?>> CONFIGURED_NATIVE_COPPER_CLUSTER = register("ore_copper_native", ORE_CLUSTER_FEATURE, Configs.NATIVE_COPPER_ORE_CLUSTER);
-    public static final RegistryEntry<PlacedFeature> NATIVE_COPPER_ORE_CLUSTER = register("ore_copper_native", CONFIGURED_NATIVE_COPPER_CLUSTER, RarityFilterPlacementModifier.of(5), SquarePlacementModifier.of(), getHeightModifier(5,160), BiomePlacementModifier.of());
+    public static final RegistryEntry<PlacedFeature> NATIVE_COPPER_ORE_CLUSTER = register("ore_copper_native", CONFIGURED_NATIVE_COPPER_CLUSTER, RarityFilterPlacementModifier.of(6), SquarePlacementModifier.of(), getHeightModifier(5,160), BiomePlacementModifier.of());
 
     private static final RegistryEntry<ConfiguredFeature<OreClusterFeatureConfig, ?>> CONFIGURED_MALACHITE_COPPER_CLUSTER = register("ore_copper_malachite", ORE_CLUSTER_FEATURE, Configs.MALACHITE_COPPER_ORE_CLUSTER);
-    public static final RegistryEntry<PlacedFeature> MALACHITE_COPPER_ORE_CLUSTER = register("ore_copper_malachite", CONFIGURED_MALACHITE_COPPER_CLUSTER, RarityFilterPlacementModifier.of(7), SquarePlacementModifier.of(), getHeightModifier(-20,120), BiomePlacementModifier.of());
+    public static final RegistryEntry<PlacedFeature> MALACHITE_COPPER_ORE_CLUSTER = register("ore_copper_malachite", CONFIGURED_MALACHITE_COPPER_CLUSTER, RarityFilterPlacementModifier.of(10), SquarePlacementModifier.of(), getHeightModifier(-20,120), BiomePlacementModifier.of());
 
     private static final RegistryEntry<ConfiguredFeature<OreClusterFeatureConfig, ?>> CONFIGURED_CASSITERITE_TIN_CLUSTER = register("ore_tin_cassiterite", ORE_CLUSTER_FEATURE, Configs.CASSITERITE_TIN_ORE_CLUSTER);
-    public static final RegistryEntry<PlacedFeature> CASSITERITE_TIN_ORE_CLUSTER = register("ore_tin_cassiterite", CONFIGURED_CASSITERITE_TIN_CLUSTER, RarityFilterPlacementModifier.of(10), SquarePlacementModifier.of(), getHeightModifier(30,100), BiomePlacementModifier.of());
+    public static final RegistryEntry<PlacedFeature> CASSITERITE_TIN_ORE_CLUSTER = register("ore_tin_cassiterite", CONFIGURED_CASSITERITE_TIN_CLUSTER, RarityFilterPlacementModifier.of(12), SquarePlacementModifier.of(), getHeightModifier(30,100), BiomePlacementModifier.of());
 
     private static final RegistryEntry<ConfiguredFeature<OreClusterFeatureConfig, ?>> CONFIGURED_SPHALERITE_ZINC_CLUSTER = register("ore_zinc_sphalerite", ORE_CLUSTER_FEATURE, Configs.SPHALERITE_ZINC_ORE_CLUSTER);
-    public static final RegistryEntry<PlacedFeature> SPHALERITE_ZINC_ORE_CLUSTER = register("ore_zinc_sphalerite", CONFIGURED_SPHALERITE_ZINC_CLUSTER, RarityFilterPlacementModifier.of(12), SquarePlacementModifier.of(), getHeightModifier(-20,120), BiomePlacementModifier.of());
+    public static final RegistryEntry<PlacedFeature> SPHALERITE_ZINC_ORE_CLUSTER = register("ore_zinc_sphalerite", CONFIGURED_SPHALERITE_ZINC_CLUSTER, RarityFilterPlacementModifier.of(14), SquarePlacementModifier.of(), getHeightModifier(-20,120), BiomePlacementModifier.of());
+
+    private static final RegistryEntry<ConfiguredFeature<OreClusterFeatureConfig, ?>> CONFIGURED_LAZURITE_CLUSTER = register("ore_lazurite", ORE_CLUSTER_FEATURE, Configs.LAZURITE_ORE_CLUSTER);
+    public static final RegistryEntry<PlacedFeature> LAZURITE_ORE_CLUSTER = register("ore_lazurite", CONFIGURED_LAZURITE_CLUSTER, RarityFilterPlacementModifier.of(18), SquarePlacementModifier.of(), getHeightModifier(-60,40), BiomePlacementModifier.of());
+
+    private static final RegistryEntry<ConfiguredFeature<OreFeatureConfig, ?>> CONFIGURED_FOSSIL_ORE_BLOBS = register("ore_fossil", Feature.ORE, Configs.FOSSIL_ORE_BLOBS);
+    public static final RegistryEntry<PlacedFeature> FOSSIL_ORE_BLOBS = register("ore_fossil", CONFIGURED_FOSSIL_ORE_BLOBS, CountPlacementModifier.of(6), SquarePlacementModifier.of(), getHeightModifier(-32,80), BiomePlacementModifier.of());
 
     // BLOBS +
     private static final RegistryEntry<ConfiguredFeature<OreFeatureConfig, ?>> CONFIGURED_DIRT_ORE_BLOBS = register("ore_dirt", Feature.ORE, Configs.DIRT_ORE_BLOBS);
@@ -91,7 +97,15 @@ public class PrimevalFeatures {
     public static final RegistryEntry<PlacedFeature> OXEYE_DAISY_PATCH = register("patch_oxeye_daisy", CONFIGURED_OXEYE_DAISY_PATCH, RarityFilterPlacementModifier.of(6), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
 
     private static final RegistryEntry<ConfiguredFeature<RandomPatchFeatureConfig, ?>> CONFIGURED_WILD_CARROTS_PATCH = register("patch_wild_carrots", Feature.RANDOM_PATCH, Configs.WILD_CARROTS_PATCH);
-    public static final RegistryEntry<PlacedFeature> WILD_CARROTS_PATCH = register("patch_wild_carrots", CONFIGURED_WILD_CARROTS_PATCH, RarityFilterPlacementModifier.of(30), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
+    public static final RegistryEntry<PlacedFeature> WILD_CARROTS_PATCH = register("patch_wild_carrots", CONFIGURED_WILD_CARROTS_PATCH, RarityFilterPlacementModifier.of(55), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
+    private static final RegistryEntry<ConfiguredFeature<RandomPatchFeatureConfig, ?>> CONFIGURED_WILD_WHEAT_PATCH = register("patch_wild_wheat", Feature.RANDOM_PATCH, Configs.WILD_WHEAT_PATCH);
+    public static final RegistryEntry<PlacedFeature> WILD_WHEAT_PATCH = register("patch_wild_wheat", CONFIGURED_WILD_WHEAT_PATCH, RarityFilterPlacementModifier.of(55), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
+    private static final RegistryEntry<ConfiguredFeature<RandomPatchFeatureConfig, ?>> CONFIGURED_WILD_CABBAGE_PATCH = register("patch_wild_cabbage", Feature.RANDOM_PATCH, Configs.WILD_CABBAGE_PATCH);
+    public static final RegistryEntry<PlacedFeature> WILD_CABBAGE_PATCH = register("patch_wild_cabbage", CONFIGURED_WILD_CABBAGE_PATCH, RarityFilterPlacementModifier.of(55), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
+    private static final RegistryEntry<ConfiguredFeature<RandomPatchFeatureConfig, ?>> CONFIGURED_WILD_BEANS_PATCH = register("patch_wild_beans", Feature.RANDOM_PATCH, Configs.WILD_BEANS_PATCH);
+    public static final RegistryEntry<PlacedFeature> WILD_BEANS_PATCH = register("patch_wild_beans", CONFIGURED_WILD_BEANS_PATCH, RarityFilterPlacementModifier.of(55), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
+    private static final RegistryEntry<ConfiguredFeature<RandomPatchFeatureConfig, ?>> CONFIGURED_WILD_POTATO_PATCH = register("patch_wild_potato", Feature.RANDOM_PATCH, Configs.WILD_POTATO_PATCH);
+    public static final RegistryEntry<PlacedFeature> WILD_POTATO_PATCH = register("patch_wild_potato", CONFIGURED_WILD_POTATO_PATCH, RarityFilterPlacementModifier.of(55), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
 
 
     private static final RegistryEntry<ConfiguredFeature<MultifaceGrowthFeatureConfig, ?>> CONFIGURED_MOSS_RARE = register("moss_rare", PrimevalFeatures.MOSS_FEATURE, Configs.MOSS_RARE);
@@ -212,6 +226,23 @@ public class PrimevalFeatures {
                 UniformFloatProvider.create(0.2f, 0.4f),
                 UniformFloatProvider.create(0.2f, 0.4f)
         );
+        public static final OreClusterFeatureConfig LAZURITE_ORE_CLUSTER = new OreClusterFeatureConfig(
+                SimpleBlockStateProvider.of(PrimevalBlocks.LAZURITE_ORE.large()),
+                SimpleBlockStateProvider.of(PrimevalBlocks.LAZURITE_ORE.medium()),
+                new WeightedBlockStateProvider(
+                        DataPool.<BlockState>builder()
+                            .add(PrimevalBlocks.LAZURITE_ORE.small().getDefaultState(), 12)
+                            .add(PrimevalBlocks.GOLD_NATIVE_ORE.small().getDefaultState(), 1)
+                ),
+                UniformIntProvider.create(4, 6),
+                UniformIntProvider.create(3, 6),
+                UniformFloatProvider.create(0.1f, 0.3f),
+                UniformFloatProvider.create(0.5f, 0.8f)
+        );
+        public static final OreFeatureConfig FOSSIL_ORE_BLOBS = new OreFeatureConfig(
+                List.of(OreFeatureConfig.createTarget(new TagMatchRuleTest(PrimevalBlockTags.NATURAL_STONE), PrimevalBlocks.FOSSIL.getDefaultState())),
+                3
+        );
         public static final OreFeatureConfig DIRT_ORE_BLOBS = new OreFeatureConfig(
                 List.of(OreFeatureConfig.createTarget(new TagMatchRuleTest(PrimevalBlockTags.NATURAL_STONE), PrimevalBlocks.DIRT.getDefaultState())),
                 33
@@ -287,6 +318,30 @@ public class PrimevalFeatures {
                 7,
                 3,
                 blockProviderFeature(SimpleBlockStateProvider.of(PrimevalBlocks.WILD_CARROTS.getDefaultState()))
+        );
+        public static final RandomPatchFeatureConfig WILD_WHEAT_PATCH = new RandomPatchFeatureConfig(
+                12,
+                7,
+                3,
+                blockProviderFeature(SimpleBlockStateProvider.of(PrimevalBlocks.WILD_WHEAT.getDefaultState()))
+        );
+        public static final RandomPatchFeatureConfig WILD_CABBAGE_PATCH = new RandomPatchFeatureConfig(
+                12,
+                7,
+                3,
+                blockProviderFeature(SimpleBlockStateProvider.of(PrimevalBlocks.WILD_CABBAGE.getDefaultState()))
+        );
+        public static final RandomPatchFeatureConfig WILD_BEANS_PATCH = new RandomPatchFeatureConfig(
+                12,
+                7,
+                3,
+                blockProviderFeature(SimpleBlockStateProvider.of(PrimevalBlocks.WILD_BEANS.getDefaultState()))
+        );
+        public static final RandomPatchFeatureConfig WILD_POTATO_PATCH = new RandomPatchFeatureConfig(
+                12,
+                7,
+                3,
+                blockProviderFeature(SimpleBlockStateProvider.of(PrimevalBlocks.WILD_POTATOES.getDefaultState()))
         );
         public static final MultifaceGrowthFeatureConfig MOSS_RARE = new MultifaceGrowthFeatureConfig(
                 (MultifaceGrowthBlock) PrimevalBlocks.MOSS,
