@@ -37,6 +37,7 @@
     "#primeval:ores_iron",
     "#primeval:ores_tin",
     "#primeval:ores_zinc",
-    "#primeval:ores_gold"
+    "#primeval:ores_gold",
+    "#primeval:ores_lazurite"
   ]
 }

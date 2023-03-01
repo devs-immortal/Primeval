@@ -114,6 +114,10 @@ public class PrimevalItems {
     public static final Item RAW_IRON_HEMATITE_MEDIUM = registerItem("raw_iron_hematite_medium", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
     public static final Item RAW_IRON_HEMATITE_LARGE = registerItem("raw_iron_hematite_large", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.LARGE));
 
+    public static final Item RAW_LAZURITE_SMALL = registerItem("raw_lazurite_small", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.SMALL));
+    public static final Item RAW_LAZURITE_MEDIUM = registerItem("raw_lazurite_medium", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
+    public static final Item RAW_LAZURITE_LARGE = registerItem("raw_lazurite_large", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.LARGE));
+
     // Tools
     public static final Item FLINT_AXE = registerItem("flint_axe", new PrimevalAxeItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.FLINT.getAttackDamage(), -3.0f, GROUP_TOOLS(), Weight.HEAVY, Size.LARGE));
     public static final Item FLINT_KNIFE = registerItem("flint_knife", new PrimevalSwordItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.FLINT.getAttackDamage()*PrimevalToolMaterials.KNIFE_DAMAGE_MULTIPLIER, -3.0f, GROUP_TOOLS(), Weight.HEAVY, Size.LARGE));

@@ -46,6 +46,9 @@
     "block.primeval.iron_hematite_ore_small": "Small Hematite Ore",
     "block.primeval.iron_hematite_ore_medium": "Medium Hematite Ore",
     "block.primeval.iron_hematite_ore_large": "Large Hematite Ore",
+    "block.primeval.lazurite_ore_small": "Small Lazurite Ore",
+    "block.primeval.lazurite_ore_medium": "Medium Lazurite Ore",
+    "block.primeval.lazurite_ore_large": "Large Lazurite Ore",
     "block.primeval.fossil": "Fossil",
     
     "block.primeval.straw_block": "Straw Block",
@@ -207,6 +210,9 @@
     "item.primeval.raw_iron_hematite_small": "Small Raw Hematite",
     "item.primeval.raw_iron_hematite_medium": "Medium Raw Hematite",
     "item.primeval.raw_iron_hematite_large": "Large Raw Hematite",
+    "item.primeval.raw_lazurite_small": "Small Lazurite",
+    "item.primeval.raw_lazurite_medium": "Medium Lazurite",
+    "item.primeval.raw_lazurite_large": "Large Lazurite",
     
     "item.primeval.copper_ingot": "Copper Ingot",
     "item.primeval.copper_chunk": "Copper Chunk",

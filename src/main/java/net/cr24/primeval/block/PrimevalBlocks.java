@@ -106,6 +106,7 @@ public class PrimevalBlocks {
     public static final OreBlockSet ZINC_SPHALERITE_ORE = registerOreBlockSet("zinc_sphalerite_ore", SETTINGS_STONE(), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
     public static final OreBlockSet GOLD_NATIVE_ORE = registerOreBlockSet("gold_native_ore", SETTINGS_STONE(), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
     public static final OreBlockSet IRON_HEMATITE_ORE = registerOreBlockSet("iron_hematite_ore", SETTINGS_STONE(), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
+    public static final OreBlockSet LAZURITE_ORE = registerOreBlockSet("lazurite_ore", SETTINGS_STONE(), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
     public static final Block FOSSIL = registerBlock("fossil", new SemiSupportedBlock(SETTINGS_STONE(), 0.35f, COBBLESTONE), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
 
 
