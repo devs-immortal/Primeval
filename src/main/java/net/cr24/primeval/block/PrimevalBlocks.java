@@ -140,6 +140,7 @@ public class PrimevalBlocks {
     public static final BlockSet WICKER = registerBlockSet("wicker", SETTINGS_REFINED_WOOD(), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block WICKER_DOOR = registerBlock("wicker_door", new PrimevalDoorBlock(SETTINGS_REFINED_WOOD().nonOpaque()), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block WICKER_TRAPDOOR = registerBlock("wicker_trapdoor", new PrimevalTrapdoorBlock(SETTINGS_REFINED_WOOD().nonOpaque()), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block WICKER_BARS = registerBlock("wicker_bars", new PaneBlock(SETTINGS_REFINED_WOOD().nonOpaque()), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block ROPE = registerBlock("rope", new ChainBlock(FabricBlockSettings.of(Material.PLANT).strength(0.2F).sounds(BlockSoundGroup.GRASS)), Weight.LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
     public static final Block ROPE_LADDER = registerBlock("rope_ladder", new SuspendedLadderBlock(FabricBlockSettings.of(Material.WOOD, MapColor.OAK_TAN).strength(0.3F).sounds(BlockSoundGroup.WOOD).nonOpaque()), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
 
@@ -168,6 +169,7 @@ public class PrimevalBlocks {
     public static final Block LARGE_CLAY_POT = registerBlock("large_clay_pot", new DecorativePotBlock(SETTINGS_SOIL().nonOpaque()), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
     public static final Block LARGE_FIRED_CLAY_POT = registerBlock("fired_large_clay_pot", new StoragePotBlock(SETTINGS_FIRED_CLAY().nonOpaque()), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
     public static final Block LARGE_DECORATIVE_FIRED_CLAY_POT = registerBlock("fired_large_decorative_clay_pot", new DecorativePotBlock(SETTINGS_FIRED_CLAY().nonOpaque()), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
+    public static final Block WICKER_BASKET = registerBlock("wicker_basket", new WickerBasketBlock(SETTINGS_REFINED_WOOD().nonOpaque()), Weight.NORMAL, Size.LARGE, PRIMEVAL_BLOCKS);
 
 
     // Intractable Blocks
@@ -196,6 +198,7 @@ public class PrimevalBlocks {
     public static final BlockEntityType<LayingItemBlockEntity> LAYING_ITEM_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, PrimevalMain.getId("laying_item_block_entity"), FabricBlockEntityTypeBuilder.create(LayingItemBlockEntity::new, LAYING_ITEM).build());
     public static final BlockEntityType<CrateBlockEntity> CRATE_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, PrimevalMain.getId("crate_block_entity"), FabricBlockEntityTypeBuilder.create(CrateBlockEntity::new, OAK_CRATE, BIRCH_CRATE, SPRUCE_CRATE).build());
     public static final BlockEntityType<StoragePotBlockEntity> LARGE_POT_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, PrimevalMain.getId("large_pot_block_entity"), FabricBlockEntityTypeBuilder.create(StoragePotBlockEntity::new, LARGE_FIRED_CLAY_POT).build());
+    public static final BlockEntityType<WickerBasketBlockEntity> WICKER_BASKET_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, PrimevalMain.getId("wicker_basket_block_entity"), FabricBlockEntityTypeBuilder.create(WickerBasketBlockEntity::new, WICKER_BASKET).build());
     public static final BlockEntityType<PrimevalCampfireBlockEntity> CAMPFIRE_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, PrimevalMain.getId("campfire_block_entity"), FabricBlockEntityTypeBuilder.create(PrimevalCampfireBlockEntity::new, CAMPFIRE).build());
     public static final BlockEntityType<QuernBlockEntity> QUERN_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, PrimevalMain.getId("quern_block_entity"), FabricBlockEntityTypeBuilder.create(QuernBlockEntity::new, QUERN).build());
 
@@ -241,7 +244,8 @@ public class PrimevalBlocks {
                 OAK_PLANK_BLOCKS.door,
                 OAK_PLANK_BLOCKS.trapdoor,
                 WICKER_DOOR,
-                WICKER_TRAPDOOR
+                WICKER_TRAPDOOR,
+                WICKER_BARS
         );
 
         // Color registry on items

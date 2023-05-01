@@ -12,7 +12,7 @@ public class PrimevalSoundEvents {
     public static final SoundEvent QUERN_PROCESS = registerSound("quern_process");
 
     public static void init() {}
-
+    
     private static SoundEvent registerSound(String id) {
         Identifier located = PrimevalMain.getId(id);
         return Registry.register(Registry.SOUND_EVENT, located, new SoundEvent(located));

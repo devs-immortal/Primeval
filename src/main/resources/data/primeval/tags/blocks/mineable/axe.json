@@ -58,9 +58,11 @@
     "primeval:wicker_slab",
     "primeval:wicker_door",
     "primeval:wicker_trapdoor",
+    "primeval:wicker_bars",
     
     "primeval:pit_kiln",
     "primeval:crude_crafting_bench",
+    "primeval:wicker_basket",
     
     "primeval:rope",
     "primeval:rope_ladder"

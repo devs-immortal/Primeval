@@ -128,6 +128,7 @@
     "block.primeval.wicker_slab": "Wicker Slab",
     "block.primeval.wicker_door": "Wicker Door",
     "block.primeval.wicker_trapdoor": "Wicker Trapdoor",
+    "block.primeval.wicker_bars": "Wicker Mesh",
     
     
     "block.primeval.rope": "Rope",
@@ -143,6 +144,7 @@
     "block.primeval.large_clay_pot": "Large Clay Pot",
     "block.primeval.fired_large_clay_pot": "Large Fired Clay Pot",
     "block.primeval.fired_large_decorative_clay_pot": "Large Filled Fired Clay Pot",
+    "block.primeval.wicker_basket": "Wicker Basket",
     "block.primeval.quern": "Quern Base",
     
     "block.primeval.molten_copper": "Molten Copper",
@@ -319,6 +321,7 @@
     
     "container.primeval.crate": "Crate",
     "container.primeval.large_pot": "Large Clay Pot",
+    "container.primeval.wicker_basket": "Wicker Basket",
     
     
     "itemGroup.primeval.items": "Primeval Items",

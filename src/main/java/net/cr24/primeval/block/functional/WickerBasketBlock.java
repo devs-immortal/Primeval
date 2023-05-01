@@ -1,6 +1,6 @@
 package net.cr24.primeval.block.functional;
 
-import net.cr24.primeval.block.entity.StoragePotBlockEntity;
+import net.cr24.primeval.block.entity.WickerBasketBlockEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.LivingEntity;
@@ -21,15 +21,13 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class StoragePotBlock extends BlockWithEntity {
+public class WickerBasketBlock extends BlockWithEntity {
     protected static final VoxelShape SHAPE = VoxelShapes.union(
-            Block.createCuboidShape(2.0, 0.0, 2.0, 14.0, 2.0, 14.0),
-            Block.createCuboidShape(1.0, 2.0, 1.0, 15.0, 11.0, 15.0),
-            Block.createCuboidShape(3.0, 11.0, 3.0, 13.0, 13.0, 13.0),
-            Block.createCuboidShape(2.0, 13.0, 2.0, 14.0, 16.0, 14.0)
+            Block.createCuboidShape(2.0, 0.0, 2.0, 14.0, 13.0, 14.0),
+            Block.createCuboidShape(6.0, 13.0, 6.0, 10.0, 16.0, 10.0)
     );
 
-    public StoragePotBlock(AbstractBlock.Settings settings) {
+    public WickerBasketBlock(Settings settings) {
         super(settings);
     }
 
@@ -39,8 +37,8 @@ public class StoragePotBlock extends BlockWithEntity {
             return ActionResult.SUCCESS;
         }
         BlockEntity blockEntity = world.getBlockEntity(pos);
-        if (blockEntity instanceof StoragePotBlockEntity) {
-            player.openHandledScreen((StoragePotBlockEntity)blockEntity);
+        if (blockEntity instanceof WickerBasketBlockEntity) {
+            player.openHandledScreen((WickerBasketBlockEntity)blockEntity);
         }
         return ActionResult.CONSUME;
     }
@@ -61,15 +59,15 @@ public class StoragePotBlock extends BlockWithEntity {
     @Override
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
-        if (blockEntity instanceof StoragePotBlockEntity) {
-            ((StoragePotBlockEntity)blockEntity).tick();
+        if (blockEntity instanceof WickerBasketBlockEntity) {
+            ((WickerBasketBlockEntity)blockEntity).tick();
         }
     }
 
     @Override
     @Nullable
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new StoragePotBlockEntity(pos, state);
+        return new WickerBasketBlockEntity(pos, state);
     }
 
     @Override
@@ -85,8 +83,8 @@ public class StoragePotBlock extends BlockWithEntity {
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
         BlockEntity blockEntity;
-        if (itemStack.hasCustomName() && (blockEntity = world.getBlockEntity(pos)) instanceof StoragePotBlockEntity) {
-            ((StoragePotBlockEntity)blockEntity).setCustomName(itemStack.getName());
+        if (itemStack.hasCustomName() && (blockEntity = world.getBlockEntity(pos)) instanceof WickerBasketBlockEntity) {
+            ((WickerBasketBlockEntity)blockEntity).setCustomName(itemStack.getName());
         }
     }
 
