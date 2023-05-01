@@ -5,6 +5,7 @@ import net.cr24.primeval.block.entity.QuernBlockEntity;
 import net.cr24.primeval.item.PrimevalItems;
 import net.cr24.primeval.recipe.PrimevalRecipes;
 import net.cr24.primeval.recipe.QuernRecipe;
+import net.cr24.primeval.util.PrimevalSoundEvents;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -12,6 +13,7 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.ActionResult;
@@ -61,9 +63,11 @@ public class QuernBlock extends BlockWithEntity {
                         return ActionResult.FAIL;
                     }
                 } else {
-                    boolean success = ((QuernBlockEntity) ent).tryTurnWheel(world, pos, 30);
+                    boolean success = ((QuernBlockEntity) ent).tryTurnWheel(world, pos, 45);
                     if (success) {
                         if (!player.isCreative()) player.getHungerManager().addExhaustion(2.0f);
+                        if (!world.isClient())
+                            world.playSound(null, pos, PrimevalSoundEvents.QUERN_GRIND, SoundCategory.BLOCKS, 0.2f, 1f);
                         return ActionResult.SUCCESS;
                     } else {
                         return ActionResult.FAIL;

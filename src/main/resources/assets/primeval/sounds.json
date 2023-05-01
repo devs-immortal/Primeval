@@ -1,0 +1,32 @@
+{
+  "quern_break": {
+    "subtitle": "subtitles.primeval.block.quern.break",
+    "sounds": [
+      "primeval:block/quern_break"
+    ]
+  },
+  "quern_grind": {
+    "subtitle": "subtitles.primeval.block.quern.grind",
+    "sounds": [
+      {
+        "name": "primeval:block/quern_short_0"
+      },
+      {
+        "name": "primeval:block/quern_short_1"
+      },
+      {
+        "name": "primeval:block/quern_short_2"
+      }
+      
+    ]
+  },
+  "quern_process": {
+    "subtitle": "subtitles.primeval.block.quern.process",
+    "sounds": [
+      {
+        "name": "entity.item_frame.remove_item",
+        "type": "event"
+      }
+    ]
+  }
+}

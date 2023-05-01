@@ -334,6 +334,11 @@
     "category.primeval.quern": "Quern Grinding",
     
     
+    "subtitles.primeval.block.quern.break": "Quern Wheel Breaks",
+    "subtitles.primeval.block.quern.grind": "Quern Grinds",
+    "subtitles.primeval.block.quern.process": "Quern Finishes",
+    
+    
     "text.primeval.fluid.contains": "Contains %d Units of %s",
     "text.primeval.size.small": "Small",
     "text.primeval.size.medium": "Medium",

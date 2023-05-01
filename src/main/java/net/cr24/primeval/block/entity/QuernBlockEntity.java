@@ -5,6 +5,7 @@ import net.cr24.primeval.block.functional.QuernBlock;
 import net.cr24.primeval.item.PrimevalItems;
 import net.cr24.primeval.recipe.PrimevalRecipes;
 import net.cr24.primeval.recipe.QuernRecipe;
+import net.cr24.primeval.util.PrimevalSoundEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -17,6 +18,7 @@ import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Clearable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -44,7 +46,7 @@ public class QuernBlockEntity extends BlockEntity implements Clearable {
     }
 
     public static void tick(World world, BlockPos pos, BlockState state, QuernBlockEntity blockEntity) {
-        float newAngle = MathHelper.lerp(0.1f, blockEntity.currentAngle, blockEntity.targetAngle+FLOW_ANGLE);
+        float newAngle = MathHelper.lerp(0.05f, blockEntity.currentAngle, blockEntity.targetAngle+FLOW_ANGLE);
         if (newAngle < (blockEntity.targetAngle-2)) {
             blockEntity.makeParticles(world, pos);
         }
@@ -66,9 +68,13 @@ public class QuernBlockEntity extends BlockEntity implements Clearable {
                 if (wheelDamage > PrimevalItems.QUERN_WHEEL.getMaxDamage()) {
                     wheelDamage = -1;
                     breakParticles(world, pos);
+                    if (!world.isClient())
+                        world.playSound(null, pos, PrimevalSoundEvents.QUERN_BREAK, SoundCategory.BLOCKS, 0.3f, 0.8f);
                     break;
                 }
             }
+            if (!world.isClient())
+                world.playSound(null, pos, PrimevalSoundEvents.QUERN_PROCESS, SoundCategory.BLOCKS, 0.8f, 0.8f);
             Block.dropStack(world, pos, Direction.UP, new ItemStack(inputItem.getItem(), remainder));
             targetAngle = 0;
             currentAngle = 0;
