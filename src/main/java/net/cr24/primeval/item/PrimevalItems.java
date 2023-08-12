@@ -132,7 +132,7 @@ public class PrimevalItems {
 
     // Other
     public static final Item WOODEN_BUCKET = registerItem("wooden_bucket", new WoodenBucketItem(GROUP_TOOLS(), Weight.NORMAL, Size.MEDIUM, 4));
-    public static final Item WATER_WOODEN_BUCKET = registerItem("water_wooden_bucket", new WaterWoodenBucketItem(GROUP_TOOLS(), Weight.HEAVY, Size.MEDIUM));
+    public static final Item WATER_WOODEN_BUCKET = registerItem("water_wooden_bucket", new WaterWoodenBucketItem(GROUP_TOOLS().recipeRemainder(WOODEN_BUCKET), Weight.HEAVY, Size.MEDIUM));
     public static final Item FIRED_CLAY_JUG = registerItem("fired_clay_jug", new EmptyJugItem(GROUP_TOOLS(), Weight.NORMAL, Size.LARGE));
     public static final Item FIRED_CLAY_WATER_JUG = registerItem("fired_clay_jug_filled", new JugItem(GROUP_TOOLS(), Weight.NORMAL, Size.LARGE));
     public static final Item FIRED_CLAY_VESSEL = registerItem("fired_clay_vessel", new VesselItem(GROUP_TOOLS().maxCount(1), Weight.NORMAL, Size.LARGE));

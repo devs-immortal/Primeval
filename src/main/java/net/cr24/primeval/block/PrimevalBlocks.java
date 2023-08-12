@@ -120,7 +120,9 @@ public class PrimevalBlocks {
     public static final Block STRAW_MESH = registerBlock("straw_mesh", new Block(FabricBlockSettings.of(Material.PLANT).strength(0.5F).sounds(BlockSoundGroup.GRASS)), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block STRAW_MAT = registerBlock("straw_mat", new CarpetBlock(FabricBlockSettings.of(Material.PLANT).strength(0.3F).sounds(BlockSoundGroup.GRASS)), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block TERRACOTTA = registerBlock("terracotta", new Block(SETTINGS_FIRED_CLAY()), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final ColoredBlockSet COLORED_TERRACOTTA = registerColoredBlockSet("terracotta", SETTINGS_FIRED_CLAY(), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final BlockSet FIRED_CLAY_SHINGLE_BLOCKS = registerBlockSet("fired_clay_shingles", SETTINGS_FIRED_CLAY(), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final ColoredBlockSetSet COLORED_FIRED_CLAY_SHINGLE_BLOCKS = registerColoredBlockSetSet("fired_clay_shingles", SETTINGS_FIRED_CLAY(), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final BlockSet FIRED_CLAY_BRICK_BLOCKS = registerBlockSet("fired_clay_bricks", SETTINGS_FIRED_CLAY(), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final BlockSet FIRED_CLAY_TILES_BLOCKS = registerBlockSet("fired_clay_tiles", SETTINGS_FIRED_CLAY(), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final BlockSet DRIED_BRICK_BLOCKS = registerBlockSet("dried_bricks", SETTINGS_FIRED_CLAY(), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
@@ -349,6 +351,47 @@ public class PrimevalBlocks {
         return registerBlockWithoutItem(id, new UnprotectedFluidBlock(fluid, AbstractBlock.Settings.of(Material.LAVA).noCollision().ticksRandomly().strength(100.0F).luminance((state) -> 15).dropsNothing()));
     }
 
+    private static ColoredBlockSet registerColoredBlockSet(String baseId, AbstractBlock.Settings settings, Weight weight, Size size, ItemGroup itemgroup) {
+        return new ColoredBlockSet(
+                registerBlock(baseId + "_white", new Block(settings), weight, size, itemgroup),
+                registerBlock(baseId + "_orange", new Block(settings), weight, size, itemgroup),
+                registerBlock(baseId + "_magenta", new Block(settings), weight, size, itemgroup),
+                registerBlock(baseId + "_light_blue", new Block(settings), weight, size, itemgroup),
+                registerBlock(baseId + "_yellow", new Block(settings), weight, size, itemgroup),
+                registerBlock(baseId + "_lime", new Block(settings), weight, size, itemgroup),
+                registerBlock(baseId + "_pink", new Block(settings), weight, size, itemgroup),
+                registerBlock(baseId + "_dark_gray", new Block(settings), weight, size, itemgroup),
+                registerBlock(baseId + "_light_gray", new Block(settings), weight, size, itemgroup),
+                registerBlock(baseId + "_cyan", new Block(settings), weight, size, itemgroup),
+                registerBlock(baseId + "_purple", new Block(settings), weight, size, itemgroup),
+                registerBlock(baseId + "_blue", new Block(settings), weight, size, itemgroup),
+                registerBlock(baseId + "_brown", new Block(settings), weight, size, itemgroup),
+                registerBlock(baseId + "_green", new Block(settings), weight, size, itemgroup),
+                registerBlock(baseId + "_red", new Block(settings), weight, size, itemgroup),
+                registerBlock(baseId + "_black", new Block(settings), weight, size, itemgroup)
+        );
+    }
+    private static ColoredBlockSetSet registerColoredBlockSetSet(String baseId, AbstractBlock.Settings settings, Weight weight, Size size, ItemGroup itemgroup) {
+        return new ColoredBlockSetSet(
+                registerBlockSet(baseId + "_white", settings, weight, size, itemgroup),
+                registerBlockSet(baseId + "_orange", settings, weight, size, itemgroup),
+                registerBlockSet(baseId + "_magenta", settings, weight, size, itemgroup),
+                registerBlockSet(baseId + "_light_blue", settings, weight, size, itemgroup),
+                registerBlockSet(baseId + "_yellow", settings, weight, size, itemgroup),
+                registerBlockSet(baseId + "_lime", settings, weight, size, itemgroup),
+                registerBlockSet(baseId + "_pink", settings, weight, size, itemgroup),
+                registerBlockSet(baseId + "_dark_gray", settings, weight, size, itemgroup),
+                registerBlockSet(baseId + "_light_gray", settings, weight, size, itemgroup),
+                registerBlockSet(baseId + "_cyan", settings, weight, size, itemgroup),
+                registerBlockSet(baseId + "_purple", settings, weight, size, itemgroup),
+                registerBlockSet(baseId + "_blue", settings, weight, size, itemgroup),
+                registerBlockSet(baseId + "_brown", settings, weight, size, itemgroup),
+                registerBlockSet(baseId + "_green", settings, weight, size, itemgroup),
+                registerBlockSet(baseId + "_red", settings, weight, size, itemgroup),
+                registerBlockSet(baseId + "_black", settings, weight, size, itemgroup)
+        );
+    }
+
     private static BlockSet registerBlockSet(String id, AbstractBlock.Settings settings, Weight weight, Size size, ItemGroup itemgroup) {
         return registerBlockSet(id, id+"_stairs", id+"_slab", settings, weight, size, itemgroup);
     }
@@ -391,6 +434,17 @@ public class PrimevalBlocks {
     public record BlockSet(Block block, StairsBlock stairs, SlabBlock slab) implements Iterable<Block> {
         public @NotNull Iterator<Block> iterator() {
             return Arrays.stream(new Block[]{block, stairs, slab}).iterator();
+        }
+    }
+
+    public record ColoredBlockSet(Block white, Block orange, Block magenta, Block lightBlue, Block yellow, Block lime, Block pink, Block darkGray, Block lightGray, Block cyan, Block purple, Block blue, Block brown, Block green, Block red, Block black) implements Iterable<Block> {
+        public @NotNull Iterator<Block> iterator() {
+            return Arrays.stream(new Block[]{white, orange, magenta, lightBlue, yellow, lime, pink, darkGray, lightGray, cyan, purple, blue, brown, green, red, black}).iterator();
+        }
+    }
+    public record ColoredBlockSetSet(BlockSet white, BlockSet orange, BlockSet magenta, BlockSet lightBlue, BlockSet yellow, BlockSet lime, BlockSet pink, BlockSet darkGray, BlockSet lightGray, BlockSet cyan, BlockSet purple, BlockSet blue, BlockSet brown, BlockSet green, BlockSet red, BlockSet black) implements Iterable<BlockSet> {
+        public @NotNull Iterator<BlockSet> iterator() {
+            return Arrays.stream(new BlockSet[]{white, orange, magenta, lightBlue, yellow, lime, pink, darkGray, lightGray, cyan, purple, blue, brown, green, red, black}).iterator();
         }
     }
     public record WoodBlockSet(Block block, StairsBlock stairs, SlabBlock slab, Block panel, FenceBlock fence, FenceBlock logFence, FenceGateBlock fenceGate, DoorBlock door, TrapdoorBlock trapdoor) implements Iterable<Block> {

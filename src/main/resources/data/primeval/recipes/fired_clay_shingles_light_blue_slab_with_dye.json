@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#D#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "primeval:fired_clay_shingles_slab"
+    },
+    "D": {
+      "item": "primeval:dye_light_blue"
+    }
+  },
+  "result": {
+    "item": "primeval:fired_clay_shingles_light_blue_slab",
+    "count": 8
+  }
+}

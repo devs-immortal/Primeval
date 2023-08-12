@@ -1,0 +1,13 @@
+{
+	"variants": {
+		"type=bottom": {
+			"model": "primeval:block/fired_clay_shingles_yellow_slab"
+		},
+		"type=double": {
+			"model": "primeval:block/fired_clay_shingles_yellow"
+		},
+		"type=top": {
+			"model": "primeval:block/fired_clay_shingles_yellow_slab_top"
+		}
+	}
+}

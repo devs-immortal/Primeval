@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#D#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "primeval:terracotta"
+    },
+    "D": {
+      "item": "primeval:dye_brown"
+    }
+  },
+  "result": {
+    "item": "primeval:terracotta_brown",
+    "count": 8
+  }
+}
