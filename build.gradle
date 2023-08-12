@@ -12,13 +12,7 @@ repositories {
 	// REI
 	maven { url "https://maven.shedaniel.me" }
 	// Incubus
-	maven {
-		name = "JitPack"
-		url = 'https://jitpack.io/'
-		metadataSources {
-			artifact() //Look directly for artifact
-		}
-	}
+	maven { url 'https://jitpack.io' }
 	// Mod Menu + Trinkets
 	maven {
 		name = "TerraformersMC"
@@ -27,7 +21,7 @@ repositories {
 	// Cardinal Components
 	maven {
 		name = 'Ladysnake Mods'
-		url = 'https://ladysnake.jfrog.io/artifactory/mods'
+		url = 'https://maven.ladysnake.org/releases'
 	}
 
 	maven {
@@ -40,7 +34,8 @@ repositories {
 }
 
 dependencies {
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	implementation 'org.jetbrains:annotations:24.0.0'
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 

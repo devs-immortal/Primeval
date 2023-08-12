@@ -10,6 +10,7 @@
     "block.primeval.gravel": "Gravel",
     "block.primeval.cobblestone": "Cobblestone",
     "block.primeval.stone": "Stone",
+    "block.primeval.sandstone": "Sandstone",
     
     "block.primeval.oak_sapling": "Oak Sapling",
     "block.primeval.oak_log": "Oak Log",
@@ -27,6 +28,7 @@
     "block.primeval.dandelion": "Dandelion",
     "block.primeval.oxeye_daisy": "Oxeye Daisy",
     "block.primeval.moss": "Moss",
+    "block.primeval.reeds": "Reeds",
     
     "block.primeval.copper_malachite_ore_small": "Small Malachite Copper Ore",
     "block.primeval.copper_malachite_ore_medium": "Medium Malachite Copper Ore",

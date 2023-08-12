@@ -1,0 +1,34 @@
+{
+	"variants": {
+		"age=0,cap=false": {
+			"model": "primeval:block/reeds_water"
+		},
+		"age=1,cap=false": {
+			"model": "primeval:block/reeds_base"
+		},
+		"age=2,cap=false": {
+			"model": "primeval:block/reeds_air"
+		},
+		"age=3,cap=false": {
+			"model": "primeval:block/reeds_air"
+		},
+		"age=4,cap=false": {
+			"model": "primeval:block/reeds_air"
+		},
+		"age=0,cap=true": {
+			"model": "primeval:block/reeds_water_cap"
+		},
+		"age=1,cap=true": {
+			"model": "primeval:block/reeds_base_cap"
+		},
+		"age=2,cap=true": {
+			"model": "primeval:block/reeds_base_cap"
+		},
+		"age=3,cap=true": {
+			"model": "primeval:block/reeds_base_cap"
+		},
+		"age=4,cap=true": {
+			"model": "primeval:block/reeds_air_cap"
+		}
+	}
+}

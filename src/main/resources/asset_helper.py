@@ -87,13 +87,11 @@ def create_ore_set(ore_type):
     generate_standard_item("raw_"+ore_type+"_large")
 
 #create_ore_set("lazurite")
-generate_standard_item("fired_clay_jug_filled")
+#generate_standard_item("fired_clay_jug_filled")
 #generate_stairs_block("stone_paver_stairs", "stone_paver")
 #generate_slab_block("stone_paver_slab", "stone_paver", "stone_paver")
 
-#generate_standard_block("wicker")
-#generate_stairs_block("crude_bricks_stairs", "crude_bricks")
-#generate_slab_block("crude_bricks_slab", "crude_bricks", "crude_bricks")
+generate_standard_block("sandstone")
 #create_ore_set("zinc_sphalerite")
 
 #generate_handheld_item("copper_hoe")
