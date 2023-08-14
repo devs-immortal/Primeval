@@ -1,0 +1,11 @@
+{
+  "type": "primeval:quern_grinding",
+  "input": {
+    "item": "primeval:fired_clay_bowl"
+  },
+  "result": {
+    "item": "primeval:crushed_terracotta",
+    "count": 3
+  },
+  "wheelDamage":2
+}

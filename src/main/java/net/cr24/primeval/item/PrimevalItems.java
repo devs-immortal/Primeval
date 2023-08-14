@@ -53,6 +53,9 @@ public class PrimevalItems {
     public static final Item ROCK = registerItem("rock", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
     public static final Item STONE_BRICK = registerItem("stone_brick", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
     public static final Item ASHES = registerItem("ashes", new WeightedItem(GROUP_ITEMS(), Weight.VERY_LIGHT, Size.SMALL));
+    public static final Item CRUSHED_TERRACOTTA = registerItem("crushed_terracotta", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.SMALL));
+    public static final Item CEMENT_MIX = registerItem("cement_mix", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.SMALL));
+    public static final Item CEMENT = registerItem("cement", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.SMALL));
     public static final Item BONE = registerItem("bone", new WeightedItem(GROUP_ITEMS(), Weight.VERY_LIGHT, Size.SMALL));
     public static final Item BONEMEAL = registerItem("bonemeal", new FertilizerItem(GROUP_ITEMS(), Weight.VERY_LIGHT, Size.SMALL, 4, PrimevalFarmlandBlockFertilizerType.BONEMEAL));
     public static final Item ANIMAL_FAT = registerItem("animal_fat", new WeightedItem(GROUP_ITEMS(), Weight.VERY_LIGHT, Size.SMALL));

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#D#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "primeval:cement_mix"
+    },
+    "D": {
+      "item": "primeval:water_wooden_bucket"
+    }
+  },
+  "result": {
+    "item": "primeval:cement",
+    "count": 12
+  }
+}

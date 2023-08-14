@@ -1,0 +1,18 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "primeval:crushed_terracotta"
+        },
+        {
+            "item": "primeval:ashes"
+        },
+        {
+            "item": "primeval:ashes"
+        }
+    ],
+    "result": {
+        "item": "primeval:cement_mix",
+        "count": 4
+    }
+}
