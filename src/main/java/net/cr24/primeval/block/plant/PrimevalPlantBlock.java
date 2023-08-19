@@ -28,8 +28,4 @@ public class PrimevalPlantBlock extends PlantBlock {
     protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
         return floor.isIn(PrimevalBlockTags.HEAVY_SOIL) || floor.isIn(PrimevalBlockTags.MEDIUM_SOIL) || floor.isIn(PrimevalBlockTags.SPECIAL_PLANTABLE);
     }
-
-    public OffsetType getOffsetType() {
-        return OffsetType.XZ;
-    }
 }

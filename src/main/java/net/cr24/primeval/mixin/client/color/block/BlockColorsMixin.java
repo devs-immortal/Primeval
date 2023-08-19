@@ -34,6 +34,14 @@ public class BlockColorsMixin {
         );
         origin.registerColorProvider(
                 ((state, world, pos, tintIndex) ->  world != null && pos != null ? BiomeColors.getGrassColor(world, pos) : GrassColors.getColor(0.5D, 1.0D)),
+                PrimevalBlocks.SPIKED_PLANT
+        );
+        origin.registerColorProvider(
+                ((state, world, pos, tintIndex) ->  world != null && pos != null ? BiomeColors.getGrassColor(world, pos) : GrassColors.getColor(0.5D, 1.0D)),
+                PrimevalBlocks.LEAFY_PLANT
+        );
+        origin.registerColorProvider(
+                ((state, world, pos, tintIndex) ->  world != null && pos != null ? BiomeColors.getGrassColor(world, pos) : GrassColors.getColor(0.5D, 1.0D)),
                 PrimevalBlocks.SHRUB
         );
         origin.registerColorProvider(

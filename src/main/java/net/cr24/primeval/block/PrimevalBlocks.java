@@ -90,16 +90,21 @@ public class PrimevalBlocks {
     public static final Block OAK_SAPLING = registerBlock("oak_sapling", new GrowingSaplingBlock(SETTINGS_PLANT().ticksRandomly(), OakTrunker.INSTANCE), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
     public static final Block BIRCH_SAPLING = registerBlock("birch_sapling", new GrowingSaplingBlock(SETTINGS_PLANT().ticksRandomly(), BirchTrunker.INSTANCE), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
     public static final Block SPRUCE_SAPLING = registerBlock("spruce_sapling", new GrowingSaplingBlock(SETTINGS_PLANT().ticksRandomly(), SpruceTrunker.INSTANCE), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
-    public static final Block GRASS = registerBlock("grass", new GrowingGrassBlock(SETTINGS_PLANT().ticksRandomly()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
-    public static final Block BUSH = registerBlock("bush", new PrimevalPlantBlock(SETTINGS_PLANT()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
-    public static final Block SHRUB = registerBlock("shrub", new PrimevalPlantBlock(SETTINGS_PLANT()), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block GRASS = registerBlock("grass", new GrowingGrassBlock(SETTINGS_PLANT().ticksRandomly().offsetType(AbstractBlock.OffsetType.XZ)), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
+    public static final Block BUSH = registerBlock("bush", new PrimevalPlantBlock(SETTINGS_PLANT().offsetType(AbstractBlock.OffsetType.XZ)), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
+    public static final Block SPIKED_PLANT = registerBlock("plant_0", new PrimevalPlantBlock(SETTINGS_PLANT().offsetType(AbstractBlock.OffsetType.XZ)), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
+    public static final Block LEAFY_PLANT = registerBlock("plant_1", new PrimevalPlantBlock(SETTINGS_PLANT().offsetType(AbstractBlock.OffsetType.XZ)), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
+    public static final Block SHRUB = registerBlock("shrub", new PrimevalPlantBlock(SETTINGS_PLANT().offsetType(AbstractBlock.OffsetType.XZ)), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block MOSS = registerBlock("moss", new SpreadingMossBlock(SETTINGS_PLANT().ticksRandomly()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
     // Flowers
     public static final Block POPPY = registerBlock("poppy", new PrimevalPlantBlock(SETTINGS_PLANT()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
     public static final Block DANDELION = registerBlock("dandelion", new PrimevalPlantBlock(SETTINGS_PLANT()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
     public static final Block OXEYE_DAISY = registerBlock("oxeye_daisy", new PrimevalPlantBlock(SETTINGS_PLANT()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
+    public static final Block CORNFLOWER = registerBlock("cornflower", new PrimevalPlantBlock(SETTINGS_PLANT()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
+    public static final Block LILY_OF_THE_VALLEY = registerBlock("lily_of_the_valley", new PrimevalPlantBlock(SETTINGS_PLANT()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
     // Misc
     public static final Block REEDS = registerBlock("reeds", new ReedsBlock(SETTINGS_PLANT().ticksRandomly()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
+    public static final Block RIVER_GRASS = registerBlock("river_grass", new PrimevalWaterPlantBlock(SETTINGS_PLANT().offsetType(AbstractBlock.OffsetType.XZ)), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
 
 
     // Ore blocks
@@ -225,8 +230,8 @@ public class PrimevalBlocks {
         // Render Layers
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
                 GRASSY_DIRT, GRASSY_CLAY,
-                GRASS, BUSH, SHRUB,
-                POPPY, DANDELION, OXEYE_DAISY,
+                GRASS, BUSH, SPIKED_PLANT, LEAFY_PLANT, SHRUB,
+                POPPY, DANDELION, OXEYE_DAISY, CORNFLOWER, LILY_OF_THE_VALLEY,
                 MOSS,
                 /* Crop */
                 CARROT_CROP, WILD_CARROTS,
@@ -234,7 +239,7 @@ public class PrimevalBlocks {
                 CABBAGE_CROP, WILD_CABBAGE,
                 BEANS_CROP, WILD_BEANS,
                 POTATO_CROP, WILD_POTATOES,
-                REEDS,
+                REEDS, RIVER_GRASS,
                 /* Tree */
                 OAK_SAPLING,
                 OAK_LEAVES,
@@ -259,7 +264,9 @@ public class PrimevalBlocks {
                 GRASSY_DIRT.asItem(),
                 GRASSY_CLAY.asItem(),
                 GRASS.asItem(),
-                BUSH.asItem());
+                BUSH.asItem(),
+                SPIKED_PLANT.asItem(),
+                LEAFY_PLANT.asItem());
 
         // Block Renderers
         BlockEntityRendererRegistry.register(PIT_KILN_BLOCK_ENTITY, PitKilnBlockEntityRenderer::new);
@@ -289,9 +296,13 @@ public class PrimevalBlocks {
 
         FlammableBlockRegistry.getDefaultInstance().add(GRASS, 60, 100);
         FlammableBlockRegistry.getDefaultInstance().add(BUSH, 60, 100);
+        FlammableBlockRegistry.getDefaultInstance().add(SPIKED_PLANT, 60, 100);
+        FlammableBlockRegistry.getDefaultInstance().add(LEAFY_PLANT, 60, 100);
         FlammableBlockRegistry.getDefaultInstance().add(POPPY, 60, 100);
         FlammableBlockRegistry.getDefaultInstance().add(DANDELION, 60, 100);
         FlammableBlockRegistry.getDefaultInstance().add(OXEYE_DAISY, 60, 100);
+        FlammableBlockRegistry.getDefaultInstance().add(CORNFLOWER, 60, 100);
+        FlammableBlockRegistry.getDefaultInstance().add(LILY_OF_THE_VALLEY, 60, 100);
 
         FlammableBlockRegistry.getDefaultInstance().add(STRAW_BLOCK, 10, 40);
         FlammableBlockRegistry.getDefaultInstance().add(STRAW_STAIRS, 10, 40);

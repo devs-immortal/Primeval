@@ -1,0 +1,11 @@
+{
+  "type": "primeval:quern_grinding",
+  "input": {
+    "item": "primeval:cornflower"
+  },
+  "result": {
+    "item": "primeval:dye_light_blue",
+    "count": 3
+  },
+  "wheelDamage": 1
+}

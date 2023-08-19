@@ -40,6 +40,8 @@ public class PrimevalFeatures {
     public static final TrunkedTreeFeature TRUNKED_TREE_FEATURE = registerFeature(PrimevalMain.getId("trunked_tree"), new TrunkedTreeFeature(TrunkedTreeFeatureConfig.CODEC));
     public static final LayingItemPatchFeature LAYING_ITEM_PATCH_FEATURE = registerFeature(PrimevalMain.getId("laying_item_patch"), new LayingItemPatchFeature(LayingItemPatchFeatureConfig.CODEC));
     public static final MossFeature MOSS_FEATURE = registerFeature(PrimevalMain.getId("growing_moss"), new MossFeature(MultifaceGrowthFeatureConfig.CODEC));
+    public static final RiverGrassFeature RIVER_GRASS_FEATURE = registerFeature(PrimevalMain.getId("river_grass"), new RiverGrassFeature(DefaultFeatureConfig.CODEC));
+    public static final WaterReedsFeature WATER_REEDS_FEATURE = registerFeature(PrimevalMain.getId("water_reed"), new WaterReedsFeature(DefaultFeatureConfig.CODEC));
 
     private static <C extends FeatureConfig, F extends Feature<C>> F registerFeature(Identifier id, F f) {
         return Registry.register(Registry.FEATURE, id, f);
@@ -83,12 +85,18 @@ public class PrimevalFeatures {
 
     private static final RegistryEntry<ConfiguredFeature<RandomPatchFeatureConfig, ?>> CONFIGURED_BUSH_PATCH = register("patch_bush", Feature.RANDOM_PATCH, Configs.BUSH_PATCH);
     public static final RegistryEntry<PlacedFeature> BUSH_PATCH = register("patch_bush", CONFIGURED_BUSH_PATCH, NoiseThresholdCountPlacementModifier.of(-0.8, 4, 5), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
+    private static final RegistryEntry<ConfiguredFeature<RandomPatchFeatureConfig, ?>> CONFIGURED_SPIKED_PLANT_PATCH = register("patch_spiked_plant", Feature.RANDOM_PATCH, Configs.SPIKED_PLANT_PATCH);
+    public static final RegistryEntry<PlacedFeature> SPIKED_PLANT_PATCH = register("patch_spiked_plant", CONFIGURED_SPIKED_PLANT_PATCH, RarityFilterPlacementModifier.of(8), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
+    private static final RegistryEntry<ConfiguredFeature<RandomPatchFeatureConfig, ?>> CONFIGURED_LEAFY_PLANT_PATCH = register("patch_leafy_plant", Feature.RANDOM_PATCH, Configs.LEAFY_PLANT_PATCH);
+    public static final RegistryEntry<PlacedFeature> LEAFY_PLANT_PATCH = register("patch_leafy_plant", CONFIGURED_LEAFY_PLANT_PATCH, RarityFilterPlacementModifier.of(4), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
 
     private static final RegistryEntry<ConfiguredFeature<RandomPatchFeatureConfig, ?>> CONFIGURED_SHRUB_PATCH = register("patch_shrub", Feature.RANDOM_PATCH, Configs.SHRUB_PATCH);
     public static final RegistryEntry<PlacedFeature> SHRUB_PATCH = register("patch_shrub", CONFIGURED_SHRUB_PATCH, RarityFilterPlacementModifier.of(6), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
 
     private static final RegistryEntry<ConfiguredFeature<RandomPatchFeatureConfig, ?>> CONFIGURED_REED_PATCH = register("patch_reed", Feature.RANDOM_PATCH, Configs.REED_PATCH);
-    public static final RegistryEntry<PlacedFeature> REED_PATCH = register("patch_reed", CONFIGURED_REED_PATCH, RarityFilterPlacementModifier.of(27), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.OCEAN_FLOOR_WG), BiomePlacementModifier.of());
+    public static final RegistryEntry<PlacedFeature> REED_PATCH = register("patch_reed", CONFIGURED_REED_PATCH, RarityFilterPlacementModifier.of(54), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.OCEAN_FLOOR_WG), BiomePlacementModifier.of());
+    private static final RegistryEntry<ConfiguredFeature<DefaultFeatureConfig, ?>> CONFIGURED_WATER_REED_PATCH = register("patch_water_reed", PrimevalFeatures.WATER_REEDS_FEATURE, new DefaultFeatureConfig());
+    public static final RegistryEntry<PlacedFeature> WATER_REED_PATCH = register("patch_water_reed", CONFIGURED_WATER_REED_PATCH, RarityFilterPlacementModifier.of(1), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.OCEAN_FLOOR_WG), BiomePlacementModifier.of());
 
     private static final RegistryEntry<ConfiguredFeature<RandomPatchFeatureConfig, ?>> CONFIGURED_POPPY_PATCH = register("patch_poppy", Feature.RANDOM_PATCH, Configs.POPPY_PATCH);
     public static final RegistryEntry<PlacedFeature> POPPY_PATCH = register("patch_poppy", CONFIGURED_POPPY_PATCH, RarityFilterPlacementModifier.of(8), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
@@ -98,6 +106,10 @@ public class PrimevalFeatures {
 
     private static final RegistryEntry<ConfiguredFeature<RandomPatchFeatureConfig, ?>> CONFIGURED_OXEYE_DAISY_PATCH = register("patch_oxeye_daisy", Feature.RANDOM_PATCH, Configs.OXEYE_DAISY_PATCH);
     public static final RegistryEntry<PlacedFeature> OXEYE_DAISY_PATCH = register("patch_oxeye_daisy", CONFIGURED_OXEYE_DAISY_PATCH, RarityFilterPlacementModifier.of(6), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
+    private static final RegistryEntry<ConfiguredFeature<RandomPatchFeatureConfig, ?>> CONFIGURED_CORNFLOWER_PATCH = register("patch_cornflower", Feature.RANDOM_PATCH, Configs.CORNFLOWER_PATCH);
+    public static final RegistryEntry<PlacedFeature> CORNFLOWER_PATCH = register("patch_cornflower", CONFIGURED_CORNFLOWER_PATCH, RarityFilterPlacementModifier.of(5), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
+    private static final RegistryEntry<ConfiguredFeature<RandomPatchFeatureConfig, ?>> CONFIGURED_LILY_OF_THE_VALLEY_PATCH = register("patch_lily_of_the_valley", Feature.RANDOM_PATCH, Configs.LILY_OF_THE_VALLEY_PATCH);
+    public static final RegistryEntry<PlacedFeature> LILY_OF_THE_VALLEY_PATCH = register("patch_lily_of_the_valley", CONFIGURED_LILY_OF_THE_VALLEY_PATCH, RarityFilterPlacementModifier.of(9), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
 
     private static final RegistryEntry<ConfiguredFeature<RandomPatchFeatureConfig, ?>> CONFIGURED_WILD_CARROTS_PATCH = register("patch_wild_carrots", Feature.RANDOM_PATCH, Configs.WILD_CARROTS_PATCH);
     public static final RegistryEntry<PlacedFeature> WILD_CARROTS_PATCH = register("patch_wild_carrots", CONFIGURED_WILD_CARROTS_PATCH, RarityFilterPlacementModifier.of(55), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
@@ -113,6 +125,8 @@ public class PrimevalFeatures {
 
     private static final RegistryEntry<ConfiguredFeature<MultifaceGrowthFeatureConfig, ?>> CONFIGURED_MOSS_RARE = register("moss_rare", PrimevalFeatures.MOSS_FEATURE, Configs.MOSS_RARE);
     public static final RegistryEntry<PlacedFeature> MOSS_RARE = register("moss_rare", CONFIGURED_MOSS_RARE, CountPlacementModifier.of(UniformIntProvider.create(50, 100)), HeightRangePlacementModifier.uniform(YOffset.fixed(60), YOffset.getTop()), SquarePlacementModifier.of(), SurfaceThresholdFilterPlacementModifier.of(Heightmap.Type.OCEAN_FLOOR_WG, Integer.MIN_VALUE, -13), BiomePlacementModifier.of());
+    private static final RegistryEntry<ConfiguredFeature<DefaultFeatureConfig, ?>> CONFIGURED_RIVER_GRASS = register("river_grass", PrimevalFeatures.RIVER_GRASS_FEATURE, new DefaultFeatureConfig());
+    public static final RegistryEntry<PlacedFeature> RIVER_GRASS = register("river_grass", CONFIGURED_RIVER_GRASS, SquarePlacementModifier.of(), PlacedFeatures.OCEAN_FLOOR_WG_HEIGHTMAP, CountPlacementModifier.of(17), BiomePlacementModifier.of());
 
     // ITEM PATCHES
     private static final RegistryEntry<ConfiguredFeature<LayingItemPatchFeatureConfig, ?>> CONFIGURED_STICK_ITEM_PATCH = register("laying_item_patch_stick", LAYING_ITEM_PATCH_FEATURE, Configs.STICK_ITEM_PATCH);
@@ -151,7 +165,6 @@ public class PrimevalFeatures {
     public static final RegistryEntry<PlacedFeature> FOREST_DENSE_OAK_TRUNKED_TREE = register("trunked_tree_dense_oak_forest", CONFIGURED_OAK_TRUNKED_TREE, getCommonWeightedCountPlacementModifier(1, 3), SquarePlacementModifier.of(), SurfaceWaterDepthFilterPlacementModifier.of(0), HeightmapPlacementModifier.of(Heightmap.Type.OCEAN_FLOOR), BlockFilterPlacementModifier.of(BlockPredicate.wouldSurvive(PrimevalBlocks.OAK_SAPLING.getDefaultState(), Vec3i.ZERO)), BiomePlacementModifier.of());
     public static final RegistryEntry<PlacedFeature> FOREST_BIRCH_TRUNKED_TREE = register("trunked_tree_birch_forest", CONFIGURED_BIRCH_TRUNKED_TREE, getWeightedCountPlacementModifier(1, 2, 6), SquarePlacementModifier.of(), SurfaceWaterDepthFilterPlacementModifier.of(0), HeightmapPlacementModifier.of(Heightmap.Type.OCEAN_FLOOR), BlockFilterPlacementModifier.of(BlockPredicate.wouldSurvive(PrimevalBlocks.BIRCH_SAPLING.getDefaultState(), Vec3i.ZERO)), BiomePlacementModifier.of());
     public static final RegistryEntry<PlacedFeature> FOREST_SPRUCE_TRUNKED_TREE = register("trunked_tree_taiga", CONFIGURED_SPRUCE_TRUNKED_TREE, getWeightedCountPlacementModifier(1, 2, 6), SquarePlacementModifier.of(), SurfaceWaterDepthFilterPlacementModifier.of(0), HeightmapPlacementModifier.of(Heightmap.Type.OCEAN_FLOOR), BlockFilterPlacementModifier.of(BlockPredicate.wouldSurvive(PrimevalBlocks.SPRUCE_SAPLING.getDefaultState(), Vec3i.ZERO)), BiomePlacementModifier.of());
-
 
     protected static <FC extends FeatureConfig, F extends Feature<FC>> RegistryEntry<ConfiguredFeature<FC, ?>> register(String id, F feature, FC featureConfig) {
         return register(BuiltinRegistries.CONFIGURED_FEATURE, id, new ConfiguredFeature<>(feature, featureConfig));
@@ -292,6 +305,18 @@ public class PrimevalFeatures {
                 3,
                 blockProviderFeature(SimpleBlockStateProvider.of(PrimevalBlocks.BUSH.getDefaultState()))
         );
+        public static final RandomPatchFeatureConfig SPIKED_PLANT_PATCH = new RandomPatchFeatureConfig(
+                12,
+                7,
+                3,
+                blockProviderFeature(SimpleBlockStateProvider.of(PrimevalBlocks.SPIKED_PLANT.getDefaultState()))
+        );
+        public static final RandomPatchFeatureConfig LEAFY_PLANT_PATCH = new RandomPatchFeatureConfig(
+                12,
+                7,
+                3,
+                blockProviderFeature(SimpleBlockStateProvider.of(PrimevalBlocks.LEAFY_PLANT.getDefaultState()))
+        );
         public static final RandomPatchFeatureConfig SHRUB_PATCH = new RandomPatchFeatureConfig(
                 6,
                 5,
@@ -321,6 +346,18 @@ public class PrimevalFeatures {
                 7,
                 3,
                 blockProviderFeature(SimpleBlockStateProvider.of(PrimevalBlocks.OXEYE_DAISY.getDefaultState()))
+        );
+        public static final RandomPatchFeatureConfig CORNFLOWER_PATCH = new RandomPatchFeatureConfig(
+                6,
+                7,
+                3,
+                blockProviderFeature(SimpleBlockStateProvider.of(PrimevalBlocks.CORNFLOWER.getDefaultState()))
+        );
+        public static final RandomPatchFeatureConfig LILY_OF_THE_VALLEY_PATCH = new RandomPatchFeatureConfig(
+                6,
+                7,
+                3,
+                blockProviderFeature(SimpleBlockStateProvider.of(PrimevalBlocks.LILY_OF_THE_VALLEY.getDefaultState()))
         );
         public static final RandomPatchFeatureConfig WILD_CARROTS_PATCH = new RandomPatchFeatureConfig(
                 12,

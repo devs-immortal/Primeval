@@ -46,11 +46,11 @@ public class PrimevalWorld {
             buildGeneratorSettings(
                     UNDERGROUND_FEATURES_NO_TIN,
                     List.of(PLAINS_OAK_TRUNKED_TREE,
-                            MOSS_RARE,
+                            MOSS_RARE, RIVER_GRASS,
                             STICK_ITEM_PATCH, FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
                             NATIVE_COPPER_ITEM_PATCH, MALACHITE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, SPHALERITE_ZINC_ITEM_PATCH,
                             PLAINS_GRASS_PATCH, BUSH_PATCH, SHRUB_PATCH, POPPY_PATCH, DANDELION_PATCH, OXEYE_DAISY_PATCH,
-                            WILD_CARROTS_PATCH, WILD_WHEAT_PATCH
+                            WILD_CARROTS_PATCH, WILD_WHEAT_PATCH, WATER_REED_PATCH
                     )
             )
     ));
@@ -58,11 +58,11 @@ public class PrimevalWorld {
             buildGeneratorSettings(
                     UNDERGROUND_FEATURES_NO_ZINC,
                     List.of(FOREST_OAK_TRUNKED_TREE,
-                            MOSS_RARE,
+                            MOSS_RARE, RIVER_GRASS,
                             STICK_ITEM_PATCH, FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
                             NATIVE_COPPER_ITEM_PATCH, MALACHITE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, CASSITERITE_TIN_ITEM_PATCH,
-                            OAK_FOREST_GRASS_PATCH, BUSH_PATCH, POPPY_PATCH,
-                            WILD_BEANS_PATCH, WILD_POTATO_PATCH
+                            OAK_FOREST_GRASS_PATCH, SPIKED_PLANT_PATCH, POPPY_PATCH,
+                            WILD_BEANS_PATCH, WILD_POTATO_PATCH, WATER_REED_PATCH
                     )
             )
     ));
@@ -70,11 +70,11 @@ public class PrimevalWorld {
             buildGeneratorSettings(
                     UNDERGROUND_FEATURES_NO_ZINC,
                     List.of(FOREST_DENSE_OAK_TRUNKED_TREE,
-                            MOSS_RARE,
+                            MOSS_RARE, RIVER_GRASS,
                             STICK_ITEM_PATCH, FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
                             NATIVE_COPPER_ITEM_PATCH, MALACHITE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, CASSITERITE_TIN_ITEM_PATCH,
-                            SPARSE_GRASS_PATCH, BUSH_PATCH, SHRUB_PATCH, POPPY_PATCH,
-                            WILD_BEANS_PATCH, WILD_POTATO_PATCH
+                            SPARSE_GRASS_PATCH, SPIKED_PLANT_PATCH, SHRUB_PATCH, POPPY_PATCH,
+                            WILD_BEANS_PATCH, WILD_POTATO_PATCH, WATER_REED_PATCH
                     )
             )
     ));
@@ -82,11 +82,11 @@ public class PrimevalWorld {
             buildGeneratorSettings(
                     UNDERGROUND_FEATURES_NO_ZINC,
                     List.of(FOREST_BIRCH_TRUNKED_TREE,
-                            MOSS_RARE,
+                            MOSS_RARE, RIVER_GRASS,
                             STICK_ITEM_PATCH, FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
                             NATIVE_COPPER_ITEM_PATCH, MALACHITE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, CASSITERITE_TIN_ITEM_PATCH,
                             PLAINS_GRASS_PATCH, DANDELION_PATCH, OXEYE_DAISY_PATCH,
-                            WILD_CABBAGE_PATCH, REED_PATCH
+                            WILD_CABBAGE_PATCH, REED_PATCH, WATER_REED_PATCH
                     )
             )
     ));
@@ -94,10 +94,10 @@ public class PrimevalWorld {
             buildGeneratorSettings(
                     UNDERGROUND_FEATURES_ALL,
                     List.of(FOREST_SPRUCE_TRUNKED_TREE,
-                            MOSS_RARE,
+                            MOSS_RARE, RIVER_GRASS,
                             STICK_ITEM_PATCH, FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
                             NATIVE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, CASSITERITE_TIN_ITEM_PATCH, SPHALERITE_ZINC_ITEM_PATCH,
-                            SPARSE_GRASS_PATCH, BUSH_PATCH, SHRUB_PATCH, DANDELION_PATCH,
+                            SPARSE_GRASS_PATCH, LEAFY_PLANT_PATCH, SHRUB_PATCH, DANDELION_PATCH, LILY_OF_THE_VALLEY_PATCH,
                             WILD_CARROTS_PATCH, WILD_BEANS_PATCH
                     )
             )
@@ -108,7 +108,7 @@ public class PrimevalWorld {
                     List.of(MOSS_RARE,
                             FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
                             NATIVE_COPPER_ITEM_PATCH, MALACHITE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, CASSITERITE_TIN_ITEM_PATCH, SPHALERITE_ZINC_ITEM_PATCH,
-                            SPARSE_GRASS_PATCH, OXEYE_DAISY_PATCH,
+                            SPARSE_GRASS_PATCH, LEAFY_PLANT_PATCH, LILY_OF_THE_VALLEY_PATCH,
                             WILD_WHEAT_PATCH
                     )
             )
@@ -127,7 +127,7 @@ public class PrimevalWorld {
             buildGeneratorSettings(
                     UNDERGROUND_FEATURES_NO_TIN,
                     List.of(STICK_ITEM_PATCH, ROCK_ITEM_PATCH,
-                            SPARSE_GRASS_PATCH
+                            SPARSE_GRASS_PATCH, CORNFLOWER_PATCH
                     )
             )
     ));

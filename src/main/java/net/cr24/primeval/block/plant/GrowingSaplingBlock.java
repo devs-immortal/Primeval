@@ -46,8 +46,4 @@ public class GrowingSaplingBlock extends PrimevalPlantBlock {
         }
         return true;
     }
-
-    public OffsetType getOffsetType() {
-        return OffsetType.NONE;
-    }
 }
