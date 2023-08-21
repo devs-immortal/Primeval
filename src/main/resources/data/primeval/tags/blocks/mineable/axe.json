@@ -65,6 +65,10 @@
     "primeval:wicker_basket",
     
     "primeval:rope",
-    "primeval:rope_ladder"
+    "primeval:rope_ladder",
+    
+    "primeval:oak_log_pile",
+    "primeval:birch_log_pile",
+    "primeval:spruce_log_pile"
   ]
 }

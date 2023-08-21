@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class WeightedBlockItem extends BlockItem implements IWeightedItem{
+public class WeightedBlockItem extends BlockItem implements IWeightedItem {
 
     private final Weight weight;
     private final Size size;

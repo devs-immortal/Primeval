@@ -1,0 +1,7 @@
+{
+  "parent": "primeval:block/template_log_pile_4",
+  "textures": {
+    "top": "primeval:block/spruce_log_top_3",
+    "side": "primeval:block/spruce_log_3"
+  }
+}

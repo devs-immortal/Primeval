@@ -42,6 +42,7 @@ public class PrimevalItems {
 
     private static Item.Settings GROUP_ITEMS() { return new Item.Settings().group(PRIMEVAL_ITEMS);}
     private static Item.Settings GROUP_TOOLS() { return new Item.Settings().group(PRIMEVAL_TOOLS);}
+    private static Item.Settings GROUP_BLOCKS() { return new Item.Settings().group(PRIMEVAL_BLOCKS);}
 
 
     /* Items */
@@ -77,6 +78,11 @@ public class PrimevalItems {
     public static final Item FIRED_CLAY_TILE = registerItem("fired_clay_tile", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.SMALL));
     public static final Item CLAY_JUG = registerItem("clay_jug", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
     public static final Item CLAY_VESSEL = registerItem("clay_vessel", new WeightedItem(GROUP_ITEMS(), Weight.NORMAL, Size.MEDIUM));
+
+    // Logs
+    public static final Item OAK_LOG = registerItem("oak_log", new LogItem(PrimevalBlocks.OAK_LOG, OAK_LOG_PILE, GROUP_BLOCKS(), Weight.HEAVY, Size.LARGE));
+    public static final Item BIRCH_LOG = registerItem("birch_log", new LogItem(PrimevalBlocks.BIRCH_LOG, BIRCH_LOG_PILE, GROUP_BLOCKS(), Weight.HEAVY, Size.LARGE));
+    public static final Item SPRUCE_LOG = registerItem("spruce_log", new LogItem(PrimevalBlocks.SPRUCE_LOG, SPRUCE_LOG_PILE, GROUP_BLOCKS(), Weight.HEAVY, Size.LARGE));
 
     // Edible Items
     public static final Item PORKCHOP = registerItem("porkchop", new WeightedItem(new Item.Settings().group(PRIMEVAL_FOODS).food(PrimevalFoodComponents.PORKCHOP), Weight.NORMAL, Size.MEDIUM));
