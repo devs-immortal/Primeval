@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "primeval:daub",
+    "primeval:framed_daub",
+    "primeval:framed_pillar_daub",
+    "primeval:framed_cross_daub",
+    "primeval:framed_inverted_cross_daub",
+    "primeval:framed_x_daub",
+    "primeval:framed_plus_daub",
+    "primeval:framed_divided_daub"
+  ]
+}

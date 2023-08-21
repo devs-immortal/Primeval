@@ -7,7 +7,8 @@
     "world.GameRulesMixin",
     "entity.mob.AbstractSkeletonEntityMixin",
     "entity.mob.ZombieEntityMixin",
-    "entity.passive.PigEntityMixin"
+    "entity.passive.PigEntityMixin",
+    "item.ItemStackMixin"
   ],
   "client": [
     "client.color.block.BlockColorsMixin",

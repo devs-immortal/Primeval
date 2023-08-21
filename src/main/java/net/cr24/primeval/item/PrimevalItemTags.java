@@ -10,6 +10,8 @@ public class PrimevalItemTags {
     public static final TagKey<Item> BURNABLE_SHORT = register("burnable_short");
     public static final TagKey<Item> BURNABLE_LONG = register("burnable_long");
 
+    public static final TagKey<Item> BURNS_TO_ASH = register("burns_to_ash");
+
     public static final TagKey<Item> KNIVES = register("knives");
     public static final TagKey<Item> LOGS = register("logs");
     public static final TagKey<Item> ROCKS = register("rocks");
