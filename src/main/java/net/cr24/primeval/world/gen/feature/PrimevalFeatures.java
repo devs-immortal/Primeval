@@ -49,21 +49,6 @@ public class PrimevalFeatures {
 
     /* CONFIGURED FEATURES */
     // ORES
-    private static final RegistryEntry<ConfiguredFeature<OreClusterFeatureConfig, ?>> CONFIGURED_NATIVE_COPPER_CLUSTER = register("ore_copper_native", ORE_CLUSTER_FEATURE, Configs.NATIVE_COPPER_ORE_CLUSTER);
-    public static final RegistryEntry<PlacedFeature> NATIVE_COPPER_ORE_CLUSTER = register("ore_copper_native", CONFIGURED_NATIVE_COPPER_CLUSTER, RarityFilterPlacementModifier.of(6), SquarePlacementModifier.of(), getHeightModifier(5,160), BiomePlacementModifier.of());
-
-    private static final RegistryEntry<ConfiguredFeature<OreClusterFeatureConfig, ?>> CONFIGURED_MALACHITE_COPPER_CLUSTER = register("ore_copper_malachite", ORE_CLUSTER_FEATURE, Configs.MALACHITE_COPPER_ORE_CLUSTER);
-    public static final RegistryEntry<PlacedFeature> MALACHITE_COPPER_ORE_CLUSTER = register("ore_copper_malachite", CONFIGURED_MALACHITE_COPPER_CLUSTER, RarityFilterPlacementModifier.of(10), SquarePlacementModifier.of(), getHeightModifier(-20,120), BiomePlacementModifier.of());
-
-    private static final RegistryEntry<ConfiguredFeature<OreClusterFeatureConfig, ?>> CONFIGURED_CASSITERITE_TIN_CLUSTER = register("ore_tin_cassiterite", ORE_CLUSTER_FEATURE, Configs.CASSITERITE_TIN_ORE_CLUSTER);
-    public static final RegistryEntry<PlacedFeature> CASSITERITE_TIN_ORE_CLUSTER = register("ore_tin_cassiterite", CONFIGURED_CASSITERITE_TIN_CLUSTER, RarityFilterPlacementModifier.of(12), SquarePlacementModifier.of(), getHeightModifier(30,100), BiomePlacementModifier.of());
-
-    private static final RegistryEntry<ConfiguredFeature<OreClusterFeatureConfig, ?>> CONFIGURED_SPHALERITE_ZINC_CLUSTER = register("ore_zinc_sphalerite", ORE_CLUSTER_FEATURE, Configs.SPHALERITE_ZINC_ORE_CLUSTER);
-    public static final RegistryEntry<PlacedFeature> SPHALERITE_ZINC_ORE_CLUSTER = register("ore_zinc_sphalerite", CONFIGURED_SPHALERITE_ZINC_CLUSTER, RarityFilterPlacementModifier.of(14), SquarePlacementModifier.of(), getHeightModifier(-20,120), BiomePlacementModifier.of());
-
-    private static final RegistryEntry<ConfiguredFeature<OreClusterFeatureConfig, ?>> CONFIGURED_LAZURITE_CLUSTER = register("ore_lazurite", ORE_CLUSTER_FEATURE, Configs.LAZURITE_ORE_CLUSTER);
-    public static final RegistryEntry<PlacedFeature> LAZURITE_ORE_CLUSTER = register("ore_lazurite", CONFIGURED_LAZURITE_CLUSTER, RarityFilterPlacementModifier.of(18), SquarePlacementModifier.of(), getHeightModifier(-60,40), BiomePlacementModifier.of());
-
     private static final RegistryEntry<ConfiguredFeature<OreFeatureConfig, ?>> CONFIGURED_FOSSIL_ORE_BLOBS = register("ore_fossil", Feature.ORE, Configs.FOSSIL_ORE_BLOBS);
     public static final RegistryEntry<PlacedFeature> FOSSIL_ORE_BLOBS = register("ore_fossil", CONFIGURED_FOSSIL_ORE_BLOBS, CountPlacementModifier.of(6), SquarePlacementModifier.of(), getHeightModifier(-32,80), BiomePlacementModifier.of());
 

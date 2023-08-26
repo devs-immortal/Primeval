@@ -80,7 +80,7 @@ public class OreFieldGenerator {
         }
 
         public void generate(StructureWorldAccess world, StructureAccessor structureAccessor, ChunkGenerator chunkGenerator, Random random, BlockBox chunkBox, ChunkPos chunkPos, BlockPos pivot) {
-            if (this.adjustToAverageHeight(world, chunkBox, -24)) {
+            if (this.adjustToAverageHeight(world, chunkBox, height)) {
                 for (int i = 0; i < ballParams.length; i += 4) {
                     Ball b = new Ball(ballParams[i], ballParams[i + 1], ballParams[i + 2], ballParams[i + 3], richness, largeState, mediumState, smallState, extraState);
                     b.generate(this, world, chunkBox, random);

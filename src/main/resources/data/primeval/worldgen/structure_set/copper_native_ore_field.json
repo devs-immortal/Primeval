@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "primeval:copper_native_ore_field",
+      "weight": 1
+    } 
+  ],
+  "placement": {
+    "salt": 42069,
+    "spacing": 16,
+    "separation": 3,
+    "type": "minecraft:random_spread"
+  }
+}

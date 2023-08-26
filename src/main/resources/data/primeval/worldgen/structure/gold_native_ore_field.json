@@ -1,6 +1,6 @@
 {
-  "type": "primeval:ore_field",
-  "biomes": "#primeval:has_native_copper",
+  "type": "primeval:gold_native_ore_field",
+  "biomes": "#primeval:has_gold",
   "step": "surface_structures",
   "spawn_overrides": {},
   "start_height": {
