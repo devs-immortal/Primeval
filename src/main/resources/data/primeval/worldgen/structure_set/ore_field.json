@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "primeval:ore_field",
+      "weight": 1
+    } 
+  ],
+  "placement": {
+    "salt": 42069,
+    "spacing": 24,
+    "separation": 4,
+    "type": "minecraft:random_spread"
+  }
+}

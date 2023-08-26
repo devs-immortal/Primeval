@@ -1,12 +1,8 @@
 package net.cr24.primeval.world;
 
 import net.cr24.primeval.PrimevalMain;
-import net.cr24.primeval.world.gen.feature.PrimevalFeatures;
-import net.minecraft.client.gui.screen.world.CreateWorldScreen;
-import net.minecraft.client.realms.dto.RealmsServer;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
-import net.minecraft.entity.passive.PigEntity;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryEntry;
@@ -22,29 +18,16 @@ import static net.cr24.primeval.world.gen.feature.PrimevalFeatures.*;
 public class PrimevalWorld {
 
     /* BIOMES */
-    public static final BiomeEffects UNIVERSAL_EFFECTS = new BiomeEffects.Builder() .skyColor(7907327).fogColor(12638463).grassColor(9551193).waterColor(5404090).waterFogColor(329011).build();
+    public static final BiomeEffects UNIVERSAL_EFFECTS = new BiomeEffects.Builder().skyColor(7907327).fogColor(12638463).grassColor(9551193).waterColor(5404090).waterFogColor(329011).build();
 
-    public static final List<RegistryEntry<PlacedFeature>> UNDERGROUND_FEATURES_NO_ZINC = List.of(
-            NATIVE_COPPER_ORE_CLUSTER, MALACHITE_COPPER_ORE_CLUSTER, CASSITERITE_TIN_ORE_CLUSTER, LAZURITE_ORE_CLUSTER,
-            DIRT_ORE_BLOBS, GRAVEL_ORE_BLOBS, FOSSIL_ORE_BLOBS
-    );
-    public static final List<RegistryEntry<PlacedFeature>> UNDERGROUND_FEATURES_NO_TIN = List.of(
-            NATIVE_COPPER_ORE_CLUSTER, MALACHITE_COPPER_ORE_CLUSTER, SPHALERITE_ZINC_ORE_CLUSTER, LAZURITE_ORE_CLUSTER,
-            DIRT_ORE_BLOBS, GRAVEL_ORE_BLOBS, FOSSIL_ORE_BLOBS
-    );
-    public static final List<RegistryEntry<PlacedFeature>> UNDERGROUND_FEATURES_NO_COPPER = List.of(
-            CASSITERITE_TIN_ORE_CLUSTER, SPHALERITE_ZINC_ORE_CLUSTER, LAZURITE_ORE_CLUSTER,
-            DIRT_ORE_BLOBS, GRAVEL_ORE_BLOBS, FOSSIL_ORE_BLOBS
-    );
-    public static final List<RegistryEntry<PlacedFeature>> UNDERGROUND_FEATURES_ALL = List.of(
-            NATIVE_COPPER_ORE_CLUSTER, MALACHITE_COPPER_ORE_CLUSTER, CASSITERITE_TIN_ORE_CLUSTER, SPHALERITE_ZINC_ORE_CLUSTER, LAZURITE_ORE_CLUSTER,
+    public static final List<RegistryEntry<PlacedFeature>> UNDERGROUND_FEATURES = List.of(
             DIRT_ORE_BLOBS, GRAVEL_ORE_BLOBS, FOSSIL_ORE_BLOBS
     );
 
     // INLAND
     public static final RegistryEntry<Biome> PLAINS = registerBiome(getBiomeKey("inland/plains"), createBiome(
             buildGeneratorSettings(
-                    UNDERGROUND_FEATURES_NO_TIN,
+                    UNDERGROUND_FEATURES,
                     List.of(PLAINS_OAK_TRUNKED_TREE,
                             MOSS_RARE, RIVER_GRASS,
                             STICK_ITEM_PATCH, FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
@@ -56,7 +39,7 @@ public class PrimevalWorld {
     ));
     public static final RegistryEntry<Biome> OAK_FOREST = registerBiome(getBiomeKey("inland/oak_forest"), createBiome(
             buildGeneratorSettings(
-                    UNDERGROUND_FEATURES_NO_ZINC,
+                    UNDERGROUND_FEATURES,
                     List.of(FOREST_OAK_TRUNKED_TREE,
                             MOSS_RARE, RIVER_GRASS,
                             STICK_ITEM_PATCH, FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
@@ -68,7 +51,7 @@ public class PrimevalWorld {
     ));
     public static final RegistryEntry<Biome> DENSE_OAK_FOREST = registerBiome(getBiomeKey("inland/dense_oak_forest"), createBiome(
             buildGeneratorSettings(
-                    UNDERGROUND_FEATURES_NO_ZINC,
+                    UNDERGROUND_FEATURES,
                     List.of(FOREST_DENSE_OAK_TRUNKED_TREE,
                             MOSS_RARE, RIVER_GRASS,
                             STICK_ITEM_PATCH, FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
@@ -80,7 +63,7 @@ public class PrimevalWorld {
     ));
     public static final RegistryEntry<Biome> BIRCH_FOREST = registerBiome(getBiomeKey("inland/birch_forest"), createBiome(
             buildGeneratorSettings(
-                    UNDERGROUND_FEATURES_NO_ZINC,
+                    UNDERGROUND_FEATURES,
                     List.of(FOREST_BIRCH_TRUNKED_TREE,
                             MOSS_RARE, RIVER_GRASS,
                             STICK_ITEM_PATCH, FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
@@ -92,7 +75,7 @@ public class PrimevalWorld {
     ));
     public static final RegistryEntry<Biome> TAIGA = registerBiome(getBiomeKey("inland/taiga"), createBiome(
             buildGeneratorSettings(
-                    UNDERGROUND_FEATURES_ALL,
+                    UNDERGROUND_FEATURES,
                     List.of(FOREST_SPRUCE_TRUNKED_TREE,
                             MOSS_RARE, RIVER_GRASS,
                             STICK_ITEM_PATCH, FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
@@ -104,7 +87,7 @@ public class PrimevalWorld {
     ));
     public static final RegistryEntry<Biome> ROCKY_OUTCROP = registerBiome(getBiomeKey("inland/rocky_outcrop"), createBiome(
             buildGeneratorSettings(
-                    UNDERGROUND_FEATURES_ALL,
+                    UNDERGROUND_FEATURES,
                     List.of(MOSS_RARE,
                             FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
                             NATIVE_COPPER_ITEM_PATCH, MALACHITE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, CASSITERITE_TIN_ITEM_PATCH, SPHALERITE_ZINC_ITEM_PATCH,
@@ -115,7 +98,7 @@ public class PrimevalWorld {
     ));
     public static final RegistryEntry<Biome> CRUMBLING_CLIFFS = registerBiome(getBiomeKey("inland/crumbling_cliffs"), createBiome(
             buildGeneratorSettings(
-                    UNDERGROUND_FEATURES_ALL,
+                    UNDERGROUND_FEATURES,
                     List.of(FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
                             NATIVE_COPPER_ITEM_PATCH, MALACHITE_COPPER_ITEM_PATCH, MIXED_COPPER_ITEM_PATCH, CASSITERITE_TIN_ITEM_PATCH, SPHALERITE_ZINC_ITEM_PATCH
                     )
@@ -125,7 +108,7 @@ public class PrimevalWorld {
     // COASTAL
     public static final RegistryEntry<Biome> SANDY_SHORE = registerBiome(getBiomeKey("coastal/sandy_shore"), createBiome(
             buildGeneratorSettings(
-                    UNDERGROUND_FEATURES_NO_TIN,
+                    UNDERGROUND_FEATURES,
                     List.of(STICK_ITEM_PATCH, ROCK_ITEM_PATCH,
                             SPARSE_GRASS_PATCH, CORNFLOWER_PATCH
                     )
@@ -133,7 +116,7 @@ public class PrimevalWorld {
     ));
     public static final RegistryEntry<Biome> ROCKY_SHORE = registerBiome(getBiomeKey("coastal/rocky_shore"), createBiome(
             buildGeneratorSettings(
-                    UNDERGROUND_FEATURES_NO_TIN,
+                    UNDERGROUND_FEATURES,
                     List.of(STICK_ITEM_PATCH, FLINT_ITEM_PATCH, ROCK_ITEM_PATCH,
                             WILD_CARROTS_PATCH
                     )
@@ -143,11 +126,10 @@ public class PrimevalWorld {
     // ETC
     public static final RegistryEntry<Biome> OCEAN = registerBiome(getBiomeKey("ocean"), createBiome(
             buildGeneratorSettings(
-                    UNDERGROUND_FEATURES_ALL,
+                    UNDERGROUND_FEATURES,
                     List.of()
             )
     ));
-
 
     public static void init() {}
 

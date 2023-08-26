@@ -9,6 +9,7 @@ import net.cr24.primeval.recipe.PrimevalRecipes;
 import net.cr24.primeval.recipe.rei.PrimevalREIIntegration;
 import net.cr24.primeval.util.PrimevalSoundEvents;
 import net.cr24.primeval.world.PrimevalWorld;
+import net.cr24.primeval.world.gen.structure.PrimevalStructures;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -27,6 +28,7 @@ public class PrimevalMain implements ModInitializer, ClientModInitializer {
         PrimevalFluids.init();
         PrimevalRecipes.init();
         PrimevalWorld.init();
+        PrimevalStructures.init();
         PrimevalVillagerTrades.init();
         PrimevalSoundEvents.init();
     }
