@@ -6,8 +6,9 @@ import net.minecraft.recipe.Ingredient;
 public class PrimevalToolMaterials {
 
     public static final float BLUNT_DAMAGE_MULTIPLIER = 0.5f;
-    public static final float KNIFE_DAMAGE_MULTIPLIER = 1.5f;
+    public static final float KNIFE_DAMAGE_MULTIPLIER = 1.75f;
     public static final float SWORD_DAMAGE_MULTIPLIER = 2f;
+    public static final float SPEAR_DAMAGE_MULTIPLIER = 3f;
 
     public static final FlintMaterial FLINT = new FlintMaterial();
     public static final CopperMaterial COPPER = new CopperMaterial();

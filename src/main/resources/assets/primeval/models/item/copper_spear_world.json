@@ -1,0 +1,6 @@
+{
+  "parent": "primeval:item/48x_handheld_oversized",
+  "textures": {
+    "layer0": "primeval:item/copper_spear_world"
+  }
+}

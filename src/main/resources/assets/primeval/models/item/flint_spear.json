@@ -1,0 +1,14 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "primeval:item/flint_spear"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "incubus_core:in_world": 1.0
+      },
+      "model": "primeval:item/flint_spear_world"
+    }
+  ]
+}

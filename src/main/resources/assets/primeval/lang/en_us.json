@@ -332,43 +332,44 @@
     
     "item.primeval.copper_axe_head": "Copper Axe Head",
     "item.primeval.copper_chisel_head": "Copper Chisel Head",
-    "item.primeval.copper_knife_blade": "Copper Knife Blade",
+    "item.primeval.copper_knife_blade": "Copper Small Blade",
     "item.primeval.copper_pickaxe_head": "Copper Pickaxe Head",
     "item.primeval.copper_shovel_head": "Copper Shovel Head",
-    "item.primeval.copper_sword_blade": "Copper Sword Blade",
+    "item.primeval.copper_sword_blade": "Copper Medium Blade",
     "item.primeval.copper_hoe_head": "Copper Hoe Head",
     
     "item.primeval.bronze_axe_head": "Bronze Axe Head",
     "item.primeval.bronze_chisel_head": "Bronze Chisel Head",
-    "item.primeval.bronze_knife_blade": "Bronze Knife Blade",
+    "item.primeval.bronze_knife_blade": "Bronze Small Blade",
     "item.primeval.bronze_pickaxe_head": "Bronze Pickaxe Head",
     "item.primeval.bronze_shovel_head": "Bronze Shovel Head",
-    "item.primeval.bronze_sword_blade": "Bronze Sword Blade",
+    "item.primeval.bronze_sword_blade": "Bronze Medium Blade",
     "item.primeval.bronze_hoe_head": "Bronze Hoe Head",
     
     
     "item.primeval.clay_mold_ingot": "Clay Ingot Mold",
     "item.primeval.clay_mold_axe_head": "Clay Axe Head Mold",
     "item.primeval.clay_mold_chisel_head": "Clay Chisel Head Mold",
-    "item.primeval.clay_mold_knife_blade": "Clay Knife Blade Mold",
+    "item.primeval.clay_mold_knife_blade": "Clay Small Blade Mold",
     "item.primeval.clay_mold_pickaxe_head": "Clay Pickaxe Head Mold",
     "item.primeval.clay_mold_shovel_head": "Clay Shovel Head Mold",
-    "item.primeval.clay_mold_sword_blade": "Clay Sword Blade Mold",
+    "item.primeval.clay_mold_sword_blade": "Clay Medium Blade Mold",
     "item.primeval.clay_mold_hoe_head": "Clay Hoe Head Mold",
     
     "item.primeval.fired_clay_mold_ingot": "Fired Clay Ingot Mold",
     "item.primeval.fired_clay_mold_axe_head": "Fired Clay Axe Head Mold",
     "item.primeval.fired_clay_mold_chisel_head": "Fired Clay Chisel Head Mold",
-    "item.primeval.fired_clay_mold_knife_blade": "Fired Clay Knife Blade Mold",
+    "item.primeval.fired_clay_mold_knife_blade": "Fired Clay Small Blade Mold",
     "item.primeval.fired_clay_mold_pickaxe_head": "Fired Clay Pickaxe Head Mold",
     "item.primeval.fired_clay_mold_shovel_head": "Fired Clay Shovel Head Mold",
-    "item.primeval.fired_clay_mold_sword_blade": "Fired Clay Sword Blade Mold",
+    "item.primeval.fired_clay_mold_sword_blade": "Fired Clay Medium Blade Mold",
     "item.primeval.fired_clay_mold_hoe_head": "Fired Clay Hoe Head Mold",
     
     
     "item.primeval.flint_axe": "Flint Hatchet",
     "item.primeval.flint_knife": "Flint Knife",
     "item.primeval.flint_shovel": "Flint Shovel",
+    "item.primeval.flint_spear": "Flint Spear",
     
     "item.primeval.copper_axe": "Copper Axe",
     "item.primeval.copper_chisel": "Copper Chisel",
@@ -377,6 +378,7 @@
     "item.primeval.copper_shovel": "Copper Shovel",
     "item.primeval.copper_sword": "Copper Shortsword",
     "item.primeval.copper_hoe": "Copper Hoe",
+    "item.primeval.copper_spear": "Copper Spear",
     
     "item.primeval.bronze_axe": "Bronze Axe",
     "item.primeval.bronze_chisel": "Bronze Chisel",
@@ -385,6 +387,7 @@
     "item.primeval.bronze_shovel": "Bronze Shovel",
     "item.primeval.bronze_sword": "Bronze Shortsword",
     "item.primeval.bronze_hoe": "Bronze Hoe",
+    "item.primeval.bronze_spear": "Bronze Spear",
     
     "item.primeval.wooden_bucket": "Wooden Bucket",
     "item.primeval.water_wooden_bucket": "Wooden Bucket of Water",

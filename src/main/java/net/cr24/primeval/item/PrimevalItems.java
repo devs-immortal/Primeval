@@ -10,6 +10,7 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
+import net.id.incubus_core.item_predicates.IncubusItemPredicates;
 import net.minecraft.item.*;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
@@ -130,8 +131,9 @@ public class PrimevalItems {
 
     // Tools
     public static final Item FLINT_AXE = registerItem("flint_axe", new PrimevalAxeItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.FLINT.getAttackDamage(), -3.0f, GROUP_TOOLS(), Weight.HEAVY, Size.LARGE));
-    public static final Item FLINT_KNIFE = registerItem("flint_knife", new PrimevalSwordItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.FLINT.getAttackDamage()*PrimevalToolMaterials.KNIFE_DAMAGE_MULTIPLIER, -3.0f, GROUP_TOOLS(), Weight.HEAVY, Size.LARGE));
+    public static final Item FLINT_KNIFE = registerItem("flint_knife", new PrimevalKnifeItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.FLINT.getAttackDamage()*PrimevalToolMaterials.KNIFE_DAMAGE_MULTIPLIER, -3.0f, GROUP_TOOLS(), Weight.HEAVY, Size.LARGE));
     public static final Item FLINT_SHOVEL = registerItem("flint_shovel", new PrimevalShovelItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.FLINT.getAttackDamage()*PrimevalToolMaterials.BLUNT_DAMAGE_MULTIPLIER, -3.0f, GROUP_TOOLS(), Weight.HEAVY, Size.LARGE));
+    public static final Item FLINT_SPEAR = registerItem("flint_spear", new PrimevalSpearItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.FLINT.getAttackDamage()*PrimevalToolMaterials.SPEAR_DAMAGE_MULTIPLIER, -3.5f, GROUP_TOOLS(), Weight.HEAVY, Size.LARGE));
     public static final Item[] COPPER_TOOLS = registerToolSet("copper", PrimevalToolMaterials.COPPER, GROUP_TOOLS(), Weight.HEAVY, Size.LARGE);
     public static final Item[] BRONZE_TOOLS = registerToolSet("bronze", PrimevalToolMaterials.BRONZE, GROUP_TOOLS(), Weight.HEAVY, Size.LARGE);
 
@@ -222,6 +224,7 @@ public class PrimevalItems {
 
     public static void init() {
         PrimevalFoodComponents.init();
+        IncubusItemPredicates.registerInWorldItemPredicate(FLINT_SPEAR);
     }
 
     @Environment(EnvType.CLIENT)
@@ -253,14 +256,16 @@ public class PrimevalItems {
     }
 
     private static Item[] registerToolSet(String material_id, ToolMaterial material, Item.Settings group, Weight weight, Size size) {
-        Item[] items = new Item[7];
+        Item[] items = new Item[8];
         items[0] = registerItem(material_id+"_axe", new PrimevalAxeItem(material, material.getAttackDamage(), -3.0f, group, weight, size));
         items[1] = registerItem(material_id+"_chisel", new ChiselItem(material, material.getAttackDamage()*PrimevalToolMaterials.BLUNT_DAMAGE_MULTIPLIER, -3.0f, group, weight, size));
-        items[2] = registerItem(material_id+"_knife", new PrimevalKnifeItem(material, material.getAttackDamage()*PrimevalToolMaterials.KNIFE_DAMAGE_MULTIPLIER, -3.0f, group, weight, size));
+        items[2] = registerItem(material_id+"_knife", new PrimevalKnifeItem(material, material.getAttackDamage()*PrimevalToolMaterials.KNIFE_DAMAGE_MULTIPLIER, -1.5f, group, weight, size));
         items[3] = registerItem(material_id+"_pickaxe", new PrimevalPickaxeItem(material, material.getAttackDamage(), -3.0f, group, weight, size));
         items[4] = registerItem(material_id+"_shovel", new PrimevalShovelItem(material, material.getAttackDamage()*PrimevalToolMaterials.BLUNT_DAMAGE_MULTIPLIER, -3.0f, group, weight, size));
         items[5] = registerItem(material_id+"_sword", new PrimevalSwordItem(material, material.getAttackDamage()*PrimevalToolMaterials.SWORD_DAMAGE_MULTIPLIER, -2.5f, group, weight, size));
         items[6] = registerItem(material_id+"_hoe", new PrimevalHoeItem(material, group, weight, size));
+        items[7] = registerItem(material_id+"_spear", new PrimevalSpearItem(material, material.getAttackDamage()*PrimevalToolMaterials.SPEAR_DAMAGE_MULTIPLIER, -3.5f, group, weight, size));
+        IncubusItemPredicates.registerInWorldItemPredicate(items[7]);
         return items;
     }
 
