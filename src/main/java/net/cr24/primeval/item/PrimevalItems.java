@@ -51,7 +51,7 @@ public class PrimevalItems {
     public static final Item STRAW = registerItem("straw", new WeightedBlockItem(STRAW_PILE, GROUP_ITEMS(), Weight.VERY_LIGHT, Size.SMALL));
     public static final Item STICK = registerItem("stick", new FirestarterItem(GROUP_ITEMS(), Weight.VERY_LIGHT, Size.SMALL));
     public static final Item STRING = registerItem("string", new FirestarterItem(GROUP_ITEMS(), Weight.VERY_LIGHT, Size.SMALL));
-    public static final Item FLINT = registerItem("flint", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
+    public static final Item FLINT = registerItem("flint", new FlintItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
     public static final Item ROCK = registerItem("rock", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
     public static final Item STONE_BRICK = registerItem("stone_brick", new WeightedItem(GROUP_ITEMS(), Weight.LIGHT, Size.SMALL));
     public static final Item ASHES = registerItem("ashes", new WeightedItem(GROUP_ITEMS(), Weight.VERY_LIGHT, Size.SMALL));
