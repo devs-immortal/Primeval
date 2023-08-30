@@ -18,6 +18,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 
 public class TimedTorchBlock extends Block {
+    static final int TICKS = 6000;
+
     public static final IntProperty BURNOUT_STAGE;
     public static final DirectionProperty DIRECTION;
     protected static final VoxelShape[] SHAPES;
@@ -30,7 +32,7 @@ public class TimedTorchBlock extends Block {
 
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         super.appendProperties(builder);
-        builder.add(new Property[]{BURNOUT_STAGE, DIRECTION});
+        builder.add(BURNOUT_STAGE, DIRECTION);
     }
 
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
@@ -45,17 +47,19 @@ public class TimedTorchBlock extends Block {
         return null;
     }
 
-    public boolean hasRandomTicks(BlockState state) {
-        int burnout = state.get(BURNOUT_STAGE);
-        return (burnout != 0 && burnout != 5);
+    public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
+        int stage = state.get(BURNOUT_STAGE);
+        if (stage == 1) {
+            world.createAndScheduleBlockTick(pos, this, TICKS*stage);
+        }
     }
 
-    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        super.randomTick(state, world, pos, random);
-        double burnout = (double)state.get(BURNOUT_STAGE) * 0.1;
-        int randomChance = (int) ((1.0+burnout) * 7);
-        if (random.nextInt(randomChance) == 0) {
-            world.setBlockState(pos, state.with(BURNOUT_STAGE, state.get(BURNOUT_STAGE)+1));
+    @Override
+    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+        int stage = state.get(BURNOUT_STAGE);
+        world.setBlockState(pos, state.with(BURNOUT_STAGE, Math.min(stage+1, 5)));
+        if (stage < 4) {
+            world.createAndScheduleBlockTick(pos, PrimevalBlocks.CRUDE_TORCH, TICKS*stage);
         }
     }
 

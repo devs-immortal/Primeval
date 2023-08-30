@@ -21,8 +21,6 @@ public class FlintItem extends WeightedItem {
         World world = context.getWorld();
         Block targetBlock = world.getBlockState(pos).getBlock();
         if (hoeables.containsKey(targetBlock) && world.getBlockState(pos.up()).isAir()) {
-            String side = world.isClient() ? "Client " : "Server ";
-            System.out.println(side + context.getStack().getCount());
             world.setBlockState(pos, hoeables.get(targetBlock).getDefaultState());
             world.playSound(context.getPlayer(), pos, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS, 1.0f, 1.0f);
             if (!world.isClient() && context.getWorld().getRandom().nextFloat() < 0.2) {
