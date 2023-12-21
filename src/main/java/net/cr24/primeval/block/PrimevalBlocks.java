@@ -136,6 +136,8 @@ public class PrimevalBlocks {
     public static final BlockSet CRUDE_BRICKS = registerBlockSet("crude_bricks", SETTINGS_STONE(), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final BlockSet STONE_BRICKS = registerBlockSet("stone_bricks", SETTINGS_STONE(), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final BlockSet SMOOTH_STONE = registerBlockSet("smooth_stone", SETTINGS_STONE(), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block STONE_INDENT = registerBlock("stone_indent", new Block(SETTINGS_STONE()), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block STONE_PILLAR = registerBlock("stone_pillar", new PillarBlock(SETTINGS_STONE()), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final BlockSet STONE_PAVER = registerBlockSet("stone_paver", SETTINGS_STONE(), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block DAUB = registerBlock("daub", new Block(SETTINGS_REFINED_WOOD()), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
     public static final Block FRAMED_DAUB = registerBlock("framed_daub", new Block(SETTINGS_REFINED_WOOD()), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
