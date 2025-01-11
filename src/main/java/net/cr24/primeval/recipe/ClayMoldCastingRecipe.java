@@ -11,20 +11,21 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.*;
+import net.minecraft.recipe.book.CraftingRecipeCategory;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.Pair;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registry;
 import net.minecraft.world.World;
 
 
 public class ClayMoldCastingRecipe implements CraftingRecipe {
-
     private final Identifier id;
-    final Item mold;
-    final FluidVariant fluid;
-    final ItemStack result;
+    private final Item mold;
+    private final FluidVariant fluid;
+    private final ItemStack result;
 
     public ClayMoldCastingRecipe(Identifier id, Item mold, FluidVariant fluid, ItemStack result) {
         this.id = id;
@@ -128,14 +129,24 @@ public class ClayMoldCastingRecipe implements CraftingRecipe {
         return PrimevalRecipes.CLAY_MOLD_CASTING_SERIALIZER;
     }
 
+    @Override
+    public RecipeType<?> getType() {
+        return CraftingRecipe.super.getType();
+    }
+
+    @Override
+    public CraftingRecipeCategory getCategory() {
+        return CraftingRecipeCategory.MISC;
+    }
+
     public static class Serializer implements RecipeSerializer<ClayMoldCastingRecipe> {
         public Serializer() {
         }
 
         public ClayMoldCastingRecipe read(Identifier identifier, JsonObject jsonObject) {
             JsonObject inputJson = JsonHelper.getObject(jsonObject, "input");
-            Item inputMold = Registry.ITEM.get(new Identifier(JsonHelper.getString(inputJson, "mold")));
-            FluidVariant inputFluid = FluidVariant.of(Registry.FLUID.get(new Identifier(JsonHelper.getString(inputJson, "fluid"))));
+            Item inputMold = Registries.ITEM.get(new Identifier(JsonHelper.getString(inputJson, "mold")));
+            FluidVariant inputFluid = FluidVariant.of(Registries.FLUID.get(new Identifier(JsonHelper.getString(inputJson, "fluid"))));
             ItemStack result = ShapedRecipe.outputFromJson(JsonHelper.getObject(jsonObject, "result"));
             return new ClayMoldCastingRecipe(identifier, inputMold, inputFluid, result);
         }

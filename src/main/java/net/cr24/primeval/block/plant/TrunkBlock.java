@@ -64,7 +64,7 @@ public class TrunkBlock extends Block {
 
     @Override
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
-        world.createAndScheduleBlockTick(pos, this, 2);
+        world.scheduleBlockTick(pos, this, 2);
     }
 
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {

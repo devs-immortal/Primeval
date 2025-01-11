@@ -3,10 +3,10 @@ package net.cr24.primeval.world;
 import net.cr24.primeval.PrimevalMain;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
-import net.minecraft.util.registry.BuiltinRegistries;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryEntry;
-import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.world.biome.*;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.PlacedFeature;
@@ -153,7 +153,7 @@ public class PrimevalWorld {
     }
 
     private static RegistryKey<Biome> getBiomeKey(String id) {
-        return RegistryKey.of(Registry.BIOME_KEY, PrimevalMain.getId(id));
+        return RegistryKey.of(RegistryKeys.BIOME, PrimevalMain.getId(id));
     }
 
     private static RegistryEntry<Biome> registerBiome(RegistryKey<Biome> key, Biome b) {

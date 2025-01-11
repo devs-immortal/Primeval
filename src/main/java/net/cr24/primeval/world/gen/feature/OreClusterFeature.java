@@ -3,7 +3,7 @@ package net.cr24.primeval.world.gen.feature;
 import com.mojang.serialization.Codec;
 import net.cr24.primeval.util.IntPoint2D;
 import net.cr24.primeval.util.ShapesUtil;
-import net.minecraft.tag.BlockTags;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.StructureWorldAccess;
@@ -55,7 +55,7 @@ public class OreClusterFeature extends Feature<OreClusterFeatureConfig> {
 
     private boolean setBlockIfAble(StructureWorldAccess structureWorldAccess, BlockPos blockPos, BlockStateProvider stateProvider, Random random) {
         if (structureWorldAccess.getBlockState(blockPos).isIn(BlockTags.BASE_STONE_OVERWORLD)) {
-            structureWorldAccess.setBlockState(blockPos, stateProvider.getBlockState(random, blockPos), 4);
+            structureWorldAccess.setBlockState(blockPos, stateProvider.get(random, blockPos), 4);
             return true;
         } else {
             return false;

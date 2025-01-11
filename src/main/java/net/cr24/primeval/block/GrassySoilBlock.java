@@ -2,12 +2,12 @@ package net.cr24.primeval.block;
 
 import net.minecraft.block.*;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
-import net.minecraft.tag.BlockTags;
-import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
@@ -55,7 +55,7 @@ public class GrassySoilBlock extends SemiSupportedBlock {
             if (world.getLightLevel(pos.up()) >= 9) {
                 BlockState blockState = this.getDefaultState();
 
-                for(int i = 0; i < 4; ++i) {
+                for (int i = 0; i < 4; ++i) {
                     BlockPos blockPos = pos.add(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1);
                     Block block = world.getBlockState(blockPos).getBlock();
                     if (grass_spreadable.containsKey(block) && canSpread(blockState, world, blockPos)) {

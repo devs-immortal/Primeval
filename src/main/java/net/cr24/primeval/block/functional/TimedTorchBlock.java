@@ -50,7 +50,7 @@ public class TimedTorchBlock extends Block {
     public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
         int stage = state.get(BURNOUT_STAGE);
         if (stage == 1) {
-            world.createAndScheduleBlockTick(pos, this, TICKS*stage);
+            world.scheduleBlockTick(pos, this, TICKS*stage);
         }
     }
 
@@ -59,7 +59,7 @@ public class TimedTorchBlock extends Block {
         int stage = state.get(BURNOUT_STAGE);
         world.setBlockState(pos, state.with(BURNOUT_STAGE, Math.min(stage+1, 5)));
         if (stage < 4) {
-            world.createAndScheduleBlockTick(pos, PrimevalBlocks.CRUDE_TORCH, TICKS*stage);
+            world.scheduleBlockTick(pos, PrimevalBlocks.CRUDE_TORCH, TICKS*stage);
         }
     }
 

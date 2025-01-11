@@ -6,11 +6,12 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.*;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.Pair;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registry;
 import net.minecraft.world.World;
 
 public class MeltingRecipe implements Recipe<Inventory> {
@@ -83,7 +84,7 @@ public class MeltingRecipe implements Recipe<Inventory> {
         public MeltingRecipe read(Identifier identifier, JsonObject jsonObject) {
             Ingredient in = Ingredient.fromJson(JsonHelper.getObject(jsonObject, "input"));
             JsonObject result = JsonHelper.getObject(jsonObject, "result");
-            FluidVariant fluid = FluidVariant.of(Registry.FLUID.get(new Identifier(result.get("fluid").getAsString())));
+            FluidVariant fluid = FluidVariant.of(Registries.FLUID.get(new Identifier(result.get("fluid").getAsString())));
             int amount = result.get("amount").getAsInt();
             Pair<FluidVariant, Integer> fluidOut = new Pair<>(fluid, amount);
             return new MeltingRecipe(identifier, in, fluidOut);

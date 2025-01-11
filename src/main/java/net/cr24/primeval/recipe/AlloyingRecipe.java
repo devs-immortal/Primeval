@@ -10,9 +10,10 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registry;
 import net.minecraft.world.World;
 
 import java.util.HashMap;
@@ -102,13 +103,13 @@ public class AlloyingRecipe implements Recipe<FluidInventory> {
             HashMap<FluidVariant, RangedValue> ingredientFluids = new HashMap<>();
             for (int i = 0; i < inputFluids.size(); i++) {
                 JsonObject item = inputFluids.get(i).getAsJsonObject();
-                FluidVariant fluid = FluidVariant.of(Registry.FLUID.get(new Identifier(item.get("fluid").getAsString())));
+                FluidVariant fluid = FluidVariant.of(Registries.FLUID.get(new Identifier(item.get("fluid").getAsString())));
                 double min = item.get("min").getAsDouble();
                 double max = item.get("max").getAsDouble();
                 ingredientFluids.put(fluid, new RangedValue(max, min));
             }
             JsonObject result = JsonHelper.getObject(jsonObject, "result");
-            FluidVariant outputFluid = FluidVariant.of(Registry.FLUID.get(new Identifier(result.get("fluid").getAsString())));
+            FluidVariant outputFluid = FluidVariant.of(Registries.FLUID.get(new Identifier(result.get("fluid").getAsString())));
             return new AlloyingRecipe(identifier, ingredientFluids, outputFluid);
         }
 

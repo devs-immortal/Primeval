@@ -1,11 +1,11 @@
 package net.cr24.primeval.world.gen.structure;
 
-import net.cr24.primeval.block.PrimevalBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtHelper;
+import net.minecraft.registry.Registries;
 import net.minecraft.structure.*;
-import net.minecraft.tag.BlockTags;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -34,13 +34,13 @@ public class OreFieldGenerator {
             super(PrimevalStructures.ORE_FIELD_PIECE, x, height, z, size, 20, size, Direction.NORTH);
             this.height = height;
             this.size = size;
-            int[] params = new int[ballCount*4];
-            for (int i = 0; i < ballCount*4; i += 4) {
+            int[] params = new int[ballCount * 4];
+            for (int i = 0; i < ballCount * 4; i += 4) {
                 int ballSize = random.nextBetween(ballSizeMin, ballSizeMax);
-                params[i] = ballSize-2;
-                params[i+1] = random.nextBetween(ballSize, size-ballSize);
-                params[i+2] = random.nextBetween(0, 6);
-                params[i+3] = random.nextBetween(ballSize, size-ballSize);
+                params[i] = ballSize - 2;
+                params[i + 1] = random.nextBetween(ballSize, size - ballSize);
+                params[i + 2] = random.nextBetween(0, 6);
+                params[i + 3] = random.nextBetween(ballSize, size - ballSize);
             }
             this.ballParams = params;
             this.richness = richness;
@@ -56,10 +56,10 @@ public class OreFieldGenerator {
             this.size = nbt.getInt("Size");
             this.ballParams = nbt.getIntArray("BallParams");
             this.richness = nbt.getFloat("Richness");
-            this.largeState = NbtHelper.toBlockState(nbt.getCompound("LargeState"));
-            this.mediumState = NbtHelper.toBlockState(nbt.getCompound("MediumState"));
-            this.smallState = NbtHelper.toBlockState(nbt.getCompound("SmallState"));
-            this.extraState = NbtHelper.toBlockState(nbt.getCompound("ExtraState"));
+            this.largeState = NbtHelper.toBlockState(Registries.BLOCK.getReadOnlyWrapper(), nbt.getCompound("LargeState"));
+            this.mediumState = NbtHelper.toBlockState(Registries.BLOCK.getReadOnlyWrapper(), nbt.getCompound("MediumState"));
+            this.smallState = NbtHelper.toBlockState(Registries.BLOCK.getReadOnlyWrapper(), nbt.getCompound("SmallState"));
+            this.extraState = NbtHelper.toBlockState(Registries.BLOCK.getReadOnlyWrapper(), nbt.getCompound("ExtraState"));
         }
 
 
@@ -126,17 +126,17 @@ public class OreFieldGenerator {
         public void generate(Blob blob, StructureWorldAccess world, BlockBox chunkBox, Random random) {
             for (int i = -size; i < size; i++) {
                 for (int j = -size; j < size; j++) {
-                    for (int k = -size/2; k <= size/2; k++) {
-                        if (center.distance(i, j) < size-Math.abs(k/2) && blob.validBlock(world, xOffset+i, yOffset+k, zOffset+j, chunkBox)) {
+                    for (int k = -size / 2; k <= size / 2; k++) {
+                        if (center.distance(i, j) < size - Math.abs(k / 2) && blob.validBlock(world, xOffset + i, yOffset + k, zOffset + j, chunkBox)) {
                             float threshold = random.nextFloat();
                             if (threshold > richness) {
-                                blob.pAddBlock(world, largeState, xOffset+i, yOffset+k, zOffset+j, chunkBox);
-                            } else if (threshold > richness/2) {
-                                blob.pAddBlock(world, mediumState, xOffset+i, yOffset+k, zOffset+j, chunkBox);
-                            } else if (threshold > richness/4) {
-                                blob.pAddBlock(world, smallState, xOffset+i, yOffset+k, zOffset+j, chunkBox);
-                            } else if (threshold > richness/8) {
-                                blob.pAddBlock(world, extraState, xOffset+i, yOffset+k, zOffset+j, chunkBox);
+                                blob.pAddBlock(world, largeState, xOffset + i, yOffset + k, zOffset + j, chunkBox);
+                            } else if (threshold > richness / 2) {
+                                blob.pAddBlock(world, mediumState, xOffset + i, yOffset + k, zOffset + j, chunkBox);
+                            } else if (threshold > richness / 4) {
+                                blob.pAddBlock(world, smallState, xOffset + i, yOffset + k, zOffset + j, chunkBox);
+                            } else if (threshold > richness / 8) {
+                                blob.pAddBlock(world, extraState, xOffset + i, yOffset + k, zOffset + j, chunkBox);
                             }
                         }
                     }

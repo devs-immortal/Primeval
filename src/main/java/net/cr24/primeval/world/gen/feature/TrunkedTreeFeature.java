@@ -26,7 +26,7 @@ public class TrunkedTreeFeature extends Feature<TrunkedTreeFeatureConfig> {
         Random random = context.getRandom();
 
         TrunkedTreeFeatureConfig config = context.getConfig();
-        BlockState saplingState = config.saplingState().getBlockState(random, blockPos);
+        BlockState saplingState = config.saplingState().get(random, blockPos);
         int tries = config.tickTries().get(random);
 
         GrowingSaplingBlock saplingBlock = (GrowingSaplingBlock) saplingState.getBlock();

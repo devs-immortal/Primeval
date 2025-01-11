@@ -9,6 +9,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.MultifaceGrowthBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.structure.rule.TagMatchRuleTest;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DataPool;
@@ -18,10 +20,9 @@ import net.minecraft.util.math.intprovider.ConstantIntProvider;
 import net.minecraft.util.math.intprovider.IntProvider;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.util.math.intprovider.WeightedListIntProvider;
-import net.minecraft.util.registry.BuiltinRegistries;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryEntry;
-import net.minecraft.util.registry.RegistryEntryList;
+import net.minecraft.registry.BuiltinRegistries;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.gen.YOffset;
 import net.minecraft.world.gen.blockpredicate.BlockPredicate;
@@ -44,7 +45,7 @@ public class PrimevalFeatures {
     public static final WaterReedsFeature WATER_REEDS_FEATURE = registerFeature(PrimevalMain.getId("water_reed"), new WaterReedsFeature(DefaultFeatureConfig.CODEC));
 
     private static <C extends FeatureConfig, F extends Feature<C>> F registerFeature(Identifier id, F f) {
-        return Registry.register(Registry.FEATURE, id, f);
+        return Registry.register(Registries.FEATURE, id, f);
     }
 
     /* CONFIGURED FEATURES */

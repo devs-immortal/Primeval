@@ -6,6 +6,7 @@ import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.*;
+import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
@@ -13,9 +14,9 @@ import net.minecraft.world.World;
 
 public class ItemDamagingRecipe implements CraftingRecipe {
     private final Identifier id;
-    final String group;
-    final ItemStack output;
-    final DefaultedList<Ingredient> input;
+    private final String group;
+    private final ItemStack output;
+    private final DefaultedList<Ingredient> input;
 
     public ItemDamagingRecipe(Identifier id, String group, ItemStack output, DefaultedList<Ingredient> input) {
         this.id = id;
@@ -83,6 +84,16 @@ public class ItemDamagingRecipe implements CraftingRecipe {
     @Override
     public RecipeSerializer<?> getSerializer() {
         return PrimevalRecipes.ITEM_DAMAGING_SERIALIZER;
+    }
+
+    @Override
+    public RecipeType<?> getType() {
+        return CraftingRecipe.super.getType();
+    }
+
+    @Override
+    public CraftingRecipeCategory getCategory() {
+        return CraftingRecipeCategory.MISC;
     }
 
     public static class Serializer implements RecipeSerializer<ItemDamagingRecipe> {

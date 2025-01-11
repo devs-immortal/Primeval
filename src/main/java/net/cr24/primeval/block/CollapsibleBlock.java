@@ -31,7 +31,7 @@ public class CollapsibleBlock extends FallingBlock {
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
         if (!(neighborState.getBlock() instanceof FluidBlock)) {
-            world.createAndScheduleBlockTick(pos, this, this.getFallDelay());
+            world.scheduleBlockTick(pos, this, this.getFallDelay());
         }
         return state;
     }
