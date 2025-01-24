@@ -7,10 +7,7 @@ import net.cr24.primeval.fluid.PrimevalFluidUtil;
 import net.cr24.primeval.item.tool.*;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
-import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
-import net.id.incubus_core.item_predicates.IncubusItemPredicates;
 import net.minecraft.item.*;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
@@ -79,16 +76,16 @@ public class PrimevalItems {
     public static final Item SPRUCE_LOG = registerItem("spruce_log", new LogItem(PrimevalBlocks.SPRUCE_LOG, SPRUCE_LOG_PILE, new Item.Settings(), Weight.HEAVY, Size.LARGE), PrimevalItems.PRIMEVAL_FOODS);
 
     // Edible Items
-    public static final Item PORKCHOP = registerItem("porkchop", new WeightedItem(new Item.Settings().food(PrimevalFoodComponents.PORKCHOP), Weight.NORMAL, Size.MEDIUM), PrimevalItems.PRIMEVAL_FOODS);
-    public static final Item COOKED_PORKCHOP = registerItem("cooked_porkchop", new WeightedItem(new Item.Settings().food(PrimevalFoodComponents.COOKED_PORKCHOP), Weight.NORMAL, Size.MEDIUM), PrimevalItems.PRIMEVAL_FOODS);
-    public static final Item ROTTEN_FLESH = registerItem("rotten_flesh", new WeightedItem(new Item.Settings().food(PrimevalFoodComponents.ROTTEN_FLESH), Weight.NORMAL, Size.MEDIUM), PrimevalItems.PRIMEVAL_FOODS);
-    public static final Item SPIDER_EYE = registerItem("spider_eye", new WeightedItem(new Item.Settings().food(PrimevalFoodComponents.SPIDER_EYE), Weight.LIGHT, Size.SMALL), PrimevalItems.PRIMEVAL_FOODS);
+    public static final Item PORKCHOP = registerItem("porkchop", new WeightedItem(new Item.Settings().food(PrimevalFoodComponents.PORKCHOP_FOOD, PrimevalFoodComponents.PORKCHOP_CONSUME), Weight.NORMAL, Size.MEDIUM), PrimevalItems.PRIMEVAL_FOODS);
+    public static final Item COOKED_PORKCHOP = registerItem("cooked_porkchop", new WeightedItem(new Item.Settings().food(PrimevalFoodComponents.COOKED_PORKCHOP_FOOD), Weight.NORMAL, Size.MEDIUM), PrimevalItems.PRIMEVAL_FOODS);
+    public static final Item ROTTEN_FLESH = registerItem("rotten_flesh", new WeightedItem(new Item.Settings().food(PrimevalFoodComponents.ROTTEN_FLESH_FOOD, PrimevalFoodComponents.ROTTEN_FLESH_CONSUME), Weight.NORMAL, Size.MEDIUM), PrimevalItems.PRIMEVAL_FOODS);
+    public static final Item SPIDER_EYE = registerItem("spider_eye", new WeightedItem(new Item.Settings().food(PrimevalFoodComponents.SPIDER_EYE_FOOD, PrimevalFoodComponents.SPIDER_EYE_CONSUME), Weight.LIGHT, Size.SMALL), PrimevalItems.PRIMEVAL_FOODS);
 
-    public static final Item CARROT = registerItem("carrot", new WeightedBlockItem(CARROT_CROP, new Item.Settings().food(PrimevalFoodComponents.CARROT), Weight.LIGHT, Size.SMALL), PrimevalItems.PRIMEVAL_FOODS);
+    public static final Item CARROT = registerItem("carrot", new WeightedBlockItem(CARROT_CROP, new Item.Settings().food(PrimevalFoodComponents.CARROT_FOOD), Weight.LIGHT, Size.SMALL), PrimevalItems.PRIMEVAL_FOODS);
     public static final Item WHEAT = registerItem("wheat", new WeightedItem(new Item.Settings(), Weight.LIGHT, Size.SMALL), PrimevalItems.PRIMEVAL_FOODS);
-    public static final Item CABBAGE = registerItem("cabbage", new WeightedItem(new Item.Settings().food(PrimevalFoodComponents.CABBAGE), Weight.LIGHT, Size.SMALL), PrimevalItems.PRIMEVAL_FOODS);
-    public static final Item BEANS = registerItem("beans", new WeightedBlockItem(BEANS_CROP, new Item.Settings().food(PrimevalFoodComponents.BEANS), Weight.LIGHT, Size.SMALL), PrimevalItems.PRIMEVAL_FOODS);
-    public static final Item POTATO = registerItem("potato", new WeightedBlockItem(POTATO_CROP, new Item.Settings().food(PrimevalFoodComponents.POTATO), Weight.LIGHT, Size.SMALL), PrimevalItems.PRIMEVAL_FOODS);
+    public static final Item CABBAGE = registerItem("cabbage", new WeightedItem(new Item.Settings().food(PrimevalFoodComponents.CABBAGE_FOOD), Weight.LIGHT, Size.SMALL), PrimevalItems.PRIMEVAL_FOODS);
+    public static final Item BEANS = registerItem("beans", new WeightedBlockItem(BEANS_CROP, new Item.Settings().food(PrimevalFoodComponents.BEANS_FOOD), Weight.LIGHT, Size.SMALL), PrimevalItems.PRIMEVAL_FOODS);
+    public static final Item POTATO = registerItem("potato", new WeightedBlockItem(POTATO_CROP, new Item.Settings().food(PrimevalFoodComponents.POTATO_FOOD), Weight.LIGHT, Size.SMALL), PrimevalItems.PRIMEVAL_FOODS);
     // Seeds
     public static final Item WHEAT_SEEDS = registerItem("wheat_seeds", new WeightedBlockItem(WHEAT_CROP, new Item.Settings(), Weight.LIGHT, Size.SMALL), PrimevalItems.PRIMEVAL_FOODS);
     public static final Item CABBAGE_SEEDS = registerItem("cabbage_seeds", new WeightedBlockItem(CABBAGE_CROP, new Item.Settings(), Weight.LIGHT, Size.SMALL), PrimevalItems.PRIMEVAL_FOODS);

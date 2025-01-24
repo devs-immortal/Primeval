@@ -10,6 +10,7 @@ import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
@@ -48,6 +49,12 @@ public class PrimevalPlantBlock extends PlantBlock {
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         super.appendProperties(builder);
         builder.add(CENTERED);
+    }
+
+    @Override
+    protected float getMaxHorizontalModelOffset() {
+        Offsetter offsetter = this.offsetter;
+        return offsetter != null ? offsetter.evaluate(this.asBlockState(), pos) : Vec3d.ZERO;
     }
 
     static {
