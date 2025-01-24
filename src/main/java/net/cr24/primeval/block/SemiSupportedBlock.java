@@ -13,7 +13,7 @@ public class SemiSupportedBlock extends CollapsibleBlock {
     public float percentPerSide;
 
     public SemiSupportedBlock(Settings settings, float percentPerSide, Block fallBlock) {
-        super(settings, fallBlock);
+        super(fallBlock, settings);
         this.percentPerSide = percentPerSide;
     }
 

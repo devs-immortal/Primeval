@@ -4,18 +4,14 @@ import net.cr24.primeval.item.IWeightedItem;
 import net.cr24.primeval.item.PrimevalItems;
 import net.cr24.primeval.item.Size;
 import net.cr24.primeval.item.Weight;
-import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsage;
-import net.minecraft.item.Items;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.stat.Stats;
+import net.minecraft.item.consume.UseAction;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 
 public class JugItem extends Item implements IWeightedItem {
@@ -49,7 +45,8 @@ public class JugItem extends Item implements IWeightedItem {
         return UseAction.DRINK;
     }
 
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+    @Override
+    public ActionResult use(World world, PlayerEntity user, Hand hand) {
         return ItemUsage.consumeHeldItem(world, user, hand);
     }
 

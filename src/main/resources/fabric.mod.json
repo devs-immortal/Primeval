@@ -25,15 +25,18 @@
     ],
     "rei_client": [
       "net.cr24.primeval.recipe.rei.PrimevalREIClientIntegration"
+    ],
+    "fabric-datagen": [
+      "net.cr24.primeval.PrimevalDataGenerator"
     ]
   },
   "mixins": [
     "primeval.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.14.9",
+    "fabricloader": ">=0.16.10",
     "fabric-api": "*",
-    "minecraft": "1.19.2",
-    "java": ">=17"
+    "minecraft": "1.21.4",
+    "java": ">=21"
   }
 }

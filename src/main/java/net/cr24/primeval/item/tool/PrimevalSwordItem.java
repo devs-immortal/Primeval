@@ -5,15 +5,12 @@ import net.cr24.primeval.item.Size;
 import net.cr24.primeval.item.Weight;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableTextContent;
 import net.minecraft.util.Formatting;
-import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -29,7 +26,7 @@ public class PrimevalSwordItem extends SwordItem implements IWeightedItem {
     }
 
     @Environment(EnvType.CLIENT)
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         tooltip.add((Text.translatable("⚖ ").append(this.weight.getText()).append(" ⤧ ").append(this.size.getText())).formatted(Formatting.GRAY));
     }
 

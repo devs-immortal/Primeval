@@ -40,20 +40,13 @@ public class LogItem extends WeightedBlockItem {
         World world = context.getWorld();
         BlockPos pos = context.getBlockPos();
         BlockState state = world.getBlockState(pos);
-        ActionResult actionResult;
         if (state.getBlock() instanceof LogPileBlock && state.get(LogPileBlock.AMOUNT) < 7) {
             world.setBlockState(pos, state.with(LogPileBlock.AMOUNT, state.get(LogPileBlock.AMOUNT)+1));
             if (context.getPlayer() != null && !context.getPlayer().isCreative()) context.getStack().decrement(1);
             world.playSound(null, pos, SoundEvents.BLOCK_WOOD_PLACE, SoundCategory.BLOCKS, 0.3f, world.getRandom().nextFloat() * 0.4f + 0.8f);
-            actionResult = ActionResult.success(world.isClient);
+            return ActionResult.SUCCESS;
         } else {
-            actionResult = this.place(new ItemPlacementContext(context));
-        }
-        if (!actionResult.isAccepted() && this.isFood()) {
-            ActionResult actionResult2 = this.use(context.getWorld(), context.getPlayer(), context.getHand()).getResult();
-            return actionResult2 == ActionResult.CONSUME ? ActionResult.CONSUME_PARTIAL : actionResult2;
-        } else {
-            return actionResult;
+            return this.place(new ItemPlacementContext(context));
         }
     }
 
@@ -70,32 +63,10 @@ public class LogItem extends WeightedBlockItem {
                     return ActionResult.FAIL;
                 } else if (!this.place(itemPlacementContext, blockState)) {
                     return ActionResult.FAIL;
-                } else {
-                    BlockPos blockPos = itemPlacementContext.getBlockPos();
-                    World world = itemPlacementContext.getWorld();
-                    PlayerEntity playerEntity = itemPlacementContext.getPlayer();
-                    ItemStack itemStack = itemPlacementContext.getStack();
-                    BlockState blockState2 = world.getBlockState(blockPos);
-                    if (blockState2.isOf(blockState.getBlock())) {
-                        blockState2 = this.placeFromNbt(blockPos, world, itemStack, blockState2);
-                        this.postPlacement(blockPos, world, playerEntity, itemStack, blockState2);
-                        blockState2.getBlock().onPlaced(world, blockPos, blockState2, playerEntity, itemStack);
-                        if (playerEntity instanceof ServerPlayerEntity) {
-                            Criteria.PLACED_BLOCK.trigger((ServerPlayerEntity)playerEntity, blockPos, itemStack);
-                        }
-                    }
-
-                    BlockSoundGroup blockSoundGroup = blockState2.getSoundGroup();
-                    world.playSound(playerEntity, blockPos, this.getPlaceSound(blockState2), SoundCategory.BLOCKS, (blockSoundGroup.getVolume() + 1.0F) / 2.0F, blockSoundGroup.getPitch() * 0.8F);
-                    world.emitGameEvent(GameEvent.BLOCK_PLACE, blockPos, GameEvent.Emitter.of(playerEntity, blockState2));
-                    if (playerEntity == null || !playerEntity.getAbilities().creativeMode) {
-                        itemStack.decrement(1);
-                    }
-
-                    return ActionResult.success(world.isClient);
                 }
             }
         }
+        return ActionResult.SUCCESS;
     }
 
     @Nullable
@@ -110,43 +81,4 @@ public class LogItem extends WeightedBlockItem {
         }
         return blockState != null && this.canPlace(context, blockState) ? blockState : null;
     }
-
-    private BlockState placeFromNbt(BlockPos pos, World world, ItemStack stack, BlockState state) {
-        BlockState blockState = state;
-        NbtCompound nbtCompound = stack.getNbt();
-        if (nbtCompound != null) {
-            NbtCompound nbtCompound2 = nbtCompound.getCompound("BlockStateTag");
-            StateManager<Block, BlockState> stateManager = state.getBlock().getStateManager();
-            Iterator var9 = nbtCompound2.getKeys().iterator();
-
-            while(var9.hasNext()) {
-                String string = (String)var9.next();
-                Property<?> property = stateManager.getProperty(string);
-                if (property != null) {
-                    String string2 = nbtCompound2.get(string).asString();
-                    blockState = with(blockState, property, string2);
-                }
-            }
-        }
-
-        if (blockState != state) {
-            world.setBlockState(pos, blockState, 2);
-        }
-
-        if (blockState.getBlock() instanceof LogPileBlock) {
-            BlockEntity be = world.getBlockEntity(pos);
-            if (be instanceof LogPileBlockEntity) {
-                ItemStack s = stack.copy();
-                s.setCount(1);
-                ((LogPileBlockEntity) be).setItem(s);
-            }
-        }
-
-        return blockState;
-    }
-
-    private static <T extends Comparable<T>> BlockState with(BlockState state, Property<T> property, String name) {
-        return property.parse(name).map((value) -> state.with(property, value)).orElse(state);
-    }
-
 }

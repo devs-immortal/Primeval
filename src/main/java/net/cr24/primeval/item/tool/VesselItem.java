@@ -1,7 +1,6 @@
 package net.cr24.primeval.item.tool;
 
 import net.cr24.primeval.fluid.FluidInventory;
-import net.cr24.primeval.fluid.PrimevalFluidUtil;
 import net.cr24.primeval.fluid.PrimevalFluids;
 import net.cr24.primeval.item.ClayMoldItem;
 import net.cr24.primeval.item.IWeightedItem;
@@ -9,13 +8,10 @@ import net.cr24.primeval.item.Size;
 import net.cr24.primeval.item.Weight;
 import net.cr24.primeval.recipe.AlloyingRecipe;
 import net.cr24.primeval.recipe.MeltingRecipe;
-import net.cr24.primeval.recipe.PitKilnFiringRecipe;
 import net.cr24.primeval.recipe.PrimevalRecipes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
-import net.minecraft.client.item.TooltipContext;
-import net.minecraft.client.item.TooltipData;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.SimpleInventory;

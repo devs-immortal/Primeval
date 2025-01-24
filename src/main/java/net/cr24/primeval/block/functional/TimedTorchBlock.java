@@ -6,9 +6,8 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
-import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.IntProperty;
-import net.minecraft.state.property.Property;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
@@ -16,12 +15,14 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
+import net.minecraft.world.WorldView;
+import net.minecraft.world.tick.ScheduledTickView;
 
 public class TimedTorchBlock extends Block {
     static final int TICKS = 6000;
 
     public static final IntProperty BURNOUT_STAGE;
-    public static final DirectionProperty DIRECTION;
+    public static final EnumProperty<Direction> DIRECTION;
     protected static final VoxelShape[] SHAPES;
     private static final Direction[] SIDES = new Direction[] {Direction.UP, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST};
 
@@ -89,7 +90,7 @@ public class TimedTorchBlock extends Block {
         return null;
     }
 
-    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
+    public BlockState getStateForNeighborUpdate(BlockState state, WorldView world, ScheduledTickView tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random) {
         Direction torchDirection = state.get(DIRECTION);
         BlockPos placedOn = pos.offset(torchDirection);
         if (torchDirection == Direction.DOWN && !world.getBlockState(placedOn).isSideSolid(world, placedOn, Direction.UP, SideShapeType.CENTER)) {
@@ -97,7 +98,7 @@ public class TimedTorchBlock extends Block {
         } else if (!world.getBlockState(placedOn).isSideSolidFullSquare(world, placedOn, torchDirection.getOpposite())) {
             return Blocks.AIR.getDefaultState();
         }
-        return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
+        return super.getStateForNeighborUpdate(state, world, tickView, pos, direction, neighborPos, neighborState, random);
     }
 
     @Override
@@ -128,7 +129,7 @@ public class TimedTorchBlock extends Block {
 
     static {
         BURNOUT_STAGE = IntProperty.of("burnout_stage", 0, 5); // 0 = unlit    1,2,3,4 = burning    5 = extinguished
-        DIRECTION = DirectionProperty.of("facing", facing -> facing != Direction.UP);
+        DIRECTION = EnumProperty.of("facing", Direction.class, new Direction[]{Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST, Direction.DOWN});
         SHAPES = new VoxelShape[] {
                 Block.createCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 11.0D, 10.0D),  // ground shape
                 Block.createCuboidShape(6.0D, 3.0D, 0.0D, 10.0D, 13.0D, 5.0D),

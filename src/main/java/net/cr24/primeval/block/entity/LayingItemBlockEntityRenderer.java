@@ -7,6 +7,7 @@ import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ModelTransformationMode;
 import org.joml.Quaternionf;
 
 public class LayingItemBlockEntityRenderer implements BlockEntityRenderer<LayingItemBlockEntity> {
@@ -25,6 +26,6 @@ public class LayingItemBlockEntityRenderer implements BlockEntityRenderer<Laying
         matrices.multiply(NEGATIVE_X.rotateX(90));
         matrices.multiply(POSITIVE_Z.rotateZ(90 * randomInt));
         matrices.translate(0.0, -0.1, -0.0);
-        MinecraftClient.getInstance().getItemRenderer().renderItem(item, ModelTransformation.Mode.GROUND, light, overlay, matrices, vertexConsumers, 0);
+        MinecraftClient.getInstance().getItemRenderer().renderItem(item, ModelTransformationMode.GROUND, light, overlay, matrices, vertexConsumers, entity.getWorld(), 0);
     }
 }

@@ -19,7 +19,7 @@ import net.minecraft.world.GameRules;
 
 public class PrimevalMain implements ModInitializer, ClientModInitializer {
 
-    private static final String MODID = "primeval";
+    public static final String MODID = "primeval";
 
     @Override
     public void onInitialize() {

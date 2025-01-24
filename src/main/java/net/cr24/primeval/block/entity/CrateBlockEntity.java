@@ -81,12 +81,12 @@ public class CrateBlockEntity extends LootableContainerBlockEntity {
     }
 
     @Override
-    protected DefaultedList<ItemStack> getInvStackList() {
+    protected DefaultedList<ItemStack> getHeldStacks() {
         return this.inventory;
     }
 
     @Override
-    protected void setInvStackList(DefaultedList<ItemStack> list) {
+    protected void setHeldStacks(DefaultedList<ItemStack> list) {
         this.inventory = list;
     }
 
@@ -94,6 +94,7 @@ public class CrateBlockEntity extends LootableContainerBlockEntity {
     protected Text getContainerName() {
         return Text.translatable("container.primeval.crate");
     }
+
 
     @Override
     protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
