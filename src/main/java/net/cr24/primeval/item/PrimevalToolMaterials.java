@@ -1,97 +1,26 @@
 package net.cr24.primeval.item;
 
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.registry.tag.TagKey;
 
 public class PrimevalToolMaterials {
+
+    public static final ToolMaterial FLINT = create(BlockTags.INCORRECT_FOR_STONE_TOOL, 200, 2f, 1f, 2, PrimevalItemTags.FLINT_TOOL_MATERIALS);
+    public static final ToolMaterial COPPER = create(BlockTags.INCORRECT_FOR_IRON_TOOL, 600, 3f, 2f, 3, PrimevalItemTags.COPPER_TOOL_MATERIALS);
+    public static final ToolMaterial BRONZE = create(BlockTags.INCORRECT_FOR_IRON_TOOL, 1000, 3.5f, 2f, 3, PrimevalItemTags.BBRONZE_TOOL_MATERIALS);
+
+    public static ToolMaterial create(final TagKey<Block> incorrect, int itemDurability, float miningSpeed, float attackDamage, int enchantability, TagKey<Item> repairIngredient) {
+        return new ToolMaterial(incorrect, itemDurability, miningSpeed, attackDamage, enchantability, repairIngredient);
+    }
 
     public static final float BLUNT_DAMAGE_MULTIPLIER = 0.5f;
     public static final float KNIFE_DAMAGE_MULTIPLIER = 1.75f;
     public static final float SWORD_DAMAGE_MULTIPLIER = 2f;
     public static final float SPEAR_DAMAGE_MULTIPLIER = 3f;
 
-    public static final FlintMaterial FLINT = new FlintMaterial();
-    public static final CopperMaterial COPPER = new CopperMaterial();
-    public static final BronzeMaterial BRONZE = new BronzeMaterial();
-
-    public static class FlintMaterial implements ToolMaterial {
-        @Override
-        public int getDurability() {
-            return 200;
-        }
-        @Override
-        public float getMiningSpeedMultiplier() {
-            return 2f;
-        }
-        @Override
-        public float getAttackDamage() {
-            return 1.0f;
-        }
-        @Override
-        public int getMiningLevel() {
-            return 0;
-        }
-        @Override
-        public int getEnchantability() {
-            return 2;
-        }
-        @Override
-        public Ingredient getRepairIngredient() {
-            return Ingredient.ofItems(PrimevalItems.FLINT);
-        }
-    }
-
-    public static class CopperMaterial implements ToolMaterial {
-        @Override
-        public int getDurability() {
-            return 600;
-        }
-        @Override
-        public float getMiningSpeedMultiplier() {
-            return 3f;
-        }
-        @Override
-        public float getAttackDamage() {
-            return 1.5f;
-        }
-        @Override
-        public int getMiningLevel() {
-            return 1;
-        }
-        @Override
-        public int getEnchantability() {
-            return 3;
-        }
-        @Override
-        public Ingredient getRepairIngredient() {
-            return Ingredient.ofItems(PrimevalItems.COPPER_CHUNK);
-        }
-    }
-
-    public static class BronzeMaterial implements ToolMaterial {
-        @Override
-        public int getDurability() {
-            return 1000;
-        }
-        @Override
-        public float getMiningSpeedMultiplier() {
-            return 3.5f;
-        }
-        @Override
-        public float getAttackDamage() {
-            return 1.5f;
-        }
-        @Override
-        public int getMiningLevel() {
-            return 1;
-        }
-        @Override
-        public int getEnchantability() {
-            return 3;
-        }
-        @Override
-        public Ingredient getRepairIngredient() {
-            return Ingredient.ofItems(PrimevalItems.BRONZE_CHUNK);
-        }
-    }
 }

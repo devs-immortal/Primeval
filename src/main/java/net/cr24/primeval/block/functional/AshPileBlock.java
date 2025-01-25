@@ -5,11 +5,11 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Clearable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.block.WireOrientation;
 import org.jetbrains.annotations.Nullable;
 
 public class AshPileBlock extends BlockWithEntity {
@@ -19,8 +19,8 @@ public class AshPileBlock extends BlockWithEntity {
     }
 
     @Override
-    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
-        super.neighborUpdate(state, world, pos, block, fromPos, notify);
+    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
+        super.neighborUpdate(state, world, pos, sourceBlock, wireOrientation, notify);
         if (!PitKilnBlock.isSoilSurrounded(world, pos)) { // if not surrounded properly
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof AshPileBlockEntity) {
@@ -35,7 +35,7 @@ public class AshPileBlock extends BlockWithEntity {
     }
 
     @Override
-    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         super.onBreak(world, pos, state, player);
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof AshPileBlockEntity) {
@@ -44,6 +44,7 @@ public class AshPileBlock extends BlockWithEntity {
             }
         }
         world.getBlockEntity(pos).markRemoved();
+        return state;
     }
 
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {

@@ -7,6 +7,10 @@ import net.minecraft.registry.tag.TagKey;
 
 public class PrimevalItemTags {
 
+    public static final TagKey<Item> FLINT_TOOL_MATERIALS = register("tool_material_flint");
+    public static final TagKey<Item> COPPER_TOOL_MATERIALS = register("tool_material_copper");
+    public static final TagKey<Item> BBRONZE_TOOL_MATERIALS = register("tool_material_bronze");
+
     public static final TagKey<Item> BURNABLE_SHORT = register("burnable_short");
     public static final TagKey<Item> BURNABLE_LONG = register("burnable_long");
 

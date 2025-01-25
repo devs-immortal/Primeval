@@ -24,7 +24,6 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.hit.BlockHitResult;
@@ -34,6 +33,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
+import net.minecraft.world.block.WireOrientation;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -53,7 +53,7 @@ public class PrimevalCampfireBlock extends BlockWithEntity {
     }
 
     @Override
-    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
+    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
         if (!canPlaceAt(state, world, pos)) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof PrimevalCampfireBlockEntity) {
@@ -63,7 +63,7 @@ public class PrimevalCampfireBlock extends BlockWithEntity {
             }
             world.breakBlock(pos, true);
         }
-        super.neighborUpdate(state, world, pos, block, fromPos, notify);
+        super.neighborUpdate(state, world, pos, sourceBlock, wireOrientation, notify);
     }
 
     @Override
@@ -93,7 +93,7 @@ public class PrimevalCampfireBlock extends BlockWithEntity {
     }
 
     @Override
-    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         super.onBreak(world, pos, state, player);
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof PrimevalCampfireBlockEntity) {
@@ -101,10 +101,11 @@ public class PrimevalCampfireBlock extends BlockWithEntity {
             ItemScatterer.spawn(world, pos, items);
             blockEntity.markRemoved();
         }
+        return state;
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         ItemStack itemStack = player.getStackInHand(hand);
         Optional<OpenFireRecipe> optional;
         BlockEntity blockEntity = world.getBlockEntity(pos);

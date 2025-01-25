@@ -10,6 +10,7 @@ import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Clearable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -33,27 +34,27 @@ public class PitKilnBlockEntity extends BlockEntity implements Clearable {
         this.burnTimer = -1;
     }
 
-    public void readNbt(NbtCompound nbt) {
-        super.readNbt(nbt);
+    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
+        super.readNbt(nbt, registries);
         for (int i = 0; i < 4; i++) {
             this.logs.clear();
             if (nbt.contains(("Log"+i), 10)) {
-                this.logs.push(ItemStack.fromNbt(nbt.getCompound(("Log"+i))));
+                this.logs.push(ItemStack.fromNbt(registries, nbt.getCompound(("Log"+i))).orElse(ItemStack.EMPTY));
             }
             if (nbt.contains(("Item"+i), 10)) {
-                this.inventory[i] = ItemStack.fromNbt(nbt.getCompound(("Item"+i)));
+                this.inventory[i] = ItemStack.fromNbt(registries, nbt.getCompound(("Item"+i))).orElse(ItemStack.EMPTY);
             }
         }
         this.burnTimer = nbt.getInt("burnTimer");
     }
 
-    protected void writeNbt(NbtCompound nbt) {
-        super.writeNbt(nbt);
+    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
+        super.writeNbt(nbt, registries);
         for (int i = 0; i < 4; i++) {
             if (i < this.logs.size() && !this.logs.get(i).isEmpty()) {
-                nbt.put(("Log"+i), this.logs.get(i).writeNbt(new NbtCompound()));
+                nbt.put(("Log"+i), this.logs.get(i).toNbt(registries));
             }
-            nbt.put(("Item"+i), this.inventory[i].writeNbt(new NbtCompound()));
+            nbt.put(("Item"+i), this.inventory[i].toNbt(registries));
         }
         nbt.putInt("burnTimer", this.burnTimer);
     }
@@ -77,10 +78,10 @@ public class PitKilnBlockEntity extends BlockEntity implements Clearable {
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt() {
+    public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registries) {
         NbtCompound nbtCompound = new NbtCompound();
         for (int i = 0; i < 4; i++) {
-            nbtCompound.put(("Item"+i), this.inventory[i].writeNbt(new NbtCompound()));
+            nbtCompound.put(("Item"+i), this.inventory[i].toNbt(registries));
         }
         nbtCompound.putInt("burnTimer", this.burnTimer);
         return nbtCompound;

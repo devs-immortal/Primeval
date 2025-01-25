@@ -28,13 +28,13 @@ public class CrateBlock extends BlockWithEntity {
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         if (world.isClient) {
             return ActionResult.SUCCESS;
         }
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof CrateBlockEntity) {
-            player.openHandledScreen((CrateBlockEntity)blockEntity);
+            player.openHandledScreen((CrateBlockEntity) blockEntity);
         }
         return ActionResult.CONSUME;
     }

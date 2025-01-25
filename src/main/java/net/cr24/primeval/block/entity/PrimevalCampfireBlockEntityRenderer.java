@@ -7,6 +7,7 @@ import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ModelTransformationMode;
 import net.minecraft.util.collection.DefaultedList;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
@@ -22,12 +23,12 @@ public class PrimevalCampfireBlockEntityRenderer  implements BlockEntityRenderer
         matrices.scale(0.6f, 0.5f, 0.6f);
         matrices.multiply(NEGATIVE_X.rotateX(90));
         matrices.translate(0.25, -0.37, 0.4);
-        MinecraftClient.getInstance().getItemRenderer().renderItem(items.get(0), ModelTransformation.Mode.GROUND, light, overlay, matrices, vertexConsumers, 0);
+        MinecraftClient.getInstance().getItemRenderer().renderItem(items.get(0), ModelTransformationMode.GROUND, light, overlay, matrices, vertexConsumers, entity.getWorld(), 0);
         matrices.translate(1.15, 0, 0);
-        MinecraftClient.getInstance().getItemRenderer().renderItem(items.get(1), ModelTransformation.Mode.GROUND, light, overlay, matrices, vertexConsumers, 0);
+        MinecraftClient.getInstance().getItemRenderer().renderItem(items.get(1), ModelTransformationMode.GROUND, light, overlay, matrices, vertexConsumers, entity.getWorld(), 0);
         matrices.translate(-1.15, -1.15, 0);
-        MinecraftClient.getInstance().getItemRenderer().renderItem(items.get(2), ModelTransformation.Mode.GROUND, light, overlay, matrices, vertexConsumers, 0);
+        MinecraftClient.getInstance().getItemRenderer().renderItem(items.get(2), ModelTransformationMode.GROUND, light, overlay, matrices, vertexConsumers, entity.getWorld(), 0);
         matrices.translate(1.15, 0, 0);
-        MinecraftClient.getInstance().getItemRenderer().renderItem(items.get(3), ModelTransformation.Mode.GROUND, light, overlay, matrices, vertexConsumers, 0);
+        MinecraftClient.getInstance().getItemRenderer().renderItem(items.get(3), ModelTransformationMode.GROUND, light, overlay, matrices, vertexConsumers, entity.getWorld(), 0);
     }
 }

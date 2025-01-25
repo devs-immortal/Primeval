@@ -37,7 +37,7 @@ public class QuernBlock extends BlockWithEntity {
     }
 
     @Override
-    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         super.onBreak(world, pos, state, player);
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof QuernBlockEntity) {
@@ -45,6 +45,7 @@ public class QuernBlock extends BlockWithEntity {
             dropStack(world, pos, ((QuernBlockEntity) blockEntity).getWheelToDrop());
         }
         blockEntity.markRemoved();
+        return state;
     }
 
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {

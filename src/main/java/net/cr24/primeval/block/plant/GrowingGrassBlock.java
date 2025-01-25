@@ -15,6 +15,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
+import net.minecraft.world.tick.ScheduledTickView;
 
 public class GrowingGrassBlock extends Block {
     public static final IntProperty GROWTH_STATE;
@@ -73,8 +74,8 @@ public class GrowingGrassBlock extends Block {
         return canGrow(state.get(GROWTH_STATE), floorBlock);
     }
 
-    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
-        return !state.canPlaceAt(world, pos) ? Blocks.AIR.getDefaultState() : super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
+    public BlockState getStateForNeighborUpdate(BlockState state, WorldView world, ScheduledTickView tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random) {
+        return !state.canPlaceAt(world, pos) ? Blocks.AIR.getDefaultState() : super.getStateForNeighborUpdate(state, world, tickView, pos, direction, neighborPos, neighborState, random);
     }
 
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
@@ -86,8 +87,8 @@ public class GrowingGrassBlock extends Block {
         return true;
     }
 
-    public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
-        return type == NavigationType.AIR && !this.collidable ? true : super.canPathfindThrough(state, world, pos, type);
+    public boolean canPathfindThrough(BlockState state, NavigationType type) {
+        return type == NavigationType.AIR && !this.collidable || super.canPathfindThrough(state, type);
     }
 
     static {

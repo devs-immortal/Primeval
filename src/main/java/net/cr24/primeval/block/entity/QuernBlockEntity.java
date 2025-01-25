@@ -9,6 +9,7 @@ import net.cr24.primeval.util.PrimevalSoundEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.projectile.thrown.SnowballEntity;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
@@ -18,6 +19,7 @@ import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Clearable;
 import net.minecraft.util.math.BlockPos;
@@ -65,7 +67,7 @@ public class QuernBlockEntity extends BlockEntity implements Clearable {
                 Block.dropStack(world, pos, Direction.UP, recipe.get().getOutput());
                 wheelDamage += recipe.get().getWheelDamage();
                 remainder--;
-                if (wheelDamage > PrimevalItems.QUERN_WHEEL.getMaxDamage()) {
+                if (wheelDamage > PrimevalItems.QUERN_WHEEL.getComponents().get(DataComponentTypes.MAX_DAMAGE)) {
                     wheelDamage = -1;
                     breakParticles(world, pos);
                     if (!world.isClient())
@@ -153,17 +155,17 @@ public class QuernBlockEntity extends BlockEntity implements Clearable {
         }
     }
 
-    public void readNbt(NbtCompound nbt) {
-        super.readNbt(nbt);
-        inputItem = ItemStack.fromNbt(nbt.getCompound(("InputItem")));
+    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
+        super.readNbt(nbt, registries);
+        inputItem = ItemStack.fromNbt(registries, nbt.getCompound("InputItem")).orElse(ItemStack.EMPTY);
         wheelDamage = nbt.getInt("WheelHealth");
         targetAngle = nbt.getFloat("TargetAngle");
         currentAngle = nbt.getFloat("CurrentAngle");
     }
 
-    protected void writeNbt(NbtCompound nbt) {
-        super.writeNbt(nbt);
-        nbt.put("InputItem", inputItem.writeNbt(new NbtCompound()));
+    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
+        super.writeNbt(nbt, registries);
+        nbt.put("InputItem", inputItem.toNbt(registries));
         nbt.putInt("WheelHealth", wheelDamage);
         nbt.putFloat("TargetAngle", targetAngle);
         nbt.putFloat("CurrentAngle", currentAngle);
@@ -174,9 +176,9 @@ public class QuernBlockEntity extends BlockEntity implements Clearable {
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt() {
+    public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registries) {
         NbtCompound nbtCompound = new NbtCompound();
-        nbtCompound.put("InputItem", inputItem.writeNbt(new NbtCompound()));
+        nbtCompound.put("InputItem", inputItem.toNbt(registries));
         nbtCompound.putInt("WheelHealth", wheelDamage);
         nbtCompound.putFloat("TargetAngle", targetAngle);
         nbtCompound.putFloat("CurrentAngle", currentAngle);

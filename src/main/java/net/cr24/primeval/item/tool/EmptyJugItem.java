@@ -13,8 +13,8 @@ import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
@@ -34,24 +34,25 @@ public class EmptyJugItem extends Item implements IWeightedItem {
     }
 
     @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+    public ActionResult use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
         BlockHitResult hitResult = GlassBottleItem.raycast(world, user, RaycastContext.FluidHandling.SOURCE_ONLY);
         if (((HitResult)hitResult).getType() == HitResult.Type.MISS) {
-            return TypedActionResult.pass(itemStack);
+            return ActionResult.PASS;
         }
         if (((HitResult)hitResult).getType() == HitResult.Type.BLOCK) {
             BlockPos blockPos = hitResult.getBlockPos();
             if (!world.canPlayerModifyAt(user, blockPos)) {
-                return TypedActionResult.pass(itemStack);
+                return ActionResult.PASS;
             }
             if (world.getFluidState(blockPos).isIn(FluidTags.WATER)) {
                 world.playSound(user, user.getX(), user.getY(), user.getZ(), SoundEvents.ITEM_BUCKET_FILL, SoundCategory.NEUTRAL, 1.0f, 1.0f);
                 world.emitGameEvent(user, GameEvent.FLUID_PICKUP, blockPos);
-                return TypedActionResult.success(this.fill(itemStack, user, new ItemStack(PrimevalItems.FIRED_CLAY_WATER_JUG)), world.isClient());
+                this.fill(itemStack, user, new ItemStack(PrimevalItems.FIRED_CLAY_WATER_JUG));
+                return ActionResult.SUCCESS;
             }
         }
-        return TypedActionResult.pass(itemStack);
+        return ActionResult.PASS;
     }
 
     protected ItemStack fill(ItemStack stack, PlayerEntity player, ItemStack outputStack) {

@@ -120,12 +120,12 @@ public class PrimevalItems {
     public static final Item RAW_LAZURITE_LARGE = registerItem("raw_lazurite_large", new WeightedItem(new Item.Settings(), Weight.NORMAL, Size.LARGE), PrimevalItems.PRIMEVAL_ITEMS);
 
     // Tools
-    public static final Item FLINT_AXE = registerItem("flint_axe", new PrimevalAxeItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.FLINT.getAttackDamage(), -3.0f, new Item.Settings(), Weight.HEAVY, Size.LARGE), PrimevalItems.PRIMEVAL_TOOLS);
-    public static final Item FLINT_KNIFE = registerItem("flint_knife", new PrimevalKnifeItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.FLINT.getAttackDamage() * PrimevalToolMaterials.KNIFE_DAMAGE_MULTIPLIER, -3.0f, new Item.Settings(), Weight.HEAVY, Size.LARGE), PrimevalItems.PRIMEVAL_TOOLS);
-    public static final Item FLINT_SHOVEL = registerItem("flint_shovel", new PrimevalShovelItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.FLINT.getAttackDamage() * PrimevalToolMaterials.BLUNT_DAMAGE_MULTIPLIER, -3.0f, new Item.Settings(), Weight.HEAVY, Size.LARGE), PrimevalItems.PRIMEVAL_TOOLS);
-    public static final Item FLINT_SPEAR = registerItem("flint_spear", new PrimevalSpearItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.FLINT.getAttackDamage() * PrimevalToolMaterials.SPEAR_DAMAGE_MULTIPLIER, -3.5f, new Item.Settings(), Weight.HEAVY, Size.LARGE), PrimevalItems.PRIMEVAL_TOOLS);
-    public static final Item[] COPPER_TOOLS = registerToolSet("copper", PrimevalToolMaterials.COPPER, new Item.Settings(), Weight.HEAVY, Size.LARGE);
-    public static final Item[] BRONZE_TOOLS = registerToolSet("bronze", PrimevalToolMaterials.BRONZE, new Item.Settings(), Weight.HEAVY, Size.LARGE);
+    public static final Item FLINT_AXE = registerItem("flint_axe", new PrimevalAxeItem(PrimevalToolMaterials.FLINT, 1.0f, -3.0f, new Item.Settings(), Weight.HEAVY, Size.LARGE), PrimevalItems.PRIMEVAL_TOOLS);
+    public static final Item FLINT_KNIFE = registerItem("flint_knife", new PrimevalKnifeItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.KNIFE_DAMAGE_MULTIPLIER, -3.0f, new Item.Settings(), Weight.HEAVY, Size.LARGE), PrimevalItems.PRIMEVAL_TOOLS);
+    public static final Item FLINT_SHOVEL = registerItem("flint_shovel", new PrimevalShovelItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.BLUNT_DAMAGE_MULTIPLIER, -3.0f, new Item.Settings(), Weight.HEAVY, Size.LARGE), PrimevalItems.PRIMEVAL_TOOLS);
+    public static final Item FLINT_SPEAR = registerItem("flint_spear", new PrimevalSpearItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.SPEAR_DAMAGE_MULTIPLIER, -3.5f, new Item.Settings(), Weight.HEAVY, Size.LARGE), PrimevalItems.PRIMEVAL_TOOLS);
+    public static final Item[] COPPER_TOOLS = registerToolSet("copper", PrimevalToolMaterials.COPPER, new Item.Settings(), 1.5f, Weight.HEAVY, Size.LARGE);
+    public static final Item[] BRONZE_TOOLS = registerToolSet("bronze", PrimevalToolMaterials.BRONZE, new Item.Settings(), 1.5f, Weight.HEAVY, Size.LARGE);
 
     // Tool Parts
     public static final Item[] COPPER_TOOL_PARTS = registerToolPartSet("copper", new Item.Settings(), Weight.NORMAL, Size.MEDIUM);
@@ -245,17 +245,16 @@ public class PrimevalItems {
         return items;
     }
 
-    private static Item[] registerToolSet(String material_id, ToolMaterial material, Item.Settings group, Weight weight, Size size) {
+    private static Item[] registerToolSet(String material_id, ToolMaterial material, Item.Settings group, float attackDamage, Weight weight, Size size) {
         Item[] items = new Item[8];
-        items[0] = registerItem(material_id + "_axe", new PrimevalAxeItem(material, material.getAttackDamage(), -3.0f, group, weight, size), PrimevalItems.PRIMEVAL_TOOLS);
-        items[1] = registerItem(material_id + "_chisel", new ChiselItem(material, material.getAttackDamage() * PrimevalToolMaterials.BLUNT_DAMAGE_MULTIPLIER, -3.0f, group, weight, size), PrimevalItems.PRIMEVAL_TOOLS);
-        items[2] = registerItem(material_id + "_knife", new PrimevalKnifeItem(material, material.getAttackDamage() * PrimevalToolMaterials.KNIFE_DAMAGE_MULTIPLIER, -1.5f, group, weight, size), PrimevalItems.PRIMEVAL_TOOLS);
-        items[3] = registerItem(material_id + "_pickaxe", new PrimevalPickaxeItem(material, material.getAttackDamage(), -3.0f, group, weight, size), PrimevalItems.PRIMEVAL_TOOLS);
-        items[4] = registerItem(material_id + "_shovel", new PrimevalShovelItem(material, material.getAttackDamage() * PrimevalToolMaterials.BLUNT_DAMAGE_MULTIPLIER, -3.0f, group, weight, size), PrimevalItems.PRIMEVAL_TOOLS);
-        items[5] = registerItem(material_id + "_sword", new PrimevalSwordItem(material, material.getAttackDamage() * PrimevalToolMaterials.SWORD_DAMAGE_MULTIPLIER, -2.5f, group, weight, size), PrimevalItems.PRIMEVAL_TOOLS);
-        items[6] = registerItem(material_id + "_hoe", new PrimevalHoeItem(material, group, weight, size), PrimevalItems.PRIMEVAL_TOOLS);
-        items[7] = registerItem(material_id + "_spear", new PrimevalSpearItem(material, material.getAttackDamage() * PrimevalToolMaterials.SPEAR_DAMAGE_MULTIPLIER, -3.5f, group, weight, size), PrimevalItems.PRIMEVAL_TOOLS);
-        IncubusItemPredicates.registerInWorldItemPredicate(items[7]);
+        items[0] = registerItem(material_id + "_axe", new PrimevalAxeItem(material, attackDamage, -3.0f, group, weight, size), PrimevalItems.PRIMEVAL_TOOLS);
+        items[1] = registerItem(material_id + "_chisel", new ChiselItem(material, attackDamage * PrimevalToolMaterials.BLUNT_DAMAGE_MULTIPLIER, -3.0f, group, weight, size), PrimevalItems.PRIMEVAL_TOOLS);
+        items[2] = registerItem(material_id + "_knife", new PrimevalKnifeItem(material, attackDamage * PrimevalToolMaterials.KNIFE_DAMAGE_MULTIPLIER, -1.5f, group, weight, size), PrimevalItems.PRIMEVAL_TOOLS);
+        items[3] = registerItem(material_id + "_pickaxe", new PrimevalPickaxeItem(material, attackDamage, -3.0f, group, weight, size), PrimevalItems.PRIMEVAL_TOOLS);
+        items[4] = registerItem(material_id + "_shovel", new PrimevalShovelItem(material, attackDamage * PrimevalToolMaterials.BLUNT_DAMAGE_MULTIPLIER, -3.0f, group, weight, size), PrimevalItems.PRIMEVAL_TOOLS);
+        items[5] = registerItem(material_id + "_sword", new PrimevalSwordItem(material, attackDamage * PrimevalToolMaterials.SWORD_DAMAGE_MULTIPLIER, -2.5f, group, weight, size), PrimevalItems.PRIMEVAL_TOOLS);
+        items[6] = registerItem(material_id + "_hoe", new PrimevalHoeItem(material, attackDamage * PrimevalToolMaterials.BLUNT_DAMAGE_MULTIPLIER, -3.0f, group, weight, size), PrimevalItems.PRIMEVAL_TOOLS);
+        items[7] = registerItem(material_id + "_spear", new PrimevalSpearItem(material, attackDamage * PrimevalToolMaterials.SPEAR_DAMAGE_MULTIPLIER, -3.5f, group, weight, size), PrimevalItems.PRIMEVAL_TOOLS);
         return items;
     }
 

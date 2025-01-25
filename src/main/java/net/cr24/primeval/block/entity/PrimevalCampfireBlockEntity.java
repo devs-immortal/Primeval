@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Clearable;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
@@ -38,11 +39,11 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
         super(PrimevalBlocks.CAMPFIRE_BLOCK_ENTITY, pos, state);
     }
 
-    public void readNbt(NbtCompound nbt) {
-        super.readNbt(nbt);
+    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
+        super.readNbt(nbt, registries);
         int[] is;
         this.itemsBeingCooked.clear();
-        Inventories.readNbt(nbt, this.itemsBeingCooked);
+        Inventories.readNbt(nbt, this.itemsBeingCooked, registries);
         if (nbt.contains("CookingTimes", 11)) {
             is = nbt.getIntArray("CookingTimes");
             System.arraycopy(is, 0, this.cookingTimes, 0, Math.min(this.cookingTotalTimes.length, is.length));
@@ -56,9 +57,9 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
         this.lit = nbt.getBoolean("Lit");
     }
 
-    protected void writeNbt(NbtCompound nbt) {
-        super.writeNbt(nbt);
-        Inventories.writeNbt(nbt, this.itemsBeingCooked, true);
+    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
+        super.writeNbt(nbt, registries);
+        Inventories.writeNbt(nbt, this.itemsBeingCooked, true, registries);
         nbt.putIntArray("CookingTimes", this.cookingTimes);
         nbt.putIntArray("CookingTotalTimes", this.cookingTotalTimes);
         nbt.putInt("BurnTime", this.burnTime);
@@ -202,9 +203,9 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt() {
+    public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registries) {
         NbtCompound nbtCompound = new NbtCompound();
-        Inventories.writeNbt(nbtCompound, this.itemsBeingCooked, true);
+        Inventories.writeNbt(nbtCompound, this.itemsBeingCooked, true, registries);
         nbtCompound.putInt("BurnTime", this.burnTime);
         nbtCompound.putInt("Fuel", this.fuel);
         nbtCompound.putBoolean("Lit", this.lit);

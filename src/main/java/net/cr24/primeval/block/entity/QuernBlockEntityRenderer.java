@@ -9,6 +9,7 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.item.ModelTransformationMode;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 import net.minecraft.util.math.random.Random;
@@ -21,7 +22,7 @@ public class QuernBlockEntityRenderer implements BlockEntityRenderer<QuernBlockE
     public void render(QuernBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
         double sinkProgress = 0.7-(entity.currentAngle / 360D)*0.2;
         matrices.translate(0.5, sinkProgress, 0.5);
-        MinecraftClient.getInstance().getItemRenderer().renderItem(entity.inputItem, ModelTransformation.Mode.GROUND, light, overlay, matrices, vertexConsumers, 0);
+        MinecraftClient.getInstance().getItemRenderer().renderItem(entity.inputItem, ModelTransformationMode.GROUND, light, overlay, matrices, vertexConsumers, entity.getWorld(), 0);
         matrices.translate(0, -sinkProgress, 0);
 
         if (entity.wheelDamage == -1) return;

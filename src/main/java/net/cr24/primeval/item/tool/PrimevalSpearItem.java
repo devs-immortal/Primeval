@@ -2,7 +2,6 @@ package net.cr24.primeval.item.tool;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.cr24.primeval.item.Size;
 import net.cr24.primeval.item.Weight;
 import net.minecraft.entity.EquipmentSlot;

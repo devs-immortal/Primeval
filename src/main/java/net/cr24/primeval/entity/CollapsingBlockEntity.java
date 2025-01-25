@@ -58,9 +58,9 @@ public class CollapsingBlockEntity extends FallingBlockEntity {
             BlockPos blockPos2;
             if (this.timeFalling++ == 0) {
                 blockPos2 = this.origin;
-                if (this.world.getBlockState(blockPos2).isOf(block) || this.world.getBlockState(blockPos2).isOf(source)) {
-                    this.world.removeBlock(blockPos2, false);
-                } else if (!this.world.isClient) {
+                if (getWorld().getBlockState(blockPos2).isOf(block) || getWorld().getBlockState(blockPos2).isOf(source)) {
+                    getWorld().removeBlock(blockPos2, false);
+                } else if (!getWorld().isClient) {
                     this.discard();
                     return;
                 }
@@ -71,48 +71,48 @@ public class CollapsingBlockEntity extends FallingBlockEntity {
             }
 
             this.move(MovementType.SELF, this.getVelocity());
-            if (!this.world.isClient) {
+            if (!getWorld().isClient) {
                 blockPos2 = this.getBlockPos();
                 boolean bl = this.block.getBlock() instanceof ConcretePowderBlock;
-                boolean bl2 = bl && this.world.getFluidState(blockPos2).isIn(FluidTags.WATER);
+                boolean bl2 = bl && getWorld().getFluidState(blockPos2).isIn(FluidTags.WATER);
                 double d = this.getVelocity().lengthSquared();
                 if (bl && d > 1.0D) {
-                    BlockHitResult blockHitResult = this.world.raycast(new RaycastContext(new Vec3d(this.prevX, this.prevY, this.prevZ), this.getPos(), RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.SOURCE_ONLY, this));
-                    if (blockHitResult.getType() != HitResult.Type.MISS && this.world.getFluidState(blockHitResult.getBlockPos()).isIn(FluidTags.WATER)) {
+                    BlockHitResult blockHitResult = getWorld().raycast(new RaycastContext(new Vec3d(this.prevX, this.prevY, this.prevZ), this.getPos(), RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.SOURCE_ONLY, this));
+                    if (blockHitResult.getType() != HitResult.Type.MISS && getWorld().getFluidState(blockHitResult.getBlockPos()).isIn(FluidTags.WATER)) {
                         blockPos2 = blockHitResult.getBlockPos();
                         bl2 = true;
                     }
                 }
 
-                if (!this.onGround && !bl2) {
-                    if (!this.world.isClient && (this.timeFalling > 100 && (blockPos2.getY() < 1 || blockPos2.getY() > 256) || this.timeFalling > 600)) {
-                        if (this.dropItem && this.world.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
+                if (!this.isOnGround() && !bl2) {
+                    if (!getWorld().isClient && (this.timeFalling > 100 && (blockPos2.getY() < 1 || blockPos2.getY() > 256) || this.timeFalling > 600)) {
+                        if (this.dropItem && getWorld().getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
                             this.dropItem(block);
                         }
 
                         this.discard();
                     }
                 } else {
-                    BlockState blockState = this.world.getBlockState(blockPos2);
+                    BlockState blockState = getWorld().getBlockState(blockPos2);
                     this.setVelocity(this.getVelocity().multiply(0.7D, -0.5D, 0.7D));
                     if (!blockState.isOf(Blocks.MOVING_PISTON)) {
                         if (blockState.isIn(PrimevalBlockTags.COLLAPSING_NO_CRUSH)) {
                             blockPos2 = blockPos2.up();
-                            blockState = this.world.getBlockState(blockPos2);
+                            blockState = getWorld().getBlockState(blockPos2);
                         }
                         this.discard();
                         // !destroyedOnLanding
-                        if (this.block.contains(Properties.WATERLOGGED) && this.world.getFluidState(blockPos2).getFluid() == Fluids.WATER) {
+                        if (this.block.contains(Properties.WATERLOGGED) && getWorld().getFluidState(blockPos2).getFluid() == Fluids.WATER) {
                             this.block = this.block.with(Properties.WATERLOGGED, true);
                         }
 
-                        if (this.world.setBlockState(blockPos2, this.block, 3)) {
+                        if (getWorld().setBlockState(blockPos2, this.block, 3)) {
                             if (block instanceof FallingBlock) {
-                                ((FallingBlock)block).onLanding(this.world, blockPos2, this.block, blockState, this);
+                                ((FallingBlock)block).onLanding(getWorld(), blockPos2, this.block, blockState, this);
                             }
 
                             if (this.blockEntityData != null && this.block.hasBlockEntity()) {
-                                BlockEntity $$11 = this.world.getBlockEntity(blockPos2);
+                                BlockEntity $$11 = getWorld().getBlockEntity(blockPos2);
                                 if ($$11 != null) {
                                     NbtCompound $$12 = $$11.createNbt();
                                     Iterator var13 = this.blockEntityData.getKeys().iterator();
@@ -130,7 +130,7 @@ public class CollapsingBlockEntity extends FallingBlockEntity {
                                     $$11.markDirty();
                                 }
                             }
-                        } else if (this.dropItem && this.world.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
+                        } else if (this.dropItem && getWorld().getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
                             this.dropItem(block);
                         }
                     }
@@ -153,7 +153,7 @@ public class CollapsingBlockEntity extends FallingBlockEntity {
             List<Entity> list = Lists.newArrayList(this.world.getOtherEntities(this, this.getBoundingBox()));
 
             for (Entity entity : list) {
-                entity.damage(damageSource, Math.min(MathHelper.floor((float) i * 2f), 40f));
+                entity.serverDamage(damageSource, Math.min(MathHelper.floor((float) i * 2f), 40f));
             }
         }
         return false;

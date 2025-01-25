@@ -26,6 +26,8 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
+import net.minecraft.world.block.WireOrientation;
+import org.jetbrains.annotations.Nullable;
 
 public class PitKilnBlock extends BlockWithEntity {
 
@@ -38,9 +40,10 @@ public class PitKilnBlock extends BlockWithEntity {
     }
 
     @Override
-    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         super.onBreak(world, pos, state, player);
         breakBlockEntity(world, pos, state);
+        return state;
     }
 
     private void breakBlockEntity(World world, BlockPos pos, BlockState state) {
@@ -57,8 +60,8 @@ public class PitKilnBlock extends BlockWithEntity {
     }
 
     @Override
-    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
-        super.neighborUpdate(state, world, pos, block, fromPos, notify);
+    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
+        super.neighborUpdate(state, world, pos, sourceBlock, wireOrientation, notify);
         if (!isSoilSurrounded(world, pos)) { // if not surrounded properly
             breakBlockEntity(world, pos, state);
             world.breakBlock(pos, true);

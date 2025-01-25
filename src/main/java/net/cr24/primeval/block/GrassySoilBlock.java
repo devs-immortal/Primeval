@@ -14,6 +14,7 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.chunk.light.ChunkLightProvider;
+import net.minecraft.world.tick.ScheduledTickView;
 
 import java.util.HashMap;
 
@@ -38,7 +39,7 @@ public class GrassySoilBlock extends SemiSupportedBlock {
         } else if (blockState.getFluidState().getLevel() == 8) {
             return false;
         } else {
-            int i = ChunkLightProvider.getRealisticOpacity(world, state, pos, blockState, blockPos, Direction.UP, blockState.getOpacity(world, blockPos));
+            int i = ChunkLightProvider.getRealisticOpacity(world, state, pos, blockState, blockPos, Direction.UP, blockState.getOpacity());
             return i < world.getMaxLightLevel();
         }
     }
@@ -70,8 +71,9 @@ public class GrassySoilBlock extends SemiSupportedBlock {
         }
     }
 
-    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
-        return direction == Direction.UP ? state.with(SNOWY, isSnow(neighborState)) : super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
+    @Override
+    public BlockState getStateForNeighborUpdate(BlockState state, WorldView world, ScheduledTickView tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random) {
+        return direction == Direction.UP ? state.with(SNOWY, isSnow(neighborState)) : super.getStateForNeighborUpdate(state, world, tickView, pos, direction, neighborPos, neighborState, random);
     }
 
     public BlockState getPlacementState(ItemPlacementContext ctx) {

@@ -6,6 +6,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Clearable;
 import net.minecraft.util.math.BlockPos;
 
@@ -20,14 +21,14 @@ public class LayingItemBlockEntity extends BlockEntity implements Clearable {
         randomInt = (pos.getX() + pos.getY()*2 + pos.getZ()*3)%4;
     }
 
-    public void readNbt(NbtCompound nbt) {
-        super.readNbt(nbt);
-        this.item = ItemStack.fromNbt(nbt.getCompound(("Item")));
+    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
+        super.readNbt(nbt, registries);
+        this.item = ItemStack.fromNbt(registries, nbt.getCompound(("Item"))).orElse(ItemStack.EMPTY);
     }
 
-    protected void writeNbt(NbtCompound nbt) {
-        super.writeNbt(nbt);
-        nbt.put("Item", this.item.writeNbt(new NbtCompound()));
+    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
+        super.writeNbt(nbt, registries);
+        nbt.put("Item", this.item.toNbt(registries));
     }
 
     public BlockEntityUpdateS2CPacket toUpdatePacket() {
@@ -39,9 +40,9 @@ public class LayingItemBlockEntity extends BlockEntity implements Clearable {
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt() {
+    public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registries) {
         NbtCompound nbtCompound = new NbtCompound();
-        nbtCompound.put("Item", this.item.writeNbt(new NbtCompound()));
+        nbtCompound.put("Item", this.item.toNbt(registries));
         return nbtCompound;
     }
 

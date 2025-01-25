@@ -6,6 +6,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Clearable;
 import net.minecraft.util.math.BlockPos;
 
@@ -18,19 +19,19 @@ public class AshPileBlockEntity extends BlockEntity implements Clearable {
         inventory = new ItemStack[] {ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY};
     }
 
-    public void readNbt(NbtCompound nbt) {
-        super.readNbt(nbt);
+    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
+        super.readNbt(nbt, registries);
         for (int i = 0; i < 4; i++) {
             if (nbt.contains(("Item"+i), 10)) {
-                this.inventory[i] = ItemStack.fromNbt(nbt.getCompound(("Item"+i)));
+                this.inventory[i] = ItemStack.fromNbt(registries, nbt.getCompound(("Item"+i))).orElse(ItemStack.EMPTY);
             }
         }
     }
 
-    protected void writeNbt(NbtCompound nbt) {
-        super.writeNbt(nbt);
+    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
+        super.writeNbt(nbt, registries);
         for (int i = 0; i < 4; i++) {
-            nbt.put(("Item"+i), this.inventory[i].writeNbt(new NbtCompound()));
+            nbt.put(("Item"+i), this.inventory[i].toNbt(registries));
         }
     }
 
@@ -44,10 +45,10 @@ public class AshPileBlockEntity extends BlockEntity implements Clearable {
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt() {
+    public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registries) {
         NbtCompound nbtCompound = new NbtCompound();
         for (int i = 0; i < 4; i++) {
-            nbtCompound.put(("Item"+i), this.inventory[i].writeNbt(new NbtCompound()));
+            nbtCompound.put(("Item"+i), this.inventory[i].toNbt(registries));
         }
         return nbtCompound;
     }

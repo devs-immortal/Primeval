@@ -10,6 +10,8 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.block.WireOrientation;
+import org.jetbrains.annotations.Nullable;
 
 public class LeafBlock extends Block {
 
@@ -34,7 +36,7 @@ public class LeafBlock extends Block {
     }
 
     @Override
-    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
+    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
         world.scheduleBlockTick(pos, this, 2);
     }
 }

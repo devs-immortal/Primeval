@@ -47,7 +47,7 @@ public class LogPileBlock extends BlockWithEntity implements Waterloggable {
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         if (!player.getAbilities().allowModifyWorld) return ActionResult.PASS;
         ItemStack itemStack = player.getStackInHand(hand);
         BlockEntity blockEntity = world.getBlockEntity(pos);
