@@ -28,7 +28,7 @@ public class PrimevalRecipes {
             @Override
             public String toString() {return "primeval:pit_kiln_firing";}
         });
-        PIT_KILN_FIRING_SERIALIZER = Registry.register(Registries.RECIPE_SERIALIZER, PrimevalMain.getId("pit_kiln_firing"), new PitKilnFiringRecipe.Serializer());
+        PIT_KILN_FIRING_SERIALIZER = Registry.register(Registries.RECIPE_SERIALIZER, PrimevalMain.getId("pit_kiln_firing"), new SimpleOneToOneRecipe.Serializer<>(PitKilnFiringRecipe::new));
 
         OPEN_FIRE = Registry.register(Registries.RECIPE_TYPE, PrimevalMain.getId("open_fire"), new RecipeType<OpenFireRecipe>() {
             @Override

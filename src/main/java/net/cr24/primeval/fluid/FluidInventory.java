@@ -4,15 +4,21 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.input.RecipeInput;
 
 import java.util.HashMap;
 
-public class FluidInventory implements Inventory {
+public class FluidInventory implements Inventory, RecipeInput {
 
     private final HashMap<FluidVariant, Integer> fluids;
 
     public FluidInventory(HashMap<FluidVariant, Integer> fluidsIn) {
         this.fluids = fluidsIn;
+    }
+
+    @Override
+    public ItemStack getStackInSlot(int slot) {
+        return ItemStack.EMPTY;
     }
 
     @Override

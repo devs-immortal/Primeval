@@ -24,6 +24,7 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.hit.BlockHitResult;
@@ -88,9 +89,10 @@ public class PrimevalCampfireBlock extends BlockWithEntity {
                 if (bl) stack.decrement(1);
             }
         } else if (state.get(LIT) && !world.isClient) {
-            entity.damage(DamageSource.IN_FIRE, 1);
+            entity.serverDamage(world.getDamageSources().inFire(), 1);
         }
     }
+
 
     @Override
     public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
@@ -106,7 +108,7 @@ public class PrimevalCampfireBlock extends BlockWithEntity {
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        ItemStack itemStack = player.getStackInHand(hand);
+        ItemStack itemStack = player.getStackInHand(Hand.MAIN_HAND);
         Optional<OpenFireRecipe> optional;
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof PrimevalCampfireBlockEntity) {
@@ -204,6 +206,6 @@ public class PrimevalCampfireBlock extends BlockWithEntity {
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return checkType(type, PrimevalBlocks.CAMPFIRE_BLOCK_ENTITY, (world1, pos, state1, be) -> PrimevalCampfireBlockEntity.tick(world1, pos, state1, be));
+        return validateTicker(type, PrimevalBlocks.CAMPFIRE_BLOCK_ENTITY, (world1, pos, state1, be) -> PrimevalCampfireBlockEntity.tick(world1, pos, state1, be));
     }
 }

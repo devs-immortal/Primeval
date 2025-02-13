@@ -1,13 +1,25 @@
 package net.cr24.primeval.recipe;
 
-import com.google.gson.JsonObject;
+import com.mojang.datafixers.Products;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.cr24.primeval.block.PrimevalBlocks;
 import net.cr24.primeval.item.PrimevalItems;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.recipe.*;
+import net.minecraft.recipe.book.RecipeBookCategories;
+import net.minecraft.recipe.book.RecipeBookCategory;
+import net.minecraft.recipe.input.SingleStackRecipeInput;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.JsonHelper;
-import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.world.World;
+
+import java.util.Objects;
+import java.util.function.Function;
 
 public class PitKilnFiringRecipe extends SimpleOneToOneRecipe {
     public PitKilnFiringRecipe(Identifier id, Ingredient input, ItemStack result) {
@@ -15,10 +27,8 @@ public class PitKilnFiringRecipe extends SimpleOneToOneRecipe {
     }
 
     @Override
-    public DefaultedList<Ingredient> getIngredients() {
-        DefaultedList<Ingredient> list = DefaultedList.of();
-        list.add(this.input);
-        return list;
+    public RecipeSerializer<PitKilnFiringRecipe> getSerializer() {
+        return PrimevalRecipes.PIT_KILN_FIRING_SERIALIZER;
     }
 
     @Override
@@ -27,34 +37,8 @@ public class PitKilnFiringRecipe extends SimpleOneToOneRecipe {
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
-        return PrimevalRecipes.PIT_KILN_FIRING_SERIALIZER;
-    }
-
-    @Override
-    public RecipeType<?> getType() {
+    public RecipeType<PitKilnFiringRecipe> getType() {
         return PrimevalRecipes.PIT_KILN_FIRING;
     }
 
-    public static class Serializer implements RecipeSerializer<PitKilnFiringRecipe> {
-        public Serializer() {
-        }
-
-        public PitKilnFiringRecipe read(Identifier identifier, JsonObject jsonObject) {
-            Ingredient in = Ingredient.fromJson(JsonHelper.getObject(jsonObject, "input"));
-            ItemStack out = ShapedRecipe.outputFromJson(JsonHelper.getObject(jsonObject, "result"));
-            return new PitKilnFiringRecipe(identifier, in, out);
-        }
-
-        public PitKilnFiringRecipe read(Identifier identifier, PacketByteBuf packetByteBuf) {
-            Ingredient in = Ingredient.fromPacket(packetByteBuf);
-            ItemStack out = packetByteBuf.readItemStack();
-            return new PitKilnFiringRecipe(identifier, in, out);
-        }
-
-        public void write(PacketByteBuf packetByteBuf, PitKilnFiringRecipe recipe) {
-            recipe.input.write(packetByteBuf);
-            packetByteBuf.writeItemStack(recipe.result);
-        }
-    }
 }

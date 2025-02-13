@@ -6,11 +6,16 @@ import net.cr24.primeval.recipe.PitKilnFiringRecipe;
 import net.cr24.primeval.recipe.PrimevalRecipes;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.CampfireBlockEntity;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.recipe.CampfireCookingRecipe;
+import net.minecraft.recipe.ServerRecipeManager;
+import net.minecraft.recipe.input.SingleStackRecipeInput;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Clearable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -59,7 +64,7 @@ public class PitKilnBlockEntity extends BlockEntity implements Clearable {
         nbt.putInt("burnTimer", this.burnTimer);
     }
 
-    public static void tick(World world, BlockPos pos, BlockState state, PitKilnBlockEntity blockEntity) {
+    public static void litServerTick(ServerWorld world, BlockPos pos, BlockState state, PitKilnBlockEntity blockEntity, ServerRecipeManager.MatchGetter<SingleStackRecipeInput, PitKilnFiringRecipe> recipeMatchGetter) {
         if (blockEntity.burnTimer > 0) {
             blockEntity.burnTimer--;
         } else if (blockEntity.burnTimer == 0) { // WHEN FINISHES FIRING

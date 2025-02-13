@@ -1,15 +1,21 @@
 package net.cr24.primeval.recipe;
 
 import com.google.gson.JsonObject;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.cr24.primeval.block.PrimevalBlocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.ShapedRecipe;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
+import net.minecraft.util.dynamic.Codecs;
 
 public class QuernRecipe extends SimpleOneToOneRecipe {
 
@@ -30,36 +36,39 @@ public class QuernRecipe extends SimpleOneToOneRecipe {
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<QuernRecipe> getSerializer() {
         return PrimevalRecipes.QUERN_GRINDING_SERIALIZER;
     }
 
     @Override
-    public RecipeType<?> getType() {
+    public RecipeType<QuernRecipe> getType() {
         return PrimevalRecipes.QUERN_GRINDING;
     }
 
     public static class Serializer implements RecipeSerializer<QuernRecipe> {
-        public Serializer() {}
+        private static final MapCodec<QuernRecipe> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
+                Identifier.CODEC.fieldOf("id").forGetter((recipe) -> recipe.id),
+                Ingredient.CODEC.fieldOf("input").forGetter((recipe) -> recipe.input),
+                ItemStack.CODEC.fieldOf("result").forGetter((recipe) -> recipe.result),
+                Codecs.NON_NEGATIVE_INT.fieldOf("wheel_damage").forGetter((recipe) -> recipe.wheelDamage)
+        ).apply(instance, QuernRecipe::new));
+        private static final PacketCodec<RegistryByteBuf, QuernRecipe> PACKET_CODEC = PacketCodec.tuple(
+                Identifier.PACKET_CODEC, QuernRecipe::getId,
+                Ingredient.PACKET_CODEC, QuernRecipe::getInput,
+                ItemStack.PACKET_CODEC, QuernRecipe::getResult,
+                PacketCodecs.INTEGER, QuernRecipe::getWheelDamage,
+                QuernRecipe::new
+        );
 
-        public QuernRecipe read(Identifier identifier, JsonObject jsonObject) {
-            Ingredient in = Ingredient.fromJson(JsonHelper.getObject(jsonObject, "input"));
-            ItemStack out = ShapedRecipe.outputFromJson(JsonHelper.getObject(jsonObject, "result"));
-            int damage = JsonHelper.getInt(jsonObject, "wheelDamage");
-            return new QuernRecipe(identifier, in, out, damage);
+        protected Serializer() {
         }
 
-        public QuernRecipe read(Identifier identifier, PacketByteBuf packetByteBuf) {
-            Ingredient in = Ingredient.fromPacket(packetByteBuf);
-            ItemStack out = packetByteBuf.readItemStack();
-            int damage = packetByteBuf.readInt();
-            return new QuernRecipe(identifier, in, out, damage);
+        public MapCodec<QuernRecipe> codec() {
+            return CODEC;
         }
 
-        public void write(PacketByteBuf packetByteBuf, QuernRecipe recipe) {
-            recipe.input.write(packetByteBuf);
-            packetByteBuf.writeItemStack(recipe.result);
-            packetByteBuf.writeInt(recipe.wheelDamage);
+        public PacketCodec<RegistryByteBuf, QuernRecipe> packetCodec() {
+            return PACKET_CODEC;
         }
     }
 }

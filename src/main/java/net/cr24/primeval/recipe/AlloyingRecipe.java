@@ -2,18 +2,24 @@ package net.cr24.primeval.recipe;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.cr24.primeval.fluid.FluidInventory;
 import net.cr24.primeval.util.RangedValue;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.recipe.RecipeType;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.codec.PacketCodecs;
+import net.minecraft.recipe.*;
+import net.minecraft.recipe.book.RecipeBookCategory;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.registry.Registry;
+import net.minecraft.util.dynamic.Codecs;
 import net.minecraft.world.World;
 
 import java.util.HashMap;
@@ -52,18 +58,12 @@ public class AlloyingRecipe implements Recipe<FluidInventory> {
     }
 
     @Override
-    public ItemStack craft(FluidInventory inventory) {
+    public ItemStack craft(FluidInventory input, RegistryWrapper.WrapperLookup registries) {
         return ItemStack.EMPTY;
     }
 
-    @Override
-    public boolean fits(int width, int height) {
-        return true;
-    }
-
-    @Override
-    public ItemStack getOutput() {
-        return ItemStack.EMPTY;
+    public Identifier getId() {
+        return this.id;
     }
 
     public FluidVariant getFluidResult() {
@@ -80,18 +80,48 @@ public class AlloyingRecipe implements Recipe<FluidInventory> {
     }
 
     @Override
-    public Identifier getId() {
-        return this.id;
-    }
-
-    @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<AlloyingRecipe> getSerializer() {
         return PrimevalRecipes.ALLOYING_SERIALIZER;
     }
 
     @Override
-    public RecipeType<?> getType() {
+    public RecipeType<AlloyingRecipe> getType() {
         return PrimevalRecipes.ALLOYING;
+    }
+
+    @Override
+    public IngredientPlacement getIngredientPlacement() {
+        return IngredientPlacement.NONE;
+    }
+
+    @Override
+    public RecipeBookCategory getRecipeBookCategory() {
+        return null;
+    }
+
+    public static class Serializer implements RecipeSerializer<AlloyingRecipe> {
+        private static final MapCodec<AlloyingRecipe> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
+                Identifier.CODEC.fieldOf("id").forGetter((recipe) -> recipe.id),
+                Ingredient.CODEC.fieldOf("input").forGetter((recipe) -> recipe.id),
+                FluidVariant.CODEC.fieldOf("result").forGetter((recipe) -> recipe.fluidResult)
+        ).apply(instance, AlloyingRecipe::new));
+        private static final PacketCodec<RegistryByteBuf, AlloyingRecipe> PACKET_CODEC = PacketCodec.tuple(
+                Identifier.PACKET_CODEC, AlloyingRecipe::getId,
+                Ingredient.PACKET_CODEC, AlloyingRecipe::getFluidInputs,
+                FluidVariant.PACKET_CODEC, AlloyingRecipe::getFluidResult,
+                AlloyingRecipe::new
+        );
+
+        protected Serializer() {
+        }
+
+        public MapCodec<QuernRecipe> codec() {
+            return CODEC;
+        }
+
+        public PacketCodec<RegistryByteBuf, QuernRecipe> packetCodec() {
+            return PACKET_CODEC;
+        }
     }
 
     public static class Serializer implements RecipeSerializer<AlloyingRecipe> {
