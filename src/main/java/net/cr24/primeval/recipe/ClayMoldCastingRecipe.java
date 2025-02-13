@@ -12,7 +12,9 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
+import net.minecraft.recipe.input.CraftingRecipeInput;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.Pair;
@@ -35,7 +37,7 @@ public class ClayMoldCastingRecipe implements CraftingRecipe {
     }
 
     @Override
-    public boolean matches(CraftingInventory inventory, World world) {
+    public boolean matches(CraftingRecipeInput input, World world) {
         ItemStack stack = null;
         for (int i = 0; i < inventory.size(); ++i) {
             ItemStack itemStack2 = inventory.getStack(i);
@@ -124,6 +126,12 @@ public class ClayMoldCastingRecipe implements CraftingRecipe {
         return this.id;
     }
 
+
+    @Override
+    public ItemStack craft(CraftingRecipeInput input, RegistryWrapper.WrapperLookup registries) {
+        return null;
+    }
+
     @Override
     public RecipeSerializer<?> getSerializer() {
         return PrimevalRecipes.CLAY_MOLD_CASTING_SERIALIZER;
@@ -132,6 +140,11 @@ public class ClayMoldCastingRecipe implements CraftingRecipe {
     @Override
     public RecipeType<?> getType() {
         return CraftingRecipe.super.getType();
+    }
+
+    @Override
+    public IngredientPlacement getIngredientPlacement() {
+        return null;
     }
 
     @Override

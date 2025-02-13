@@ -245,7 +245,7 @@ public class VesselItem extends BundleItem implements IWeightedItem {
             // Check if meltable recipe for the item
             Optional<MeltingRecipe> option = world.getRecipeManager().getFirstMatch(PrimevalRecipes.MELTING, new SimpleInventory(itemStack), world);
             if (option.isPresent()) { // if can be melted
-                fluidResult = option.get().getFluidResult();
+                fluidResult = option.get().getFluidResultPair();
                 fluidType = fluidResult.getLeft();
                 fluidAmount = fluidResult.getRight();
                 overallFluid += fluidAmount*itemStack.getCount();

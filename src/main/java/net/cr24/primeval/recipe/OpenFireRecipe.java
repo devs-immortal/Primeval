@@ -1,54 +1,24 @@
 package net.cr24.primeval.recipe;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.Blocks;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.recipe.*;
+import net.minecraft.recipe.book.RecipeBookCategory;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.JsonHelper;
-import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.world.World;
+import net.minecraft.util.dynamic.Codecs;
 
-public class OpenFireRecipe implements Recipe<Inventory>  {
-    final Ingredient input;
-    final ItemStack result;
+public class OpenFireRecipe extends SimpleOneToOneRecipe {
+
     final int cookTime;
-    private final Identifier id;
 
     public OpenFireRecipe(Identifier id, Ingredient input, ItemStack result, int cookTime) {
-        this.id = id;
-        this.input = input;
-        this.result = result;
+        super(id, input, result);
         this.cookTime = cookTime;
-    }
-
-    @Override
-    public boolean matches(Inventory inventory, World world) {
-        return this.input.test(inventory.getStack(0));
-    }
-
-    @Override
-    public ItemStack craft(Inventory inventory) {
-        return this.result.copy();
-    }
-
-    @Override
-    public boolean fits(int width, int height) {
-        return true;
-    }
-
-    @Override
-    public DefaultedList<Ingredient> getIngredients() {
-        DefaultedList<Ingredient> defaultedList = DefaultedList.of();
-        defaultedList.add(this.input);
-        return defaultedList;
-    }
-
-    @Override
-    public ItemStack getOutput() {
-        return this.result;
     }
 
     public int getCookTime() {
@@ -66,41 +36,49 @@ public class OpenFireRecipe implements Recipe<Inventory>  {
     }
 
     @Override
-    public Identifier getId() {
-        return this.id;
-    }
-
-    @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<OpenFireRecipe> getSerializer() {
         return PrimevalRecipes.OPEN_FIRE_SERIALIZER;
     }
 
     @Override
-    public RecipeType<?> getType() {
+    public RecipeType<OpenFireRecipe> getType() {
         return PrimevalRecipes.OPEN_FIRE;
     }
 
+    @Override
+    public IngredientPlacement getIngredientPlacement() {
+        return IngredientPlacement.NONE;
+    }
+
+    @Override
+    public RecipeBookCategory getRecipeBookCategory() {
+        return null;
+    }
+
     public static class Serializer implements RecipeSerializer<OpenFireRecipe> {
-        public Serializer() {}
+        private static final MapCodec<OpenFireRecipe> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
+                Identifier.CODEC.fieldOf("id").forGetter((recipe) -> recipe.id),
+                Ingredient.CODEC.fieldOf("input").forGetter((recipe) -> recipe.input),
+                ItemStack.CODEC.fieldOf("result").forGetter((recipe) -> recipe.result),
+                Codecs.POSITIVE_INT.fieldOf("cook_time").forGetter((recipe) -> recipe.cookTime)
+        ).apply(instance, OpenFireRecipe::new));
+        private static final PacketCodec<RegistryByteBuf, OpenFireRecipe> PACKET_CODEC = PacketCodec.tuple(
+                Identifier.PACKET_CODEC, OpenFireRecipe::getId,
+                Ingredient.PACKET_CODEC, OpenFireRecipe::getInput,
+                ItemStack.PACKET_CODEC, OpenFireRecipe::getResult,
+                PacketCodecs.INTEGER, OpenFireRecipe::getCookTime,
+                OpenFireRecipe::new
+        );
 
-        public OpenFireRecipe read(Identifier identifier, JsonObject jsonObject) {
-            Ingredient in = Ingredient.fromJson(JsonHelper.getObject(jsonObject, "input"));
-            ItemStack out = ShapedRecipe.outputFromJson(JsonHelper.getObject(jsonObject, "result"));
-            int time = JsonHelper.getInt(jsonObject, "cook_time");
-            return new OpenFireRecipe(identifier, in, out, time);
+        protected Serializer() {
         }
 
-        public OpenFireRecipe read(Identifier identifier, PacketByteBuf packetByteBuf) {
-            Ingredient in = Ingredient.fromPacket(packetByteBuf);
-            ItemStack out = packetByteBuf.readItemStack();
-            int time = packetByteBuf.readInt();
-            return new OpenFireRecipe(identifier, in, out, time);
+        public MapCodec<OpenFireRecipe> codec() {
+            return this.CODEC;
         }
 
-        public void write(PacketByteBuf packetByteBuf, OpenFireRecipe recipe) {
-            recipe.input.write(packetByteBuf);
-            packetByteBuf.writeItemStack(recipe.result);
-            packetByteBuf.writeInt(recipe.cookTime);
+        public PacketCodec<RegistryByteBuf, OpenFireRecipe> packetCodec() {
+            return this.PACKET_CODEC;
         }
     }
 }

@@ -16,8 +16,8 @@ import java.util.function.Function;
 
 public abstract class SimpleOneToOneRecipe implements Recipe<SingleStackRecipeInput> {
     protected final Identifier id;
-    final Ingredient input;
-    final ItemStack result;
+    protected final Ingredient input;
+    protected final ItemStack result;
 
     public SimpleOneToOneRecipe(Identifier id, Ingredient input, ItemStack result) {
             this.id = id;
