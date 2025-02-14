@@ -28,6 +28,7 @@ public class WeightedBlockItem extends BlockItem implements IWeightedItem {
 
     @Environment(EnvType.CLIENT)
     public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+        super.appendTooltip(stack, context, tooltip, type);
         tooltip.add((Text.translatable("⚖ ").append(this.weight.getText()).append(" ⤧ ").append(this.size.getText())).formatted(Formatting.GRAY));
     }
 

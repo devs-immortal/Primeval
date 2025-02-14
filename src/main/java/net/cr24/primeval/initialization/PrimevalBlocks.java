@@ -7,8 +7,10 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.MapColor;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -42,18 +44,18 @@ public class PrimevalBlocks {
 
     // region TERRAIN BLOCKS
 
-//    public static final Block DIRT = registerBlock("dirt", new SemiSupportedBlock(SETTINGS_SOIL(), 0.2f), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
-//    public static final Block COARSE_DIRT = registerBlock("coarse_dirt", new SemiSupportedBlock(SETTINGS_SOIL(), 0.2f), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
-//    public static final Block CLAY_BLOCK = registerBlock("block_of_clay", new SemiSupportedBlock(SETTINGS_SOIL(), 0.3f), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block DIRT = registerBlock("dirt", new SemiSupportedBlock(0.2f, SETTINGS_SOIL()), Weight.NORMAL, Size.MEDIUM);
+    public static final Block COARSE_DIRT = registerBlock("coarse_dirt", new SemiSupportedBlock(0.2f, SETTINGS_SOIL()), Weight.NORMAL, Size.MEDIUM);
+    public static final Block CLAY_BLOCK = registerBlock("clay", new SemiSupportedBlock(0.3f, SETTINGS_SOIL()), Weight.NORMAL, Size.MEDIUM);
 //    public static final Block MUD = registerBlock("mud", new MudBlock(SETTINGS_SOIL().velocityMultiplier(0.4f), 0.25f), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
-//    public static final Block DRY_DIRT = registerBlock("dry_dirt", new SemiSupportedBlock(SETTINGS_TOUGH_SOIL().sounds(BlockSoundGroup.DRIPSTONE_BLOCK), 0.2f), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block DRY_DIRT = registerBlock("dry_dirt", new SemiSupportedBlock(0.2f, SETTINGS_TOUGH_SOIL().sounds(BlockSoundGroup.DRIPSTONE_BLOCK)), Weight.NORMAL, Size.MEDIUM);
 //    public static final Block GRASSY_DIRT = registerBlock("grassy_dirt", new GrassySoilBlock(SETTINGS_GRASSY().ticksRandomly(), 0.35f, PrimevalBlocks.DIRT, new Block[]{DIRT}), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
 //    public static final Block GRASSY_CLAY = registerBlock("grassy_clay", new GrassySoilBlock(SETTINGS_GRASSY().ticksRandomly(), 0.45f, PrimevalBlocks.CLAY_BLOCK, new Block[]{CLAY_BLOCK}), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
-//    public static final Block SAND = registerBlock("sand", new SemiSupportedBlock(SETTINGS_SAND(), 0.1f), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
-//    public static final Block GRAVEL = registerBlock("gravel", new SemiSupportedBlock(SETTINGS_SAND(), 0.1f), Weight.NORMAL, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block SAND = registerBlock("sand", new SemiSupportedBlock(0.1f, SETTINGS_SAND()), Weight.NORMAL, Size.MEDIUM);
+    public static final Block GRAVEL = registerBlock("gravel", new SemiSupportedBlock(0.1f, SETTINGS_SAND()), Weight.NORMAL, Size.MEDIUM);
     public static final Block COBBLESTONE = registerBlock("cobblestone", new SemiSupportedBlock(0.1f, SETTINGS_STONE().registryKey(blockKey("cobblestone")).strength(5.0f, 6.0f)), Weight.HEAVY, Size.MEDIUM);
     public static final Block STONE = registerBlock("stone", new CascadingBlock(0.35f, COBBLESTONE, SETTINGS_STONE().registryKey(blockKey("stone"))), Weight.HEAVY, Size.MEDIUM);
-//    public static final Block SANDSTONE = registerBlock("sandstone", new CascadingBlock(SETTINGS_STONE(), 0.3f), Weight.HEAVY, Size.MEDIUM, PRIMEVAL_BLOCKS);
+    public static final Block SANDSTONE = registerBlock("sandstone", new CascadingBlock(0.3f, SETTINGS_STONE()), Weight.HEAVY, Size.MEDIUM);
 //    public static final Block DIRT_FARMLAND = registerBlockWithoutItem("farmland_dirt", new PrimevalFarmlandBlock(SETTINGS_SOIL().ticksRandomly(), 0.2f, DIRT, new Block[]{DIRT, GRASSY_DIRT}));
 //    public static final Block CLAY_FARMLAND = registerBlockWithoutItem("farmland_clay", new PrimevalFarmlandBlock(SETTINGS_SOIL().ticksRandomly(), 0.3f, CLAY_BLOCK, new Block[]{CLAY_BLOCK}));
 
@@ -73,16 +75,12 @@ public class PrimevalBlocks {
         return RegistryKey.of(RegistryKeys.BLOCK, identify(id));
     }
 
-    private static RegistryKey<Item> itemKey(String id) {
-        return RegistryKey.of(RegistryKeys.ITEM, identify(id));
-    }
-
     @SafeVarargs
     private static Block registerBlock(String id, Block block, Weight w, Size s, Consumer<Block>... additionalActions) {
         RegistryKey<Block> blockKey = blockKey(id);
-        RegistryKey<Item> itemKey = itemKey(id);
+        RegistryKey<Item> itemKey = RegistryKey.of(RegistryKeys.ITEM, blockKey.getValue());
         var registeredBlock = Registry.register(Registries.BLOCK, blockKey, block);
-        Registry.register(Registries.ITEM, identify(id), new WeightedBlockItem(registeredBlock, w, s, new Item.Settings().registryKey(itemKey)));
+        Registry.register(Registries.ITEM, identify(id), new WeightedBlockItem(registeredBlock, w, s, new Item.Settings().registryKey(itemKey).useBlockPrefixedTranslationKey()));
         for (var action : additionalActions) {
             action.accept(registeredBlock);
         }

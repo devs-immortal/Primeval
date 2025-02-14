@@ -87,7 +87,7 @@ public class CollapsingBlockEntity extends FallingBlockEntity {
                                 if (this.getWorld().setBlockState(blockPos, this.block, 3)) {
                                     ((ServerWorld)this.getWorld()).getChunkManager().chunkLoadingManager.sendToOtherNearbyPlayers(this, new BlockUpdateS2CPacket(blockPos, this.getWorld().getBlockState(blockPos)));
                                     this.discard();
-                                } else if (this.dropItem && serverWorld.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
+                                } else if (this.dropItem && serverWorld.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS) && this.random.nextBoolean()) {
                                     this.discard();
                                     this.onDestroyedOnLanding(block, blockPos);
                                     this.dropItem(serverWorld, block);
