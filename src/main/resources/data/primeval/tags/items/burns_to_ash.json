@@ -1,9 +1,0 @@
-{
-  "replace": false,
-  "values": [
-    "#primeval:burnable_long",
-    "#primeval:burnable_short",
-    "primeval:wheat",
-    "primeval:cabbage"
-  ]
-}

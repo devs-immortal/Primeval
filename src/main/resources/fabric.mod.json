@@ -1,42 +1,37 @@
 {
-  "schemaVersion": 1,
-  "id": "primeval",
-  "version": "${version}",
-
-  "name": "Primeval",
-  "description": "Primeval aims for a complete overhaul of Minecraft systems to create a rustic, realistic game progression. You are dropped into a natural setting rich with materials and life, but punching a tree is no longer an option.",
-  "authors": [
-    "24Chrome"
-  ],
-  "contact": {
-    "sources": "https://github.com/devs-immortal/Primeval"
-  },
-
-  "license": "MIT",
-  "icon": "assets/primeval/icon.png",
-
-  "environment": "*",
-  "entrypoints": {
-    "main": [
-      "net.cr24.primeval.PrimevalMain"
-    ],
-    "client": [
-      "net.cr24.primeval.PrimevalMain"
-    ],
-    "rei_client": [
-      "net.cr24.primeval.recipe.rei.PrimevalREIClientIntegration"
-    ],
-    "fabric-datagen": [
-      "net.cr24.primeval.PrimevalDataGenerator"
-    ]
-  },
-  "mixins": [
-    "primeval.mixins.json"
-  ],
-  "depends": {
-    "fabricloader": ">=0.16.10",
-    "fabric-api": "*",
-    "minecraft": "1.21.4",
-    "java": ">=21"
-  }
+	"schemaVersion": 1,
+	"id": "primeval",
+	"version": "${version}",
+	"name": "Primeval",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/primeval/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.cr24.primeval.Primeval"
+		],
+		"fabric-datagen": [
+			"net.cr24.primeval.PrimevalDataGenerator"
+		]
+	},
+	"mixins": [
+		"primeval.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.10",
+		"minecraft": "~1.21.4",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
 }

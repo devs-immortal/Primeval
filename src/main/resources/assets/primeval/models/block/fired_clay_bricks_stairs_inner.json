@@ -1,8 +1,0 @@
-{
-	"parent": "minecraft:block/inner_stairs",
-	"textures": {
-		"bottom": "primeval:block/fired_clay_bricks",
-		"top": "primeval:block/fired_clay_bricks",
-		"side": "primeval:block/fired_clay_bricks"
-	}
-}

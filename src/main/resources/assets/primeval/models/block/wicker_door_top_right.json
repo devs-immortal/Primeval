@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/door_top_right",
-  "textures": {
-    "bottom": "primeval:block/wicker_door_bottom",
-    "top": "primeval:block/wicker_door_top"
-  }
-}

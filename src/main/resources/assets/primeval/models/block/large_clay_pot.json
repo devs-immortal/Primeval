@@ -1,8 +1,0 @@
-{
-  "parent": "primeval:block/template_large_clay_pot",
-  "textures": {
-    "bottom": "primeval:block/block_of_clay",
-    "side": "primeval:block/block_of_clay",
-    "top": "primeval:block/large_clay_pot_top"
-  }
-}

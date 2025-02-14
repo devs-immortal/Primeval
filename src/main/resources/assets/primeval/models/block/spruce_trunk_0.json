@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column",
-  "textures": {
-    "end": "primeval:block/spruce_log_top_0",
-    "side": "primeval:block/spruce_log_0"
-  }
-}

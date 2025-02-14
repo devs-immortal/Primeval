@@ -1,8 +1,0 @@
-{
-	"parent": "minecraft:block/slab",
-	"textures": {
-		"bottom": "primeval:block/crude_bricks",
-		"top": "primeval:block/crude_bricks",
-		"side": "primeval:block/crude_bricks"
-	}
-}

@@ -1,6 +1,0 @@
-{
-	"parent": "minecraft:block/cube_all",
-	"textures": {
-		"all": "primeval:block/fired_clay_shingles_orange"
-	}
-}

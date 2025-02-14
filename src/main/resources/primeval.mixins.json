@@ -1,20 +1,11 @@
 {
-  "required": true,
-  "minVersion": "0.8",
-  "package": "net.cr24.primeval.mixin",
-  "compatibilityLevel": "JAVA_17",
-  "mixins": [
-    "entity.mob.AbstractSkeletonEntityMixin",
-    "entity.mob.ZombieEntityMixin",
-    "item.ItemStackMixin",
-    "recipe.ServerRecipeManagerMixin",
-    "world.GameRulesMixin"
-  ],
-  "client": [
-    "client.color.block.BlockColorsMixin",
-    "item.LeadItemMixin"
-  ],
-  "injectors": {
-    "defaultRequire": 1
-  }
+	"required": true,
+	"package": "net.cr24.primeval.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"ExampleMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
 }

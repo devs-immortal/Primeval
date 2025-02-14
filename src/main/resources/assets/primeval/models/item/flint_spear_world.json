@@ -1,6 +1,0 @@
-{
-  "parent": "primeval:item/48x_handheld_oversized",
-  "textures": {
-    "layer0": "primeval:item/flint_spear_world"
-  }
-}

@@ -1,8 +1,0 @@
-{
-	"parent": "minecraft:block/outer_stairs",
-	"textures": {
-		"bottom": "primeval:block/fired_clay_shingles_cyan",
-		"top": "primeval:block/fired_clay_shingles_cyan",
-		"side": "primeval:block/fired_clay_shingles_cyan"
-	}
-}
