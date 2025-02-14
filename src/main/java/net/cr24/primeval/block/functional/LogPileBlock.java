@@ -1,5 +1,6 @@
 package net.cr24.primeval.block.functional;
 
+import com.mojang.serialization.MapCodec;
 import net.cr24.primeval.block.LayeredBlock;
 import net.cr24.primeval.block.entity.LayingItemBlockEntity;
 import net.cr24.primeval.block.entity.LogPileBlockEntity;
@@ -38,6 +39,8 @@ import java.util.Optional;
 
 public class LogPileBlock extends BlockWithEntity implements Waterloggable {
 
+    public static final MapCodec<LogPileBlock> CODEC = createCodec(LogPileBlock::new);
+
     public static final BooleanProperty WATERLOGGED;
     public static final IntProperty AMOUNT;
 
@@ -47,9 +50,13 @@ public class LogPileBlock extends BlockWithEntity implements Waterloggable {
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
+    protected MapCodec<? extends BlockWithEntity> getCodec() {
+        return CODEC;
+    }
+
+    @Override
+    protected ActionResult onUseWithItem(ItemStack itemStack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (!player.getAbilities().allowModifyWorld) return ActionResult.PASS;
-        ItemStack itemStack = player.getStackInHand(hand);
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (hand == Hand.MAIN_HAND && blockEntity instanceof LogPileBlockEntity) {
             ItemStack logItem = ((LogPileBlockEntity) blockEntity).getItem();

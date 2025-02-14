@@ -29,11 +29,4 @@ public class PrimevalFluidUtil {
         return 0F;
     }
 
-    public static Pair<FluidVariant, Integer> fluidFromItemStack(ItemStack stack) {
-
-        NbtCompound nbt = stack.getOrCreateNbt();
-        NbtCompound fluidNbt = nbt.getCompound("Fluid");
-        int fluidAmount = fluidNbt.getInt("Amount");
-        return new Pair<>(FluidVariant.fromNbt(fluidNbt), fluidAmount);
-    }
 }

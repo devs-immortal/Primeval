@@ -1,5 +1,6 @@
 package net.cr24.primeval.block.functional;
 
+import com.mojang.serialization.MapCodec;
 import net.cr24.primeval.block.PrimevalBlocks;
 import net.cr24.primeval.block.entity.QuernBlockEntity;
 import net.cr24.primeval.item.PrimevalItems;
@@ -29,11 +30,18 @@ import java.util.Optional;
 
 public class QuernBlock extends BlockWithEntity {
 
+    public static final MapCodec<QuernBlock> CODEC = createCodec(QuernBlock::new);
+
     public static final BooleanProperty WHEELED = BooleanProperty.of("wheeled");
 
     public QuernBlock(Settings settings) {
         super(settings);
         this.setDefaultState(this.stateManager.getDefaultState().with(WHEELED, false));
+    }
+
+    @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec() {
+        return CODEC;
     }
 
     @Override
@@ -48,7 +56,7 @@ public class QuernBlock extends BlockWithEntity {
         return state;
     }
 
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    protected ActionResult onUseWithItem(ItemStack itemStack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         BlockEntity ent = world.getBlockEntity(pos);
         if (ent instanceof QuernBlockEntity) {
 
@@ -83,8 +91,7 @@ public class QuernBlock extends BlockWithEntity {
                     return ActionResult.FAIL;
                 }
             } else {
-                Optional<QuernRecipe> recipe = world.getRecipeManager().getFirstMatch(PrimevalRecipes.QUERN_GRINDING, new SimpleInventory(player.getStackInHand(hand)), world);
-                if (recipe.isPresent()) {
+                if (world.getRecipeManager().getPropertySet(PrimevalRecipes.QUERN_GRINDING_INPUT).canUse(itemStack)) {
                     boolean success = ((QuernBlockEntity) ent).tryPutInputItem(handItem);
                     if (success) {
                         player.setStackInHand(hand, ItemStack.EMPTY);
@@ -126,6 +133,6 @@ public class QuernBlock extends BlockWithEntity {
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return checkType(type, PrimevalBlocks.QUERN_BLOCK_ENTITY, (world1, pos, state1, be) -> QuernBlockEntity.tick(world1, pos, state1, be));
+        return validateTicker(type, PrimevalBlocks.QUERN_BLOCK_ENTITY, QuernBlockEntity::tick);
     }
 }

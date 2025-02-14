@@ -2,6 +2,7 @@ package net.cr24.primeval.block.entity;
 
 import net.cr24.primeval.block.PrimevalBlocks;
 import net.cr24.primeval.block.functional.PrimevalCampfireBlock;
+import net.cr24.primeval.recipe.OpenFireRecipe;
 import net.cr24.primeval.recipe.PrimevalRecipes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -14,7 +15,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.recipe.ServerRecipeManager;
+import net.minecraft.recipe.input.SingleStackRecipeInput;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Clearable;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
@@ -24,6 +28,7 @@ import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearable {
 
@@ -147,7 +152,7 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
         this.updateListeners();
     }
 
-    public static void tick(World world, BlockPos pos, BlockState state, PrimevalCampfireBlockEntity blockEntity) {
+    public static void tick(World world, BlockPos pos, BlockState state, PrimevalCampfireBlockEntity blockEntity, ServerRecipeManager.MatchGetter<SingleStackRecipeInput, OpenFireRecipe> recipeMatchGetter) {
         // If client, just make particles
         if (world.isClient) {
             clientParticles(world, pos, state, blockEntity);
@@ -161,10 +166,12 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
                 ItemStack itemStack = blockEntity.itemsBeingCooked.get(i);
                 if (itemStack.isEmpty() || blockEntity.cookingTimes[i] == -1) continue;
                 blockEntity.cookingTimes[i] += blockEntity.updateFireHeight(state, world, pos, blockEntity.burnTime)+1;
-                if (blockEntity.cookingTimes[i] >= blockEntity.cookingTotalTimes[i]) {
-                    SimpleInventory inventory = new SimpleInventory(itemStack);
-                    ItemStack craftingResult = world.getRecipeManager().getFirstMatch(PrimevalRecipes.OPEN_FIRE, inventory, world).map(recipe -> recipe.craft(inventory)).orElse(itemStack);
-                    blockEntity.itemsBeingCooked.set(i, craftingResult);
+                if (blockEntity.cookingTimes[i] >= blockEntity.cookingTotalTimes[i] && world instanceof ServerWorld) {
+                    SingleStackRecipeInput singleStackRecipeInput = new SingleStackRecipeInput(itemStack);
+                    Optional<ItemStack> result = recipeMatchGetter.getFirstMatch(singleStackRecipeInput, (ServerWorld) world).map((recipe) -> (recipe.value()).craft(singleStackRecipeInput, world.getRegistryManager()));
+                    if (result.isPresent()) {
+                        blockEntity.itemsBeingCooked.set(i, result.get());
+                    }
                     blockEntity.cookingTimes[i] = -1;
                     bl = true;
                 }

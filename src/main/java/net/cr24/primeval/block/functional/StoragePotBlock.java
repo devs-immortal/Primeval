@@ -1,5 +1,6 @@
 package net.cr24.primeval.block.functional;
 
+import com.mojang.serialization.MapCodec;
 import net.cr24.primeval.block.entity.StoragePotBlockEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -22,6 +23,9 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public class StoragePotBlock extends BlockWithEntity {
+
+    public static final MapCodec<StoragePotBlock> CODEC = createCodec(StoragePotBlock::new);
+
     protected static final VoxelShape SHAPE = VoxelShapes.union(
             Block.createCuboidShape(2.0, 0.0, 2.0, 14.0, 2.0, 14.0),
             Block.createCuboidShape(1.0, 2.0, 1.0, 15.0, 11.0, 15.0),
@@ -31,6 +35,11 @@ public class StoragePotBlock extends BlockWithEntity {
 
     public StoragePotBlock(AbstractBlock.Settings settings) {
         super(settings);
+    }
+
+    @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec() {
+        return CODEC;
     }
 
     @Override
@@ -80,14 +89,6 @@ public class StoragePotBlock extends BlockWithEntity {
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return SHAPE;
-    }
-
-    @Override
-    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
-        BlockEntity blockEntity;
-        if (itemStack.hasCustomName() && (blockEntity = world.getBlockEntity(pos)) instanceof StoragePotBlockEntity) {
-            ((StoragePotBlockEntity)blockEntity).setCustomName(itemStack.getName());
-        }
     }
 
     @Override

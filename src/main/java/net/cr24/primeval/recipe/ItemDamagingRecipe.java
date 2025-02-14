@@ -62,7 +62,7 @@ public class ItemDamagingRecipe implements CraftingRecipe {
         if (craftingRecipeInput.getStackCount() != this.ingredients.size()) {
             return false;
         } else {
-            return craftingRecipeInput.size() == 1 && this.ingredients.size() == 1 ? (this.ingredients.getFirst()).test(craftingRecipeInput.getStackInSlot(0)) : craftingRecipeInput.getRecipeMatcher().isCraftable(this, (RecipeMatcher.ItemCallback)null);
+            return craftingRecipeInput.size() == 1 && this.ingredients.size() == 1 ? (this.ingredients.getFirst()).test(craftingRecipeInput.getStackInSlot(0)) : craftingRecipeInput.getRecipeMatcher().isCraftable(this, null);
         }
     }
 

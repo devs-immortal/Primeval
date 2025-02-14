@@ -3,6 +3,7 @@ package net.cr24.primeval.block.entity;
 import net.cr24.primeval.block.PrimevalBlocks;
 import net.cr24.primeval.block.functional.QuernBlock;
 import net.cr24.primeval.item.PrimevalItems;
+import net.cr24.primeval.recipe.OpenFireRecipe;
 import net.cr24.primeval.recipe.PrimevalRecipes;
 import net.cr24.primeval.recipe.QuernRecipe;
 import net.cr24.primeval.util.PrimevalSoundEvents;
@@ -19,7 +20,11 @@ import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.recipe.RecipeEntry;
+import net.minecraft.recipe.ServerRecipeManager;
+import net.minecraft.recipe.input.SingleStackRecipeInput;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Clearable;
 import net.minecraft.util.math.BlockPos;
@@ -54,18 +59,20 @@ public class QuernBlockEntity extends BlockEntity implements Clearable {
         }
         blockEntity.currentAngle = newAngle;
         blockEntity.markDirty();
-        if (blockEntity.currentAngle >= 359.97) {
-            blockEntity.process(world, pos);
+        if (world instanceof ServerWorld && blockEntity.currentAngle >= 359.97) {
+            blockEntity.process((ServerWorld) world, pos);
         }
     }
 
-    public void process(World world, BlockPos pos) {
-        Optional<QuernRecipe> recipe = world.getRecipeManager().getFirstMatch(PrimevalRecipes.QUERN_GRINDING, new SimpleInventory(inputItem), world);
+    public void process(ServerWorld world, BlockPos pos) {
+        SingleStackRecipeInput singleStackRecipeInput = new SingleStackRecipeInput(inputItem);
+        Optional<RecipeEntry<QuernRecipe>> recipe = world.getRecipeManager().getFirstMatch(PrimevalRecipes.QUERN_GRINDING, singleStackRecipeInput, world);
+
         if (recipe.isPresent()) {
             int remainder = inputItem.getCount();
             for (int i = 0; i < inputItem.getCount(); i++) {
-                Block.dropStack(world, pos, Direction.UP, recipe.get().getOutput());
-                wheelDamage += recipe.get().getWheelDamage();
+                Block.dropStack(world, pos, Direction.UP, recipe.get().value().getResult());
+                wheelDamage += recipe.get().value().getWheelDamage();
                 remainder--;
                 if (wheelDamage > PrimevalItems.QUERN_WHEEL.getComponents().get(DataComponentTypes.MAX_DAMAGE)) {
                     wheelDamage = -1;

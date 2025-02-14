@@ -4,18 +4,23 @@ import net.cr24.primeval.PrimevalMain;
 import net.minecraft.recipe.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.util.Identifier;
+
 public class PrimevalRecipes {
 
     public static final RecipeType<PitKilnFiringRecipe> PIT_KILN_FIRING;
     public static final RecipeSerializer<PitKilnFiringRecipe> PIT_KILN_FIRING_SERIALIZER;
     public static final RecipeType<OpenFireRecipe> OPEN_FIRE;
     public static final RecipeSerializer<OpenFireRecipe> OPEN_FIRE_SERIALIZER;
+    public static final RegistryKey<RecipePropertySet> OPEN_FIRE_INPUT;
     public static final RecipeType<MeltingRecipe> MELTING;
     public static final RecipeSerializer<MeltingRecipe> MELTING_SERIALIZER;
     public static final RecipeType<AlloyingRecipe> ALLOYING;
     public static final RecipeSerializer<AlloyingRecipe> ALLOYING_SERIALIZER;
     public static final RecipeType<QuernRecipe> QUERN_GRINDING;
     public static final RecipeSerializer<QuernRecipe> QUERN_GRINDING_SERIALIZER;
+    public static final RegistryKey<RecipePropertySet> QUERN_GRINDING_INPUT;
 
     public static final RecipeSerializer<ClayMoldCastingRecipe> CLAY_MOLD_CASTING_SERIALIZER;
 
@@ -35,6 +40,7 @@ public class PrimevalRecipes {
             public String toString() {return "primeval:open_fire";}
         });
         OPEN_FIRE_SERIALIZER = Registry.register(Registries.RECIPE_SERIALIZER, PrimevalMain.getId("open_fire"), new OpenFireRecipe.Serializer());
+        OPEN_FIRE_INPUT = RegistryKey.of(RegistryKey.ofRegistry(Identifier.ofVanilla("recipe_property_set")), PrimevalMain.getId("open_fire"));
 
         MELTING = Registry.register(Registries.RECIPE_TYPE, PrimevalMain.getId("melting"), new RecipeType<MeltingRecipe>() {
             @Override
@@ -53,6 +59,7 @@ public class PrimevalRecipes {
             public String toString() {return "primeval:quern_grinding";}
         });
         QUERN_GRINDING_SERIALIZER = Registry.register(Registries.RECIPE_SERIALIZER, PrimevalMain.getId("quern_grinding"), new QuernRecipe.Serializer());
+        QUERN_GRINDING_INPUT = RegistryKey.of(RegistryKey.ofRegistry(Identifier.ofVanilla("recipe_property_set")), PrimevalMain.getId("quern_grinding"));
 
         CLAY_MOLD_CASTING_SERIALIZER = Registry.register(Registries.RECIPE_SERIALIZER, PrimevalMain.getId("clay_mold_casting"), new ClayMoldCastingRecipe.Serializer());
 

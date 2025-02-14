@@ -1,5 +1,6 @@
 package net.cr24.primeval.block.functional;
 
+import com.mojang.serialization.MapCodec;
 import net.cr24.primeval.block.entity.LayingItemBlockEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -16,8 +17,16 @@ import net.minecraft.world.block.WireOrientation;
 import org.jetbrains.annotations.Nullable;
 
 public class LayingItemBlock extends BlockWithEntity {
+
+    public static final MapCodec<LayingItemBlock> CODEC = createCodec(LayingItemBlock::new);
+
     public LayingItemBlock(Settings settings) {
         super(settings);
+    }
+
+    @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec() {
+        return CODEC;
     }
 
     @Override

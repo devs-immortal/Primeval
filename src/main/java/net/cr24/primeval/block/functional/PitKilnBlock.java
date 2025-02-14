@@ -1,17 +1,23 @@
 package net.cr24.primeval.block.functional;
 
+import com.mojang.serialization.MapCodec;
 import net.cr24.primeval.block.LayeredBlock;
 import net.cr24.primeval.block.PrimevalBlockTags;
 import net.cr24.primeval.block.PrimevalBlocks;
 import net.cr24.primeval.block.entity.PitKilnBlockEntity;
 import net.cr24.primeval.item.PrimevalItemTags;
 import net.cr24.primeval.item.PrimevalItems;
+import net.cr24.primeval.recipe.PitKilnFiringRecipe;
+import net.cr24.primeval.recipe.PrimevalRecipes;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.ServerRecipeManager;
+import net.minecraft.recipe.input.SingleStackRecipeInput;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
@@ -31,12 +37,19 @@ import org.jetbrains.annotations.Nullable;
 
 public class PitKilnBlock extends BlockWithEntity {
 
+    public static final MapCodec<PitKilnBlock> CODEC = createCodec(PitKilnBlock::new);
+
     public static final IntProperty BUILD_STEP = IntProperty.of("build_step", 0, 8);
     public static final BooleanProperty LIT = BooleanProperty.of("lit");
 
     public PitKilnBlock(Settings settings) {
         super(settings);
         this.setDefaultState((this.stateManager.getDefaultState()).with(BUILD_STEP, 0).with(LIT, false));
+    }
+
+    @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec() {
+        return CODEC;
     }
 
     @Override
@@ -119,7 +132,7 @@ public class PitKilnBlock extends BlockWithEntity {
     }
 
 
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    protected ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (!player.getAbilities().allowModifyWorld) {
             return ActionResult.PASS;
         } else if (player.isSneaking()) {
@@ -224,7 +237,13 @@ public class PitKilnBlock extends BlockWithEntity {
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return checkType(type, PrimevalBlocks.PIT_KILN_BLOCK_ENTITY, (world1, pos, state1, be) -> PitKilnBlockEntity.tick(world1, pos, state1, be));
+        if (world instanceof ServerWorld) {
+            ServerRecipeManager.MatchGetter<SingleStackRecipeInput, PitKilnFiringRecipe> matchGetter = ServerRecipeManager.createCachedMatchGetter(PrimevalRecipes.PIT_KILN_FIRING);
+            return validateTicker(type, PrimevalBlocks.PIT_KILN_BLOCK_ENTITY, (worldx, pos, statex, blockEntity) -> {
+                PitKilnBlockEntity.serverTick((ServerWorld) world, pos, statex, blockEntity, matchGetter);
+            });
+        }
+        return null;
     }
 
 }

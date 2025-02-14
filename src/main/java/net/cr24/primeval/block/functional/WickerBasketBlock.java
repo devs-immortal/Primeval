@@ -1,8 +1,10 @@
 package net.cr24.primeval.block.functional;
 
+import com.mojang.serialization.MapCodec;
 import net.cr24.primeval.block.entity.WickerBasketBlockEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
@@ -22,6 +24,9 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public class WickerBasketBlock extends BlockWithEntity {
+
+    public static final MapCodec<WickerBasketBlock> CODEC = createCodec(WickerBasketBlock::new);
+
     protected static final VoxelShape SHAPE = VoxelShapes.union(
             Block.createCuboidShape(2.0, 0.0, 2.0, 14.0, 13.0, 14.0),
             Block.createCuboidShape(6.0, 13.0, 6.0, 10.0, 16.0, 10.0)
@@ -29,6 +34,11 @@ public class WickerBasketBlock extends BlockWithEntity {
 
     public WickerBasketBlock(Settings settings) {
         super(settings);
+    }
+
+    @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec() {
+        return CODEC;
     }
 
     @Override
@@ -78,14 +88,6 @@ public class WickerBasketBlock extends BlockWithEntity {
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return SHAPE;
-    }
-
-    @Override
-    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
-        BlockEntity blockEntity;
-        if (itemStack.hasCustomName() && (blockEntity = world.getBlockEntity(pos)) instanceof WickerBasketBlockEntity) {
-            ((WickerBasketBlockEntity)blockEntity).setCustomName(itemStack.getName());
-        }
     }
 
     @Override

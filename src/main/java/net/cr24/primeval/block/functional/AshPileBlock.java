@@ -1,5 +1,6 @@
 package net.cr24.primeval.block.functional;
 
+import com.mojang.serialization.MapCodec;
 import net.cr24.primeval.block.entity.AshPileBlockEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -14,8 +15,15 @@ import org.jetbrains.annotations.Nullable;
 
 public class AshPileBlock extends BlockWithEntity {
 
+    public static final MapCodec<AshPileBlock> CODEC = createCodec(AshPileBlock::new);
+
     public AshPileBlock(Settings settings) {
         super(settings);
+    }
+
+    @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec() {
+        return CODEC;
     }
 
     @Override

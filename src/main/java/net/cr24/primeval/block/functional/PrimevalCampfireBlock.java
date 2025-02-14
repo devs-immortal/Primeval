@@ -1,11 +1,16 @@
 package net.cr24.primeval.block.functional;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.cr24.primeval.block.PrimevalBlockTags;
 import net.cr24.primeval.block.PrimevalBlocks;
+import net.cr24.primeval.block.entity.PitKilnBlockEntity;
 import net.cr24.primeval.block.entity.PrimevalCampfireBlockEntity;
 import net.cr24.primeval.item.PrimevalItemTags;
 import net.cr24.primeval.item.tool.PrimevalShovelItem;
 import net.cr24.primeval.recipe.OpenFireRecipe;
+import net.cr24.primeval.recipe.PitKilnFiringRecipe;
 import net.cr24.primeval.recipe.PrimevalRecipes;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -13,11 +18,15 @@ import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.recipe.CampfireCookingRecipe;
+import net.minecraft.recipe.RecipePropertySet;
+import net.minecraft.recipe.ServerRecipeManager;
+import net.minecraft.recipe.input.SingleStackRecipeInput;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
@@ -38,9 +47,10 @@ import net.minecraft.world.block.WireOrientation;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.Optional;
 
 public class PrimevalCampfireBlock extends BlockWithEntity {
+
+    public static final MapCodec<PrimevalCampfireBlock> CODEC = createCodec(PrimevalCampfireBlock::new);
 
     public static final IntProperty FIRE_SCALE = IntProperty.of("fire_scale", 0, 3);
     public static final IntProperty KINDLING = IntProperty.of("kindling", 0, 3);
@@ -51,6 +61,11 @@ public class PrimevalCampfireBlock extends BlockWithEntity {
     public PrimevalCampfireBlock(Settings settings) {
         super(settings);
         this.setDefaultState(this.getDefaultState().with(FIRE_SCALE, 0).with(KINDLING, 0).with(LIT, false));
+    }
+
+    @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec() {
+        return CODEC;
     }
 
     @Override
@@ -107,9 +122,7 @@ public class PrimevalCampfireBlock extends BlockWithEntity {
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        ItemStack itemStack = player.getStackInHand(Hand.MAIN_HAND);
-        Optional<OpenFireRecipe> optional;
+    protected ActionResult onUseWithItem(ItemStack itemStack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof PrimevalCampfireBlockEntity) {
             if (itemStack == ItemStack.EMPTY && !world.isClient) {
@@ -128,12 +141,13 @@ public class PrimevalCampfireBlock extends BlockWithEntity {
                 world.setBlockState(pos, state.with(LIT, false));
                 return ActionResult.SUCCESS;
             } else if (state.get(LIT)) {
-                optional = world.getRecipeManager().getFirstMatch(PrimevalRecipes.OPEN_FIRE, new SimpleInventory(itemStack), world); //TODO
-                if (optional.isPresent()) {
-                    OpenFireRecipe recipe = optional.get();
-                    if (!world.isClient && ((PrimevalCampfireBlockEntity) blockEntity).addItem(player.isCreative() ? itemStack.copy() : itemStack, recipe.getCookTime())) {
-                        world.playSound(null, pos, SoundEvents.BLOCK_STONE_HIT, SoundCategory.BLOCKS, 0.7f, world.getRandom().nextFloat() * 0.4f + 0.8f);
-                        return ActionResult.SUCCESS;
+                if (world.getRecipeManager().getPropertySet(PrimevalRecipes.OPEN_FIRE_INPUT).canUse(itemStack)) {
+                    if (world instanceof ServerWorld) {
+                        var recipe = ((ServerWorld) world).getRecipeManager().getFirstMatch(PrimevalRecipes.OPEN_FIRE, new SingleStackRecipeInput(itemStack), world);
+                        if (recipe.isPresent() && ((PrimevalCampfireBlockEntity) blockEntity).addItem(player.isCreative() ? itemStack.copy() : itemStack, recipe.get().value().getCookTime())) {
+                            world.playSound(null, pos, SoundEvents.BLOCK_STONE_HIT, SoundCategory.BLOCKS, 0.7f, world.getRandom().nextFloat() * 0.4f + 0.8f);
+                            return ActionResult.SUCCESS;
+                        }
                     }
                     return ActionResult.CONSUME;
                 }
@@ -206,6 +220,7 @@ public class PrimevalCampfireBlock extends BlockWithEntity {
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return validateTicker(type, PrimevalBlocks.CAMPFIRE_BLOCK_ENTITY, (world1, pos, state1, be) -> PrimevalCampfireBlockEntity.tick(world1, pos, state1, be));
+        ServerRecipeManager.MatchGetter<SingleStackRecipeInput, OpenFireRecipe> matchGetter = ServerRecipeManager.createCachedMatchGetter(PrimevalRecipes.OPEN_FIRE);
+        return validateTicker(type, PrimevalBlocks.CAMPFIRE_BLOCK_ENTITY, (worldx, pos, statex, blockEntity) -> PrimevalCampfireBlockEntity.tick(world, pos, statex, blockEntity, matchGetter));
     }
 }

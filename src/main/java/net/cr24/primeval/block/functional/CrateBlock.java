@@ -1,5 +1,6 @@
 package net.cr24.primeval.block.functional;
 
+import com.mojang.serialization.MapCodec;
 import net.cr24.primeval.block.entity.CrateBlockEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -20,11 +21,19 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public class CrateBlock extends BlockWithEntity {
+
+    public static final MapCodec<CrateBlock> CODEC = createCodec(CrateBlock::new);
+
     public static final BooleanProperty OPEN = Properties.OPEN;
 
     public CrateBlock(AbstractBlock.Settings settings) {
         super(settings);
         this.setDefaultState(this.stateManager.getDefaultState().with(OPEN, false));
+    }
+
+    @Override
+    protected MapCodec<? extends BlockWithEntity> getCodec() {
+        return CODEC;
     }
 
     @Override
@@ -69,14 +78,6 @@ public class CrateBlock extends BlockWithEntity {
     @Override
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
-    }
-
-    @Override
-    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
-        BlockEntity blockEntity;
-        if (itemStack.hasCustomName() && (blockEntity = world.getBlockEntity(pos)) instanceof CrateBlockEntity) {
-            ((CrateBlockEntity)blockEntity).setCustomName(itemStack.getName());
-        }
     }
 
     @Override

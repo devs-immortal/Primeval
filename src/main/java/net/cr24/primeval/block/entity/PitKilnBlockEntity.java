@@ -64,14 +64,14 @@ public class PitKilnBlockEntity extends BlockEntity implements Clearable {
         nbt.putInt("burnTimer", this.burnTimer);
     }
 
-    public static void litServerTick(ServerWorld world, BlockPos pos, BlockState state, PitKilnBlockEntity blockEntity, ServerRecipeManager.MatchGetter<SingleStackRecipeInput, PitKilnFiringRecipe> recipeMatchGetter) {
+    public static void serverTick(ServerWorld serverWorld, BlockPos pos, BlockState state, PitKilnBlockEntity blockEntity, ServerRecipeManager.MatchGetter<SingleStackRecipeInput, PitKilnFiringRecipe> recipeMatchGetter) {
         if (blockEntity.burnTimer > 0) {
             blockEntity.burnTimer--;
         } else if (blockEntity.burnTimer == 0) { // WHEN FINISHES FIRING
-            ItemStack[] results = blockEntity.processItems();
-            world.removeBlockEntity(pos);
-            world.setBlockState(pos, PrimevalBlocks.ASH_PILE.getDefaultState());
-            BlockEntity newBlockEntity = world.getBlockEntity(pos);
+            ItemStack[] results = blockEntity.processItems(serverWorld, recipeMatchGetter);
+            serverWorld.removeBlockEntity(pos);
+            serverWorld.setBlockState(pos, PrimevalBlocks.ASH_PILE.getDefaultState());
+            BlockEntity newBlockEntity = serverWorld.getBlockEntity(pos);
             if (newBlockEntity instanceof AshPileBlockEntity) {
                 ((AshPileBlockEntity) newBlockEntity).setItems(results);
             }
@@ -127,20 +127,22 @@ public class PitKilnBlockEntity extends BlockEntity implements Clearable {
         return ret;
     }
 
-    public ItemStack[] processItems() {
+    public ItemStack[] processItems(ServerWorld serverWorld, ServerRecipeManager.MatchGetter<SingleStackRecipeInput, PitKilnFiringRecipe> recipeMatchGetter) {
         for (int i = 0; i < 4; i++) {
             if (this.inventory[i].getItem() instanceof VesselItem) {
                 this.inventory[i] = VesselItem.processItems(this.inventory[i], world);
             } else {
-                Optional<PitKilnFiringRecipe> result = world.getRecipeManager().getFirstMatch(PrimevalRecipes.PIT_KILN_FIRING, new SimpleInventory(this.inventory[i]), world);
+                SingleStackRecipeInput singleStackRecipeInput = new SingleStackRecipeInput(this.inventory[i]);
+                Optional<ItemStack> result = recipeMatchGetter.getFirstMatch(singleStackRecipeInput, serverWorld).map((recipe) -> (recipe.value()).craft(singleStackRecipeInput, world.getRegistryManager()));
                 if (result.isPresent()) {
-                    this.inventory[i] = result.get().getOutput();
+                    this.inventory[i] = result.get();
                 }
             }
         }
         this.markDirty();
         return this.inventory;
     }
+
 
     public void startFiring() {
         int itemCount = 0;
