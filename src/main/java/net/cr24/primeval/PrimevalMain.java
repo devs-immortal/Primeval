@@ -5,6 +5,7 @@ import net.cr24.primeval.entity.PrimevalVillagerTrades;
 import net.cr24.primeval.fluid.PrimevalFluids;
 import net.cr24.primeval.item.PrimevalFoodComponents;
 import net.cr24.primeval.item.PrimevalItems;
+import net.cr24.primeval.item.components.PrimevalDataComponentTypes;
 import net.cr24.primeval.recipe.PrimevalRecipes;
 import net.cr24.primeval.recipe.rei.PrimevalREIIntegration;
 import net.cr24.primeval.util.PrimevalSoundEvents;
@@ -23,6 +24,7 @@ public class PrimevalMain implements ModInitializer, ClientModInitializer {
 
     @Override
     public void onInitialize() {
+        PrimevalDataComponentTypes.init();
         PrimevalItems.init();
         PrimevalBlocks.init();
         PrimevalFluids.init();
@@ -42,7 +44,7 @@ public class PrimevalMain implements ModInitializer, ClientModInitializer {
     }
 
     public static Identifier getId(String id) {
-        return new Identifier(MODID, id);
+        return Identifier.of(MODID, id);
     }
 
 }

@@ -22,8 +22,8 @@ import java.util.Objects;
 import java.util.function.Function;
 
 public class PitKilnFiringRecipe extends SimpleOneToOneRecipe {
-    public PitKilnFiringRecipe(Identifier id, Ingredient input, ItemStack result) {
-        super(id, input, result);
+    public PitKilnFiringRecipe(Ingredient input, ItemStack result) {
+        super(input, result);
     }
 
     @Override

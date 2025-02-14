@@ -9,18 +9,15 @@ import net.minecraft.recipe.*;
 import net.minecraft.recipe.book.RecipeBookCategory;
 import net.minecraft.recipe.input.SingleStackRecipeInput;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
-import java.util.function.Function;
 
 public abstract class SimpleOneToOneRecipe implements Recipe<SingleStackRecipeInput> {
-    protected final Identifier id;
+
     protected final Ingredient input;
     protected final ItemStack result;
 
-    public SimpleOneToOneRecipe(Identifier id, Ingredient input, ItemStack result) {
-            this.id = id;
+    public SimpleOneToOneRecipe(Ingredient input, ItemStack result) {
             this.input = input;
             this.result = result;
     }
@@ -45,10 +42,6 @@ public abstract class SimpleOneToOneRecipe implements Recipe<SingleStackRecipeIn
         return this.result.copy();
     }
 
-    public Identifier getId() {
-        return this.id;
-    }
-
     
     public boolean isIgnoredInRecipeBook() {
         return true;
@@ -69,7 +62,7 @@ public abstract class SimpleOneToOneRecipe implements Recipe<SingleStackRecipeIn
 
     @FunctionalInterface
     public interface RecipeFactory<T extends SimpleOneToOneRecipe> {
-        T create(Identifier id, Ingredient ingredient, ItemStack result);
+        T create(Ingredient ingredient, ItemStack result);
     }
 
     public static class Serializer<T extends SimpleOneToOneRecipe> implements RecipeSerializer<T> {
@@ -78,12 +71,10 @@ public abstract class SimpleOneToOneRecipe implements Recipe<SingleStackRecipeIn
 
         protected Serializer(RecipeFactory<T> factory) {
             this.codec = RecordCodecBuilder.mapCodec((instance) -> instance.group(
-                    Identifier.CODEC.fieldOf("id").forGetter((recipe) -> recipe.id),
                     Ingredient.CODEC.fieldOf("input").forGetter((recipe) -> recipe.input),
                     ItemStack.CODEC.fieldOf("result").forGetter((recipe) -> recipe.result)
             ).apply(instance, factory::create));
             packetCodec = PacketCodec.tuple(
-                    Identifier.PACKET_CODEC, SimpleOneToOneRecipe::getId,
                     Ingredient.PACKET_CODEC, SimpleOneToOneRecipe::getInput,
                     ItemStack.PACKET_CODEC, SimpleOneToOneRecipe::getResult,
                     factory::create

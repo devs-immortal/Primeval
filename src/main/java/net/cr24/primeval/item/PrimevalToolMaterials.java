@@ -12,7 +12,7 @@ public class PrimevalToolMaterials {
 
     public static final ToolMaterial FLINT = create(BlockTags.INCORRECT_FOR_STONE_TOOL, 200, 2f, 1f, 2, PrimevalItemTags.FLINT_TOOL_MATERIALS);
     public static final ToolMaterial COPPER = create(BlockTags.INCORRECT_FOR_IRON_TOOL, 600, 3f, 2f, 3, PrimevalItemTags.COPPER_TOOL_MATERIALS);
-    public static final ToolMaterial BRONZE = create(BlockTags.INCORRECT_FOR_IRON_TOOL, 1000, 3.5f, 2f, 3, PrimevalItemTags.BBRONZE_TOOL_MATERIALS);
+    public static final ToolMaterial BRONZE = create(BlockTags.INCORRECT_FOR_IRON_TOOL, 1000, 3.5f, 2f, 3, PrimevalItemTags.BRONZE_TOOL_MATERIALS);
 
     public static ToolMaterial create(final TagKey<Block> incorrect, int itemDurability, float miningSpeed, float attackDamage, int enchantability, TagKey<Item> repairIngredient) {
         return new ToolMaterial(incorrect, itemDurability, miningSpeed, attackDamage, enchantability, repairIngredient);

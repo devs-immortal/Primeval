@@ -1,150 +1,96 @@
 package net.cr24.primeval.recipe;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.cr24.primeval.fluid.FallbackFluid;
 import net.cr24.primeval.item.ClayMoldItem;
+import net.cr24.primeval.item.components.PrimevalDataComponentTypes;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.inventory.CraftingInventory;
+import net.fabricmc.fabric.impl.transfer.VariantCodecs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.recipe.input.CraftingRecipeInput;
-import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.JsonHelper;
-import net.minecraft.util.Pair;
-import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.registry.Registry;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.world.World;
 
 
 public class ClayMoldCastingRecipe implements CraftingRecipe {
-    private final Identifier id;
+
     private final Item mold;
     private final FluidVariant fluid;
     private final ItemStack result;
 
-    public ClayMoldCastingRecipe(Identifier id, Item mold, FluidVariant fluid, ItemStack result) {
-        this.id = id;
-        this.mold = mold;
+    public ClayMoldCastingRecipe(RegistryEntry<Item> mold, FluidVariant fluid, ItemStack result) {
+        this.mold = mold.value();
         this.fluid = fluid;
         this.result = result;
     }
 
+    // Matching and Crafting
+
     @Override
     public boolean matches(CraftingRecipeInput input, World world) {
-        ItemStack stack = null;
-        for (int i = 0; i < inventory.size(); ++i) {
-            ItemStack itemStack2 = inventory.getStack(i);
-            if (itemStack2.isEmpty()) continue;
-            if (stack != null) return false;
-            if (itemStack2.getItem() instanceof ClayMoldItem) {
-                stack = itemStack2;
-            } else {
-                return false;
+        if (input.size() != 1) return false;
+
+        ItemStack stack = input.getStacks().get(0);
+        if (stack.getItem() == this.mold && stack.getComponents().contains(PrimevalDataComponentTypes.FLUID_CONTENTS)) {
+            var contents = stack.get(PrimevalDataComponentTypes.FLUID_CONTENTS);
+            return contents.fluid().equals(this.fluid);
+        }
+
+        return false;
+    }
+
+    @Override
+    public ItemStack craft(CraftingRecipeInput input, RegistryWrapper.WrapperLookup registries) {
+        if (input.size() != 1) return ItemStack.EMPTY;
+
+        ItemStack stack = input.getStacks().get(0);
+        if (stack.getItem() == this.mold && stack.getComponents().contains(PrimevalDataComponentTypes.FLUID_CONTENTS)) {
+            var contents = stack.get(PrimevalDataComponentTypes.FLUID_CONTENTS);
+            var moldFluid = contents.fluid().getFluid();
+            if (contents.amount() == ((ClayMoldItem) stack.getItem()).getCapacity()) {
+                return result.copy();
+            } else if (moldFluid instanceof FallbackFluid) {
+                return new ItemStack(((FallbackFluid) moldFluid).getFallbackItem(), contents.amount() / 1000);
             }
         }
-        if (stack == null) return false;
 
-        NbtCompound nbt = stack.getOrCreateNbt();
-        NbtCompound fluidNbt = nbt.getCompound("Fluid");
-        Item moldItem = stack.getItem();
-        FluidVariant moldFluid = FluidVariant.fromNbt(fluidNbt);
-        int moldFluidAmount = fluidNbt.getInt("Amount");
+        return ItemStack.EMPTY;
 
-        if (moldFluidAmount < 1000) return false;
-        if (moldItem != mold) return false;
-        if (moldFluid != fluid) return false;
-        return true;
+
     }
 
-    @Override
-    public ItemStack craft(CraftingInventory inventory) {
-        ItemStack moldStack = ItemStack.EMPTY;
-        for (int i = 0; i < inventory.size(); ++i) {
-            ItemStack itemStack2 = inventory.getStack(i);
-            if (itemStack2.isEmpty()) continue;
-            if (itemStack2.getItem() instanceof ClayMoldItem) {
-                moldStack = itemStack2;
-                break;
-            } else {
-                return ItemStack.EMPTY;
-            }
-        }
-        if (moldStack.isEmpty()) return ItemStack.EMPTY;
+    // Accessors
 
-        NbtCompound nbt = moldStack.getOrCreateNbt();
-        NbtCompound fluidNbt = nbt.getCompound("Fluid");
-        ClayMoldItem moldItem = (ClayMoldItem) moldStack.getItem();
-        Fluid moldFluid = FluidVariant.fromNbt(fluidNbt).getFluid();
-        int moldFluidAmount = fluidNbt.getInt("Amount");
-
-        if (moldFluidAmount == moldItem.getCapacity()) {
-            return result.copy();
-        } else if (moldFluid instanceof FallbackFluid) {
-            return new ItemStack(((FallbackFluid) moldFluid).getFallbackItem(), moldFluidAmount / 1000);
-        } else {
-            return ItemStack.EMPTY;
-        }
+    public Item getMoldItem() {
+        return this.mold;
     }
 
-    @Override
-    public boolean fits(int width, int height) {
-        return true;
-    }
-
-    @Override
-    public ItemStack getOutput() {
-        return this.result;
-    }
-
-    @Override
-    public DefaultedList<Ingredient> getIngredients() {
-        DefaultedList<Ingredient> list = DefaultedList.of();
-        ItemStack moldStack = new ItemStack(mold);
-        NbtCompound nbt = moldStack.getOrCreateNbt().copy();
-        NbtCompound nbtF = fluid.toNbt();
-        nbtF.putInt("Amount", ((ClayMoldItem) mold).getCapacity());
-        nbt.put("Fluid", nbtF);
-        ItemStack stackCopy = moldStack.copy();
-        stackCopy.setNbt(nbt);
-        list.add(Ingredient.ofStacks(stackCopy));
-        return list;
+    public RegistryEntry<Item> getMoldItemRegistryEntry() {
+        return this.mold.getRegistryEntry();
     }
 
     public FluidVariant getFluid() {
         return this.fluid;
     }
 
-    @Override
-    public Identifier getId() {
-        return this.id;
+    public ItemStack getResult() {
+        return this.result;
     }
 
-
-    @Override
-    public ItemStack craft(CraftingRecipeInput input, RegistryWrapper.WrapperLookup registries) {
-        return null;
-    }
-
-    @Override
-    public RecipeSerializer<?> getSerializer() {
-        return PrimevalRecipes.CLAY_MOLD_CASTING_SERIALIZER;
-    }
-
-    @Override
-    public RecipeType<?> getType() {
-        return CraftingRecipe.super.getType();
-    }
+    // Crafting Layout
 
     @Override
     public IngredientPlacement getIngredientPlacement() {
-        return null;
+        return IngredientPlacement.NONE;
     }
 
     @Override
@@ -152,29 +98,35 @@ public class ClayMoldCastingRecipe implements CraftingRecipe {
         return CraftingRecipeCategory.MISC;
     }
 
+    // Serializer
+
+    @Override
+    public RecipeSerializer<ClayMoldCastingRecipe> getSerializer() {
+        return PrimevalRecipes.CLAY_MOLD_CASTING_SERIALIZER;
+    }
+
     public static class Serializer implements RecipeSerializer<ClayMoldCastingRecipe> {
-        public Serializer() {
+        private static final MapCodec<ClayMoldCastingRecipe> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
+                Item.ENTRY_CODEC.fieldOf("mold").forGetter(ClayMoldCastingRecipe::getMoldItemRegistryEntry),
+                FluidVariant.CODEC.fieldOf("fluid").forGetter(ClayMoldCastingRecipe::getFluid),
+                ItemStack.CODEC.fieldOf("result").forGetter(ClayMoldCastingRecipe::getResult)
+        ).apply(instance, ClayMoldCastingRecipe::new));
+        private static final PacketCodec<RegistryByteBuf, ClayMoldCastingRecipe> PACKET_CODEC = PacketCodec.tuple(
+                PacketCodecs.registryEntry(RegistryKeys.ITEM), ClayMoldCastingRecipe::getMoldItemRegistryEntry,
+                VariantCodecs.FLUID_PACKET_CODEC, ClayMoldCastingRecipe::getFluid,
+                ItemStack.PACKET_CODEC, ClayMoldCastingRecipe::getResult,
+                ClayMoldCastingRecipe::new
+        );
+
+        protected Serializer() {
         }
 
-        public ClayMoldCastingRecipe read(Identifier identifier, JsonObject jsonObject) {
-            JsonObject inputJson = JsonHelper.getObject(jsonObject, "input");
-            Item inputMold = Registries.ITEM.get(new Identifier(JsonHelper.getString(inputJson, "mold")));
-            FluidVariant inputFluid = FluidVariant.of(Registries.FLUID.get(new Identifier(JsonHelper.getString(inputJson, "fluid"))));
-            ItemStack result = ShapedRecipe.outputFromJson(JsonHelper.getObject(jsonObject, "result"));
-            return new ClayMoldCastingRecipe(identifier, inputMold, inputFluid, result);
+        public MapCodec<ClayMoldCastingRecipe> codec() {
+            return CODEC;
         }
 
-        public ClayMoldCastingRecipe read(Identifier identifier, PacketByteBuf packetByteBuf) {
-            Item inputMold = packetByteBuf.readItemStack().getItem();
-            FluidVariant inputFluid = FluidVariant.fromPacket(packetByteBuf);
-            ItemStack result = packetByteBuf.readItemStack();
-            return new ClayMoldCastingRecipe(identifier, inputMold, inputFluid, result);
-        }
-
-        public void write(PacketByteBuf packetByteBuf, ClayMoldCastingRecipe recipe) {
-            packetByteBuf.writeItemStack(new ItemStack(recipe.mold));
-            recipe.fluid.toPacket(packetByteBuf);
-            packetByteBuf.writeItemStack(recipe.result);
+        public PacketCodec<RegistryByteBuf, ClayMoldCastingRecipe> packetCodec() {
+            return PACKET_CODEC;
         }
     }
 }

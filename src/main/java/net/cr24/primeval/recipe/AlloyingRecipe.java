@@ -22,15 +22,15 @@ import java.util.Map;
 
 public class AlloyingRecipe implements Recipe<FluidInventory> {
 
-    private final Identifier id;
     private final Map<FluidVariant, RangedValue> fluidInputs;
     private final FluidVariant fluidResult;
 
-    public AlloyingRecipe(Identifier id, Map<FluidVariant, RangedValue> fluidsIn, FluidVariant fluidResult) {
-        this.id = id;
+    public AlloyingRecipe(Map<FluidVariant, RangedValue> fluidsIn, FluidVariant fluidResult) {
         this.fluidInputs = fluidsIn;
         this.fluidResult = fluidResult;
     }
+
+    // Matching and Crafting
 
     @Override
     public boolean matches(FluidInventory inventory, World world) {
@@ -58,9 +58,7 @@ public class AlloyingRecipe implements Recipe<FluidInventory> {
         return ItemStack.EMPTY;
     }
 
-    public Identifier getId() {
-        return this.id;
-    }
+    // Accessors
 
     public FluidVariant getFluidResult() {
         return this.fluidResult;
@@ -76,15 +74,13 @@ public class AlloyingRecipe implements Recipe<FluidInventory> {
         return true;
     }
 
-    @Override
-    public RecipeSerializer<AlloyingRecipe> getSerializer() {
-        return PrimevalRecipes.ALLOYING_SERIALIZER;
-    }
 
     @Override
     public RecipeType<AlloyingRecipe> getType() {
         return PrimevalRecipes.ALLOYING;
     }
+
+    // Crafting Layout
 
     @Override
     public IngredientPlacement getIngredientPlacement() {
@@ -96,14 +92,19 @@ public class AlloyingRecipe implements Recipe<FluidInventory> {
         return null;
     }
 
+    // Serializer
+
+    @Override
+    public RecipeSerializer<AlloyingRecipe> getSerializer() {
+        return PrimevalRecipes.ALLOYING_SERIALIZER;
+    }
+
     public static class Serializer implements RecipeSerializer<AlloyingRecipe> {
         private static final MapCodec<AlloyingRecipe> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
-                Identifier.CODEC.fieldOf("id").forGetter((recipe) -> recipe.id),
                 Codec.unboundedMap(VariantCodecs.FLUID_CODEC, RangedValue.CODEC).fieldOf("fluids").forGetter((recipe) -> recipe.fluidInputs),
                 FluidVariant.CODEC.fieldOf("result").forGetter((recipe) -> recipe.fluidResult)
         ).apply(instance, AlloyingRecipe::new));
         private static final PacketCodec<RegistryByteBuf, AlloyingRecipe> PACKET_CODEC = PacketCodec.tuple(
-                Identifier.PACKET_CODEC, AlloyingRecipe::getId,
                 PacketCodecs.map(HashMap::new, VariantCodecs.FLUID_PACKET_CODEC, RangedValue.PACKET_CODEC), AlloyingRecipe::getFluidInputs,
                 FluidVariant.PACKET_CODEC, AlloyingRecipe::getFluidResult,
                 AlloyingRecipe::new

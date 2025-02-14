@@ -21,8 +21,8 @@ public class QuernRecipe extends SimpleOneToOneRecipe {
 
     final int wheelDamage;
 
-    public QuernRecipe(Identifier id, Ingredient input, ItemStack result, int wheelDamage) {
-        super(id, input, result);
+    public QuernRecipe(Ingredient input, ItemStack result, int wheelDamage) {
+        super(input, result);
         this.wheelDamage = wheelDamage;
     }
 
@@ -47,13 +47,11 @@ public class QuernRecipe extends SimpleOneToOneRecipe {
 
     public static class Serializer implements RecipeSerializer<QuernRecipe> {
         private static final MapCodec<QuernRecipe> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
-                Identifier.CODEC.fieldOf("id").forGetter((recipe) -> recipe.id),
                 Ingredient.CODEC.fieldOf("input").forGetter((recipe) -> recipe.input),
                 ItemStack.CODEC.fieldOf("result").forGetter((recipe) -> recipe.result),
                 Codecs.NON_NEGATIVE_INT.fieldOf("wheel_damage").forGetter((recipe) -> recipe.wheelDamage)
         ).apply(instance, QuernRecipe::new));
         private static final PacketCodec<RegistryByteBuf, QuernRecipe> PACKET_CODEC = PacketCodec.tuple(
-                Identifier.PACKET_CODEC, QuernRecipe::getId,
                 Ingredient.PACKET_CODEC, QuernRecipe::getInput,
                 ItemStack.PACKET_CODEC, QuernRecipe::getResult,
                 PacketCodecs.INTEGER, QuernRecipe::getWheelDamage,

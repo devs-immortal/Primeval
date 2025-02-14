@@ -19,13 +19,11 @@ import net.minecraft.world.World;
 
 public class MeltingRecipe implements Recipe<SingleStackRecipeInput> {
 
-    private final Identifier id;
     final Ingredient input;
     final FluidVariant fluidResult;
     final int fluidAmount;
 
-    public MeltingRecipe(Identifier id, Ingredient input, FluidVariant fluidResult, int fluidAmount) {
-        this.id = id;
+    public MeltingRecipe(Ingredient input, FluidVariant fluidResult, int fluidAmount) {
         this.input = input;
         this.fluidResult = fluidResult;
         this.fluidAmount = fluidAmount;
@@ -44,10 +42,6 @@ public class MeltingRecipe implements Recipe<SingleStackRecipeInput> {
     @Override
     public boolean isIgnoredInRecipeBook() {
         return true;
-    }
-
-    public Identifier getId() {
-        return this.id;
     }
 
     public Ingredient getInput() {
@@ -87,13 +81,11 @@ public class MeltingRecipe implements Recipe<SingleStackRecipeInput> {
 
     public static class Serializer implements RecipeSerializer<MeltingRecipe> {
         private static final MapCodec<MeltingRecipe> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
-                Identifier.CODEC.fieldOf("id").forGetter((recipe) -> recipe.id),
                 Ingredient.CODEC.fieldOf("input").forGetter((recipe) -> recipe.input),
                 VariantCodecs.FLUID_CODEC.fieldOf("fluid").forGetter((recipe) -> recipe.fluidResult),
                 Codecs.POSITIVE_INT.fieldOf("fluid_amount").forGetter((recipe) -> recipe.fluidAmount)
         ).apply(instance, MeltingRecipe::new));
         private static final PacketCodec<RegistryByteBuf, MeltingRecipe> PACKET_CODEC = PacketCodec.tuple(
-                Identifier.PACKET_CODEC, MeltingRecipe::getId,
                 Ingredient.PACKET_CODEC, MeltingRecipe::getInput,
                 VariantCodecs.FLUID_PACKET_CODEC, MeltingRecipe::getFluidResult,
                 PacketCodecs.INTEGER, MeltingRecipe::getFluidAmount,

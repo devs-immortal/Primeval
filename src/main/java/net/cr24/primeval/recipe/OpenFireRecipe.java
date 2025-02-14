@@ -16,8 +16,8 @@ public class OpenFireRecipe extends SimpleOneToOneRecipe {
 
     final int cookTime;
 
-    public OpenFireRecipe(Identifier id, Ingredient input, ItemStack result, int cookTime) {
-        super(id, input, result);
+    public OpenFireRecipe(Ingredient input, ItemStack result, int cookTime) {
+        super(input, result);
         this.cookTime = cookTime;
     }
 
@@ -57,13 +57,11 @@ public class OpenFireRecipe extends SimpleOneToOneRecipe {
 
     public static class Serializer implements RecipeSerializer<OpenFireRecipe> {
         private static final MapCodec<OpenFireRecipe> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
-                Identifier.CODEC.fieldOf("id").forGetter((recipe) -> recipe.id),
                 Ingredient.CODEC.fieldOf("input").forGetter((recipe) -> recipe.input),
                 ItemStack.CODEC.fieldOf("result").forGetter((recipe) -> recipe.result),
                 Codecs.POSITIVE_INT.fieldOf("cook_time").forGetter((recipe) -> recipe.cookTime)
         ).apply(instance, OpenFireRecipe::new));
         private static final PacketCodec<RegistryByteBuf, OpenFireRecipe> PACKET_CODEC = PacketCodec.tuple(
-                Identifier.PACKET_CODEC, OpenFireRecipe::getId,
                 Ingredient.PACKET_CODEC, OpenFireRecipe::getInput,
                 ItemStack.PACKET_CODEC, OpenFireRecipe::getResult,
                 PacketCodecs.INTEGER, OpenFireRecipe::getCookTime,

@@ -1,139 +1,104 @@
 package net.cr24.primeval.recipe;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import net.minecraft.inventory.CraftingInventory;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketByteBuf;
+import net.minecraft.item.Items;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.JsonHelper;
+import net.minecraft.recipe.display.RecipeDisplay;
+import net.minecraft.recipe.display.ShapelessCraftingRecipeDisplay;
+import net.minecraft.recipe.display.SlotDisplay;
+import net.minecraft.recipe.input.CraftingRecipeInput;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class ItemDamagingRecipe implements CraftingRecipe {
-    private final Identifier id;
-    private final String group;
-    private final ItemStack output;
-    private final DefaultedList<Ingredient> input;
+    final String group;
+    final CraftingRecipeCategory category;
+    final ItemStack result;
+    final List<Ingredient> ingredients;
+    final List<Ingredient> damageableIngredients;
+    @Nullable
+    private IngredientPlacement ingredientPlacement;
 
-    public ItemDamagingRecipe(Identifier id, String group, ItemStack output, DefaultedList<Ingredient> input) {
-        this.id = id;
+    public ItemDamagingRecipe(String group, CraftingRecipeCategory category, ItemStack result, List<Ingredient> ingredients, List<Ingredient> damageableIngredients) {
         this.group = group;
-        this.output = output;
-        this.input = input;
+        this.category = category;
+        this.result = result;
+        this.ingredients = ingredients;
+        this.damageableIngredients = damageableIngredients;
     }
 
-    @Override
-    public boolean matches(CraftingInventory craftingInventory, World world) {
-        RecipeMatcher recipeMatcher = new RecipeMatcher();
-        int i = 0;
-        for (int j = 0; j < craftingInventory.size(); ++j) {
-            ItemStack itemStack = craftingInventory.getStack(j);
-            if (itemStack.isEmpty()) continue;
-            ++i;
-            recipeMatcher.addInput(itemStack, 1);
-        }
-        return i == this.input.size() && recipeMatcher.match(this, null);
-    }
-
-    @Override
-    public ItemStack craft(CraftingInventory craftingInventory) {
-        return this.output.copy();
-    }
-
-    @Override
-    public boolean fits(int width, int height) {
-        return width * height >= this.input.size();
-    }
-
-    @Override
-    public ItemStack getOutput() {
-        return this.output;
-    }
-
-    @Override
-    public DefaultedList<Ingredient> getIngredients() {
-        return this.input;
-    }
-
-    @Override
-    public DefaultedList<ItemStack> getRemainder(CraftingInventory inventory) {
-        DefaultedList<ItemStack> defaultedList = DefaultedList.ofSize(inventory.size(), ItemStack.EMPTY);
-        for (int i = 0; i < defaultedList.size(); ++i) {
-            ItemStack item = inventory.getStack(i);
-            if (item.getItem().isDamageable()) { // Override damageable, fallback onto remainders
-                if (item.getDamage() + 1 < item.getMaxDamage()) {
-                    item = item.copy();
-                    item.setDamage(item.getDamage() + 1);
-                    defaultedList.set(i, item);
-                }
-            } else if (item.getItem().hasRecipeRemainder()) {
-                defaultedList.set(i, new ItemStack(item.getItem().getRecipeRemainder()));
-            }
-        }
-        return defaultedList;
-    }
-
-    @Override
-    public Identifier getId() {
-        return this.id;
-    }
-
-    @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<ItemDamagingRecipe> getSerializer() {
         return PrimevalRecipes.ITEM_DAMAGING_SERIALIZER;
     }
 
-    @Override
-    public RecipeType<?> getType() {
-        return CraftingRecipe.super.getType();
+    public String getGroup() {
+        return this.group;
     }
 
-    @Override
     public CraftingRecipeCategory getCategory() {
-        return CraftingRecipeCategory.MISC;
+        return this.category;
+    }
+
+    public IngredientPlacement getIngredientPlacement() {
+        if (this.ingredientPlacement == null) {
+            this.ingredientPlacement = IngredientPlacement.forShapeless(this.ingredients);
+        }
+
+        return this.ingredientPlacement;
+    }
+
+    public boolean matches(CraftingRecipeInput craftingRecipeInput, World world) {
+        if (craftingRecipeInput.getStackCount() != this.ingredients.size()) {
+            return false;
+        } else {
+            return craftingRecipeInput.size() == 1 && this.ingredients.size() == 1 ? (this.ingredients.getFirst()).test(craftingRecipeInput.getStackInSlot(0)) : craftingRecipeInput.getRecipeMatcher().isCraftable(this, (RecipeMatcher.ItemCallback)null);
+        }
+    }
+
+    public ItemStack craft(CraftingRecipeInput craftingRecipeInput, RegistryWrapper.WrapperLookup wrapperLookup) {
+        return this.result.copy();
+    }
+
+    public List<RecipeDisplay> getDisplays() {
+        return List.of(new ShapelessCraftingRecipeDisplay(this.ingredients.stream().map(Ingredient::toDisplay).toList(), new SlotDisplay.StackSlotDisplay(this.result), new SlotDisplay.ItemSlotDisplay(Items.CRAFTING_TABLE)));
     }
 
     public static class Serializer implements RecipeSerializer<ItemDamagingRecipe> {
-        public Serializer() {}
+        private static final MapCodec<ItemDamagingRecipe> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
+                Codec.STRING.optionalFieldOf("group", "").forGetter((recipe) -> recipe.group),
+                CraftingRecipeCategory.CODEC.fieldOf("category").orElse(CraftingRecipeCategory.MISC).forGetter((recipe) -> recipe.category),
+                ItemStack.VALIDATED_CODEC.fieldOf("result").forGetter((recipe) -> recipe.result),
+                Ingredient.CODEC.listOf().fieldOf("ingredients").forGetter((recipe) -> recipe.ingredients),
+                Ingredient.CODEC.listOf().fieldOf("damageable_ingredients").forGetter((recipe) -> recipe.damageableIngredients)
+        ).apply(instance, ItemDamagingRecipe::new));
+        public static final PacketCodec<RegistryByteBuf, ItemDamagingRecipe> PACKET_CODEC = PacketCodec.tuple(
+                PacketCodecs.STRING, (recipe) -> recipe.group,
+                CraftingRecipeCategory.PACKET_CODEC, (recipe) -> recipe.category,
+                ItemStack.PACKET_CODEC, (recipe) -> recipe.result,
+                Ingredient.PACKET_CODEC.collect(PacketCodecs.toList()), (recipe) -> recipe.ingredients,
+                Ingredient.PACKET_CODEC.collect(PacketCodecs.toList()), (recipe) -> recipe.damageableIngredients,
+                ItemDamagingRecipe::new);
 
-        public ItemDamagingRecipe read(Identifier identifier, JsonObject jsonObject) {
-            String string = JsonHelper.getString(jsonObject, "group", "");
-            DefaultedList<Ingredient> defaultedList = ItemDamagingRecipe.Serializer.getIngredients(JsonHelper.getArray(jsonObject, "ingredients"));
-            ItemStack itemStack = ShapedRecipe.outputFromJson(JsonHelper.getObject(jsonObject, "result"));
-            return new ItemDamagingRecipe(identifier, string, itemStack, defaultedList);
+        public Serializer() {
         }
 
-        private static DefaultedList<Ingredient> getIngredients(JsonArray json) {
-            DefaultedList<Ingredient> defaultedList = DefaultedList.of();
-            for (int i = 0; i < json.size(); ++i) {
-                Ingredient ingredient = Ingredient.fromJson(json.get(i));
-                if (ingredient.isEmpty()) continue;
-                defaultedList.add(ingredient);
-            }
-            return defaultedList;
+        public MapCodec<ItemDamagingRecipe> codec() {
+            return CODEC;
         }
 
-        public ItemDamagingRecipe read(Identifier identifier, PacketByteBuf packetByteBuf) {
-            String string = packetByteBuf.readString();
-            int i = packetByteBuf.readVarInt();
-            DefaultedList<Ingredient> defaultedList = DefaultedList.ofSize(i, Ingredient.EMPTY);
-            for (int j = 0; j < defaultedList.size(); ++j) {
-                defaultedList.set(j, Ingredient.fromPacket(packetByteBuf));
-            }
-            ItemStack j = packetByteBuf.readItemStack();
-            return new ItemDamagingRecipe(identifier, string, j, defaultedList);
-        }
-
-        public void write(PacketByteBuf packetByteBuf, ItemDamagingRecipe shapelessRecipe) {
-            packetByteBuf.writeString(shapelessRecipe.group);
-            packetByteBuf.writeVarInt(shapelessRecipe.input.size());
-            for (Ingredient ingredient : shapelessRecipe.input) {
-                ingredient.write(packetByteBuf);
-            }
-            packetByteBuf.writeItemStack(shapelessRecipe.output);
+        public PacketCodec<RegistryByteBuf, ItemDamagingRecipe> packetCodec() {
+            return PACKET_CODEC;
         }
     }
 }
