@@ -1,5 +1,5 @@
 # minceraft
-src/main/generated/
+src/main/generated/.cache
 
 # gradle
 

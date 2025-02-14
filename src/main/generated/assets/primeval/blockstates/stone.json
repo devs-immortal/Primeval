@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "primeval:block/stone"
+      },
+      {
+        "model": "primeval:block/stone_mirrored"
+      },
+      {
+        "model": "primeval:block/stone",
+        "y": 180
+      },
+      {
+        "model": "primeval:block/stone_mirrored",
+        "y": 180
+      }
+    ]
+  }
+}
