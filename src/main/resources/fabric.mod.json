@@ -16,7 +16,10 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-          "net.cr24.primeval.PrimevalMain"
+			"net.cr24.primeval.PrimevalMain"
+		],
+		"client": [
+			"net.cr24.primeval.PrimevalMain"
 		],
 		"fabric-datagen": [
 			"net.cr24.primeval.PrimevalDataGenerator"

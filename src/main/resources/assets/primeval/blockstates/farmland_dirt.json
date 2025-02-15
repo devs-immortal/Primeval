@@ -1,0 +1,35 @@
+{
+  "variants": {
+    "moisture=0,fertilizer_type=none": {
+      "model": "primeval:block/farmland_dirt"
+    },
+    "moisture=1,fertilizer_type=none": {
+      "model": "primeval:block/farmland_dirt_moist"
+    },
+    "moisture=2,fertilizer_type=none": {
+      "model": "primeval:block/farmland_dirt_moist"
+    },
+    "moisture=3,fertilizer_type=none": {
+      "model": "primeval:block/farmland_dirt_moist"
+    },
+    "moisture=4,fertilizer_type=none": {
+      "model": "primeval:block/farmland_dirt_moist"
+    },
+    
+    "moisture=0,fertilizer_type=bonemeal": {
+      "model": "primeval:block/farmland_dirt_bonemeal"
+    },
+    "moisture=1,fertilizer_type=bonemeal": {
+      "model": "primeval:block/farmland_dirt_moist_bonemeal"
+    },
+    "moisture=2,fertilizer_type=bonemeal": {
+      "model": "primeval:block/farmland_dirt_moist_bonemeal"
+    },
+    "moisture=3,fertilizer_type=bonemeal": {
+      "model": "primeval:block/farmland_dirt_moist_bonemeal"
+    },
+    "moisture=4,fertilizer_type=bonemeal": {
+      "model": "primeval:block/farmland_dirt_moist_bonemeal"
+    }
+  }
+}

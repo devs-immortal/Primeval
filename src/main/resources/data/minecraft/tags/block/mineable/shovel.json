@@ -6,6 +6,8 @@
     "primeval:mud",
     "primeval:dry_dirt",
     "primeval:sand",
-    "primeval:gravel"
+    "primeval:gravel",
+    "primeval:farmland_dirt",
+    "primeval:farmland_clay"
   ]
 }

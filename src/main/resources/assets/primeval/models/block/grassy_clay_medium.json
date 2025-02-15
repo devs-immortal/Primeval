@@ -1,7 +1,7 @@
 {   "parent": "minecraft:block/block",
     "textures": {
-        "particle": "primeval:block/block_of_clay",
-        "bottom": "primeval:block/block_of_clay",
+        "particle": "primeval:block/clay",
+        "bottom": "primeval:block/clay",
         "top": "primeval:block/grass_block_top_medium",
         "side": "primeval:block/grassy_clay",
         "overlay": "minecraft:block/grass_block_side_overlay"

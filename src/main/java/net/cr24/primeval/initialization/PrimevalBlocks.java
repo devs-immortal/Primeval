@@ -1,14 +1,21 @@
 package net.cr24.primeval.initialization;
 
+import dev.architectury.registry.client.rendering.BlockEntityRendererRegistry;
+import me.shedaniel.rei.api.client.registry.screen.ScreenRegistry;
 import net.cr24.primeval.block.*;
 import net.cr24.primeval.item.WeightedBlockItem;
 import net.cr24.primeval.util.*;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
+import net.fabricmc.fabric.impl.client.rendering.ColorProviderRegistryImpl;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.MapColor;
+import net.minecraft.client.color.world.BiomeColors;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
@@ -16,6 +23,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.world.biome.GrassColors;
 
 import java.util.function.Consumer;
 
@@ -56,8 +64,8 @@ public class PrimevalBlocks {
     public static final Block COBBLESTONE = registerBlock("cobblestone", SETTINGS_STONE().strength(5.0f, 6.0f), (settings) -> new SemiSupportedBlock(0.1f, settings), Weight.HEAVY, Size.MEDIUM);
     public static final Block STONE = registerBlock("stone", SETTINGS_STONE(), (settings) -> new CascadingBlock(0.35f, COBBLESTONE, settings), Weight.HEAVY, Size.MEDIUM);
     public static final Block SANDSTONE = registerBlock("sandstone", SETTINGS_STONE(), (settings) -> new CascadingBlock(0.3f, settings), Weight.HEAVY, Size.MEDIUM);
-//    public static final Block DIRT_FARMLAND = registerBlockWithoutItem("farmland_dirt", new PrimevalFarmlandBlock(SETTINGS_SOIL().ticksRandomly(), 0.2f, DIRT, new Block[]{DIRT, GRASSY_DIRT}));
-//    public static final Block CLAY_FARMLAND = registerBlockWithoutItem("farmland_clay", new PrimevalFarmlandBlock(SETTINGS_SOIL().ticksRandomly(), 0.3f, CLAY_BLOCK, new Block[]{CLAY_BLOCK}));
+    public static final Block DIRT_FARMLAND = registerBlockWithoutItem("farmland_dirt", SETTINGS_SOIL().ticksRandomly(), (settings) -> new PrimevalFarmlandBlock(0.2f, DIRT, new Block[]{DIRT, GRASSY_DIRT}, settings));
+    public static final Block CLAY_FARMLAND = registerBlockWithoutItem("farmland_clay", SETTINGS_SOIL().ticksRandomly(), (settings) -> new PrimevalFarmlandBlock(0.3f, CLAY, new Block[]{CLAY, GRASSY_CLAY}, settings));
 
     // endregion
 
@@ -67,6 +75,23 @@ public class PrimevalBlocks {
 
     @Environment(EnvType.CLIENT)
     public static void initClient() {
+        // Render Layers
+        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
+                GRASSY_DIRT, GRASSY_CLAY
+        );
+
+        ColorProviderRegistry.BLOCK.register(((state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getGrassColor(world, pos) : GrassColors.getColor(0.5D, 1.0D)),
+                GRASSY_DIRT, GRASSY_CLAY
+        );
+
+        // Block Renderers
+//        BlockEntityRendererRegistry.register(PIT_KILN_BLOCK_ENTITY, PitKilnBlockEntityRenderer::new);
+//        BlockEntityRendererRegistry.register(ASH_PILE_BLOCK_ENTITY, AshPileBlockEntityRenderer::new);
+//        BlockEntityRendererRegistry.register(LAYING_ITEM_BLOCK_ENTITY, LayingItemBlockEntityRenderer::new);
+//        BlockEntityRendererRegistry.register(CAMPFIRE_BLOCK_ENTITY, PrimevalCampfireBlockEntityRenderer::new);
+//        BlockEntityRendererRegistry.register(QUERN_BLOCK_ENTITY, QuernBlockEntityRenderer::new);
+
+//        ScreenRegistry.register(CRATE_SCREEN_HANDLER, Primeval3x5ContainerScreen::new);
     }
 
     // region HELPER FUNCTIONS
@@ -88,8 +113,9 @@ public class PrimevalBlocks {
     }
 
     @SafeVarargs
-    private static Block registerBlockWithoutItem(String id, Block block, Consumer<Block>... additionalActions) {
-        var registeredBlock = Registry.register(Registries.BLOCK, identify(id), block);
+    private static Block registerBlockWithoutItem(String id, AbstractBlock.Settings settings, BlockFactory<Block> factory, Consumer<Block>... additionalActions) {
+        RegistryKey<Block> blockKey = blockKey(id);
+        var registeredBlock = Registry.register(Registries.BLOCK, blockKey, factory.create(settings.registryKey(blockKey)));
         for (var action : additionalActions) {
             action.accept(registeredBlock);
         }
