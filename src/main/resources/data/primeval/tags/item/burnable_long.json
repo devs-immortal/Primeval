@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "#primeval:logs",
+    "#primeval:crates",
+    "primeval:straw_mesh",
+    "primeval:wicker_basket",
+    "primeval:crude_crafting_bench"
+  ]
+}

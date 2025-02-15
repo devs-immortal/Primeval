@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    "primeval:dirt",
+    "primeval:coarse_dirt",
+    "primeval:mud",
+    "primeval:dry_dirt",
+    "primeval:grassy_dirt",
+    "primeval:grassy_clay",
+    "primeval:sand",
+    "primeval:gravel",
+    "primeval:block_of_clay",
+    "primeval:mud_bricks",
+    "primeval:mud_bricks_stairs",
+    "primeval:mud_bricks_slab",
+    "primeval:ash_pile",
+    "primeval:large_clay_pot",
+    "primeval:farmland_dirt",
+    "primeval:farmland_clay"
+  ]
+}

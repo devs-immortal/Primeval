@@ -1,0 +1,22 @@
+{
+  "replace": false,
+  "values": [
+    "primeval:terracotta",
+    "primeval:terracotta_white",
+    "primeval:terracotta_orange",
+    "primeval:terracotta_magenta",
+    "primeval:terracotta_light_blue",
+    "primeval:terracotta_yellow",
+    "primeval:terracotta_lime",
+    "primeval:terracotta_pink",
+    "primeval:terracotta_dark_gray",
+    "primeval:terracotta_light_gray",
+    "primeval:terracotta_cyan",
+    "primeval:terracotta_purple",
+    "primeval:terracotta_blue",
+    "primeval:terracotta_brown",
+    "primeval:terracotta_green",
+    "primeval:terracotta_red",
+    "primeval:terracotta_black"
+  ]
+}

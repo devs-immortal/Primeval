@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "primeval:oak_log",
+    "primeval:birch_log",
+    "primeval:spruce_log"
+  ]
+}

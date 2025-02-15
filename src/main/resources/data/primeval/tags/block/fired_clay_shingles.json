@@ -1,0 +1,22 @@
+{
+  "replace": false,
+  "values": [
+    "primeval:fired_clay_shingles",
+    "primeval:fired_clay_shingles_white",
+    "primeval:fired_clay_shingles_orange",
+    "primeval:fired_clay_shingles_magenta",
+    "primeval:fired_clay_shingles_light_blue",
+    "primeval:fired_clay_shingles_yellow",
+    "primeval:fired_clay_shingles_lime",
+    "primeval:fired_clay_shingles_pink",
+    "primeval:fired_clay_shingles_dark_gray",
+    "primeval:fired_clay_shingles_light_gray",
+    "primeval:fired_clay_shingles_cyan",
+    "primeval:fired_clay_shingles_purple",
+    "primeval:fired_clay_shingles_blue",
+    "primeval:fired_clay_shingles_brown",
+    "primeval:fired_clay_shingles_green",
+    "primeval:fired_clay_shingles_red",
+    "primeval:fired_clay_shingles_black"
+  ]
+}

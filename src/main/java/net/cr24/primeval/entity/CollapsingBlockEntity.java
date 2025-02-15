@@ -1,6 +1,7 @@
 package net.cr24.primeval.entity;
 
 import com.google.common.collect.Lists;
+import net.cr24.primeval.initialization.PrimevalTags;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.*;
@@ -80,6 +81,10 @@ public class CollapsingBlockEntity extends FallingBlockEntity {
                         }
                     } else { // hit ground
                         BlockState blockState = this.getWorld().getBlockState(blockPos);
+                        if (blockState.isIn(PrimevalTags.Blocks.COLLAPSING_NO_CRUSH)) {
+                            blockPos = blockPos.up();
+                            blockState = getWorld().getBlockState(blockPos);
+                        }
                         this.setVelocity(this.getVelocity().multiply(0.7, -0.5, 0.7));
                         if (!blockState.isOf(Blocks.MOVING_PISTON)) {
                             boolean canReplace = true; // TODO: collapsing no-crush tag
