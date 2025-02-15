@@ -82,9 +82,9 @@ public class PrimevalBlocks {
     public static final Block SPRUCE_TRUNK = registerBlockWithoutItem("spruce_trunk", SETTINGS_TRUNK().nonOpaque(), (settings) -> new TrunkBlock(SpruceTrunker.INSTANCE, settings));
     public static final Block SPRUCE_LEAVES = registerBlockWithoutItem("spruce_leaves", AbstractBlock.Settings.copy(Blocks.OAK_LEAVES), LeafBlock::new);
     // Saplings+
-//    public static final Block OAK_SAPLING = registerBlock("oak_sapling", new GrowingSaplingBlock(SETTINGS_PLANT().ticksRandomly(), OakTrunker.INSTANCE), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
-//    public static final Block BIRCH_SAPLING = registerBlock("birch_sapling", new GrowingSaplingBlock(SETTINGS_PLANT().ticksRandomly(), BirchTrunker.INSTANCE), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
-//    public static final Block SPRUCE_SAPLING = registerBlock("spruce_sapling", new GrowingSaplingBlock(SETTINGS_PLANT().ticksRandomly(), SpruceTrunker.INSTANCE), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
+    public static final Block OAK_SAPLING = registerBlock("oak_sapling", SETTINGS_PLANT().ticksRandomly(), (settings) -> new GrowingSaplingBlock(OakTrunker.INSTANCE, settings), Weight.HEAVY, Size.LARGE);
+    public static final Block BIRCH_SAPLING = registerBlock("birch_sapling", SETTINGS_PLANT().ticksRandomly(), (settings) -> new GrowingSaplingBlock(BirchTrunker.INSTANCE, settings), Weight.HEAVY, Size.LARGE);
+    public static final Block SPRUCE_SAPLING = registerBlock("spruce_sapling", SETTINGS_PLANT().ticksRandomly(), (settings) -> new GrowingSaplingBlock(SpruceTrunker.INSTANCE, settings), Weight.HEAVY, Size.LARGE);
 //    public static final Block GRASS = registerBlock("grass", new GrowingGrassBlock(SETTINGS_PLANT().ticksRandomly()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
 //    public static final Block BUSH = registerBlock("bush", new PrimevalPlantBlock(SETTINGS_PLANT()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
 //    public static final Block SPIKED_PLANT = registerBlock("plant_0", new PrimevalPlantBlock(SETTINGS_PLANT()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
@@ -104,6 +104,9 @@ public class PrimevalBlocks {
     // endregion
 
     public static void init() {
+        OakTrunker.INSTANCE.build();
+        BirchTrunker.INSTANCE.build();
+        SpruceTrunker.INSTANCE.build();
     }
 
     @Environment(EnvType.CLIENT)
@@ -123,8 +126,14 @@ public class PrimevalBlocks {
         ColorProviderRegistry.BLOCK.register(((state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getGrassColor(world, pos) : GrassColors.getColor(0.7D, 1.0D)),
                 GRASSY_DIRT, GRASSY_CLAY
         );
-        ColorProviderRegistry.BLOCK.register(((state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getFoliageColor(world, pos) : FoliageColors.getColor(0.7D, 1.0D)),
-                OAK_LEAVES, BIRCH_LEAVES, SPRUCE_LEAVES
+        ColorProviderRegistry.BLOCK.register(((state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getFoliageColor(world, pos) : FoliageColors.getColor(0.5D, 1.0D)),
+                OAK_LEAVES
+        );
+        ColorProviderRegistry.BLOCK.register(((state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getFoliageColor(world, pos)+2621440 : FoliageColors.getColor(0.5D, 1.0D)),
+                BIRCH_LEAVES
+        );
+        ColorProviderRegistry.BLOCK.register(((state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getFoliageColor(world, pos)-4082973 : FoliageColors.getColor(0.5D, 1.0D)),
+                SPRUCE_LEAVES
         );
 
         // Block Renderers
