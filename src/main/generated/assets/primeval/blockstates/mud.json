@@ -1,7 +1,20 @@
 {
   "variants": {
-    "": {
-      "model": "primeval:block/mud"
-    }
+    "": [
+      {
+        "model": "primeval:block/mud"
+      },
+      {
+        "model": "primeval:block/mud_mirrored"
+      },
+      {
+        "model": "primeval:block/mud",
+        "y": 180
+      },
+      {
+        "model": "primeval:block/mud_mirrored",
+        "y": 180
+      }
+    ]
   }
 }

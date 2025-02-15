@@ -32,7 +32,7 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 			blockStateModelGenerator.registerSimpleCubeAll(DIRT);
 			blockStateModelGenerator.registerSimpleCubeAll(COARSE_DIRT);
 			blockStateModelGenerator.registerSimpleCubeAll(CLAY);
-			blockStateModelGenerator.registerSimpleCubeAll(MUD);
+			blockStateModelGenerator.registerMirrorable(MUD);
 			blockStateModelGenerator.registerSimpleCubeAll(DRY_DIRT);
 			blockStateModelGenerator.registerSimpleCubeAll(SAND);
 			blockStateModelGenerator.registerSimpleCubeAll(GRAVEL);
@@ -50,6 +50,22 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 			blockStateModelGenerator.registerTintableCross(OAK_SAPLING, BlockStateModelGenerator.CrossType.NOT_TINTED);
 			blockStateModelGenerator.registerTintableCross(BIRCH_SAPLING, BlockStateModelGenerator.CrossType.NOT_TINTED);
 			blockStateModelGenerator.registerTintableCross(SPRUCE_SAPLING, BlockStateModelGenerator.CrossType.NOT_TINTED);
+
+			blockStateModelGenerator.registerTintedItemModel(GRASS, blockStateModelGenerator.uploadBlockItemModel(GRASS.asItem(), GRASS, "_4"), new GrassTintSource(0.7f, 1.0f));
+			blockStateModelGenerator.registerTintedItemModel(BUSH, blockStateModelGenerator.uploadBlockItemModel(BUSH.asItem(), BUSH, "_big"), new GrassTintSource(0.7f, 1.0f));
+			blockStateModelGenerator.registerGrassTinted(SPIKED_PLANT);
+			blockStateModelGenerator.registerGrassTinted(LEAFY_PLANT);
+			blockStateModelGenerator.registerItemModel(SHRUB.asItem());
+			blockStateModelGenerator.registerMultifaceBlock(MOSS);
+
+			blockStateModelGenerator.registerTintableCross(POPPY, BlockStateModelGenerator.CrossType.NOT_TINTED);
+			blockStateModelGenerator.registerTintableCross(DANDELION, BlockStateModelGenerator.CrossType.NOT_TINTED);
+			blockStateModelGenerator.registerTintableCross(OXEYE_DAISY, BlockStateModelGenerator.CrossType.NOT_TINTED);
+			blockStateModelGenerator.registerTintableCross(CORNFLOWER, BlockStateModelGenerator.CrossType.NOT_TINTED);
+			blockStateModelGenerator.registerTintableCross(LILY_OF_THE_VALLEY, BlockStateModelGenerator.CrossType.NOT_TINTED);
+
+			blockStateModelGenerator.registerItemModel(REEDS.asItem());
+			blockStateModelGenerator.registerTintableCross(RIVER_GRASS, BlockStateModelGenerator.CrossType.NOT_TINTED);
 		}
 
 		@Override

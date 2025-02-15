@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "primeval:block/oxeye_daisy"
+  }
+}

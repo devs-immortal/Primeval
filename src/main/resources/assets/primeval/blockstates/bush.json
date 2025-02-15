@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "primeval:block/bush_big"
+      },
+      {
+        "model": "primeval:block/bush_small"
+      }
+    ]
+  }
+}

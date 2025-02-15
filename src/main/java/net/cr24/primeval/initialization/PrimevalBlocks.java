@@ -12,6 +12,7 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.block.*;
+import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.item.Item;
@@ -85,21 +86,21 @@ public class PrimevalBlocks {
     public static final Block OAK_SAPLING = registerBlock("oak_sapling", SETTINGS_PLANT().ticksRandomly(), (settings) -> new GrowingSaplingBlock(OakTrunker.INSTANCE, settings), Weight.HEAVY, Size.LARGE);
     public static final Block BIRCH_SAPLING = registerBlock("birch_sapling", SETTINGS_PLANT().ticksRandomly(), (settings) -> new GrowingSaplingBlock(BirchTrunker.INSTANCE, settings), Weight.HEAVY, Size.LARGE);
     public static final Block SPRUCE_SAPLING = registerBlock("spruce_sapling", SETTINGS_PLANT().ticksRandomly(), (settings) -> new GrowingSaplingBlock(SpruceTrunker.INSTANCE, settings), Weight.HEAVY, Size.LARGE);
-//    public static final Block GRASS = registerBlock("grass", new GrowingGrassBlock(SETTINGS_PLANT().ticksRandomly()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
-//    public static final Block BUSH = registerBlock("bush", new PrimevalPlantBlock(SETTINGS_PLANT()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
-//    public static final Block SPIKED_PLANT = registerBlock("plant_0", new PrimevalPlantBlock(SETTINGS_PLANT()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
-//    public static final Block LEAFY_PLANT = registerBlock("plant_1", new PrimevalPlantBlock(SETTINGS_PLANT()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
-//    public static final Block SHRUB = registerBlock("shrub", new PrimevalPlantBlock(SETTINGS_PLANT()), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
-//    public static final Block MOSS = registerBlock("moss", new SpreadingMossBlock(SETTINGS_PLANT().ticksRandomly()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
-//    // Flowers
-//    public static final Block POPPY = registerBlock("poppy", new PrimevalPlantBlock(SETTINGS_PLANT()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
-//    public static final Block DANDELION = registerBlock("dandelion", new PrimevalPlantBlock(SETTINGS_PLANT()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
-//    public static final Block OXEYE_DAISY = registerBlock("oxeye_daisy", new PrimevalPlantBlock(SETTINGS_PLANT()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
-//    public static final Block CORNFLOWER = registerBlock("cornflower", new PrimevalPlantBlock(SETTINGS_PLANT()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
-//    public static final Block LILY_OF_THE_VALLEY = registerBlock("lily_of_the_valley", new PrimevalPlantBlock(SETTINGS_PLANT()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
-//    // Misc
-//    public static final Block REEDS = registerBlock("reeds", new ReedsBlock(SETTINGS_PLANT().ticksRandomly()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
-//    public static final Block RIVER_GRASS = registerBlock("river_grass", new PrimevalWaterPlantBlock(SETTINGS_PLANT().offset(AbstractBlock.OffsetType.XZ)), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
+    public static final Block GRASS = registerBlock("grass", SETTINGS_PLANT().ticksRandomly(), GrowingGrassBlock::new, Weight.VERY_LIGHT, Size.SMALL);
+    public static final Block BUSH = registerBlock("bush", SETTINGS_PLANT(), PrimevalPlantBlock::new, Weight.VERY_LIGHT, Size.SMALL);
+    public static final Block SPIKED_PLANT = registerBlock("plant_0", SETTINGS_PLANT(), PrimevalPlantBlock::new, Weight.VERY_LIGHT, Size.SMALL);
+    public static final Block LEAFY_PLANT = registerBlock("plant_1", SETTINGS_PLANT(), PrimevalPlantBlock::new, Weight.VERY_LIGHT, Size.SMALL);
+    public static final Block SHRUB = registerBlock("shrub", SETTINGS_PLANT(), PrimevalPlantBlock::new, Weight.LIGHT, Size.MEDIUM);
+    public static final Block MOSS = registerBlock("moss", SETTINGS_PLANT().ticksRandomly(), SpreadingMossBlock::new, Weight.VERY_LIGHT, Size.SMALL);
+    // Flowers
+    public static final Block POPPY = registerBlock("poppy", SETTINGS_PLANT(), PrimevalPlantBlock::new, Weight.VERY_LIGHT, Size.SMALL);
+    public static final Block DANDELION = registerBlock("dandelion", SETTINGS_PLANT(), PrimevalPlantBlock::new, Weight.VERY_LIGHT, Size.SMALL);
+    public static final Block OXEYE_DAISY = registerBlock("oxeye_daisy", SETTINGS_PLANT(), PrimevalPlantBlock::new, Weight.VERY_LIGHT, Size.SMALL);
+    public static final Block CORNFLOWER = registerBlock("cornflower", SETTINGS_PLANT(), PrimevalPlantBlock::new, Weight.VERY_LIGHT, Size.SMALL);
+    public static final Block LILY_OF_THE_VALLEY = registerBlock("lily_of_the_valley", SETTINGS_PLANT(), PrimevalPlantBlock::new, Weight.VERY_LIGHT, Size.SMALL);
+    // Misc
+    public static final Block REEDS = registerBlock("reeds", SETTINGS_PLANT().ticksRandomly().pistonBehavior(PistonBehavior.DESTROY), ReedsBlock::new, Weight.VERY_LIGHT, Size.SMALL);
+    public static final Block RIVER_GRASS = registerBlock("river_grass", SETTINGS_PLANT().offset(AbstractBlock.OffsetType.XZ), PrimevalWaterPlantBlock::new, Weight.VERY_LIGHT, Size.SMALL);
 
     // endregion
 
@@ -114,17 +115,22 @@ public class PrimevalBlocks {
         // Render Layers
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
                 GRASSY_DIRT, GRASSY_CLAY,
+                GRASS, BUSH, SPIKED_PLANT, LEAFY_PLANT, SHRUB,
+                POPPY, DANDELION, OXEYE_DAISY, CORNFLOWER, LILY_OF_THE_VALLEY,
+                MOSS,
+                REEDS, RIVER_GRASS,
                 /* Tree */
-                //OAK_SAPLING,
+                OAK_SAPLING,
                 OAK_LEAVES,
-                //BIRCH_SAPLING,
+                BIRCH_SAPLING,
                 BIRCH_LEAVES,
-                //SPRUCE_SAPLING,
+                SPRUCE_SAPLING,
                 SPRUCE_LEAVES
         );
 
         ColorProviderRegistry.BLOCK.register(((state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getGrassColor(world, pos) : GrassColors.getColor(0.7D, 1.0D)),
-                GRASSY_DIRT, GRASSY_CLAY
+                GRASSY_DIRT, GRASSY_CLAY,
+                GRASS, BUSH, SPIKED_PLANT, LEAFY_PLANT, SHRUB
         );
         ColorProviderRegistry.BLOCK.register(((state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getFoliageColor(world, pos) : FoliageColors.getColor(0.5D, 1.0D)),
                 OAK_LEAVES
