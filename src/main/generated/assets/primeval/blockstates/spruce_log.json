@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "primeval:block/spruce_log",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "primeval:block/spruce_log"
+    },
+    "axis=z": {
+      "model": "primeval:block/spruce_log",
+      "x": 90
+    }
+  }
+}

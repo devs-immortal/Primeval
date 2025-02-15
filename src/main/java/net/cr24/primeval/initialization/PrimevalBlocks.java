@@ -1,23 +1,20 @@
 package net.cr24.primeval.initialization;
 
-import dev.architectury.registry.client.rendering.BlockEntityRendererRegistry;
-import me.shedaniel.rei.api.client.registry.screen.ScreenRegistry;
 import net.cr24.primeval.block.*;
+import net.cr24.primeval.block.plant.*;
 import net.cr24.primeval.item.WeightedBlockItem;
 import net.cr24.primeval.util.*;
+import net.cr24.primeval.world.trunker.BirchTrunker;
+import net.cr24.primeval.world.trunker.OakTrunker;
+import net.cr24.primeval.world.trunker.SpruceTrunker;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
-import net.fabricmc.fabric.impl.client.rendering.ColorProviderRegistryImpl;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.MapColor;
+import net.minecraft.block.*;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.item.Item;
-import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -69,6 +66,41 @@ public class PrimevalBlocks {
 
     // endregion
 
+    // region PLANT BLOCKS
+
+    // Oak Trees
+    public static final Block OAK_LOG = registerBlockWithoutItem("oak_log", SETTINGS_LOG(), PillarBlock::new);
+    public static final Block OAK_TRUNK = registerBlockWithoutItem("oak_trunk", SETTINGS_TRUNK().nonOpaque(), (settings) -> new TrunkBlock(OakTrunker.INSTANCE, settings));
+    public static final Block OAK_LEAVES = registerBlockWithoutItem("oak_leaves", AbstractBlock.Settings.copy(Blocks.OAK_LEAVES), LeafBlock::new);
+    // Birch Trees
+    public static final Block BIRCH_LOG = registerBlockWithoutItem("birch_log", SETTINGS_LOG(), PillarBlock::new);
+    public static final Block BIRCH_TRUNK = registerBlockWithoutItem("birch_trunk", SETTINGS_TRUNK().nonOpaque(), (settings) -> new TrunkBlock(BirchTrunker.INSTANCE, settings));
+    public static final Block BIRCH_LEAVES = registerBlockWithoutItem("birch_leaves", AbstractBlock.Settings.copy(Blocks.OAK_LEAVES), LeafBlock::new);
+    // Spruce Trees
+    public static final Block SPRUCE_LOG = registerBlockWithoutItem("spruce_log", SETTINGS_LOG(), PillarBlock::new);
+    public static final Block SPRUCE_TRUNK = registerBlockWithoutItem("spruce_trunk", SETTINGS_TRUNK().nonOpaque(), (settings) -> new TrunkBlock(SpruceTrunker.INSTANCE, settings));
+    public static final Block SPRUCE_LEAVES = registerBlockWithoutItem("spruce_leaves", AbstractBlock.Settings.copy(Blocks.OAK_LEAVES), LeafBlock::new);
+    // Saplings+
+//    public static final Block OAK_SAPLING = registerBlock("oak_sapling", new GrowingSaplingBlock(SETTINGS_PLANT().ticksRandomly(), OakTrunker.INSTANCE), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
+//    public static final Block BIRCH_SAPLING = registerBlock("birch_sapling", new GrowingSaplingBlock(SETTINGS_PLANT().ticksRandomly(), BirchTrunker.INSTANCE), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
+//    public static final Block SPRUCE_SAPLING = registerBlock("spruce_sapling", new GrowingSaplingBlock(SETTINGS_PLANT().ticksRandomly(), SpruceTrunker.INSTANCE), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
+//    public static final Block GRASS = registerBlock("grass", new GrowingGrassBlock(SETTINGS_PLANT().ticksRandomly()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
+//    public static final Block BUSH = registerBlock("bush", new PrimevalPlantBlock(SETTINGS_PLANT()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
+//    public static final Block SPIKED_PLANT = registerBlock("plant_0", new PrimevalPlantBlock(SETTINGS_PLANT()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
+//    public static final Block LEAFY_PLANT = registerBlock("plant_1", new PrimevalPlantBlock(SETTINGS_PLANT()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
+//    public static final Block SHRUB = registerBlock("shrub", new PrimevalPlantBlock(SETTINGS_PLANT()), Weight.LIGHT, Size.MEDIUM, PRIMEVAL_BLOCKS);
+//    public static final Block MOSS = registerBlock("moss", new SpreadingMossBlock(SETTINGS_PLANT().ticksRandomly()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
+//    // Flowers
+//    public static final Block POPPY = registerBlock("poppy", new PrimevalPlantBlock(SETTINGS_PLANT()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
+//    public static final Block DANDELION = registerBlock("dandelion", new PrimevalPlantBlock(SETTINGS_PLANT()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
+//    public static final Block OXEYE_DAISY = registerBlock("oxeye_daisy", new PrimevalPlantBlock(SETTINGS_PLANT()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
+//    public static final Block CORNFLOWER = registerBlock("cornflower", new PrimevalPlantBlock(SETTINGS_PLANT()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
+//    public static final Block LILY_OF_THE_VALLEY = registerBlock("lily_of_the_valley", new PrimevalPlantBlock(SETTINGS_PLANT()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
+//    // Misc
+//    public static final Block REEDS = registerBlock("reeds", new ReedsBlock(SETTINGS_PLANT().ticksRandomly()), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
+//    public static final Block RIVER_GRASS = registerBlock("river_grass", new PrimevalWaterPlantBlock(SETTINGS_PLANT().offset(AbstractBlock.OffsetType.XZ)), Weight.VERY_LIGHT, Size.SMALL, PRIMEVAL_BLOCKS);
+
+    // endregion
 
     public static void init() {
     }
