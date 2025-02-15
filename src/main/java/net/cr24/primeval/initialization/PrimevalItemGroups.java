@@ -49,9 +49,32 @@ public class PrimevalItemGroups {
                 entries.add(OXEYE_DAISY);
                 entries.add(CORNFLOWER);
                 entries.add(LILY_OF_THE_VALLEY);
-
+                // Water Plants
                 entries.add(REEDS);
                 entries.add(RIVER_GRASS);
+                // Ores
+                entries.add(COPPER_MALACHITE_ORE.small());
+                entries.add(COPPER_MALACHITE_ORE.medium());
+                entries.add(COPPER_MALACHITE_ORE.large());
+                entries.add(COPPER_NATIVE_ORE.small());
+                entries.add(COPPER_NATIVE_ORE.medium());
+                entries.add(COPPER_NATIVE_ORE.large());
+                entries.add(TIN_CASSITERITE_ORE.small());
+                entries.add(TIN_CASSITERITE_ORE.medium());
+                entries.add(TIN_CASSITERITE_ORE.large());
+                entries.add(ZINC_SPHALERITE_ORE.small());
+                entries.add(ZINC_SPHALERITE_ORE.medium());
+                entries.add(ZINC_SPHALERITE_ORE.large());
+                entries.add(GOLD_NATIVE_ORE.small());
+                entries.add(GOLD_NATIVE_ORE.medium());
+                entries.add(GOLD_NATIVE_ORE.large());
+                entries.add(IRON_HEMATITE_ORE.small());
+                entries.add(IRON_HEMATITE_ORE.medium());
+                entries.add(IRON_HEMATITE_ORE.large());
+                entries.add(LAZURITE_ORE.small());
+                entries.add(LAZURITE_ORE.medium());
+                entries.add(LAZURITE_ORE.large());
+                entries.add(FOSSIL);
 
             }));
 

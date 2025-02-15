@@ -23,7 +23,10 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.world.biome.FoliageColors;
 import net.minecraft.world.biome.GrassColors;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.function.Consumer;
 
 import static net.cr24.primeval.PrimevalMain.identify;
@@ -104,6 +107,22 @@ public class PrimevalBlocks {
 
     // endregion
 
+    // region ORES
+
+    public static final OreBlockSet COPPER_MALACHITE_ORE = registerOreBlockSet("copper_malachite_ore", SETTINGS_STONE(), Weight.HEAVY, Size.LARGE);
+    public static final OreBlockSet COPPER_NATIVE_ORE = registerOreBlockSet("copper_native_ore", SETTINGS_STONE(), Weight.HEAVY, Size.LARGE);
+    public static final OreBlockSet TIN_CASSITERITE_ORE = registerOreBlockSet("tin_cassiterite_ore", SETTINGS_STONE(), Weight.HEAVY, Size.LARGE);
+    public static final OreBlockSet ZINC_SPHALERITE_ORE = registerOreBlockSet("zinc_sphalerite_ore", SETTINGS_STONE(), Weight.HEAVY, Size.LARGE);
+    public static final OreBlockSet GOLD_NATIVE_ORE = registerOreBlockSet("gold_native_ore", SETTINGS_STONE(), Weight.HEAVY, Size.LARGE);
+    public static final OreBlockSet IRON_HEMATITE_ORE = registerOreBlockSet("iron_hematite_ore", SETTINGS_STONE(), Weight.HEAVY, Size.LARGE);
+    public static final OreBlockSet LAZURITE_ORE = registerOreBlockSet("lazurite_ore", SETTINGS_STONE(), Weight.HEAVY, Size.LARGE);
+    public static final Block FOSSIL = registerBlock("fossil", SETTINGS_STONE(), (settings) -> new SemiSupportedBlock(0.35f, COBBLESTONE, settings), Weight.HEAVY, Size.LARGE);
+
+    // endregion
+
+
+
+
     public static void init() {
         OakTrunker.INSTANCE.build();
         BirchTrunker.INSTANCE.build();
@@ -183,6 +202,21 @@ public class PrimevalBlocks {
     @FunctionalInterface
     public interface BlockFactory<T extends Block> {
         T create(AbstractBlock.Settings settings);
+    }
+
+    // records
+
+    private static OreBlockSet registerOreBlockSet(String ore_id, AbstractBlock.Settings s, Weight weight, Size size) {
+        return new OreBlockSet(
+                registerBlock(ore_id + "_small", s, (settings) -> new SemiSupportedBlock(0.35f, COBBLESTONE, settings), weight, size),
+                registerBlock(ore_id + "_medium", s, (settings) -> new SemiSupportedBlock(0.35f, COBBLESTONE, settings), weight, size),
+                registerBlock(ore_id + "_large", s, (settings) -> new SemiSupportedBlock(0.35f, COBBLESTONE, settings), weight, size)
+        );
+    }
+    public record OreBlockSet(Block small, Block medium, Block large) {
+        public @NotNull Iterator<Block> iterator() {
+            return Arrays.stream(new Block[]{small, medium, large}).iterator();
+        }
     }
 
     // endregion

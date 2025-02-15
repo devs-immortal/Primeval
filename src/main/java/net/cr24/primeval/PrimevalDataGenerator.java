@@ -4,11 +4,8 @@ import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.client.data.*;
 import net.minecraft.client.render.item.tint.GrassTintSource;
-import net.minecraft.util.Identifier;
 
 import static net.cr24.primeval.initialization.PrimevalBlocks.*;
 import static net.minecraft.client.data.TextureMap.getSubId;
@@ -66,6 +63,14 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 
 			blockStateModelGenerator.registerItemModel(REEDS.asItem());
 			blockStateModelGenerator.registerTintableCross(RIVER_GRASS, BlockStateModelGenerator.CrossType.NOT_TINTED);
+
+			registerOreBlockSetModels(blockStateModelGenerator, COPPER_MALACHITE_ORE);
+			registerOreBlockSetModels(blockStateModelGenerator, COPPER_NATIVE_ORE);
+			registerOreBlockSetModels(blockStateModelGenerator, TIN_CASSITERITE_ORE);
+			registerOreBlockSetModels(blockStateModelGenerator, ZINC_SPHALERITE_ORE);
+			registerOreBlockSetModels(blockStateModelGenerator, GOLD_NATIVE_ORE);
+			registerOreBlockSetModels(blockStateModelGenerator, IRON_HEMATITE_ORE);
+			registerOreBlockSetModels(blockStateModelGenerator, LAZURITE_ORE);
 		}
 
 		@Override
@@ -76,6 +81,9 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 			itemModelGenerator.output.accept(GRASSY_CLAY.asItem(),
 					ItemModels.tinted(ModelIds.getBlockModelId(GRASSY_CLAY), new GrassTintSource(0.7f, 1.0f))
 			);
+			itemModelGenerator.output.accept(FOSSIL.asItem(),
+					ItemModels.basic(ModelIds.getBlockSubModelId(FOSSIL, "_2"))
+			);
 		}
 
 		@Override
@@ -83,7 +91,12 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 			return "Primeval Model Provider";
 		}
 
-		public static final TexturedModel.Factory TEXTURED_MODEL_LOG_COLUMN = makeFactory((block) -> (new TextureMap()).put(TextureKey.SIDE, getSubId(block, "_0")).put(TextureKey.END, getSubId(block, "_top_0")), Models.CUBE_COLUMN);
+		private static final TexturedModel.Factory TEXTURED_MODEL_LOG_COLUMN = makeFactory((block) -> (new TextureMap()).put(TextureKey.SIDE, getSubId(block, "_0")).put(TextureKey.END, getSubId(block, "_top_0")), Models.CUBE_COLUMN);
 
+		private static void registerOreBlockSetModels(BlockStateModelGenerator blockStateModelGenerator, OreBlockSet set) {
+			blockStateModelGenerator.registerSimpleCubeAll(set.small());
+			blockStateModelGenerator.registerSimpleCubeAll(set.medium());
+			blockStateModelGenerator.registerSimpleCubeAll(set.large());
+		}
 	}
 }
