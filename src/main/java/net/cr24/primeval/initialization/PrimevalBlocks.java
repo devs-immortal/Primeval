@@ -20,6 +20,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.world.biome.FoliageColors;
 import net.minecraft.world.biome.GrassColors;
 
 import java.util.function.Consumer;
@@ -109,11 +110,21 @@ public class PrimevalBlocks {
     public static void initClient() {
         // Render Layers
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
-                GRASSY_DIRT, GRASSY_CLAY
+                GRASSY_DIRT, GRASSY_CLAY,
+                /* Tree */
+                //OAK_SAPLING,
+                OAK_LEAVES,
+                //BIRCH_SAPLING,
+                BIRCH_LEAVES,
+                //SPRUCE_SAPLING,
+                SPRUCE_LEAVES
         );
 
-        ColorProviderRegistry.BLOCK.register(((state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getGrassColor(world, pos) : GrassColors.getColor(0.5D, 1.0D)),
+        ColorProviderRegistry.BLOCK.register(((state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getGrassColor(world, pos) : GrassColors.getColor(0.7D, 1.0D)),
                 GRASSY_DIRT, GRASSY_CLAY
+        );
+        ColorProviderRegistry.BLOCK.register(((state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getFoliageColor(world, pos) : FoliageColors.getColor(0.7D, 1.0D)),
+                OAK_LEAVES, BIRCH_LEAVES, SPRUCE_LEAVES
         );
 
         // Block Renderers
