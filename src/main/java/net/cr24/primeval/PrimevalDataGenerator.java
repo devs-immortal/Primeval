@@ -27,6 +27,8 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 			blockStateModelGenerator.registerSimpleCubeAll(PrimevalBlocks.CLAY);
 			blockStateModelGenerator.registerSimpleCubeAll(PrimevalBlocks.MUD);
 			blockStateModelGenerator.registerSimpleCubeAll(PrimevalBlocks.DRY_DIRT);
+			// PrimevalBlocks.GRASSY_DIRT
+			// PrimevalBlocks.GRASSY_CLAY
 			blockStateModelGenerator.registerSimpleCubeAll(PrimevalBlocks.SAND);
 			blockStateModelGenerator.registerSimpleCubeAll(PrimevalBlocks.GRAVEL);
 			blockStateModelGenerator.registerSimpleCubeAll(PrimevalBlocks.COBBLESTONE);

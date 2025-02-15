@@ -87,28 +87,18 @@ public class CollapsingBlockEntity extends FallingBlockEntity {
                         }
                         this.setVelocity(this.getVelocity().multiply(0.7, -0.5, 0.7));
                         if (!blockState.isOf(Blocks.MOVING_PISTON)) {
-                            boolean canReplace = true; // TODO: collapsing no-crush tag
-                            if (canReplace) {
-                                if (this.getWorld().setBlockState(blockPos, this.block, 3)) {
-                                    ((ServerWorld)this.getWorld()).getChunkManager().chunkLoadingManager.sendToOtherNearbyPlayers(this, new BlockUpdateS2CPacket(blockPos, this.getWorld().getBlockState(blockPos)));
-                                    this.discard();
-                                } else if (this.dropItem && serverWorld.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS) && this.random.nextBoolean()) {
-                                    this.discard();
-                                    this.onDestroyedOnLanding(block, blockPos);
-                                    this.dropItem(serverWorld, block);
-                                }
-                            } else {
+                            if (this.getWorld().setBlockState(blockPos, this.block, 3) || this.getWorld().setBlockState(blockPos.up(), this.block, 3)) {
+                                ((ServerWorld)this.getWorld()).getChunkManager().chunkLoadingManager.sendToOtherNearbyPlayers(this, new BlockUpdateS2CPacket(blockPos, this.getWorld().getBlockState(blockPos)));
                                 this.discard();
-                                if (this.dropItem && serverWorld.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
-                                    this.onDestroyedOnLanding(block, blockPos);
-                                    this.dropItem(serverWorld, block);
-                                }
+                            } else if (this.dropItem && serverWorld.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS) && this.random.nextBoolean()) {
+                                this.discard();
+                                this.onDestroyedOnLanding(block, blockPos);
+                                this.dropItem(serverWorld, block);
                             }
                         }
                     }
                 }
             }
-
             this.setVelocity(this.getVelocity().multiply(0.98));
         }
     }
