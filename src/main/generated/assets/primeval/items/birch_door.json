@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "primeval:block/birch_door"
+    "model": "primeval:item/birch_door"
   }
 }

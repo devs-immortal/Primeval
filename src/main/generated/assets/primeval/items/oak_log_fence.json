@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "primeval:block/oak_log_fence"
+    "model": "primeval:block/oak_log_fence_inventory"
   }
 }

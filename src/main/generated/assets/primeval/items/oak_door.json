@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "primeval:block/oak_door"
+    "model": "primeval:item/oak_door"
   }
 }

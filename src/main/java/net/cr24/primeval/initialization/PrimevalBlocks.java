@@ -328,7 +328,7 @@ public class PrimevalBlocks {
                 registerBlock(log_fence_id, settings, FenceBlock::new, Weight.LIGHT, Size.MEDIUM),
                 registerBlock(fence_gate_id, settings, (s) -> new FenceGateBlock(woodType, s), Weight.LIGHT, Size.MEDIUM),
                 registerBlock(door_id, settings, (s) -> new DoorBlock(blockSetType, s), Weight.LIGHT, Size.MEDIUM),
-                registerBlock(trapdoor_id, settings, (s) -> new TrapdoorBlock(blockSetType, s), Weight.LIGHT, Size.MEDIUM)
+                registerBlock(trapdoor_id, settings, (s) -> new TrapdoorBlock(blockSetType, s.nonOpaque()), Weight.LIGHT, Size.MEDIUM)
         );
     }
 

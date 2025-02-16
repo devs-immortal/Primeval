@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "primeval:block/spruce_door"
+    "model": "primeval:item/spruce_door"
   }
 }

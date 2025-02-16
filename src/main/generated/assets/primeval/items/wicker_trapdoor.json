@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "primeval:block/wicker_trapdoor"
+    "model": "primeval:block/wicker_trapdoor_bottom"
   }
 }

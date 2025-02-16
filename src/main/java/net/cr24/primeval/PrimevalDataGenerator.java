@@ -105,11 +105,19 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 			blockStateModelGenerator.registerSimpleCubeAll(FRAMED_DIVIDED_DAUB);
 			registerWoodBlockSetModels(blockStateModelGenerator, OAK_PLANK_BLOCKS);
 			registerPillar(blockStateModelGenerator, OAK_PLANK_BLOCKS.panel(), OAK_PLANK_BLOCKS.block());
+			blockStateModelGenerator.registerDoor(OAK_PLANK_BLOCKS.door());
+			blockStateModelGenerator.registerTrapdoor(OAK_PLANK_BLOCKS.trapdoor());
 			registerWoodBlockSetModels(blockStateModelGenerator, BIRCH_PLANK_BLOCKS);
 			registerPillar(blockStateModelGenerator, BIRCH_PLANK_BLOCKS.panel(), BIRCH_PLANK_BLOCKS.block());
+			blockStateModelGenerator.registerDoor(BIRCH_PLANK_BLOCKS.door());
+			blockStateModelGenerator.registerTrapdoor(BIRCH_PLANK_BLOCKS.trapdoor());
 			registerWoodBlockSetModels(blockStateModelGenerator, SPRUCE_PLANK_BLOCKS);
 			registerPillar(blockStateModelGenerator, SPRUCE_PLANK_BLOCKS.panel(), SPRUCE_PLANK_BLOCKS.block());
+			blockStateModelGenerator.registerDoor(SPRUCE_PLANK_BLOCKS.door());
+			blockStateModelGenerator.registerTrapdoor(SPRUCE_PLANK_BLOCKS.trapdoor());
 			registerBlockSetModels(blockStateModelGenerator, WICKER);
+			blockStateModelGenerator.registerDoor(WICKER_DOOR);
+			blockStateModelGenerator.registerTrapdoor(WICKER_TRAPDOOR);
 			registerBars(blockStateModelGenerator, WICKER_BARS);
 			blockStateModelGenerator.registerItemModel(ROPE.asItem());
 			blockStateModelGenerator.registerAxisRotated(ROPE, ModelIds.getBlockModelId(ROPE));
@@ -125,6 +133,15 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 			);
 			itemModelGenerator.output.accept(FOSSIL.asItem(),
 					ItemModels.basic(ModelIds.getBlockSubModelId(FOSSIL, "_2"))
+			);
+			itemModelGenerator.output.accept(OAK_PLANK_BLOCKS.logFence().asItem(),
+					ItemModels.basic(ModelIds.getBlockSubModelId(OAK_PLANK_BLOCKS.logFence(), "_inventory"))
+			);
+			itemModelGenerator.output.accept(BIRCH_PLANK_BLOCKS.logFence().asItem(),
+					ItemModels.basic(ModelIds.getBlockSubModelId(BIRCH_PLANK_BLOCKS.logFence(), "_inventory"))
+			);
+			itemModelGenerator.output.accept(SPRUCE_PLANK_BLOCKS.logFence().asItem(),
+					ItemModels.basic(ModelIds.getBlockSubModelId(SPRUCE_PLANK_BLOCKS.logFence(), "_inventory"))
 			);
 		}
 

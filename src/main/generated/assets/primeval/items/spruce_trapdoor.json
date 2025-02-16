@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "primeval:block/spruce_trapdoor"
+    "model": "primeval:block/spruce_trapdoor_bottom"
   }
 }

@@ -1,0 +1,7 @@
+{
+  "parent": "primeval:block/thick_fence_post",
+  "textures": {
+    "side": "primeval:block/spruce_log_2",
+	"top": "primeval:block/spruce_log_fence_top"
+  }
+}
