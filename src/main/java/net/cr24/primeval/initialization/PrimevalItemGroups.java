@@ -96,6 +96,13 @@ public class PrimevalItemGroups {
                 entries.add(WICKER_BARS);
                 entries.add(ROPE);
                 entries.add(ROPE_LADDER);
+                entries.add(OAK_CRATE);
+                entries.add(BIRCH_CRATE);
+                entries.add(SPRUCE_CRATE);
+                entries.add(LARGE_CLAY_POT);
+                entries.add(LARGE_FIRED_CLAY_POT);
+                entries.add(LARGE_DECORATIVE_FIRED_CLAY_POT);
+                entries.add(WICKER_BASKET);
             }));
 
     public static void init() {
