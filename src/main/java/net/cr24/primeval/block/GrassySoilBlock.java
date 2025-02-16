@@ -63,7 +63,7 @@ public class GrassySoilBlock extends SemiSupportedBlock {
                     if (grassSpreadable.containsKey(block) && canSpread(blockState, world, blockPos)) {
                         world.setBlockState(blockPos, grassSpreadable.get(block).getDefaultState().with(SNOWY, world.getBlockState(blockPos.up()).isOf(Blocks.SNOW)));
                         if (random.nextInt(3) == 0 && world.getBlockState(pos.up()).isAir()) {
-                            //world.setBlockState(pos.up(), PrimevalBlocks.GRASS.getDefaultState()); //TODO
+                            world.setBlockState(pos.up(), PrimevalBlocks.GRASS.getDefaultState());
                         }
                     }
                 }

@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "primeval:block/ash_pile"
+      },
+      {
+        "model": "primeval:block/ash_pile",
+        "y": 90
+      },
+      {
+        "model": "primeval:block/ash_pile",
+        "y": 180
+      },
+      {
+        "model": "primeval:block/ash_pile",
+        "y": 270
+      }
+    ]
+  }
+}

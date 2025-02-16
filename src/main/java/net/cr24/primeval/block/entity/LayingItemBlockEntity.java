@@ -10,13 +10,15 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Clearable;
 import net.minecraft.util.math.BlockPos;
 
-public class LogPileBlockEntity extends BlockEntity implements Clearable {
+public class LayingItemBlockEntity extends BlockEntity implements Clearable {
 
     private ItemStack item;
+    private final int randomInt;
 
-    public LogPileBlockEntity(BlockPos pos, BlockState state) {
-        super(PrimevalBlocks.LOG_PILE_BLOCK_ENTITY, pos, state);
+    public LayingItemBlockEntity(BlockPos pos, BlockState state) {
+        super(PrimevalBlocks.LAYING_ITEM_BLOCK_ENTITY, pos, state);
         item = ItemStack.EMPTY;
+        randomInt = (pos.getX() + pos.getY()*2 + pos.getZ()*3)%4;
     }
 
     public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
@@ -40,9 +42,7 @@ public class LogPileBlockEntity extends BlockEntity implements Clearable {
     }
 
     public void setItem(ItemStack newItem) {
-        ItemStack copy = newItem.copy();
-        copy.setCount(1);
-        this.item = copy;
+        this.item = newItem;
     }
 
     @Override
@@ -55,7 +55,11 @@ public class LogPileBlockEntity extends BlockEntity implements Clearable {
     }
 
     public ItemStack getItem() {
-        return this.item.copy();
+        return this.item;
+    }
+
+    public int getRandomInt() {
+        return this.randomInt;
     }
 
     @Override

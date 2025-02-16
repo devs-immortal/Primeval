@@ -3,6 +3,7 @@ package net.cr24.primeval.initialization;
 import net.cr24.primeval.Primeval;
 import net.cr24.primeval.block.*;
 import net.cr24.primeval.block.entity.*;
+import net.cr24.primeval.block.functional.*;
 import net.cr24.primeval.block.plant.*;
 import net.cr24.primeval.item.WeightedBlockItem;
 import net.cr24.primeval.util.*;
@@ -12,6 +13,7 @@ import net.cr24.primeval.world.trunker.SpruceTrunker;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.*;
@@ -186,12 +188,31 @@ public class PrimevalBlocks {
 
     // endregion
 
+    // region TECHNICAL BLOCKS
+
+    public static final Block STRAW_PILE = registerBlockWithoutItem("straw", SETTINGS_STRAW(), StrawLayeredBlock::new);
+    public static final Block ASH_PILE = registerBlockWithoutItem("ash_pile", AbstractBlock.Settings.create().strength(0.5F).sounds(BlockSoundGroup.SAND), AshPileBlock::new);
+    public static final Block LAYING_ITEM = registerBlockWithoutItem("laying_item", AbstractBlock.Settings.create().noCollision().nonOpaque().breakInstantly(), LayingItemBlock::new);
+//    public static final Block OAK_CRATE = registerBlock("oak_crate", new CrateBlock(SETTINGS_REFINED_WOOD()), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
+//    public static final Block BIRCH_CRATE = registerBlock("birch_crate", new CrateBlock(SETTINGS_REFINED_WOOD()), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
+//    public static final Block SPRUCE_CRATE = registerBlock("spruce_crate", new CrateBlock(SETTINGS_REFINED_WOOD()), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
+//
+//    public static final Block LARGE_CLAY_POT = registerBlock("large_clay_pot", new DecorativePotBlock(SETTINGS_SOIL().nonOpaque()), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
+//    public static final Block LARGE_FIRED_CLAY_POT = registerBlock("fired_large_clay_pot", new StoragePotBlock(SETTINGS_FIRED_CLAY().nonOpaque()), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
+//    public static final Block LARGE_DECORATIVE_FIRED_CLAY_POT = registerBlock("fired_large_decorative_clay_pot", new DecorativePotBlock(SETTINGS_FIRED_CLAY().nonOpaque()), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
+//    public static final Block WICKER_BASKET = registerBlock("wicker_basket", new WickerBasketBlock(SETTINGS_REFINED_WOOD().nonOpaque()), Weight.NORMAL, Size.LARGE, PRIMEVAL_BLOCKS);
+
+    // endregion
+
+
+
+
 
     // region BLOCK ENTITIES
 
 //    public static final BlockEntityType<PitKilnBlockEntity> PIT_KILN_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, PrimevalMain.getId("pit_kiln_block_entity"), FabricBlockEntityTypeBuilder.create(PitKilnBlockEntity::new, PIT_KILN).build());
-//    public static final BlockEntityType<AshPileBlockEntity> ASH_PILE_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, PrimevalMain.getId("ash_pile_block_entity"), FabricBlockEntityTypeBuilder.create(AshPileBlockEntity::new, ASH_PILE).build());
-//    public static final BlockEntityType<LayingItemBlockEntity> LAYING_ITEM_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, PrimevalMain.getId("laying_item_block_entity"), FabricBlockEntityTypeBuilder.create(LayingItemBlockEntity::new, LAYING_ITEM).build());
+    public static final BlockEntityType<AshPileBlockEntity> ASH_PILE_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, Primeval.identify("ash_pile_block_entity"), FabricBlockEntityTypeBuilder.create(AshPileBlockEntity::new, ASH_PILE).build());
+    public static final BlockEntityType<LayingItemBlockEntity> LAYING_ITEM_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, Primeval.identify("laying_item_block_entity"), FabricBlockEntityTypeBuilder.create(LayingItemBlockEntity::new, LAYING_ITEM).build());
     public static final BlockEntityType<LogPileBlockEntity> LOG_PILE_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, Primeval.identify("log_pile_block_entity"), FabricBlockEntityTypeBuilder.create(LogPileBlockEntity::new, OAK_LOG_PILE, BIRCH_LOG_PILE, SPRUCE_LOG_PILE).build());
 //    public static final BlockEntityType<CrateBlockEntity> CRATE_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, PrimevalMain.getId("crate_block_entity"), FabricBlockEntityTypeBuilder.create(CrateBlockEntity::new, OAK_CRATE, BIRCH_CRATE, SPRUCE_CRATE).build());
 //    public static final BlockEntityType<StoragePotBlockEntity> LARGE_POT_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, PrimevalMain.getId("large_pot_block_entity"), FabricBlockEntityTypeBuilder.create(StoragePotBlockEntity::new, LARGE_FIRED_CLAY_POT).build());
@@ -258,8 +279,8 @@ public class PrimevalBlocks {
 
         // Block Renderers
 //        BlockEntityRendererRegistry.register(PIT_KILN_BLOCK_ENTITY, PitKilnBlockEntityRenderer::new);
-//        BlockEntityRendererRegistry.register(ASH_PILE_BLOCK_ENTITY, AshPileBlockEntityRenderer::new);
-//        BlockEntityRendererRegistry.register(LAYING_ITEM_BLOCK_ENTITY, LayingItemBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.register(ASH_PILE_BLOCK_ENTITY, AshPileBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.register(LAYING_ITEM_BLOCK_ENTITY, LayingItemBlockEntityRenderer::new);
 //        BlockEntityRendererRegistry.register(CAMPFIRE_BLOCK_ENTITY, PrimevalCampfireBlockEntityRenderer::new);
 //        BlockEntityRendererRegistry.register(QUERN_BLOCK_ENTITY, QuernBlockEntityRenderer::new);
 
