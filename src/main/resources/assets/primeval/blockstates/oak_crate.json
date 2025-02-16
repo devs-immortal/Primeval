@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "open=false": {
+      "model": "primeval:block/oak_crate"
+    },
+    "open=true": {
+      "model": "primeval:block/oak_crate_open"
+    }
+  }
+}
