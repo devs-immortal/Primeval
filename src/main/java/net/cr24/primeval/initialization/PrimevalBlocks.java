@@ -1,6 +1,8 @@
 package net.cr24.primeval.initialization;
 
+import net.cr24.primeval.Primeval;
 import net.cr24.primeval.block.*;
+import net.cr24.primeval.block.entity.*;
 import net.cr24.primeval.block.plant.*;
 import net.cr24.primeval.item.WeightedBlockItem;
 import net.cr24.primeval.util.*;
@@ -11,7 +13,9 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.*;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.render.RenderLayer;
@@ -29,7 +33,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.function.Consumer;
 
-import static net.cr24.primeval.PrimevalMain.identify;
+import static net.cr24.primeval.Primeval.identify;
 
 /*
  * This class stores all blocks and fluids in the mod.
@@ -42,13 +46,14 @@ public class PrimevalBlocks {
     private static AbstractBlock.Settings SETTINGS_GRASSY() { return AbstractBlock.Settings.create().mapColor(MapColor.TERRACOTTA_GREEN).strength(2.5f, 2.0f).sounds(BlockSoundGroup.GRASS);}
     private static AbstractBlock.Settings SETTINGS_SAND() { return AbstractBlock.Settings.create().mapColor(MapColor.PALE_YELLOW).strength(1.8f, 2.0f).sounds(BlockSoundGroup.SAND);}
     private static AbstractBlock.Settings SETTINGS_STONE() { return AbstractBlock.Settings.create().mapColor(MapColor.DEEPSLATE_GRAY).strength(4.5f, 6.0f).requiresTool();}
-    private static AbstractBlock.Settings SETTINGS_PLANT() { return AbstractBlock.Settings.create().mapColor(MapColor.GREEN).strength(0.05f, 0f).sounds(BlockSoundGroup.GRASS).noCollision(); }
+    private static AbstractBlock.Settings SETTINGS_PLANT() { return AbstractBlock.Settings.create().mapColor(MapColor.GREEN).strength(0.05f, 0f).sounds(BlockSoundGroup.GRASS).replaceable().noCollision(); }
     private static AbstractBlock.Settings SETTINGS_CROP() { return AbstractBlock.Settings.create().mapColor(MapColor.GREEN).strength(0.05f, 0f).sounds(BlockSoundGroup.GRASS).noCollision().ticksRandomly(); }
     private static AbstractBlock.Settings SETTINGS_LOG() { return AbstractBlock.Settings.create().mapColor(MapColor.BROWN).strength(5.0f, 6.0f).sounds(BlockSoundGroup.WOOD).requiresTool(); }
     private static AbstractBlock.Settings SETTINGS_TRUNK() { return AbstractBlock.Settings.create().mapColor(MapColor.BROWN).strength(8.0f, 8.0f).sounds(BlockSoundGroup.WOOD).requiresTool(); }
     private static AbstractBlock.Settings SETTINGS_FIRED_CLAY() { return AbstractBlock.Settings.create().mapColor(MapColor.ORANGE).strength(4.0f, 6.0f).sounds(BlockSoundGroup.STONE).requiresTool(); }
     private static AbstractBlock.Settings SETTINGS_REFINED_WOOD() { return AbstractBlock.Settings.create().mapColor(MapColor.OAK_TAN).strength(3.0f, 4.0f).sounds(BlockSoundGroup.WOOD).requiresTool(); }
     private static AbstractBlock.Settings SETTINGS_STRAW() { return AbstractBlock.Settings.create().mapColor(MapColor.PALE_YELLOW).strength(0.5f).sounds(BlockSoundGroup.GRASS); }
+    private static AbstractBlock.Settings SETTINGS_LOGPILE() { return AbstractBlock.Settings.create().mapColor(MapColor.BROWN).strength(1.0f, 3.0f).sounds(BlockSoundGroup.WOOD).nonOpaque().requiresTool(); }
 
     // endregion
 
@@ -158,14 +163,27 @@ public class PrimevalBlocks {
     public static final Block WICKER_TRAPDOOR = registerBlock("wicker_trapdoor", SETTINGS_REFINED_WOOD().nonOpaque(), (settings) -> new TrapdoorBlock(PrimevalTypes.BlockSet.WICKER, settings), Weight.LIGHT, Size.MEDIUM);
     public static final Block WICKER_BARS = registerBlock("wicker_bars", SETTINGS_REFINED_WOOD().nonOpaque(), PaneBlock::new, Weight.LIGHT, Size.MEDIUM);
     public static final Block ROPE = registerBlock("rope", AbstractBlock.Settings.create().strength(0.2F).sounds(BlockSoundGroup.GRASS), ChainBlock::new, Weight.LIGHT, Size.SMALL);
-//    public static final Block ROPE_LADDER = registerBlock("rope_ladder", new SuspendedLadderBlock(AbstractBlock.Settings.create().mapColor(MapColor.OAK_TAN).strength(0.3F).sounds(BlockSoundGroup.WOOD).nonOpaque()), Weight.NORMAL, Size.MEDIUM);
-//    public static final Block OAK_LOG_PILE = registerBlockWithoutItem("oak_log_pile", new LogPileBlock(AbstractBlock.Settings.create().mapColor(MapColor.BROWN).strength(1.0f, 3.0f).sounds(BlockSoundGroup.WOOD).nonOpaque().requiresTool()));
-//    public static final Block BIRCH_LOG_PILE = registerBlockWithoutItem("birch_log_pile", new LogPileBlock(AbstractBlock.Settings.create().mapColor(MapColor.BROWN).strength(1.0f, 3.0f).sounds(BlockSoundGroup.WOOD).nonOpaque().requiresTool()));
-//    public static final Block SPRUCE_LOG_PILE = registerBlockWithoutItem("spruce_log_pile", new LogPileBlock(AbstractBlock.Settings.create().mapColor(MapColor.BROWN).strength(1.0f, 3.0f).sounds(BlockSoundGroup.WOOD).nonOpaque().requiresTool()));
+    public static final Block ROPE_LADDER = registerBlock("rope_ladder", AbstractBlock.Settings.create().mapColor(MapColor.OAK_TAN).strength(0.3F).sounds(BlockSoundGroup.WOOD).nonOpaque(), SuspendedLadderBlock::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Block OAK_LOG_PILE = registerBlockWithoutItem("oak_log_pile", SETTINGS_LOGPILE(), LogPileBlock::new);
+    public static final Block BIRCH_LOG_PILE = registerBlockWithoutItem("birch_log_pile", SETTINGS_LOGPILE(), LogPileBlock::new);
+    public static final Block SPRUCE_LOG_PILE = registerBlockWithoutItem("spruce_log_pile", SETTINGS_LOGPILE(), LogPileBlock::new);
     
     // endregion
 
 
+    // region BLOCK ENTITIES
+
+//    public static final BlockEntityType<PitKilnBlockEntity> PIT_KILN_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, PrimevalMain.getId("pit_kiln_block_entity"), FabricBlockEntityTypeBuilder.create(PitKilnBlockEntity::new, PIT_KILN).build());
+//    public static final BlockEntityType<AshPileBlockEntity> ASH_PILE_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, PrimevalMain.getId("ash_pile_block_entity"), FabricBlockEntityTypeBuilder.create(AshPileBlockEntity::new, ASH_PILE).build());
+//    public static final BlockEntityType<LayingItemBlockEntity> LAYING_ITEM_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, PrimevalMain.getId("laying_item_block_entity"), FabricBlockEntityTypeBuilder.create(LayingItemBlockEntity::new, LAYING_ITEM).build());
+    public static final BlockEntityType<LogPileBlockEntity> LOG_PILE_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, Primeval.identify("log_pile_block_entity"), FabricBlockEntityTypeBuilder.create(LogPileBlockEntity::new, OAK_LOG_PILE, BIRCH_LOG_PILE, SPRUCE_LOG_PILE).build());
+//    public static final BlockEntityType<CrateBlockEntity> CRATE_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, PrimevalMain.getId("crate_block_entity"), FabricBlockEntityTypeBuilder.create(CrateBlockEntity::new, OAK_CRATE, BIRCH_CRATE, SPRUCE_CRATE).build());
+//    public static final BlockEntityType<StoragePotBlockEntity> LARGE_POT_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, PrimevalMain.getId("large_pot_block_entity"), FabricBlockEntityTypeBuilder.create(StoragePotBlockEntity::new, LARGE_FIRED_CLAY_POT).build());
+//    public static final BlockEntityType<WickerBasketBlockEntity> WICKER_BASKET_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, PrimevalMain.getId("wicker_basket_block_entity"), FabricBlockEntityTypeBuilder.create(WickerBasketBlockEntity::new, WICKER_BASKET).build());
+//    public static final BlockEntityType<PrimevalCampfireBlockEntity> CAMPFIRE_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, PrimevalMain.getId("campfire_block_entity"), FabricBlockEntityTypeBuilder.create(PrimevalCampfireBlockEntity::new, CAMPFIRE).build());
+//    public static final BlockEntityType<QuernBlockEntity> QUERN_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, PrimevalMain.getId("quern_block_entity"), FabricBlockEntityTypeBuilder.create(QuernBlockEntity::new, QUERN).build());
+
+    // endregion
 
     public static void init() {
         OakTrunker.INSTANCE.build();
@@ -193,7 +211,7 @@ public class PrimevalBlocks {
                 //CRUDE_TORCH,
                 //CAMPFIRE,
                 ROPE,
-                //ROPE_LADDER,
+                ROPE_LADDER,
                 OAK_PLANK_BLOCKS.door(),
                 OAK_PLANK_BLOCKS.trapdoor(),
                 WICKER_DOOR,

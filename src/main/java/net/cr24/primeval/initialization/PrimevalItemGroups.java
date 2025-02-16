@@ -1,9 +1,8 @@
 package net.cr24.primeval.initialization;
 
-import net.cr24.primeval.PrimevalMain;
+import net.cr24.primeval.Primeval;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.block.Block;
-import net.minecraft.data.family.BlockFamily;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
@@ -103,7 +102,7 @@ public class PrimevalItemGroups {
 
     // item group registry helper
     private static RegistryKey<ItemGroup> create(String id, ItemGroup.Builder itemGroup) {
-        var key = RegistryKey.of(RegistryKeys.ITEM_GROUP, PrimevalMain.identify(id));
+        var key = RegistryKey.of(RegistryKeys.ITEM_GROUP, Primeval.identify(id));
         Registry.register(Registries.ITEM_GROUP, key, itemGroup.displayName(Text.translatable("itemGroup.primeval." + id)).build());
         return key;
     }

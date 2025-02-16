@@ -121,6 +121,8 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 			registerBars(blockStateModelGenerator, WICKER_BARS);
 			blockStateModelGenerator.registerItemModel(ROPE.asItem());
 			blockStateModelGenerator.registerAxisRotated(ROPE, ModelIds.getBlockModelId(ROPE));
+			blockStateModelGenerator.registerNorthDefaultHorizontalRotation(ROPE_LADDER);
+			blockStateModelGenerator.registerItemModel(ROPE_LADDER);
 		}
 
 		@Override

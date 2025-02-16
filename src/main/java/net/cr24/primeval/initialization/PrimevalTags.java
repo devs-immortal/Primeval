@@ -1,6 +1,6 @@
 package net.cr24.primeval.initialization;
 
-import net.cr24.primeval.PrimevalMain;
+import net.cr24.primeval.Primeval;
 import net.minecraft.block.Block;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
@@ -34,7 +34,7 @@ public class PrimevalTags {
         public static final TagKey<Block> MINEABLE_CHISEL = register("mineable/chisel");
 
         private static TagKey<Block> register(String id) {
-            return TagKey.of(RegistryKeys.BLOCK, PrimevalMain.identify(id));
+            return TagKey.of(RegistryKeys.BLOCK, Primeval.identify(id));
         }
     }
 }

@@ -12,7 +12,7 @@ import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PrimevalMain implements ModInitializer, ClientModInitializer {
+public class Primeval implements ModInitializer, ClientModInitializer {
 	public static final String MOD_ID = "primeval";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 

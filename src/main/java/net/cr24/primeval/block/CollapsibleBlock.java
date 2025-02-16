@@ -2,7 +2,6 @@ package net.cr24.primeval.block;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.cr24.primeval.PrimevalMain;
 import net.cr24.primeval.entity.CollapsingBlockEntity;
 import net.minecraft.block.*;
 import net.minecraft.entity.FallingBlockEntity;
