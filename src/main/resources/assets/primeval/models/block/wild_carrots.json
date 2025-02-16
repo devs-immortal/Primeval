@@ -1,0 +1,6 @@
+{
+  "parent": "primeval:block/wild_crop",
+  "textures": {
+    "crop": "primeval:block/wild_carrots"
+  }
+}

@@ -95,6 +95,7 @@ public class PrimevalItemGroups {
                 entries.add(WICKER_TRAPDOOR);
                 entries.add(WICKER_BARS);
                 entries.add(ROPE);
+                entries.add(ROPE_LADDER);
             }));
 
     public static void init() {

@@ -31,6 +31,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.function.Consumer;
 
 import static net.cr24.primeval.Primeval.identify;
@@ -170,6 +171,21 @@ public class PrimevalBlocks {
     
     // endregion
 
+    // region CROPS
+
+    public static final Block CARROT_CROP = registerBlockWithoutItem("crop_carrot", SETTINGS_CROP(), (settings) -> new PrimevalCropBlock(3, List.of(4, 6, 10, 14), settings));
+    public static final Block WILD_CARROTS = registerBlockWithoutItem("wild_carrots", SETTINGS_PLANT(), PrimevalPlantBlock::new);
+    public static final Block WHEAT_CROP = registerBlockWithoutItem("crop_wheat", SETTINGS_CROP(), (settings) -> new PrimevalCropBlock(7, List.of(3, 5, 7, 9, 12, 14, 15, 16), settings));
+    public static final Block WILD_WHEAT = registerBlockWithoutItem("wild_wheat", SETTINGS_PLANT(), PrimevalPlantBlock::new);
+    public static final Block CABBAGE_CROP = registerBlockWithoutItem("crop_cabbage", SETTINGS_CROP(), (settings) -> new PrimevalCropBlock( 3, List.of(4, 7, 9, 11), settings));
+    public static final Block WILD_CABBAGE = registerBlockWithoutItem("wild_cabbage", SETTINGS_PLANT(), PrimevalPlantBlock::new);
+    public static final Block BEANS_CROP = registerBlockWithoutItem("crop_beans", SETTINGS_CROP(), (settings) -> new PrimevalCropBlock(3,List.of(5, 8, 11, 14), settings));
+    public static final Block WILD_BEANS = registerBlockWithoutItem("wild_beans", SETTINGS_PLANT(), PrimevalPlantBlock::new);
+    public static final Block POTATO_CROP = registerBlockWithoutItem("crop_potato", SETTINGS_CROP(), (settings) -> new PrimevalCropBlock(3, List.of(5, 8, 11, 16), settings));
+    public static final Block WILD_POTATOES = registerBlockWithoutItem("wild_potatoes", SETTINGS_PLANT(), PrimevalPlantBlock::new);
+
+    // endregion
+
 
     // region BLOCK ENTITIES
 
@@ -199,6 +215,13 @@ public class PrimevalBlocks {
                 GRASS, BUSH, SPIKED_PLANT, LEAFY_PLANT, SHRUB,
                 POPPY, DANDELION, OXEYE_DAISY, CORNFLOWER, LILY_OF_THE_VALLEY,
                 MOSS,
+                REEDS, RIVER_GRASS,
+                /* Crop */
+                CARROT_CROP, WILD_CARROTS,
+                WHEAT_CROP, WILD_WHEAT,
+                CABBAGE_CROP, WILD_CABBAGE,
+                BEANS_CROP, WILD_BEANS,
+                POTATO_CROP, WILD_POTATOES,
                 REEDS, RIVER_GRASS,
                 /* Tree */
                 OAK_SAPLING,
