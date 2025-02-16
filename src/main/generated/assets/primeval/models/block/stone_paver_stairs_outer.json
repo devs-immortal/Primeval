@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "primeval:block/stone_paver",
+    "side": "primeval:block/stone_paver",
+    "top": "primeval:block/stone_paver"
+  }
+}

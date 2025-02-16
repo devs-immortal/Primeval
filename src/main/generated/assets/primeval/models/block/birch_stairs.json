@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "primeval:block/birch_planks",
+    "side": "primeval:block/birch_planks",
+    "top": "primeval:block/birch_planks"
+  }
+}

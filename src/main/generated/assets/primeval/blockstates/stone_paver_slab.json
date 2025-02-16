@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "primeval:block/stone_paver_slab"
+    },
+    "type=double": {
+      "model": "primeval:block/stone_paver"
+    },
+    "type=top": {
+      "model": "primeval:block/stone_paver_slab_top"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "primeval:block/fired_clay_shingles_pink",
+    "side": "primeval:block/fired_clay_shingles_pink",
+    "top": "primeval:block/fired_clay_shingles_pink"
+  }
+}

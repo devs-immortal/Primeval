@@ -48,6 +48,7 @@ public class PrimevalBlocks {
     private static AbstractBlock.Settings SETTINGS_TRUNK() { return AbstractBlock.Settings.create().mapColor(MapColor.BROWN).strength(8.0f, 8.0f).sounds(BlockSoundGroup.WOOD).requiresTool(); }
     private static AbstractBlock.Settings SETTINGS_FIRED_CLAY() { return AbstractBlock.Settings.create().mapColor(MapColor.ORANGE).strength(4.0f, 6.0f).sounds(BlockSoundGroup.STONE).requiresTool(); }
     private static AbstractBlock.Settings SETTINGS_REFINED_WOOD() { return AbstractBlock.Settings.create().mapColor(MapColor.OAK_TAN).strength(3.0f, 4.0f).sounds(BlockSoundGroup.WOOD).requiresTool(); }
+    private static AbstractBlock.Settings SETTINGS_STRAW() { return AbstractBlock.Settings.create().mapColor(MapColor.PALE_YELLOW).strength(0.5f).sounds(BlockSoundGroup.GRASS); }
 
     // endregion
 
@@ -119,7 +120,50 @@ public class PrimevalBlocks {
     public static final Block FOSSIL = registerBlock("fossil", SETTINGS_STONE(), (settings) -> new SemiSupportedBlock(0.35f, COBBLESTONE, settings), Weight.HEAVY, Size.LARGE);
 
     // endregion
+    
+    // region CRAFTED BLOCKS
 
+    public static final Block STRAW_BLOCK = registerBlock("straw_block", SETTINGS_STRAW(), PillarBlock::new, Weight.LIGHT, Size.MEDIUM);
+    public static final Block STRAW_STAIRS = registerBlock("straw_stairs", SETTINGS_STRAW(), (settings) -> new StairsBlock(STRAW_BLOCK.getDefaultState(), settings), Weight.LIGHT, Size.MEDIUM);
+    public static final Block STRAW_SLAB = registerBlock("straw_slab", SETTINGS_STRAW(), SlabBlock::new, Weight.LIGHT, Size.MEDIUM);
+    public static final Block STRAW_MESH = registerBlock("straw_mesh", SETTINGS_STRAW(), Block::new, Weight.LIGHT, Size.MEDIUM);
+    public static final Block STRAW_MAT = registerBlock("straw_mat", SETTINGS_STRAW().strength(0.3f), CarpetBlock::new, Weight.LIGHT, Size.MEDIUM);
+    public static final Block TERRACOTTA = registerBlock("terracotta", SETTINGS_FIRED_CLAY(), Block::new, Weight.HEAVY, Size.MEDIUM);
+    public static final ColoredBlockSet COLORED_TERRACOTTA = registerColoredBlockSet("terracotta", SETTINGS_FIRED_CLAY(), Weight.HEAVY, Size.MEDIUM);
+    public static final BlockSet FIRED_CLAY_SHINGLE_BLOCKS = registerBlockSet("fired_clay_shingles", SETTINGS_FIRED_CLAY(), Weight.HEAVY, Size.MEDIUM);
+    public static final ColoredBlockSetSet COLORED_FIRED_CLAY_SHINGLE_BLOCKS = registerColoredBlockSetSet("fired_clay_shingles", SETTINGS_FIRED_CLAY(), Weight.HEAVY, Size.MEDIUM);
+    public static final BlockSet FIRED_CLAY_BRICK_BLOCKS = registerBlockSet("fired_clay_bricks", SETTINGS_FIRED_CLAY(), Weight.HEAVY, Size.MEDIUM);
+    public static final BlockSet FIRED_CLAY_TILES_BLOCKS = registerBlockSet("fired_clay_tiles", SETTINGS_FIRED_CLAY(), Weight.HEAVY, Size.MEDIUM);
+    public static final BlockSet DRIED_BRICK_BLOCKS = registerBlockSet("dried_bricks", SETTINGS_FIRED_CLAY(), Weight.HEAVY, Size.MEDIUM);
+    public static final BlockSet MUD_BRICKS = registerBlockSet("mud_bricks", SETTINGS_TOUGH_SOIL(), Weight.NORMAL, Size.MEDIUM);
+    public static final BlockSet CRUDE_BRICKS = registerBlockSet("crude_bricks", SETTINGS_STONE(), Weight.HEAVY, Size.MEDIUM);
+    public static final BlockSet STONE_BRICKS = registerBlockSet("stone_bricks", SETTINGS_STONE(), Weight.HEAVY, Size.MEDIUM);
+    public static final BlockSet SMOOTH_STONE = registerBlockSet("smooth_stone", SETTINGS_STONE(), Weight.HEAVY, Size.MEDIUM);
+    public static final Block STONE_INDENT = registerBlock("stone_indent", SETTINGS_STONE(), Block::new, Weight.HEAVY, Size.MEDIUM);
+    public static final Block STONE_PILLAR = registerBlock("stone_pillar", SETTINGS_STONE(), PillarBlock::new, Weight.HEAVY, Size.MEDIUM);
+    public static final BlockSet STONE_PAVER = registerBlockSet("stone_paver", SETTINGS_STONE(), Weight.HEAVY, Size.MEDIUM);
+    public static final Block DAUB = registerBlock("daub", SETTINGS_REFINED_WOOD(), Block::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Block FRAMED_DAUB = registerBlock("framed_daub", SETTINGS_REFINED_WOOD(), Block::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Block FRAMED_PILLAR_DAUB = registerBlock("framed_pillar_daub", SETTINGS_REFINED_WOOD(), PillarBlock::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Block FRAMED_CROSS_DAUB = registerBlock("framed_cross_daub", SETTINGS_REFINED_WOOD(), Block::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Block FRAMED_INVERTED_CROSS_DAUB = registerBlock("framed_inverted_cross_daub", SETTINGS_REFINED_WOOD(), Block::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Block FRAMED_X_DAUB = registerBlock("framed_x_daub", SETTINGS_REFINED_WOOD(), Block::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Block FRAMED_PLUS_DAUB = registerBlock("framed_plus_daub", SETTINGS_REFINED_WOOD(), Block::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Block FRAMED_DIVIDED_DAUB = registerBlock("framed_divided_daub", SETTINGS_REFINED_WOOD(), Block::new, Weight.NORMAL, Size.MEDIUM);
+    public static final WoodBlockSet OAK_PLANK_BLOCKS = registerWoodBlockSet("oak", AbstractBlock.Settings.create().mapColor(MapColor.OAK_TAN).strength(3.0f, 4.0f).sounds(BlockSoundGroup.WOOD).requiresTool(), PrimevalTypes.Wood.OAK, PrimevalTypes.BlockSet.OAK, Weight.NORMAL, Size.MEDIUM);
+    public static final WoodBlockSet BIRCH_PLANK_BLOCKS = registerWoodBlockSet("birch", AbstractBlock.Settings.create().mapColor(MapColor.YELLOW).strength(3.0f, 4.0f).sounds(BlockSoundGroup.WOOD).requiresTool(), PrimevalTypes.Wood.BIRCH, PrimevalTypes.BlockSet.BIRCH, Weight.NORMAL, Size.MEDIUM);
+    public static final WoodBlockSet SPRUCE_PLANK_BLOCKS = registerWoodBlockSet("spruce", AbstractBlock.Settings.create().mapColor(MapColor.DIRT_BROWN).strength(3.0f, 4.0f).sounds(BlockSoundGroup.WOOD).requiresTool(), PrimevalTypes.Wood.SPRUCE, PrimevalTypes.BlockSet.SPRUCE, Weight.NORMAL, Size.MEDIUM);
+    public static final BlockSet WICKER = registerBlockSet("wicker", SETTINGS_REFINED_WOOD(), Weight.LIGHT, Size.MEDIUM);
+    public static final Block WICKER_DOOR = registerBlock("wicker_door", SETTINGS_REFINED_WOOD().nonOpaque(), (settings) -> new DoorBlock(PrimevalTypes.BlockSet.WICKER, settings), Weight.LIGHT, Size.MEDIUM);
+    public static final Block WICKER_TRAPDOOR = registerBlock("wicker_trapdoor", SETTINGS_REFINED_WOOD().nonOpaque(), (settings) -> new TrapdoorBlock(PrimevalTypes.BlockSet.WICKER, settings), Weight.LIGHT, Size.MEDIUM);
+    public static final Block WICKER_BARS = registerBlock("wicker_bars", SETTINGS_REFINED_WOOD().nonOpaque(), PaneBlock::new, Weight.LIGHT, Size.MEDIUM);
+    public static final Block ROPE = registerBlock("rope", AbstractBlock.Settings.create().strength(0.2F).sounds(BlockSoundGroup.GRASS), ChainBlock::new, Weight.LIGHT, Size.SMALL);
+//    public static final Block ROPE_LADDER = registerBlock("rope_ladder", new SuspendedLadderBlock(AbstractBlock.Settings.create().mapColor(MapColor.OAK_TAN).strength(0.3F).sounds(BlockSoundGroup.WOOD).nonOpaque()), Weight.NORMAL, Size.MEDIUM);
+//    public static final Block OAK_LOG_PILE = registerBlockWithoutItem("oak_log_pile", new LogPileBlock(AbstractBlock.Settings.create().mapColor(MapColor.BROWN).strength(1.0f, 3.0f).sounds(BlockSoundGroup.WOOD).nonOpaque().requiresTool()));
+//    public static final Block BIRCH_LOG_PILE = registerBlockWithoutItem("birch_log_pile", new LogPileBlock(AbstractBlock.Settings.create().mapColor(MapColor.BROWN).strength(1.0f, 3.0f).sounds(BlockSoundGroup.WOOD).nonOpaque().requiresTool()));
+//    public static final Block SPRUCE_LOG_PILE = registerBlockWithoutItem("spruce_log_pile", new LogPileBlock(AbstractBlock.Settings.create().mapColor(MapColor.BROWN).strength(1.0f, 3.0f).sounds(BlockSoundGroup.WOOD).nonOpaque().requiresTool()));
+    
+    // endregion
 
 
 
@@ -144,7 +188,17 @@ public class PrimevalBlocks {
                 BIRCH_SAPLING,
                 BIRCH_LEAVES,
                 SPRUCE_SAPLING,
-                SPRUCE_LEAVES
+                SPRUCE_LEAVES,
+                /* Misc */
+                //CRUDE_TORCH,
+                //CAMPFIRE,
+                ROPE,
+                //ROPE_LADDER,
+                OAK_PLANK_BLOCKS.door(),
+                OAK_PLANK_BLOCKS.trapdoor(),
+                WICKER_DOOR,
+                WICKER_TRAPDOOR,
+                WICKER_BARS
         );
 
         ColorProviderRegistry.BLOCK.register(((state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getGrassColor(world, pos) : GrassColors.getColor(0.7D, 1.0D)),
@@ -178,7 +232,7 @@ public class PrimevalBlocks {
     }
 
     @SafeVarargs
-    private static Block registerBlock(String id, AbstractBlock.Settings settings, BlockFactory<Block> factory, Weight w, Size s, Consumer<Block>... additionalActions) {
+    private static <T extends Block> T registerBlock(String id, AbstractBlock.Settings settings, BlockFactory<T> factory, Weight w, Size s, Consumer<Block>... additionalActions) {
         RegistryKey<Block> blockKey = blockKey(id);
         RegistryKey<Item> itemKey = RegistryKey.of(RegistryKeys.ITEM, blockKey.getValue());
         var registeredBlock = Registry.register(Registries.BLOCK, blockKey, factory.create(settings.registryKey(blockKey)));
@@ -190,7 +244,7 @@ public class PrimevalBlocks {
     }
 
     @SafeVarargs
-    private static Block registerBlockWithoutItem(String id, AbstractBlock.Settings settings, BlockFactory<Block> factory, Consumer<Block>... additionalActions) {
+    private static <T extends Block> T registerBlockWithoutItem(String id, AbstractBlock.Settings settings, BlockFactory<T> factory, Consumer<Block>... additionalActions) {
         RegistryKey<Block> blockKey = blockKey(id);
         var registeredBlock = Registry.register(Registries.BLOCK, blockKey, factory.create(settings.registryKey(blockKey)));
         for (var action : additionalActions) {
@@ -206,6 +260,78 @@ public class PrimevalBlocks {
 
     // records
 
+    private static ColoredBlockSet registerColoredBlockSet(String baseId, AbstractBlock.Settings settings, Weight weight, Size size) {
+        return new ColoredBlockSet(
+                registerBlock(baseId + "_white", settings, Block::new, weight, size),
+                registerBlock(baseId + "_orange", settings, Block::new, weight, size),
+                registerBlock(baseId + "_magenta", settings, Block::new, weight, size),
+                registerBlock(baseId + "_light_blue", settings, Block::new, weight, size),
+                registerBlock(baseId + "_yellow", settings, Block::new, weight, size),
+                registerBlock(baseId + "_lime", settings, Block::new, weight, size),
+                registerBlock(baseId + "_pink", settings, Block::new, weight, size),
+                registerBlock(baseId + "_dark_gray", settings, Block::new, weight, size),
+                registerBlock(baseId + "_light_gray", settings, Block::new, weight, size),
+                registerBlock(baseId + "_cyan", settings, Block::new, weight, size),
+                registerBlock(baseId + "_purple", settings, Block::new, weight, size),
+                registerBlock(baseId + "_blue", settings, Block::new, weight, size),
+                registerBlock(baseId + "_brown", settings, Block::new, weight, size),
+                registerBlock(baseId + "_green", settings, Block::new, weight, size),
+                registerBlock(baseId + "_red", settings, Block::new, weight, size),
+                registerBlock(baseId + "_black", settings, Block::new, weight, size)
+        );
+    }
+    private static ColoredBlockSetSet registerColoredBlockSetSet(String baseId, AbstractBlock.Settings settings, Weight weight, Size size) {
+        return new ColoredBlockSetSet(
+                registerBlockSet(baseId + "_white", settings, weight, size),
+                registerBlockSet(baseId + "_orange", settings, weight, size),
+                registerBlockSet(baseId + "_magenta", settings, weight, size),
+                registerBlockSet(baseId + "_light_blue", settings, weight, size),
+                registerBlockSet(baseId + "_yellow", settings, weight, size),
+                registerBlockSet(baseId + "_lime", settings, weight, size),
+                registerBlockSet(baseId + "_pink", settings, weight, size),
+                registerBlockSet(baseId + "_dark_gray", settings, weight, size),
+                registerBlockSet(baseId + "_light_gray", settings, weight, size),
+                registerBlockSet(baseId + "_cyan", settings, weight, size),
+                registerBlockSet(baseId + "_purple", settings, weight, size),
+                registerBlockSet(baseId + "_blue", settings, weight, size),
+                registerBlockSet(baseId + "_brown", settings, weight, size),
+                registerBlockSet(baseId + "_green", settings, weight, size),
+                registerBlockSet(baseId + "_red", settings, weight, size),
+                registerBlockSet(baseId + "_black", settings, weight, size)
+        );
+    }
+
+    private static BlockSet registerBlockSet(String id, AbstractBlock.Settings settings, Weight weight, Size size) {
+        return registerBlockSet(id, id+"_stairs", id+"_slab", settings, weight, size);
+    }
+    private static BlockSet registerBlockSet(String base_id, String stairs_id, String slab_id, AbstractBlock.Settings settings, Weight weight, Size size) {
+        Block base = registerBlock(base_id, settings, Block::new, Weight.LIGHT, Size.MEDIUM);
+        return new BlockSet(
+                base,
+                registerBlock(stairs_id, settings, (s) -> new StairsBlock(base.getDefaultState(), s), Weight.LIGHT, Size.MEDIUM),
+                registerBlock(slab_id, settings, SlabBlock::new, Weight.LIGHT, Size.MEDIUM)
+        );
+    }
+
+    private static WoodBlockSet registerWoodBlockSet(String id, AbstractBlock.Settings settings, WoodType woodType, BlockSetType blockSetType, Weight weight, Size size) {
+        return registerWoodBlockSet(id+"_planks", id+"_stairs", id+"_slab", id+"_panel", id+"_fence", id+"_log_fence", id+"_fence_gate", id+"_door", id+"_trapdoor", settings, woodType, blockSetType, weight, size);
+    }
+    private static WoodBlockSet registerWoodBlockSet(String block_id, String stairs_id, String slab_id, String panel_id, String fence_id, String log_fence_id, String fence_gate_id, String door_id, String trapdoor_id, AbstractBlock.Settings settings, WoodType woodType, BlockSetType blockSetType, Weight weight, Size size) {
+        Block base = registerBlock(block_id, settings, Block::new, Weight.LIGHT, Size.MEDIUM);
+
+        return new WoodBlockSet(
+                base,
+                registerBlock(stairs_id, settings, (s) -> new StairsBlock(base.getDefaultState(), s), Weight.LIGHT, Size.MEDIUM),
+                registerBlock(slab_id, settings, SlabBlock::new, Weight.LIGHT, Size.MEDIUM),
+                registerBlock(panel_id, settings, Block::new, Weight.LIGHT, Size.MEDIUM),
+                registerBlock(fence_id, settings, FenceBlock::new, Weight.LIGHT, Size.MEDIUM),
+                registerBlock(log_fence_id, settings, FenceBlock::new, Weight.LIGHT, Size.MEDIUM),
+                registerBlock(fence_gate_id, settings, (s) -> new FenceGateBlock(woodType, s), Weight.LIGHT, Size.MEDIUM),
+                registerBlock(door_id, settings, (s) -> new DoorBlock(blockSetType, s), Weight.LIGHT, Size.MEDIUM),
+                registerBlock(trapdoor_id, settings, (s) -> new TrapdoorBlock(blockSetType, s), Weight.LIGHT, Size.MEDIUM)
+        );
+    }
+
     private static OreBlockSet registerOreBlockSet(String ore_id, AbstractBlock.Settings s, Weight weight, Size size) {
         return new OreBlockSet(
                 registerBlock(ore_id + "_small", s, (settings) -> new SemiSupportedBlock(0.35f, COBBLESTONE, settings), weight, size),
@@ -213,7 +339,31 @@ public class PrimevalBlocks {
                 registerBlock(ore_id + "_large", s, (settings) -> new SemiSupportedBlock(0.35f, COBBLESTONE, settings), weight, size)
         );
     }
-    public record OreBlockSet(Block small, Block medium, Block large) {
+
+    // Block Sets
+
+    public record BlockSet(Block block, StairsBlock stairs, SlabBlock slab) implements Iterable<Block> {
+        public @NotNull Iterator<Block> iterator() {
+            return Arrays.stream(new Block[]{block, stairs, slab}).iterator();
+        }
+    }
+
+    public record ColoredBlockSet(Block white, Block orange, Block magenta, Block lightBlue, Block yellow, Block lime, Block pink, Block darkGray, Block lightGray, Block cyan, Block purple, Block blue, Block brown, Block green, Block red, Block black) implements Iterable<Block> {
+        public @NotNull Iterator<Block> iterator() {
+            return Arrays.stream(new Block[]{white, orange, magenta, lightBlue, yellow, lime, pink, darkGray, lightGray, cyan, purple, blue, brown, green, red, black}).iterator();
+        }
+    }
+    public record ColoredBlockSetSet(BlockSet white, BlockSet orange, BlockSet magenta, BlockSet lightBlue, BlockSet yellow, BlockSet lime, BlockSet pink, BlockSet darkGray, BlockSet lightGray, BlockSet cyan, BlockSet purple, BlockSet blue, BlockSet brown, BlockSet green, BlockSet red, BlockSet black) implements Iterable<BlockSet> {
+        public @NotNull Iterator<BlockSet> iterator() {
+            return Arrays.stream(new BlockSet[]{white, orange, magenta, lightBlue, yellow, lime, pink, darkGray, lightGray, cyan, purple, blue, brown, green, red, black}).iterator();
+        }
+    }
+    public record WoodBlockSet(Block block, StairsBlock stairs, SlabBlock slab, Block panel, FenceBlock fence, FenceBlock logFence, FenceGateBlock fenceGate, DoorBlock door, TrapdoorBlock trapdoor) implements Iterable<Block> {
+        public @NotNull Iterator<Block> iterator() {
+            return Arrays.stream(new Block[]{block, stairs, slab, panel, fence, logFence, fenceGate, door, trapdoor}).iterator();
+        }
+    }
+    public record OreBlockSet(Block small, Block medium, Block large) implements Iterable<Block> {
         public @NotNull Iterator<Block> iterator() {
             return Arrays.stream(new Block[]{small, medium, large}).iterator();
         }

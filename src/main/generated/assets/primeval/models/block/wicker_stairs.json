@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "primeval:block/wicker",
+    "side": "primeval:block/wicker",
+    "top": "primeval:block/wicker"
+  }
+}

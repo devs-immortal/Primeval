@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "primeval:block/smooth_stone_slab"
+    },
+    "type=double": {
+      "model": "primeval:block/smooth_stone"
+    },
+    "type=top": {
+      "model": "primeval:block/smooth_stone_slab_top"
+    }
+  }
+}

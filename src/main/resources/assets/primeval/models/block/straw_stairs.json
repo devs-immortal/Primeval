@@ -1,0 +1,8 @@
+{
+	"parent": "minecraft:block/stairs",
+	"textures": {
+		"bottom": "primeval:block/straw_block_top",
+		"top": "primeval:block/straw_block_top",
+		"side": "primeval:block/straw_block_side"
+	}
+}

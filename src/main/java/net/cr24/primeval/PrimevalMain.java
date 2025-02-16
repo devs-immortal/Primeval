@@ -2,6 +2,7 @@ package net.cr24.primeval;
 
 import net.cr24.primeval.initialization.PrimevalBlocks;
 import net.cr24.primeval.initialization.PrimevalItemGroups;
+import net.cr24.primeval.initialization.PrimevalTypes;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -19,6 +20,7 @@ public class PrimevalMain implements ModInitializer, ClientModInitializer {
 	public void onInitialize() {
 //		PrimevalDataComponentTypes.init();
 //		PrimevalItems.init();
+		PrimevalTypes.init();
 		PrimevalBlocks.init();
 		PrimevalItemGroups.init();
 //		PrimevalFluids.init();

@@ -1,10 +1,9 @@
 package net.cr24.primeval.initialization;
 
 import net.cr24.primeval.PrimevalMain;
-import net.cr24.primeval.world.trunker.BirchTrunker;
-import net.cr24.primeval.world.trunker.OakTrunker;
-import net.cr24.primeval.world.trunker.SpruceTrunker;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.minecraft.block.Block;
+import net.minecraft.data.family.BlockFamily;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
@@ -53,29 +52,50 @@ public class PrimevalItemGroups {
                 entries.add(REEDS);
                 entries.add(RIVER_GRASS);
                 // Ores
-                entries.add(COPPER_MALACHITE_ORE.small());
-                entries.add(COPPER_MALACHITE_ORE.medium());
-                entries.add(COPPER_MALACHITE_ORE.large());
-                entries.add(COPPER_NATIVE_ORE.small());
-                entries.add(COPPER_NATIVE_ORE.medium());
-                entries.add(COPPER_NATIVE_ORE.large());
-                entries.add(TIN_CASSITERITE_ORE.small());
-                entries.add(TIN_CASSITERITE_ORE.medium());
-                entries.add(TIN_CASSITERITE_ORE.large());
-                entries.add(ZINC_SPHALERITE_ORE.small());
-                entries.add(ZINC_SPHALERITE_ORE.medium());
-                entries.add(ZINC_SPHALERITE_ORE.large());
-                entries.add(GOLD_NATIVE_ORE.small());
-                entries.add(GOLD_NATIVE_ORE.medium());
-                entries.add(GOLD_NATIVE_ORE.large());
-                entries.add(IRON_HEMATITE_ORE.small());
-                entries.add(IRON_HEMATITE_ORE.medium());
-                entries.add(IRON_HEMATITE_ORE.large());
-                entries.add(LAZURITE_ORE.small());
-                entries.add(LAZURITE_ORE.medium());
-                entries.add(LAZURITE_ORE.large());
+                addBlockSet(entries, COPPER_MALACHITE_ORE);
+                addBlockSet(entries, COPPER_NATIVE_ORE);
+                addBlockSet(entries, TIN_CASSITERITE_ORE);
+                addBlockSet(entries, ZINC_SPHALERITE_ORE);
+                addBlockSet(entries, GOLD_NATIVE_ORE);
+                addBlockSet(entries, IRON_HEMATITE_ORE);
+                addBlockSet(entries, LAZURITE_ORE);
                 entries.add(FOSSIL);
-
+                // Crafted Blocks
+                entries.add(STRAW_BLOCK);
+                entries.add(STRAW_STAIRS);
+                entries.add(STRAW_SLAB);
+                entries.add(STRAW_MESH);
+                entries.add(STRAW_MAT);
+                entries.add(TERRACOTTA);
+                addBlockSet(entries, COLORED_TERRACOTTA);
+                addBlockSet(entries, FIRED_CLAY_SHINGLE_BLOCKS);
+                addBlockSetSet(entries, COLORED_FIRED_CLAY_SHINGLE_BLOCKS);
+                addBlockSet(entries, FIRED_CLAY_BRICK_BLOCKS);
+                addBlockSet(entries, FIRED_CLAY_TILES_BLOCKS);
+                addBlockSet(entries, DRIED_BRICK_BLOCKS);
+                addBlockSet(entries, MUD_BRICKS);
+                addBlockSet(entries, CRUDE_BRICKS);
+                addBlockSet(entries, STONE_BRICKS);
+                addBlockSet(entries, SMOOTH_STONE);
+                entries.add(STONE_INDENT);
+                entries.add(STONE_PILLAR);
+                addBlockSet(entries, STONE_PAVER);
+                entries.add(DAUB);
+                entries.add(FRAMED_DAUB);
+                entries.add(FRAMED_PILLAR_DAUB);
+                entries.add(FRAMED_CROSS_DAUB);
+                entries.add(FRAMED_INVERTED_CROSS_DAUB);
+                entries.add(FRAMED_X_DAUB);
+                entries.add(FRAMED_PLUS_DAUB);
+                entries.add(FRAMED_DIVIDED_DAUB);
+                addBlockSet(entries, OAK_PLANK_BLOCKS);
+                addBlockSet(entries, BIRCH_PLANK_BLOCKS);
+                addBlockSet(entries, SPRUCE_PLANK_BLOCKS);
+                addBlockSet(entries, WICKER);
+                entries.add(WICKER_DOOR);
+                entries.add(WICKER_TRAPDOOR);
+                entries.add(WICKER_BARS);
+                entries.add(ROPE);
             }));
 
     public static void init() {
@@ -86,6 +106,14 @@ public class PrimevalItemGroups {
         var key = RegistryKey.of(RegistryKeys.ITEM_GROUP, PrimevalMain.identify(id));
         Registry.register(Registries.ITEM_GROUP, key, itemGroup.displayName(Text.translatable("itemGroup.primeval." + id)).build());
         return key;
+    }
+
+    private static <T extends Iterable<Block>> void addBlockSet(ItemGroup.Entries entries, T bs) {
+        bs.iterator().forEachRemaining((b) -> entries.add(b.asItem()));
+    }
+
+    private static <T extends Iterable<BlockSet>> void addBlockSetSet(ItemGroup.Entries entries, T bs) {
+        bs.iterator().forEachRemaining((b) -> addBlockSet(entries, b));
     }
 
 }
