@@ -206,8 +206,7 @@
     
     "block.primeval.rope": "Rope",
     "block.primeval.rope_ladder": "Rope Ladder",
-    
-    "block.primeval.straw": "Straw",
+
     "block.primeval.crude_crafting_bench": "Crude Crafting Bench",
     "block.primeval.crude_torch": "Crude Torch",
     "block.primeval.campfire": "Campfire",
@@ -228,8 +227,9 @@
     "block.primeval.molten_pewter": "Molten Pewter",
     "block.primeval.molten_gold": "Molten Gold",
     "block.primeval.molten_botched_alloy": "Molten Botched Alloy",
-    
-    
+
+
+    "item.primeval.straw": "Straw",
     "item.primeval.stick": "Stick",
     "item.primeval.string": "String",
     "item.primeval.flint": "Flint",

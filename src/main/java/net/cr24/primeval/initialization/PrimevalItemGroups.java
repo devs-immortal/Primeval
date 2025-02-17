@@ -12,11 +12,12 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.text.Text;
 
 import static net.cr24.primeval.initialization.PrimevalBlocks.*;
+import static net.cr24.primeval.initialization.PrimevalItems.*;
 
 public class PrimevalItemGroups {
 
     public static final RegistryKey<ItemGroup> BLOCKS = create("blocks", FabricItemGroup.builder()
-            .icon(() -> new ItemStack(DIRT))
+            .icon(() -> new ItemStack(FIRED_CLAY_BRICK_BLOCKS.block()))
             .entries((context, entries) -> {
                 // Terrain Blocks
                 entries.add(DIRT);
@@ -104,7 +105,62 @@ public class PrimevalItemGroups {
                 entries.add(LARGE_DECORATIVE_FIRED_CLAY_POT);
                 entries.add(WICKER_BASKET);
                 entries.add(CRUDE_CRAFTING_BENCH);
-            }));
+            })
+    );
+
+    public static final RegistryKey<ItemGroup> ITEMS = create("items", FabricItemGroup.builder()
+            .icon(() -> new ItemStack(STRAW))
+            .entries((context, entries) -> {
+                entries.add(STRAW);
+                entries.add(STICK);
+                entries.add(STRING);
+                entries.add(FLINT);
+                entries.add(ROCK);
+                entries.add(STONE_BRICK);
+                entries.add(ASHES);
+                entries.add(CRUSHED_TERRACOTTA);
+                entries.add(CEMENT_MIX);
+                entries.add(CEMENT);
+                entries.add(BONE);
+                entries.add(BONEMEAL);
+                entries.add(ANIMAL_FAT);
+                entries.add(GUNPOWDER);
+                entries.add(CHARRED_BONE);
+
+                entries.add(SANDY_CLAY_BALL);
+                entries.add(SANDY_CLAY_BRICK);
+                entries.add(DRIED_BRICK);
+
+                entries.add(MUD_BALL);
+                entries.add(MUD_BRICK);
+                entries.add(CLAY_BALL);
+                entries.add(CLAY_BRICK);
+                entries.add(FIRED_CLAY_BRICK);
+                entries.add(CLAY_TILE);
+                entries.add(FIRED_CLAY_TILE);
+                entries.add(CLAY_BOWL);
+                entries.add(FIRED_CLAY_BOWL);
+                entries.add(CLAY_JUG);
+                entries.add(CLAY_VESSEL);
+            })
+    );
+
+    public static final RegistryKey<ItemGroup> TOOLS = create("tools", FabricItemGroup.builder()
+            .icon(() -> new ItemStack(DIRT))
+            .entries((context, entries) -> {
+                entries.add(DIRT);
+            })
+    );
+
+    public static final RegistryKey<ItemGroup> FOODS = create("foods", FabricItemGroup.builder()
+            .icon(() -> new ItemStack(DIRT))
+            .entries((context, entries) -> {
+                entries.add(DIRT);
+            })
+    );
+
+
+
 
     public static void init() {
     }

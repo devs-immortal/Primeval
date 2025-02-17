@@ -1,5 +1,6 @@
 package net.cr24.primeval.block;
 
+import net.cr24.primeval.item.tool.PrimevalHoeItem;
 import net.minecraft.block.*;
 import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.world.ServerWorld;
@@ -32,7 +33,7 @@ public class PrimevalFarmlandBlock extends SemiSupportedBlock {
         super(percentPerSide, fallBlock, settings);
         this.turnsTo = turnsTo;
         for (Block b : sourceBlocks) {
-            //PrimevalHoeItem.hoeables.put(b, this); //TODO
+            PrimevalHoeItem.hoeables.put(b, this);
         }
     }
 
@@ -119,7 +120,7 @@ public class PrimevalFarmlandBlock extends SemiSupportedBlock {
 
         private final String name;
 
-        private PrimevalFarmlandBlockFertilizerType(String name) {
+        PrimevalFarmlandBlockFertilizerType(String name) {
             this.name = name;
         }
 

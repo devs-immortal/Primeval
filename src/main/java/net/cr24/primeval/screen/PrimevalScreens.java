@@ -21,7 +21,7 @@ public class PrimevalScreens {
     }
 
     private static <T extends ScreenHandler> ScreenHandlerType<T> registerHandler(String id, ScreenHandlerType.Factory<T> factory) {
-        return Registry.register(Registries.SCREEN_HANDLER, Primeval.identify(id), new ScreenHandlerType(factory, FeatureFlags.VANILLA_FEATURES));
+        return Registry.register(Registries.SCREEN_HANDLER, Primeval.identify(id), new ScreenHandlerType<>(factory, FeatureFlags.VANILLA_FEATURES));
     }
 
 

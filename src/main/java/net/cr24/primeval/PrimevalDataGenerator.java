@@ -5,16 +5,15 @@ import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.client.data.*;
 import net.minecraft.client.render.item.tint.GrassTintSource;
-import net.minecraft.data.family.BlockFamilies;
-import net.minecraft.data.family.BlockFamily;
+import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 
 import static net.cr24.primeval.initialization.PrimevalBlocks.*;
+import static net.cr24.primeval.initialization.PrimevalItems.*;
 import static net.minecraft.client.data.TextureMap.getSubId;
 import static net.minecraft.client.data.TexturedModel.makeFactory;
 
@@ -129,6 +128,7 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 
 		@Override
 		public void generateItemModels(ItemModelGenerator itemModelGenerator) {
+			// block stuff
 			itemModelGenerator.output.accept(GRASSY_DIRT.asItem(),
 					ItemModels.tinted(ModelIds.getBlockModelId(GRASSY_DIRT), new GrassTintSource(0.7f, 1.0f))
 			);
@@ -147,6 +147,41 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 			itemModelGenerator.output.accept(SPRUCE_PLANK_BLOCKS.logFence().asItem(),
 					ItemModels.basic(ModelIds.getBlockSubModelId(SPRUCE_PLANK_BLOCKS.logFence(), "_inventory"))
 			);
+			itemModelGenerator.output.accept(STRAW,
+					ItemModels.basic(ModelIds.getItemModelId(STRAW))
+			);
+
+			// items
+			itemModelGenerator.upload(STRAW, Models.GENERATED);
+			itemModelGenerator.registerWithTextureSource(STICK, Items.STICK, Models.GENERATED);
+			itemModelGenerator.registerWithTextureSource(STRING, Items.STRING, Models.GENERATED);
+			itemModelGenerator.registerWithTextureSource(FLINT, Items.FLINT, Models.GENERATED);
+			itemModelGenerator.register(ROCK, Models.GENERATED);
+			itemModelGenerator.register(STONE_BRICK, Models.GENERATED);
+			itemModelGenerator.register(ASHES, Models.GENERATED);
+			itemModelGenerator.register(CRUSHED_TERRACOTTA, Models.GENERATED);
+			itemModelGenerator.register(CEMENT_MIX, Models.GENERATED);
+			itemModelGenerator.register(CEMENT, Models.GENERATED);
+			itemModelGenerator.register(BONE, Models.GENERATED);
+			itemModelGenerator.register(BONEMEAL, Models.GENERATED);
+			itemModelGenerator.register(ANIMAL_FAT, Models.GENERATED);
+			itemModelGenerator.registerWithTextureSource(GUNPOWDER, Items.GUNPOWDER, Models.GENERATED);
+			itemModelGenerator.register(CHARRED_BONE, Models.GENERATED);
+
+			itemModelGenerator.register(SANDY_CLAY_BALL, Models.GENERATED);
+			itemModelGenerator.register(SANDY_CLAY_BRICK, Models.GENERATED);
+			itemModelGenerator.register(DRIED_BRICK, Models.GENERATED);
+			itemModelGenerator.register(MUD_BALL, Models.GENERATED);
+			itemModelGenerator.register(MUD_BRICK, Models.GENERATED);
+			itemModelGenerator.register(CLAY_BALL, Models.GENERATED);
+			itemModelGenerator.register(CLAY_BRICK, Models.GENERATED);
+			itemModelGenerator.register(FIRED_CLAY_BRICK, Models.GENERATED);
+			itemModelGenerator.register(CLAY_BOWL, Models.GENERATED);
+			itemModelGenerator.register(FIRED_CLAY_BOWL, Models.GENERATED);
+			itemModelGenerator.register(CLAY_TILE, Models.GENERATED);
+			itemModelGenerator.register(FIRED_CLAY_TILE, Models.GENERATED);
+			itemModelGenerator.register(CLAY_JUG, Models.GENERATED);
+			itemModelGenerator.register(CLAY_VESSEL, Models.GENERATED);
 		}
 
 		@Override
