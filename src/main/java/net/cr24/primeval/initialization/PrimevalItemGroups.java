@@ -113,6 +113,9 @@ public class PrimevalItemGroups {
             .entries((context, entries) -> {
                 entries.add(STRAW);
                 entries.add(STICK);
+                entries.add(OAK_LOG);
+                entries.add(BIRCH_LOG);
+                entries.add(SPRUCE_LOG);
                 entries.add(STRING);
                 entries.add(FLINT);
                 entries.add(ROCK);

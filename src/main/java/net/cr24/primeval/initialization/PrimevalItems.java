@@ -43,9 +43,9 @@ public class PrimevalItems {
     public static final Item SANDY_CLAY_BALL = registerItem("sandy_clay_ball", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.SMALL);
     public static final Item SANDY_CLAY_BRICK = registerItem("sandy_clay_brick", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.SMALL);
     public static final Item DRIED_BRICK = registerItem("dried_brick", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.SMALL);
-
     public static final Item MUD_BALL = registerItem("mud_ball", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.SMALL);
     public static final Item MUD_BRICK = registerItem("mud_brick", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.SMALL);
+    // clay items
     public static final Item CLAY_BALL = registerItem("clay_ball", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.SMALL);
     public static final Item CLAY_BRICK = registerItem("clay_brick", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.SMALL);
     public static final Item FIRED_CLAY_BRICK = registerItem("fired_clay_brick", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.SMALL);
@@ -55,6 +55,14 @@ public class PrimevalItems {
     public static final Item FIRED_CLAY_TILE = registerItem("fired_clay_tile", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.SMALL);
     public static final Item CLAY_JUG = registerItem("clay_jug", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
     public static final Item CLAY_VESSEL = registerItem("clay_vessel", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
+
+    // logs
+    public static final Item OAK_LOG = registerItem("oak_log", SETTINGS_BASIC(), (w, s, settings) -> new LogItem(PrimevalBlocks.OAK_LOG_BLOCK, PrimevalBlocks.OAK_LOG_PILE, w, s, settings), Weight.HEAVY, Size.LARGE);
+    public static final Item BIRCH_LOG = registerItem("birch_log", SETTINGS_BASIC(), (w, s, settings) -> new LogItem(PrimevalBlocks.BIRCH_LOG_BLOCK, PrimevalBlocks.BIRCH_LOG_PILE, w, s, settings), Weight.HEAVY, Size.LARGE);
+    public static final Item SPRUCE_LOG = registerItem("spruce_log", SETTINGS_BASIC(), (w, s, settings) -> new LogItem(PrimevalBlocks.SPRUCE_LOG_BLOCK, PrimevalBlocks.SPRUCE_LOG_PILE, w, s, settings), Weight.HEAVY, Size.LARGE);
+
+
+
     // endregion
 
 

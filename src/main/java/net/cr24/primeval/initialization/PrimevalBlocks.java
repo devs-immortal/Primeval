@@ -83,15 +83,15 @@ public class PrimevalBlocks {
     // region PLANT BLOCKS
 
     // Oak Trees
-    public static final Block OAK_LOG = registerBlockWithoutItem("oak_log", SETTINGS_LOG(), PillarBlock::new);
+    public static final Block OAK_LOG_BLOCK = registerBlockWithoutItem("oak_log", SETTINGS_LOG(), PillarBlock::new);
     public static final Block OAK_TRUNK = registerBlockWithoutItem("oak_trunk", SETTINGS_TRUNK().nonOpaque(), (settings) -> new TrunkBlock(OakTrunker.INSTANCE, settings));
     public static final Block OAK_LEAVES = registerBlockWithoutItem("oak_leaves", AbstractBlock.Settings.copy(Blocks.OAK_LEAVES), LeafBlock::new);
     // Birch Trees
-    public static final Block BIRCH_LOG = registerBlockWithoutItem("birch_log", SETTINGS_LOG(), PillarBlock::new);
+    public static final Block BIRCH_LOG_BLOCK = registerBlockWithoutItem("birch_log", SETTINGS_LOG(), PillarBlock::new);
     public static final Block BIRCH_TRUNK = registerBlockWithoutItem("birch_trunk", SETTINGS_TRUNK().nonOpaque(), (settings) -> new TrunkBlock(BirchTrunker.INSTANCE, settings));
     public static final Block BIRCH_LEAVES = registerBlockWithoutItem("birch_leaves", AbstractBlock.Settings.copy(Blocks.OAK_LEAVES), LeafBlock::new);
     // Spruce Trees
-    public static final Block SPRUCE_LOG = registerBlockWithoutItem("spruce_log", SETTINGS_LOG(), PillarBlock::new);
+    public static final Block SPRUCE_LOG_BLOCK = registerBlockWithoutItem("spruce_log", SETTINGS_LOG(), PillarBlock::new);
     public static final Block SPRUCE_TRUNK = registerBlockWithoutItem("spruce_trunk", SETTINGS_TRUNK().nonOpaque(), (settings) -> new TrunkBlock(SpruceTrunker.INSTANCE, settings));
     public static final Block SPRUCE_LEAVES = registerBlockWithoutItem("spruce_leaves", AbstractBlock.Settings.copy(Blocks.OAK_LEAVES), LeafBlock::new);
     // Saplings+
@@ -167,9 +167,9 @@ public class PrimevalBlocks {
     public static final Block WICKER_BARS = registerBlock("wicker_bars", SETTINGS_REFINED_WOOD().nonOpaque(), PaneBlock::new, Weight.LIGHT, Size.MEDIUM);
     public static final Block ROPE = registerBlock("rope", AbstractBlock.Settings.create().strength(0.2F).sounds(BlockSoundGroup.GRASS), ChainBlock::new, Weight.LIGHT, Size.SMALL);
     public static final Block ROPE_LADDER = registerBlock("rope_ladder", AbstractBlock.Settings.create().mapColor(MapColor.OAK_TAN).strength(0.3F).sounds(BlockSoundGroup.WOOD).nonOpaque(), SuspendedLadderBlock::new, Weight.NORMAL, Size.MEDIUM);
-    public static final Block OAK_LOG_PILE = registerBlockWithoutItem("oak_log_pile", SETTINGS_LOGPILE(), LogPileBlock::new);
-    public static final Block BIRCH_LOG_PILE = registerBlockWithoutItem("birch_log_pile", SETTINGS_LOGPILE(), LogPileBlock::new);
-    public static final Block SPRUCE_LOG_PILE = registerBlockWithoutItem("spruce_log_pile", SETTINGS_LOGPILE(), LogPileBlock::new);
+    public static final Block OAK_LOG_PILE = registerBlockWithoutItem("oak_log_pile", SETTINGS_LOGPILE(), (settings) -> new LogPileBlock(() -> PrimevalItems.OAK_LOG, settings));
+    public static final Block BIRCH_LOG_PILE = registerBlockWithoutItem("birch_log_pile", SETTINGS_LOGPILE(), (settings) -> new LogPileBlock(() -> PrimevalItems.BIRCH_LOG, settings));
+    public static final Block SPRUCE_LOG_PILE = registerBlockWithoutItem("spruce_log_pile", SETTINGS_LOGPILE(), (settings) -> new LogPileBlock(() -> PrimevalItems.SPRUCE_LOG, settings));
     
     // endregion
 
@@ -220,7 +220,6 @@ public class PrimevalBlocks {
 //    public static final BlockEntityType<PitKilnBlockEntity> PIT_KILN_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, PrimevalMain.getId("pit_kiln_block_entity"), FabricBlockEntityTypeBuilder.create(PitKilnBlockEntity::new, PIT_KILN).build());
     public static final BlockEntityType<AshPileBlockEntity> ASH_PILE_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, Primeval.identify("ash_pile_block_entity"), FabricBlockEntityTypeBuilder.create(AshPileBlockEntity::new, ASH_PILE).build());
     public static final BlockEntityType<LayingItemBlockEntity> LAYING_ITEM_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, Primeval.identify("laying_item_block_entity"), FabricBlockEntityTypeBuilder.create(LayingItemBlockEntity::new, LAYING_ITEM).build());
-    public static final BlockEntityType<LogPileBlockEntity> LOG_PILE_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, Primeval.identify("log_pile_block_entity"), FabricBlockEntityTypeBuilder.create(LogPileBlockEntity::new, OAK_LOG_PILE, BIRCH_LOG_PILE, SPRUCE_LOG_PILE).build());
     public static final BlockEntityType<CrateBlockEntity> CRATE_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, Primeval.identify("crate_block_entity"), FabricBlockEntityTypeBuilder.create(CrateBlockEntity::new, OAK_CRATE, BIRCH_CRATE, SPRUCE_CRATE).build());
     public static final BlockEntityType<StoragePotBlockEntity> LARGE_POT_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, Primeval.identify("large_pot_block_entity"), FabricBlockEntityTypeBuilder.create(StoragePotBlockEntity::new, LARGE_FIRED_CLAY_POT).build());
     public static final BlockEntityType<WickerBasketBlockEntity> WICKER_BASKET_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, Primeval.identify("wicker_basket_block_entity"), FabricBlockEntityTypeBuilder.create(WickerBasketBlockEntity::new, WICKER_BASKET).build());

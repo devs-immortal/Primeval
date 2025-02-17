@@ -1,12 +1,10 @@
 package net.cr24.primeval.block.functional;
 
-import com.mojang.serialization.MapCodec;
-import net.cr24.primeval.block.entity.LogPileBlockEntity;
 import net.minecraft.block.*;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -25,42 +23,38 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.tick.ScheduledTickView;
-import org.jetbrains.annotations.Nullable;
 
-public class LogPileBlock extends BlockWithEntity implements Waterloggable {
+import java.util.function.Supplier;
 
-    public static final MapCodec<LogPileBlock> CODEC = createCodec(LogPileBlock::new);
+public class LogPileBlock extends Block implements Waterloggable {
 
     public static final BooleanProperty WATERLOGGED;
     public static final IntProperty AMOUNT;
+    private final Supplier<Item> logItem;
 
-    public LogPileBlock(Settings settings) {
+    public LogPileBlock(Supplier<Item> logItem, Settings settings) {
         super(settings);
         this.setDefaultState(this.getDefaultState().with(WATERLOGGED, false).with(AMOUNT, 0));
-    }
-
-    @Override
-    protected MapCodec<? extends BlockWithEntity> getCodec() {
-        return CODEC;
+        this.logItem = logItem;
     }
 
     @Override
     protected ActionResult onUseWithItem(ItemStack itemStack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (!player.getAbilities().allowModifyWorld) return ActionResult.PASS;
-        BlockEntity blockEntity = world.getBlockEntity(pos);
-        if (hand == Hand.MAIN_HAND && blockEntity instanceof LogPileBlockEntity) {
-            ItemStack logItem = ((LogPileBlockEntity) blockEntity).getItem();
-            int amount = state.get(AMOUNT);
-            if (itemStack.isEmpty() && !world.isClient) {
-                player.giveItemStack(logItem);
-                if (amount > 0) {
-                    world.setBlockState(pos, state.with(AMOUNT, amount-1));
-                } else {
-                    world.setBlockState(pos, Blocks.AIR.getDefaultState());
-                }
-                world.playSound(null, pos, SoundEvents.BLOCK_WOOD_BREAK, SoundCategory.BLOCKS, 0.3f, world.getRandom().nextFloat() * 0.4f + 0.8f);
-                return ActionResult.SUCCESS;
+        int amount = state.get(AMOUNT);
+        if (amount < 7 && itemStack.isOf(logItem.get())) {
+            world.setBlockState(pos, state.with(LogPileBlock.AMOUNT, state.get(LogPileBlock.AMOUNT)+1));
+            if (!player.isInCreativeMode()) itemStack.decrement(1);
+            world.playSound(null, pos, SoundEvents.BLOCK_WOOD_PLACE, SoundCategory.BLOCKS, 0.5f, world.getRandom().nextFloat() * 0.4f + 0.8f);
+            return ActionResult.SUCCESS;
+        } else if (itemStack.isEmpty()) {
+            player.giveItemStack(new ItemStack(logItem.get()));
+            if (amount > 0) {
+                world.setBlockState(pos, state.with(AMOUNT, amount-1));
+            } else {
+                world.setBlockState(pos, Blocks.AIR.getDefaultState());
             }
+            world.playSound(null, pos, SoundEvents.BLOCK_WOOD_BREAK, SoundCategory.BLOCKS, 0.3f, world.getRandom().nextFloat() * 0.4f + 0.8f);
+            return ActionResult.SUCCESS;
         }
         return ActionResult.PASS;
     }
@@ -84,12 +78,6 @@ public class LogPileBlock extends BlockWithEntity implements Waterloggable {
     static {
         WATERLOGGED = Properties.WATERLOGGED;
         AMOUNT = IntProperty.of("amount", 0, 7);
-    }
-
-    @Nullable
-    @Override
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new LogPileBlockEntity(pos, state);
     }
 
     public BlockRenderType getRenderType(BlockState state) {

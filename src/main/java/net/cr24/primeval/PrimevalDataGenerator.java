@@ -43,11 +43,11 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 			blockStateModelGenerator.registerMirrorable(STONE);
 			blockStateModelGenerator.registerSimpleCubeAll(SANDSTONE);
 
-			blockStateModelGenerator.registerAxisRotated(OAK_LOG, TEXTURED_MODEL_LOG_COLUMN);
+			blockStateModelGenerator.registerAxisRotated(OAK_LOG_BLOCK, TEXTURED_MODEL_LOG_COLUMN);
 			blockStateModelGenerator.registerSingleton(OAK_LEAVES, TexturedModel.LEAVES);
-			blockStateModelGenerator.registerAxisRotated(BIRCH_LOG, TEXTURED_MODEL_LOG_COLUMN);
+			blockStateModelGenerator.registerAxisRotated(BIRCH_LOG_BLOCK, TEXTURED_MODEL_LOG_COLUMN);
 			blockStateModelGenerator.registerSingleton(BIRCH_LEAVES, TexturedModel.LEAVES);
-			blockStateModelGenerator.registerAxisRotated(SPRUCE_LOG, TEXTURED_MODEL_LOG_COLUMN);
+			blockStateModelGenerator.registerAxisRotated(SPRUCE_LOG_BLOCK, TEXTURED_MODEL_LOG_COLUMN);
 			blockStateModelGenerator.registerSingleton(SPRUCE_LEAVES, TexturedModel.LEAVES);
 
 			blockStateModelGenerator.registerTintableCross(OAK_SAPLING, BlockStateModelGenerator.CrossType.NOT_TINTED);
@@ -154,6 +154,9 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 			// items
 			itemModelGenerator.upload(STRAW, Models.GENERATED);
 			itemModelGenerator.registerWithTextureSource(STICK, Items.STICK, Models.GENERATED);
+			itemModelGenerator.register(OAK_LOG, Models.GENERATED);
+			itemModelGenerator.register(BIRCH_LOG, Models.GENERATED);
+			itemModelGenerator.register(SPRUCE_LOG, Models.GENERATED);
 			itemModelGenerator.registerWithTextureSource(STRING, Items.STRING, Models.GENERATED);
 			itemModelGenerator.registerWithTextureSource(FLINT, Items.FLINT, Models.GENERATED);
 			itemModelGenerator.register(ROCK, Models.GENERATED);
