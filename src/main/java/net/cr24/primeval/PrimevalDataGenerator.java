@@ -123,6 +123,8 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 			blockStateModelGenerator.registerAxisRotated(ROPE, ModelIds.getBlockModelId(ROPE));
 			blockStateModelGenerator.registerNorthDefaultHorizontalRotation(ROPE_LADDER);
 			blockStateModelGenerator.registerItemModel(ROPE_LADDER);
+
+			blockStateModelGenerator.registerSingleton(CRUDE_CRAFTING_BENCH, TexturedModel.CUBE_BOTTOM_TOP);
 		}
 
 		@Override

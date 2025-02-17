@@ -103,6 +103,7 @@ public class PrimevalItemGroups {
                 entries.add(LARGE_FIRED_CLAY_POT);
                 entries.add(LARGE_DECORATIVE_FIRED_CLAY_POT);
                 entries.add(WICKER_BASKET);
+                entries.add(CRUDE_CRAFTING_BENCH);
             }));
 
     public static void init() {
