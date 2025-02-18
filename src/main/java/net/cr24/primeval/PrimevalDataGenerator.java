@@ -185,6 +185,19 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 			itemModelGenerator.register(FIRED_CLAY_TILE, Models.GENERATED);
 			itemModelGenerator.register(CLAY_JUG, Models.GENERATED);
 			itemModelGenerator.register(CLAY_VESSEL, Models.GENERATED);
+
+			itemModelGenerator.registerWithTextureSource(PORKCHOP, Items.PORKCHOP, Models.GENERATED);
+			itemModelGenerator.registerWithTextureSource(COOKED_PORKCHOP, Items.COOKED_PORKCHOP, Models.GENERATED);
+			itemModelGenerator.registerWithTextureSource(CARROT, Items.CARROT, Models.GENERATED);
+			itemModelGenerator.registerWithTextureSource(WHEAT, Items.WHEAT, Models.GENERATED);
+			itemModelGenerator.register(CABBAGE, Models.GENERATED);
+			itemModelGenerator.register(BEANS, Models.GENERATED);
+			itemModelGenerator.registerWithTextureSource(POTATO, Items.POTATO, Models.GENERATED);
+			itemModelGenerator.registerWithTextureSource(WHEAT_SEEDS, Items.WHEAT_SEEDS, Models.GENERATED);
+			itemModelGenerator.register(CABBAGE_SEEDS, Models.GENERATED);
+			itemModelGenerator.registerWithTextureSource(ROTTEN_FLESH, Items.ROTTEN_FLESH, Models.GENERATED);
+			itemModelGenerator.registerWithTextureSource(SPIDER_EYE, Items.SPIDER_EYE, Models.GENERATED);
+
 		}
 
 		@Override

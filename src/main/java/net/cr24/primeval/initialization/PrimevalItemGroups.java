@@ -156,9 +156,19 @@ public class PrimevalItemGroups {
     );
 
     public static final RegistryKey<ItemGroup> FOODS = create("foods", FabricItemGroup.builder()
-            .icon(() -> new ItemStack(DIRT))
+            .icon(() -> new ItemStack(COOKED_PORKCHOP))
             .entries((context, entries) -> {
-                entries.add(DIRT);
+                entries.add(PORKCHOP);
+                entries.add(COOKED_PORKCHOP);
+                entries.add(CARROT);
+                entries.add(WHEAT);
+                entries.add(CABBAGE);
+                entries.add(BEANS);
+                entries.add(POTATO);
+                entries.add(WHEAT_SEEDS);
+                entries.add(CABBAGE_SEEDS);
+                entries.add(ROTTEN_FLESH);
+                entries.add(SPIDER_EYE);
             })
     );
 

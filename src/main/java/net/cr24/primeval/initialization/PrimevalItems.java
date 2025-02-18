@@ -6,9 +6,11 @@ import net.cr24.primeval.item.*;
 import net.cr24.primeval.item.tool.*;
 import net.cr24.primeval.util.Size;
 import net.cr24.primeval.util.Weight;
-import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.Item;
+import net.minecraft.item.consume.ApplyEffectsConsumeEffect;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -17,6 +19,7 @@ import net.minecraft.registry.RegistryKeys;
 import java.util.function.Consumer;
 
 import static net.cr24.primeval.Primeval.identify;
+import static net.cr24.primeval.initialization.PrimevalItemActions.*;
 
 public class PrimevalItems {
 
@@ -64,6 +67,29 @@ public class PrimevalItems {
 
 
     // endregion
+
+    // region FOODSTUFF
+
+    public static final Item PORKCHOP = registerItem("porkchop", SETTINGS_BASIC().food(foodComponent(2, 0.3f),
+            consumableComponent(new Consumable(StatusEffects.HUNGER, 600, 0, 0.3f))), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Item COOKED_PORKCHOP = registerItem("cooked_porkchop", SETTINGS_BASIC().food(foodComponent(8, 0.8f)), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Item ROTTEN_FLESH = registerItem("rotten_flesh", SETTINGS_BASIC().food(foodComponent(4, 0.1f),
+            consumableComponent(new Consumable(StatusEffects.HUNGER, 300, 0, 0.8f), new Consumable(StatusEffects.POISON, 100, 0, 0.8f))), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Item SPIDER_EYE = registerItem("spider_eye", SETTINGS_BASIC().food(foodComponent(3, 0.1f),
+            consumableComponent(new Consumable(StatusEffects.HUNGER, 100, 0, 0.4f), new Consumable(StatusEffects.POISON, 300, 1, 0.9f))), WeightedItem::new, Weight.LIGHT, Size.SMALL);
+
+    public static final Item CARROT = registerItem("carrot", SETTINGS_BASIC().food(foodComponent(4, 1f)), (w, s, settings) -> new WeightedBlockItem(PrimevalBlocks.CARROT_CROP, w, s, settings), Weight.LIGHT, Size.SMALL);
+    public static final Item WHEAT = registerItem("wheat", SETTINGS_BASIC(), WeightedItem::new, Weight.LIGHT, Size.SMALL);
+    public static final Item CABBAGE = registerItem("cabbage", SETTINGS_BASIC().food(foodComponent(2, 4f)), WeightedItem::new, Weight.LIGHT, Size.SMALL);
+    public static final Item BEANS = registerItem("beans", SETTINGS_BASIC().food(foodComponent(1, 2f)), (w, s, settings) -> new WeightedBlockItem(PrimevalBlocks.BEANS_CROP, w, s, settings), Weight.LIGHT, Size.SMALL);
+    public static final Item POTATO = registerItem("potato", SETTINGS_BASIC().food(foodComponent(3, 0.2f)), (w, s, settings) -> new WeightedBlockItem(PrimevalBlocks.POTATO_CROP, w, s, settings), Weight.LIGHT, Size.SMALL);
+    // Seeds
+    public static final Item WHEAT_SEEDS = registerItem("wheat_seeds", SETTINGS_BASIC(), (w, s, settings) -> new WeightedBlockItem(PrimevalBlocks.WHEAT_CROP, w, s, settings), Weight.LIGHT, Size.SMALL);
+    public static final Item CABBAGE_SEEDS = registerItem("cabbage_seeds", SETTINGS_BASIC(), (w, s, settings) -> new WeightedBlockItem(PrimevalBlocks.CABBAGE_CROP, w, s, settings), Weight.LIGHT, Size.SMALL);
+
+    // endregion
+
+    // region 
 
 
     public static void init() {
