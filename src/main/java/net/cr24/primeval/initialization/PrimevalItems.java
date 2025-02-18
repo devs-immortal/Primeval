@@ -91,6 +91,36 @@ public class PrimevalItems {
 
     // region 
 
+    public static final Item RAW_COPPER_MALACHITE_SMALL = registerItem("raw_copper_malachite_small", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.SMALL);
+    public static final Item RAW_COPPER_MALACHITE_MEDIUM = registerItem("raw_copper_malachite_medium", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Item RAW_COPPER_MALACHITE_LARGE = registerItem("raw_copper_malachite_large", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.LARGE);
+
+    public static final Item RAW_COPPER_NATIVE_SMALL = registerItem("raw_copper_native_small", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.SMALL);
+    public static final Item RAW_COPPER_NATIVE_MEDIUM = registerItem("raw_copper_native_medium", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Item RAW_COPPER_NATIVE_LARGE = registerItem("raw_copper_native_large", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.LARGE);
+
+    public static final Item RAW_TIN_CASSITERITE_SMALL = registerItem("raw_tin_cassiterite_small", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.SMALL);
+    public static final Item RAW_TIN_CASSITERITE_MEDIUM = registerItem("raw_tin_cassiterite_medium", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Item RAW_TIN_CASSITERITE_LARGE = registerItem("raw_tin_cassiterite_large", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.LARGE);
+
+    public static final Item RAW_ZINC_SPHALERITE_SMALL = registerItem("raw_zinc_sphalerite_small", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.SMALL);
+    public static final Item RAW_ZINC_SPHALERITE_MEDIUM = registerItem("raw_zinc_sphalerite_medium", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Item RAW_ZINC_SPHALERITE_LARGE = registerItem("raw_zinc_sphalerite_large", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.LARGE);
+
+    public static final Item RAW_GOLD_NATIVE_SMALL = registerItem("raw_gold_native_small", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.SMALL);
+    public static final Item RAW_GOLD_NATIVE_MEDIUM = registerItem("raw_gold_native_medium", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Item RAW_GOLD_NATIVE_LARGE = registerItem("raw_gold_native_large", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.LARGE);
+
+    public static final Item RAW_IRON_HEMATITE_SMALL = registerItem("raw_iron_hematite_small", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.SMALL);
+    public static final Item RAW_IRON_HEMATITE_MEDIUM = registerItem("raw_iron_hematite_medium", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Item RAW_IRON_HEMATITE_LARGE = registerItem("raw_iron_hematite_large", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.LARGE);
+
+    public static final Item RAW_LAZURITE_SMALL = registerItem("raw_lazurite_small", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.SMALL);
+    public static final Item RAW_LAZURITE_MEDIUM = registerItem("raw_lazurite_medium", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Item RAW_LAZURITE_LARGE = registerItem("raw_lazurite_large", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.LARGE);
+    
+    // endregion
+
 
     public static void init() {
     }

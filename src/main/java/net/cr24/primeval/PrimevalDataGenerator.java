@@ -185,7 +185,7 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 			itemModelGenerator.register(FIRED_CLAY_TILE, Models.GENERATED);
 			itemModelGenerator.register(CLAY_JUG, Models.GENERATED);
 			itemModelGenerator.register(CLAY_VESSEL, Models.GENERATED);
-
+			// foods
 			itemModelGenerator.registerWithTextureSource(PORKCHOP, Items.PORKCHOP, Models.GENERATED);
 			itemModelGenerator.registerWithTextureSource(COOKED_PORKCHOP, Items.COOKED_PORKCHOP, Models.GENERATED);
 			itemModelGenerator.registerWithTextureSource(CARROT, Items.CARROT, Models.GENERATED);
@@ -197,6 +197,28 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 			itemModelGenerator.register(CABBAGE_SEEDS, Models.GENERATED);
 			itemModelGenerator.registerWithTextureSource(ROTTEN_FLESH, Items.ROTTEN_FLESH, Models.GENERATED);
 			itemModelGenerator.registerWithTextureSource(SPIDER_EYE, Items.SPIDER_EYE, Models.GENERATED);
+			// ores
+			itemModelGenerator.register(RAW_COPPER_MALACHITE_SMALL, Models.GENERATED);
+			itemModelGenerator.register(RAW_COPPER_MALACHITE_MEDIUM, Models.GENERATED);
+			itemModelGenerator.register(RAW_COPPER_MALACHITE_LARGE, Models.GENERATED);
+			itemModelGenerator.register(RAW_COPPER_NATIVE_SMALL, Models.GENERATED);
+			itemModelGenerator.register(RAW_COPPER_NATIVE_MEDIUM, Models.GENERATED);
+			itemModelGenerator.register(RAW_COPPER_NATIVE_LARGE, Models.GENERATED);
+			itemModelGenerator.register(RAW_TIN_CASSITERITE_SMALL, Models.GENERATED);
+			itemModelGenerator.register(RAW_TIN_CASSITERITE_MEDIUM, Models.GENERATED);
+			itemModelGenerator.register(RAW_TIN_CASSITERITE_LARGE, Models.GENERATED);
+			itemModelGenerator.register(RAW_ZINC_SPHALERITE_SMALL, Models.GENERATED);
+			itemModelGenerator.register(RAW_ZINC_SPHALERITE_MEDIUM, Models.GENERATED);
+			itemModelGenerator.register(RAW_ZINC_SPHALERITE_LARGE, Models.GENERATED);
+			itemModelGenerator.register(RAW_GOLD_NATIVE_SMALL, Models.GENERATED);
+			itemModelGenerator.register(RAW_GOLD_NATIVE_MEDIUM, Models.GENERATED);
+			itemModelGenerator.register(RAW_GOLD_NATIVE_LARGE, Models.GENERATED);
+			itemModelGenerator.register(RAW_IRON_HEMATITE_SMALL, Models.GENERATED);
+			itemModelGenerator.register(RAW_IRON_HEMATITE_MEDIUM, Models.GENERATED);
+			itemModelGenerator.register(RAW_IRON_HEMATITE_LARGE, Models.GENERATED);
+			itemModelGenerator.register(RAW_LAZURITE_SMALL, Models.GENERATED);
+			itemModelGenerator.register(RAW_LAZURITE_MEDIUM, Models.GENERATED);
+			itemModelGenerator.register(RAW_LAZURITE_LARGE, Models.GENERATED);
 
 		}
 
