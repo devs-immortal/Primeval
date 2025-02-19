@@ -229,6 +229,8 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 			registerToolSet(itemModelGenerator, BRONZE_TOOLS);
 			registerNormalItemSet(itemModelGenerator, COPPER_TOOL_PARTS);
 			registerNormalItemSet(itemModelGenerator, BRONZE_TOOL_PARTS);
+			itemModelGenerator.register(WOODEN_BUCKET, Models.GENERATED);
+			itemModelGenerator.register(WOODEN_BUCKET_WATER, Models.GENERATED);
 		}
 
 		@Override

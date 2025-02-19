@@ -161,6 +161,8 @@ public class PrimevalItemGroups {
                 addItemSet(entries, BRONZE_TOOLS);
                 addItemSet(entries, COPPER_TOOL_PARTS);
                 addItemSet(entries, BRONZE_TOOL_PARTS);
+                entries.add(WOODEN_BUCKET);
+                entries.add(WOODEN_BUCKET_WATER);
             })
     );
 

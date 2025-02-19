@@ -139,9 +139,9 @@ public class PrimevalItems {
     public static final ToolPartSet COPPER_TOOL_PARTS = ToolPartSet.from("copper");
     public static final ToolPartSet BRONZE_TOOL_PARTS = ToolPartSet.from("bronze");
 
-//    // Other
-//    public static final Item WOODEN_BUCKET = registerItem("wooden_bucket", new WoodenBucketItem(new Item.Settings(), Weight.NORMAL, Size.MEDIUM, 4), PrimevalItems.PRIMEVAL_TOOLS);
-//    public static final Item WATER_WOODEN_BUCKET = registerItem("water_wooden_bucket", new WaterWoodenBucketItem(new Item.Settings().recipeRemainder(WOODEN_BUCKET), Weight.HEAVY, Size.MEDIUM), PrimevalItems.PRIMEVAL_TOOLS);
+    // Other
+    public static final Item WOODEN_BUCKET = registerItem("wooden_bucket", SETTINGS_BASIC(), WoodenBucketItem::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Item WOODEN_BUCKET_WATER = registerItem("wooden_bucket_water", SETTINGS_BASIC().recipeRemainder(WOODEN_BUCKET), WaterWoodenBucketItem::new, Weight.NORMAL, Size.MEDIUM);
 //    public static final Item FIRED_CLAY_JUG = registerItem("fired_clay_jug", new EmptyJugItem(new Item.Settings(), Weight.NORMAL, Size.LARGE), PrimevalItems.PRIMEVAL_TOOLS);
 //    public static final Item FIRED_CLAY_WATER_JUG = registerItem("fired_clay_jug_filled", new JugItem(new Item.Settings(), Weight.NORMAL, Size.LARGE), PrimevalItems.PRIMEVAL_TOOLS);
 //    public static final Item FIRED_CLAY_VESSEL = registerItem("fired_clay_vessel", new VesselItem(new Item.Settings().maxCount(1), Weight.NORMAL, Size.LARGE), PrimevalItems.PRIMEVAL_TOOLS);
