@@ -236,6 +236,23 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 			itemModelGenerator.register(FIRED_CLAY_VESSEL, Models.GENERATED);
 			itemModelGenerator.register(QUERN_WHEEL, Models.GENERATED);
 
+			itemModelGenerator.register(CLAY_INGOT_MOLD, Models.GENERATED);
+			itemModelGenerator.register(FIRED_CLAY_INGOT_MOLD, Models.GENERATED);
+			itemModelGenerator.register(CLAY_AXE_HEAD_MOLD, Models.GENERATED);
+			itemModelGenerator.register(FIRED_CLAY_AXE_HEAD_MOLD, Models.GENERATED);
+			itemModelGenerator.register(CLAY_CHISEL_HEAD_MOLD, Models.GENERATED);
+			itemModelGenerator.register(FIRED_CLAY_CHISEL_HEAD_MOLD, Models.GENERATED);
+			itemModelGenerator.register(CLAY_KNIFE_BLADE_MOLD, Models.GENERATED);
+			itemModelGenerator.register(FIRED_CLAY_KNIFE_BLADE_MOLD, Models.GENERATED);
+			itemModelGenerator.register(CLAY_PICKAXE_HEAD_MOLD, Models.GENERATED);
+			itemModelGenerator.register(FIRED_CLAY_PICKAXE_HEAD_MOLD, Models.GENERATED);
+			itemModelGenerator.register(CLAY_SHOVEL_HEAD_MOLD, Models.GENERATED);
+			itemModelGenerator.register(FIRED_CLAY_SHOVEL_HEAD_MOLD, Models.GENERATED);
+			itemModelGenerator.register(CLAY_SWORD_BLADE_MOLD, Models.GENERATED);
+			itemModelGenerator.register(FIRED_CLAY_SWORD_BLADE_MOLD, Models.GENERATED);
+			itemModelGenerator.register(CLAY_HOE_HEAD_MOLD, Models.GENERATED);
+			itemModelGenerator.register(FIRED_CLAY_HOE_HEAD_MOLD, Models.GENERATED);
+
 			itemModelGenerator.register(COPPER_INGOT, Models.GENERATED);
 			itemModelGenerator.register(COPPER_CHUNK, Models.GENERATED);
 			itemModelGenerator.register(TIN_INGOT, Models.GENERATED);

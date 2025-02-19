@@ -172,6 +172,23 @@ public class PrimevalItemGroups {
                 entries.add(CLAY_VESSEL);
                 entries.add(FIRED_CLAY_VESSEL);
 
+                entries.add(CLAY_INGOT_MOLD);
+                entries.add(FIRED_CLAY_INGOT_MOLD);
+                entries.add(CLAY_AXE_HEAD_MOLD);
+                entries.add(FIRED_CLAY_AXE_HEAD_MOLD);
+                entries.add(CLAY_CHISEL_HEAD_MOLD);
+                entries.add(FIRED_CLAY_CHISEL_HEAD_MOLD);
+                entries.add(CLAY_KNIFE_BLADE_MOLD);
+                entries.add(FIRED_CLAY_KNIFE_BLADE_MOLD);
+                entries.add(CLAY_PICKAXE_HEAD_MOLD);
+                entries.add(FIRED_CLAY_PICKAXE_HEAD_MOLD);
+                entries.add(CLAY_SHOVEL_HEAD_MOLD);
+                entries.add(FIRED_CLAY_SHOVEL_HEAD_MOLD);
+                entries.add(CLAY_SWORD_BLADE_MOLD);
+                entries.add(FIRED_CLAY_SWORD_BLADE_MOLD);
+                entries.add(CLAY_HOE_HEAD_MOLD);
+                entries.add(FIRED_CLAY_HOE_HEAD_MOLD);
+
                 entries.add(COPPER_INGOT);
                 entries.add(COPPER_CHUNK);
                 entries.add(TIN_INGOT);

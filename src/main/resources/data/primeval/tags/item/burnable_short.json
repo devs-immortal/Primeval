@@ -3,8 +3,8 @@
   "values": [
     "#primeval:saplings",
     "#primeval:daub",
-    "#primeval:fences",
-    "#primeval:fence_gates",
+    "#minecraft:fences",
+    "#minecraft:fence_gates",
     "#primeval:doors",
     "primeval:straw",
     "primeval:stick",

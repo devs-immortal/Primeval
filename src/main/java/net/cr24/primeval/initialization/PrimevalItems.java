@@ -17,8 +17,10 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.function.Consumer;
 
 import static net.cr24.primeval.Primeval.identify;
@@ -145,6 +147,26 @@ public class PrimevalItems {
     public static final Item FIRED_CLAY_VESSEL = registerItem("fired_clay_vessel", SETTINGS_BASIC(), VesselItem::new, Weight.NORMAL, Size.LARGE);
     public static final Item QUERN_WHEEL = registerItem("quern_wheel", SETTINGS_BASIC().maxDamage(99), (w, s, settings) -> new WeightedItem(w, s, 1, settings), Weight.HEAVY, Size.MEDIUM);
 
+    // Molds
+    public static final Item CLAY_INGOT_MOLD = registerItem("clay_mold_ingot", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Item CLAY_AXE_HEAD_MOLD = registerItem("clay_mold_axe_head", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Item CLAY_CHISEL_HEAD_MOLD = registerItem("clay_mold_chisel_head", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Item CLAY_KNIFE_BLADE_MOLD = registerItem("clay_mold_knife_blade", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Item CLAY_PICKAXE_HEAD_MOLD = registerItem("clay_mold_pickaxe_head", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Item CLAY_SHOVEL_HEAD_MOLD = registerItem("clay_mold_shovel_head", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Item CLAY_SWORD_BLADE_MOLD = registerItem("clay_mold_sword_blade", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Item CLAY_HOE_HEAD_MOLD = registerItem("clay_mold_hoe_head", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
+
+    public static final List<Item> FIRED_MOLDS = new ArrayList<>(8);
+    public static final Item FIRED_CLAY_INGOT_MOLD = registerMold("ingot", Weight.NORMAL, Size.MEDIUM, 9000);
+    public static final Item FIRED_CLAY_AXE_HEAD_MOLD = registerMold("axe_head", Weight.NORMAL, Size.MEDIUM, 9000 * 3);
+    public static final Item FIRED_CLAY_CHISEL_HEAD_MOLD = registerMold("chisel_head", Weight.NORMAL, Size.MEDIUM, 9000 * 2);
+    public static final Item FIRED_CLAY_KNIFE_BLADE_MOLD = registerMold("knife_blade", Weight.NORMAL, Size.MEDIUM, 9000 * 2);
+    public static final Item FIRED_CLAY_PICKAXE_HEAD_MOLD = registerMold("pickaxe_head", Weight.NORMAL, Size.MEDIUM, 9000 * 3);
+    public static final Item FIRED_CLAY_SHOVEL_HEAD_MOLD = registerMold("shovel_head", Weight.NORMAL, Size.MEDIUM, 9000);
+    public static final Item FIRED_CLAY_SWORD_BLADE_MOLD = registerMold("sword_blade", Weight.NORMAL, Size.MEDIUM, 9000 * 2);
+    public static final Item FIRED_CLAY_HOE_HEAD_MOLD = registerMold("hoe_head", Weight.NORMAL, Size.MEDIUM, 9000 * 2);
+
     // endregion
 
     // region METALS
@@ -204,6 +226,12 @@ public class PrimevalItems {
     private static <T extends Item> T registerItem(String id, Item.Settings settings, ItemFactory<T> factory, Weight w, Size s, Consumer<Block>... additionalActions) {
         RegistryKey<Item> itemKey = RegistryKey.of(RegistryKeys.ITEM, Primeval.identify(id));
         return Registry.register(Registries.ITEM, identify(id), factory.create(w, s, settings.registryKey(itemKey)));
+    }
+
+    private static Item registerMold(String formId, Weight weight, Size size, int amount) {
+        Item registered = registerItem("fired_clay_mold_" + formId, SETTINGS_BASIC(), (w, s, settings) -> new MoldItem(w, s, amount, settings), weight, size);
+        FIRED_MOLDS.add(registered);
+        return registered;
     }
 
     @FunctionalInterface
