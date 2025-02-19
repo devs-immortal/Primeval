@@ -10,6 +10,7 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.Item;
+import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.consume.ApplyEffectsConsumeEffect;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -89,7 +90,7 @@ public class PrimevalItems {
 
     // endregion
 
-    // region 
+    // region ORE CHUNKS
 
     public static final Item RAW_COPPER_MALACHITE_SMALL = registerItem("raw_copper_malachite_small", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.SMALL);
     public static final Item RAW_COPPER_MALACHITE_MEDIUM = registerItem("raw_copper_malachite_medium", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
@@ -120,6 +121,30 @@ public class PrimevalItems {
     public static final Item RAW_LAZURITE_LARGE = registerItem("raw_lazurite_large", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.LARGE);
     
     // endregion
+
+    // region TOOLS+
+
+    public static final Item FLINT_AXE = registerItem("flint_axe", SETTINGS_BASIC(), (w, s, settings) -> new PrimevalAxeItem(PrimevalToolMaterials.FLINT, 1.0f, -3.0f, w, s, settings), Weight.HEAVY, Size.LARGE);
+    public static final Item FLINT_KNIFE = registerItem("flint_knife", SETTINGS_BASIC(), (w, s, settings) -> new PrimevalKnifeItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.KNIFE_DAMAGE_MULTIPLIER, -3.0f, w, s, settings), Weight.HEAVY, Size.LARGE);
+    public static final Item FLINT_SHOVEL = registerItem("flint_shovel", SETTINGS_BASIC(), (w, s, settings) -> new PrimevalShovelItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.BLUNT_DAMAGE_MULTIPLIER, -3.0f, w, s, settings), Weight.HEAVY, Size.LARGE);
+    public static final Item FLINT_SPEAR = registerItem("flint_spear", SETTINGS_BASIC(), (w, s, settings) -> new PrimevalSpearItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.SPEAR_DAMAGE_MULTIPLIER, -3.5f, w, s, settings), Weight.HEAVY, Size.LARGE);
+//    public static final Item[] COPPER_TOOLS = registerToolSet("copper", PrimevalToolMaterials.COPPER, new Item.Settings(), 1.5f, Weight.HEAVY, Size.LARGE);
+//    public static final Item[] BRONZE_TOOLS = registerToolSet("bronze", PrimevalToolMaterials.BRONZE, new Item.Settings(), 1.5f, Weight.HEAVY, Size.LARGE);
+//
+//    // Tool Parts
+//    public static final Item[] COPPER_TOOL_PARTS = registerToolPartSet("copper", new Item.Settings(), Weight.NORMAL, Size.MEDIUM);
+//    public static final Item[] BRONZE_TOOL_PARTS = registerToolPartSet("bronze", new Item.Settings(), Weight.NORMAL, Size.MEDIUM);
+//
+//    // Other
+//    public static final Item WOODEN_BUCKET = registerItem("wooden_bucket", new WoodenBucketItem(new Item.Settings(), Weight.NORMAL, Size.MEDIUM, 4), PrimevalItems.PRIMEVAL_TOOLS);
+//    public static final Item WATER_WOODEN_BUCKET = registerItem("water_wooden_bucket", new WaterWoodenBucketItem(new Item.Settings().recipeRemainder(WOODEN_BUCKET), Weight.HEAVY, Size.MEDIUM), PrimevalItems.PRIMEVAL_TOOLS);
+//    public static final Item FIRED_CLAY_JUG = registerItem("fired_clay_jug", new EmptyJugItem(new Item.Settings(), Weight.NORMAL, Size.LARGE), PrimevalItems.PRIMEVAL_TOOLS);
+//    public static final Item FIRED_CLAY_WATER_JUG = registerItem("fired_clay_jug_filled", new JugItem(new Item.Settings(), Weight.NORMAL, Size.LARGE), PrimevalItems.PRIMEVAL_TOOLS);
+//    public static final Item FIRED_CLAY_VESSEL = registerItem("fired_clay_vessel", new VesselItem(new Item.Settings().maxCount(1), Weight.NORMAL, Size.LARGE), PrimevalItems.PRIMEVAL_TOOLS);
+//    public static final Item QUERN_WHEEL = registerItem("quern_wheel", new WeightedItem(new Item.Settings().maxDamage(99), Weight.HEAVY, Size.MEDIUM, true), PrimevalItems.PRIMEVAL_TOOLS);
+
+    // endergion
+
 
 
     public static void init() {

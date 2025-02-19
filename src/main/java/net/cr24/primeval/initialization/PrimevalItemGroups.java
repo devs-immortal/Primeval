@@ -149,9 +149,12 @@ public class PrimevalItemGroups {
     );
 
     public static final RegistryKey<ItemGroup> TOOLS = create("tools", FabricItemGroup.builder()
-            .icon(() -> new ItemStack(DIRT))
+            .icon(() -> new ItemStack(FLINT_AXE))
             .entries((context, entries) -> {
-                entries.add(DIRT);
+                entries.add(FLINT_AXE);
+                entries.add(FLINT_KNIFE);
+                entries.add(FLINT_SHOVEL);
+                entries.add(FLINT_SPEAR);
             })
     );
 

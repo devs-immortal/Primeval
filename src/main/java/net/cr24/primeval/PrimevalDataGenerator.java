@@ -220,6 +220,10 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 			itemModelGenerator.register(RAW_LAZURITE_MEDIUM, Models.GENERATED);
 			itemModelGenerator.register(RAW_LAZURITE_LARGE, Models.GENERATED);
 
+			itemModelGenerator.register(FLINT_AXE, Models.HANDHELD);
+			itemModelGenerator.register(FLINT_KNIFE, Models.HANDHELD);
+			itemModelGenerator.register(FLINT_SHOVEL, Models.HANDHELD);
+			itemModelGenerator.registerWithInHandModel(FLINT_SPEAR);
 		}
 
 		@Override
