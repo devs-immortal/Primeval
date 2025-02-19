@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.block.Block;
 import net.minecraft.client.data.*;
 import net.minecraft.client.render.item.tint.GrassTintSource;
+import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.state.property.Properties;
@@ -224,6 +225,10 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 			itemModelGenerator.register(FLINT_KNIFE, Models.HANDHELD);
 			itemModelGenerator.register(FLINT_SHOVEL, Models.HANDHELD);
 			itemModelGenerator.registerWithInHandModel(FLINT_SPEAR);
+			registerToolSet(itemModelGenerator, COPPER_TOOLS);
+			registerToolSet(itemModelGenerator, BRONZE_TOOLS);
+			registerNormalItemSet(itemModelGenerator, COPPER_TOOL_PARTS);
+			registerNormalItemSet(itemModelGenerator, BRONZE_TOOL_PARTS);
 		}
 
 		@Override
@@ -282,6 +287,21 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 			Identifier identifier6 = ModelIds.getBlockSubModelId(bars, "_side_alt");
 			blockStateModelGenerator.blockStateCollector.accept(MultipartBlockStateSupplier.create(bars).with(BlockStateVariant.create().put(VariantSettings.MODEL, identifier)).with(When.create().set(Properties.NORTH, false).set(Properties.EAST, false).set(Properties.SOUTH, false).set(Properties.WEST, false), BlockStateVariant.create().put(VariantSettings.MODEL, identifier2)).with(When.create().set(Properties.NORTH, true).set(Properties.EAST, false).set(Properties.SOUTH, false).set(Properties.WEST, false), BlockStateVariant.create().put(VariantSettings.MODEL, identifier3)).with(When.create().set(Properties.NORTH, false).set(Properties.EAST, true).set(Properties.SOUTH, false).set(Properties.WEST, false), BlockStateVariant.create().put(VariantSettings.MODEL, identifier3).put(VariantSettings.Y, VariantSettings.Rotation.R90)).with(When.create().set(Properties.NORTH, false).set(Properties.EAST, false).set(Properties.SOUTH, true).set(Properties.WEST, false), BlockStateVariant.create().put(VariantSettings.MODEL, identifier4)).with(When.create().set(Properties.NORTH, false).set(Properties.EAST, false).set(Properties.SOUTH, false).set(Properties.WEST, true), BlockStateVariant.create().put(VariantSettings.MODEL, identifier4).put(VariantSettings.Y, VariantSettings.Rotation.R90)).with(When.create().set(Properties.NORTH, true), BlockStateVariant.create().put(VariantSettings.MODEL, identifier5)).with(When.create().set(Properties.EAST, true), BlockStateVariant.create().put(VariantSettings.MODEL, identifier5).put(VariantSettings.Y, VariantSettings.Rotation.R90)).with(When.create().set(Properties.SOUTH, true), BlockStateVariant.create().put(VariantSettings.MODEL, identifier6)).with(When.create().set(Properties.WEST, true), BlockStateVariant.create().put(VariantSettings.MODEL, identifier6).put(VariantSettings.Y, VariantSettings.Rotation.R90)));
 			blockStateModelGenerator.registerItemModel(bars);
+		}
+
+		private static void registerToolSet(ItemModelGenerator itemModelGenerator, ToolSet set) {
+			itemModelGenerator.register(set.axe(), Models.HANDHELD);
+			itemModelGenerator.register(set.chisel(), Models.HANDHELD);
+			itemModelGenerator.register(set.knife(), Models.HANDHELD);
+			itemModelGenerator.register(set.pickaxe(), Models.HANDHELD);
+			itemModelGenerator.register(set.shovel(), Models.HANDHELD);
+			itemModelGenerator.register(set.sword(), Models.HANDHELD);
+			itemModelGenerator.register(set.hoe(), Models.HANDHELD);
+			itemModelGenerator.registerWithInHandModel(set.spear());
+		}
+
+		private static <T extends Iterable<Item>> void registerNormalItemSet(ItemModelGenerator itemModelGenerator, T set) {
+			set.iterator().forEachRemaining((b) -> itemModelGenerator.register(b, Models.GENERATED));
 		}
 	}
 }

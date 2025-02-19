@@ -21,7 +21,7 @@ public class PrimevalPickaxeItem extends PickaxeItem implements IWeightedItem {
     private final Weight weight;
     private final Size size;
 
-    public PrimevalPickaxeItem(ToolMaterial material, float attackDamage, float attackSpeed, Settings settings, Weight weight, Size size) {
+    public PrimevalPickaxeItem(ToolMaterial material, float attackDamage, float attackSpeed, Weight weight, Size size, Settings settings) {
         super(material, (int) attackDamage, attackSpeed, settings);
         this.weight = weight;
         this.size = size;

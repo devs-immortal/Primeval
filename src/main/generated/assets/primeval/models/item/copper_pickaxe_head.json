@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "primeval:item/copper_pickaxe_head"
+  }
+}

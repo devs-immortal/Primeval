@@ -3,6 +3,7 @@ package net.cr24.primeval.initialization;
 import net.cr24.primeval.Primeval;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
@@ -13,6 +14,7 @@ import net.minecraft.text.Text;
 
 import static net.cr24.primeval.initialization.PrimevalBlocks.*;
 import static net.cr24.primeval.initialization.PrimevalItems.*;
+import static net.cr24.primeval.initialization.PrimevalItems.BRONZE_TOOL_PARTS;
 
 public class PrimevalItemGroups {
 
@@ -155,6 +157,10 @@ public class PrimevalItemGroups {
                 entries.add(FLINT_KNIFE);
                 entries.add(FLINT_SHOVEL);
                 entries.add(FLINT_SPEAR);
+                addItemSet(entries, COPPER_TOOLS);
+                addItemSet(entries, BRONZE_TOOLS);
+                addItemSet(entries, COPPER_TOOL_PARTS);
+                addItemSet(entries, BRONZE_TOOL_PARTS);
             })
     );
 
@@ -194,6 +200,10 @@ public class PrimevalItemGroups {
 
     private static <T extends Iterable<BlockSet>> void addBlockSetSet(ItemGroup.Entries entries, T bs) {
         bs.iterator().forEachRemaining((b) -> addBlockSet(entries, b));
+    }
+
+    private static <T extends Iterable<Item>> void addItemSet(ItemGroup.Entries entries, T bs) {
+        bs.iterator().forEachRemaining((b) -> entries.add(b));
     }
 
 }

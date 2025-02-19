@@ -6,9 +6,10 @@ import net.cr24.primeval.item.*;
 import net.cr24.primeval.item.tool.*;
 import net.cr24.primeval.util.Size;
 import net.cr24.primeval.util.Weight;
-import net.minecraft.block.Block;
+import net.minecraft.block.*;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.item.AxeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.consume.ApplyEffectsConsumeEffect;
@@ -16,7 +17,10 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.function.Consumer;
 
 import static net.cr24.primeval.Primeval.identify;
@@ -128,13 +132,13 @@ public class PrimevalItems {
     public static final Item FLINT_KNIFE = registerItem("flint_knife", SETTINGS_BASIC(), (w, s, settings) -> new PrimevalKnifeItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.KNIFE_DAMAGE_MULTIPLIER, -3.0f, w, s, settings), Weight.HEAVY, Size.LARGE);
     public static final Item FLINT_SHOVEL = registerItem("flint_shovel", SETTINGS_BASIC(), (w, s, settings) -> new PrimevalShovelItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.BLUNT_DAMAGE_MULTIPLIER, -3.0f, w, s, settings), Weight.HEAVY, Size.LARGE);
     public static final Item FLINT_SPEAR = registerItem("flint_spear", SETTINGS_BASIC(), (w, s, settings) -> new PrimevalSpearItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.SPEAR_DAMAGE_MULTIPLIER, -3.5f, w, s, settings), Weight.HEAVY, Size.LARGE);
-//    public static final Item[] COPPER_TOOLS = registerToolSet("copper", PrimevalToolMaterials.COPPER, new Item.Settings(), 1.5f, Weight.HEAVY, Size.LARGE);
-//    public static final Item[] BRONZE_TOOLS = registerToolSet("bronze", PrimevalToolMaterials.BRONZE, new Item.Settings(), 1.5f, Weight.HEAVY, Size.LARGE);
-//
-//    // Tool Parts
-//    public static final Item[] COPPER_TOOL_PARTS = registerToolPartSet("copper", new Item.Settings(), Weight.NORMAL, Size.MEDIUM);
-//    public static final Item[] BRONZE_TOOL_PARTS = registerToolPartSet("bronze", new Item.Settings(), Weight.NORMAL, Size.MEDIUM);
-//
+    public static final ToolSet COPPER_TOOLS = ToolSet.from("copper", PrimevalToolMaterials.COPPER,1.5f);
+    public static final ToolSet BRONZE_TOOLS = ToolSet.from("bronze", PrimevalToolMaterials.BRONZE, 1.5f);
+
+    // Tool Parts
+    public static final ToolPartSet COPPER_TOOL_PARTS = ToolPartSet.from("copper");
+    public static final ToolPartSet BRONZE_TOOL_PARTS = ToolPartSet.from("bronze");
+
 //    // Other
 //    public static final Item WOODEN_BUCKET = registerItem("wooden_bucket", new WoodenBucketItem(new Item.Settings(), Weight.NORMAL, Size.MEDIUM, 4), PrimevalItems.PRIMEVAL_TOOLS);
 //    public static final Item WATER_WOODEN_BUCKET = registerItem("water_wooden_bucket", new WaterWoodenBucketItem(new Item.Settings().recipeRemainder(WOODEN_BUCKET), Weight.HEAVY, Size.MEDIUM), PrimevalItems.PRIMEVAL_TOOLS);
@@ -159,6 +163,45 @@ public class PrimevalItems {
     @FunctionalInterface
     public interface ItemFactory<T extends Item> {
         T create(Weight weight, Size size, Item.Settings settings);
+    }
+
+    public record ToolSet(PrimevalAxeItem axe, ChiselItem chisel, PrimevalKnifeItem knife, PrimevalPickaxeItem pickaxe, PrimevalShovelItem shovel, PrimevalSwordItem sword, PrimevalHoeItem hoe, PrimevalSpearItem spear) implements Iterable<Item> {
+        public @NotNull Iterator<Item> iterator() {
+            return Arrays.stream(new Item[]{axe, chisel, knife, pickaxe, shovel, sword, hoe, spear}).iterator();
+        }
+
+        public static ToolSet from(String material_id, ToolMaterial material, float attackDamage) {
+            return new ToolSet(
+                    registerItem(material_id + "_axe", SETTINGS_BASIC(), (w, s, settings) -> new PrimevalAxeItem(material, attackDamage, -3.0f, w, s, settings), Weight.HEAVY, Size.LARGE),
+                    registerItem(material_id + "_chisel", SETTINGS_BASIC(), (w, s, settings) -> new ChiselItem(material, attackDamage * PrimevalToolMaterials.BLUNT_DAMAGE_MULTIPLIER, -3.0f, w, s, settings), Weight.HEAVY, Size.MEDIUM),
+                    registerItem(material_id + "_knife", SETTINGS_BASIC(), (w, s, settings) -> new PrimevalKnifeItem(material, attackDamage * PrimevalToolMaterials.KNIFE_DAMAGE_MULTIPLIER, -1.5f, w, s, settings), Weight.HEAVY, Size.MEDIUM),
+                    registerItem(material_id + "_pickaxe", SETTINGS_BASIC(), (w, s, settings) -> new PrimevalPickaxeItem(material, attackDamage, -3.0f, w, s, settings), Weight.HEAVY, Size.LARGE),
+                    registerItem(material_id + "_shovel", SETTINGS_BASIC(), (w, s, settings) -> new PrimevalShovelItem(material, attackDamage * PrimevalToolMaterials.BLUNT_DAMAGE_MULTIPLIER, -3.0f, w, s, settings), Weight.HEAVY, Size.LARGE),
+                    registerItem(material_id + "_sword", SETTINGS_BASIC(), (w, s, settings) -> new PrimevalSwordItem(material, attackDamage * PrimevalToolMaterials.SWORD_DAMAGE_MULTIPLIER, -2.5f, w, s, settings), Weight.HEAVY, Size.LARGE),
+                    registerItem(material_id + "_hoe", SETTINGS_BASIC(), (w, s, settings) -> new PrimevalHoeItem(material, attackDamage * PrimevalToolMaterials.BLUNT_DAMAGE_MULTIPLIER, -3.0f, w, s, settings), Weight.HEAVY, Size.LARGE),
+                    registerItem(material_id + "_spear", SETTINGS_BASIC(), (w, s, settings) -> new PrimevalSpearItem(material, attackDamage * PrimevalToolMaterials.SPEAR_DAMAGE_MULTIPLIER, -3.5f, w, s, settings), Weight.HEAVY, Size.LARGE)
+            );
+
+        }
+    }
+
+    public record ToolPartSet(WeightedItem axe_head, WeightedItem chisel_head, WeightedItem knife_blade, WeightedItem pickaxe_head, WeightedItem shovel_head, WeightedItem sword_blade, WeightedItem hoe_head) implements Iterable<Item> {
+        public @NotNull Iterator<Item> iterator() {
+            return Arrays.stream(new Item[]{axe_head, chisel_head, knife_blade, pickaxe_head, shovel_head, sword_blade, hoe_head}).iterator();
+        }
+
+        public static ToolPartSet from(String material_id) {
+            return new ToolPartSet(
+                    registerItem(material_id + "_axe_head", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM),
+                    registerItem(material_id + "_chisel_head", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM),
+                    registerItem(material_id + "_knife_blade", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM),
+                    registerItem(material_id + "_pickaxe_head", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM),
+                    registerItem(material_id + "_shovel_head", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM),
+                    registerItem(material_id + "_sword_blade", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM),
+                    registerItem(material_id + "_hoe_head", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM)
+            );
+
+        }
     }
 
 
