@@ -20,6 +20,14 @@ public class PrimevalItemActions {
         return new FoodComponent.Builder().nutrition(nutrition).saturationModifier(saturationModifier).build();
     }
 
+    public static FoodComponent foodComponent(int nutrition, float saturationModifier, boolean alwaysEat) {
+        if (alwaysEat) {
+            return new FoodComponent.Builder().nutrition(nutrition).saturationModifier(saturationModifier).alwaysEdible().build();
+        } else {
+            return new FoodComponent.Builder().nutrition(nutrition).saturationModifier(saturationModifier).build();
+        }
+    }
+
     public static ConsumableComponent consumableComponent(Consumable... consumeEffects) {
         return new ConsumableComponent(1.6f, UseAction.EAT, SoundEvents.ENTITY_GENERIC_EAT, true, Arrays.stream(consumeEffects).map(Consumable::asConsumeEffect).toList());
     }

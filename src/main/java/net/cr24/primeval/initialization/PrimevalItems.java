@@ -7,10 +7,14 @@ import net.cr24.primeval.item.tool.*;
 import net.cr24.primeval.util.Size;
 import net.cr24.primeval.util.Weight;
 import net.minecraft.block.*;
+import net.minecraft.component.type.ConsumableComponent;
+import net.minecraft.component.type.ConsumableComponents;
+import net.minecraft.component.type.FoodComponents;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.consume.ApplyEffectsConsumeEffect;
 import net.minecraft.registry.Registries;
@@ -142,13 +146,12 @@ public class PrimevalItems {
     // Other
     public static final Item WOODEN_BUCKET = registerItem("wooden_bucket", SETTINGS_BASIC(), WoodenBucketItem::new, Weight.NORMAL, Size.MEDIUM);
     public static final Item WOODEN_BUCKET_WATER = registerItem("wooden_bucket_water", SETTINGS_BASIC().recipeRemainder(WOODEN_BUCKET), WaterWoodenBucketItem::new, Weight.NORMAL, Size.MEDIUM);
-//    public static final Item FIRED_CLAY_JUG = registerItem("fired_clay_jug", new EmptyJugItem(new Item.Settings(), Weight.NORMAL, Size.LARGE), PrimevalItems.PRIMEVAL_TOOLS);
-//    public static final Item FIRED_CLAY_WATER_JUG = registerItem("fired_clay_jug_filled", new JugItem(new Item.Settings(), Weight.NORMAL, Size.LARGE), PrimevalItems.PRIMEVAL_TOOLS);
+    public static final Item FIRED_CLAY_JUG = registerItem("fired_clay_jug", SETTINGS_BASIC(), EmptyJugItem::new, Weight.NORMAL, Size.LARGE);
+    public static final Item FIRED_CLAY_WATER_JUG = registerItem("fired_clay_jug_filled", SETTINGS_BASIC().recipeRemainder(FIRED_CLAY_JUG).food(foodComponent(0, 0f, true), ConsumableComponents.drink().build()).useRemainder(FIRED_CLAY_JUG), WeightedItem::new, Weight.NORMAL, Size.LARGE);
 //    public static final Item FIRED_CLAY_VESSEL = registerItem("fired_clay_vessel", new VesselItem(new Item.Settings().maxCount(1), Weight.NORMAL, Size.LARGE), PrimevalItems.PRIMEVAL_TOOLS);
 //    public static final Item QUERN_WHEEL = registerItem("quern_wheel", new WeightedItem(new Item.Settings().maxDamage(99), Weight.HEAVY, Size.MEDIUM, true), PrimevalItems.PRIMEVAL_TOOLS);
 
     // endergion
-
 
 
     public static void init() {

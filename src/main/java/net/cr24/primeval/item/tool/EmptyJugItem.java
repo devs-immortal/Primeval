@@ -1,13 +1,14 @@
 package net.cr24.primeval.item.tool;
 
 import net.cr24.primeval.initialization.PrimevalItems;
-import net.cr24.primeval.item.WeightedItem;
+import net.cr24.primeval.item.IWeightedItem;
 import net.cr24.primeval.util.Size;
 import net.cr24.primeval.util.Weight;
-import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
-import net.minecraft.potion.Potions;
+import net.minecraft.item.GlassBottleItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUsage;
 import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -21,10 +22,15 @@ import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 
-public class WoodenBucketItem extends WeightedItem {
+public class EmptyJugItem extends Item implements IWeightedItem {
 
-    public WoodenBucketItem(Weight weight, Size size, Settings settings) {
-        super(weight, size, 4, settings);
+    private final Weight weight;
+    private final Size size;
+
+    public EmptyJugItem(Weight weight, Size size, Settings settings) {
+        super(settings.maxCount(1));
+        this.weight = weight;
+        this.size = size;
     }
 
     @Override
@@ -39,9 +45,9 @@ public class WoodenBucketItem extends WeightedItem {
                 }
 
                 if (world.getFluidState(blockPos).isIn(FluidTags.WATER)) {
-                    world.playSound(user, user.getX(), user.getY(), user.getZ(), SoundEvents.ITEM_BUCKET_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+                    world.playSound(user, user.getX(), user.getY(), user.getZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
                     world.emitGameEvent(user, GameEvent.FLUID_PICKUP, blockPos);
-                    return ActionResult.SUCCESS.withNewHandStack(this.fill(itemStack, user, new ItemStack(PrimevalItems.WOODEN_BUCKET_WATER)));
+                    return ActionResult.SUCCESS.withNewHandStack(this.fill(itemStack, user, new ItemStack(PrimevalItems.FIRED_CLAY_WATER_JUG)));
                 }
             }
         }
