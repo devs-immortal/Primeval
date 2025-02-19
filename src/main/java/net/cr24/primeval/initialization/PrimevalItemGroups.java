@@ -148,6 +148,7 @@ public class PrimevalItemGroups {
                 entries.add(CLAY_JUG);
                 entries.add(FIRED_CLAY_JUG);
                 entries.add(CLAY_VESSEL);
+                entries.add(FIRED_CLAY_VESSEL);
             })
     );
 
@@ -166,6 +167,7 @@ public class PrimevalItemGroups {
                 entries.add(WOODEN_BUCKET_WATER);
                 entries.add(FIRED_CLAY_JUG);
                 entries.add(FIRED_CLAY_WATER_JUG);
+                entries.add(FIRED_CLAY_VESSEL);
             })
     );
 

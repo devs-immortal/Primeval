@@ -148,7 +148,7 @@ public class PrimevalItems {
     public static final Item WOODEN_BUCKET_WATER = registerItem("wooden_bucket_water", SETTINGS_BASIC().recipeRemainder(WOODEN_BUCKET), WaterWoodenBucketItem::new, Weight.NORMAL, Size.MEDIUM);
     public static final Item FIRED_CLAY_JUG = registerItem("fired_clay_jug", SETTINGS_BASIC(), EmptyJugItem::new, Weight.NORMAL, Size.LARGE);
     public static final Item FIRED_CLAY_WATER_JUG = registerItem("fired_clay_jug_filled", SETTINGS_BASIC().recipeRemainder(FIRED_CLAY_JUG).food(foodComponent(0, 0f, true), ConsumableComponents.drink().build()).useRemainder(FIRED_CLAY_JUG), WeightedItem::new, Weight.NORMAL, Size.LARGE);
-//    public static final Item FIRED_CLAY_VESSEL = registerItem("fired_clay_vessel", new VesselItem(new Item.Settings().maxCount(1), Weight.NORMAL, Size.LARGE), PrimevalItems.PRIMEVAL_TOOLS);
+    public static final Item FIRED_CLAY_VESSEL = registerItem("fired_clay_vessel", SETTINGS_BASIC(), VesselItem::new, Weight.NORMAL, Size.LARGE);
 //    public static final Item QUERN_WHEEL = registerItem("quern_wheel", new WeightedItem(new Item.Settings().maxDamage(99), Weight.HEAVY, Size.MEDIUM, true), PrimevalItems.PRIMEVAL_TOOLS);
 
     // endergion
