@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Pair;
 
 import java.util.List;
 
@@ -28,13 +29,32 @@ public class MoldItem extends WeightedItem {
         return this.capacity;
     }
 
+    public static Pair<Boolean, PrimevalDataComponentTypes.FluidContentComponent> insertFluid(PrimevalDataComponentTypes.FluidContentComponent incomingFluid, ItemStack mold) {
+        var heldFluid = mold.getOrDefault(PrimevalDataComponentTypes.FLUID_CONTENTS, new PrimevalDataComponentTypes.FluidContentComponent(FluidVariant.of(Fluids.EMPTY), 0));
+        int moldCapacity = ((MoldItem)mold.getItem()).getCapacity();
+        // if mold is empty or holds same fluid and still has room
+        if (heldFluid.fluid().getFluid() == Fluids.EMPTY || (heldFluid.fluid() == incomingFluid.fluid() && heldFluid.amount() < moldCapacity)) {
+            int amountToInsert = Math.min(moldCapacity - heldFluid.amount(), Math.min(MAX_INSERTION_AMOUNT, incomingFluid.amount()));
+            mold.set(PrimevalDataComponentTypes.FLUID_CONTENTS, new PrimevalDataComponentTypes.FluidContentComponent(incomingFluid.fluid(), heldFluid.amount() + amountToInsert));
+            int remainingVesselAmount = incomingFluid.amount() - amountToInsert;
+            if (remainingVesselAmount == 0) {
+                return new Pair<>(true, null);
+            } else {
+                return new Pair<>(true, new PrimevalDataComponentTypes.FluidContentComponent(incomingFluid.fluid(), remainingVesselAmount));
+            }
+        } else {
+            // indicates could not fill
+            return new Pair<>(false, null);
+        }
+    }
+
     @Environment(EnvType.CLIENT)
     public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         var contents = stack.getOrDefault(PrimevalDataComponentTypes.FLUID_CONTENTS, new PrimevalDataComponentTypes.FluidContentComponent(FluidVariant.of(Fluids.EMPTY), 0));
         if (contents.amount() > 0) {
             tooltip.add(
                     (Text.translatable("text.primeval.fluid.contains", contents.amount(), Text.translatable(
-                            contents.fluid().getRegistryEntry().getIdAsString()
+                            "block." + contents.fluid().getRegistryEntry().getIdAsString().replace(':', '.')
                     ))
                     ).formatted(Formatting.GRAY));
         }
