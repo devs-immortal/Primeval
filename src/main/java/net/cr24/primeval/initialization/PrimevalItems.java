@@ -7,16 +7,10 @@ import net.cr24.primeval.item.tool.*;
 import net.cr24.primeval.util.Size;
 import net.cr24.primeval.util.Weight;
 import net.minecraft.block.*;
-import net.minecraft.component.type.ConsumableComponent;
 import net.minecraft.component.type.ConsumableComponents;
-import net.minecraft.component.type.FoodComponents;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.item.AxeItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.Items;
 import net.minecraft.item.ToolMaterial;
-import net.minecraft.item.consume.ApplyEffectsConsumeEffect;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -149,9 +143,58 @@ public class PrimevalItems {
     public static final Item FIRED_CLAY_JUG = registerItem("fired_clay_jug", SETTINGS_BASIC(), EmptyJugItem::new, Weight.NORMAL, Size.LARGE);
     public static final Item FIRED_CLAY_WATER_JUG = registerItem("fired_clay_jug_filled", SETTINGS_BASIC().recipeRemainder(FIRED_CLAY_JUG).food(foodComponent(0, 0f, true), ConsumableComponents.drink().build()).useRemainder(FIRED_CLAY_JUG), WeightedItem::new, Weight.NORMAL, Size.LARGE);
     public static final Item FIRED_CLAY_VESSEL = registerItem("fired_clay_vessel", SETTINGS_BASIC(), VesselItem::new, Weight.NORMAL, Size.LARGE);
-//    public static final Item QUERN_WHEEL = registerItem("quern_wheel", new WeightedItem(new Item.Settings().maxDamage(99), Weight.HEAVY, Size.MEDIUM, true), PrimevalItems.PRIMEVAL_TOOLS);
+    public static final Item QUERN_WHEEL = registerItem("quern_wheel", SETTINGS_BASIC().maxDamage(99), (w, s, settings) -> new WeightedItem(w, s, 1, settings), Weight.HEAVY, Size.MEDIUM);
 
-    // endergion
+    // endregion
+
+    // region METALS
+
+    // Primary
+    public static final Item COPPER_INGOT = registerItem("copper_ingot", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Item COPPER_CHUNK = registerItem("copper_chunk", SETTINGS_BASIC(), WeightedItem::new, Weight.LIGHT, Size.SMALL);
+    public static final Item TIN_INGOT = registerItem("tin_ingot", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Item TIN_CHUNK = registerItem("tin_chunk", SETTINGS_BASIC(), WeightedItem::new, Weight.LIGHT, Size.SMALL);
+    public static final Item ZINC_INGOT = registerItem("zinc_ingot", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Item ZINC_CHUNK = registerItem("zinc_chunk", SETTINGS_BASIC(), WeightedItem::new, Weight.LIGHT, Size.SMALL);
+    // Alloys
+    public static final Item BRONZE_INGOT = registerItem("bronze_ingot", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Item BRONZE_CHUNK = registerItem("bronze_chunk", SETTINGS_BASIC(), WeightedItem::new, Weight.LIGHT, Size.SMALL);
+    public static final Item BRASS_INGOT = registerItem("brass_ingot", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Item BRASS_CHUNK = registerItem("brass_chunk", SETTINGS_BASIC(), WeightedItem::new, Weight.LIGHT, Size.SMALL);
+    public static final Item PEWTER_INGOT = registerItem("pewter_ingot", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Item PEWTER_CHUNK = registerItem("pewter_chunk", SETTINGS_BASIC(), WeightedItem::new, Weight.LIGHT, Size.SMALL);
+    public static final Item GOLD_INGOT = registerItem("gold_ingot", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Item GOLD_CHUNK = registerItem("gold_chunk", SETTINGS_BASIC(), WeightedItem::new, Weight.LIGHT, Size.SMALL);
+    public static final Item BOTCHED_ALLOY_INGOT = registerItem("botched_alloy_ingot", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Item BOTCHED_ALLOY_CHUNK = registerItem("botched_alloy_chunk", SETTINGS_BASIC(), WeightedItem::new, Weight.LIGHT, Size.SMALL);
+    
+    // endregion
+
+    // region MISC
+
+    // Dyes
+    public static final Item WHITE_DYE = registerItem("dye_white", SETTINGS_BASIC(), WeightedItem::new, Weight.LIGHT, Size.SMALL);
+    public static final Item ORANGE_DYE = registerItem("dye_orange", SETTINGS_BASIC(), WeightedItem::new, Weight.LIGHT, Size.SMALL);
+    public static final Item MAGENTA_DYE = registerItem("dye_magenta", SETTINGS_BASIC(), WeightedItem::new, Weight.LIGHT, Size.SMALL);
+    public static final Item LIGHT_BLUE_DYE = registerItem("dye_light_blue", SETTINGS_BASIC(), WeightedItem::new, Weight.LIGHT, Size.SMALL);
+    public static final Item YELLOW_DYE = registerItem("dye_yellow", SETTINGS_BASIC(), WeightedItem::new, Weight.LIGHT, Size.SMALL);
+    public static final Item LIME_DYE = registerItem("dye_lime", SETTINGS_BASIC(), WeightedItem::new, Weight.LIGHT, Size.SMALL);
+    public static final Item PINK_DYE = registerItem("dye_pink", SETTINGS_BASIC(), WeightedItem::new, Weight.LIGHT, Size.SMALL);
+    public static final Item DARK_GRAY_DYE = registerItem("dye_dark_gray", SETTINGS_BASIC(), WeightedItem::new, Weight.LIGHT, Size.SMALL);
+    public static final Item LIGHT_GRAY_DYE = registerItem("dye_light_gray", SETTINGS_BASIC(), WeightedItem::new, Weight.LIGHT, Size.SMALL);
+    public static final Item CYAN_DYE = registerItem("dye_cyan", SETTINGS_BASIC(), WeightedItem::new, Weight.LIGHT, Size.SMALL);
+    public static final Item PURPLE_DYE = registerItem("dye_purple", SETTINGS_BASIC(), WeightedItem::new, Weight.LIGHT, Size.SMALL);
+    public static final Item BLUE_DYE = registerItem("dye_blue", SETTINGS_BASIC(), WeightedItem::new, Weight.LIGHT, Size.SMALL);
+    public static final Item BROWN_DYE = registerItem("dye_brown", SETTINGS_BASIC(), WeightedItem::new, Weight.LIGHT, Size.SMALL);
+    public static final Item GREEN_DYE = registerItem("dye_green", SETTINGS_BASIC(), WeightedItem::new, Weight.LIGHT, Size.SMALL);
+    public static final Item RED_DYE = registerItem("dye_red", SETTINGS_BASIC(), WeightedItem::new, Weight.LIGHT, Size.SMALL);
+    public static final Item BLACK_DYE = registerItem("dye_black", SETTINGS_BASIC(), WeightedItem::new, Weight.LIGHT, Size.SMALL);
+    
+    // Currency
+    public static final Item COPPER_COIN = registerItem("copper_coin", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.SMALL);
+    public static final Item GOLD_COIN = registerItem("gold_coin", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.SMALL);
+
+    // endregion
 
 
     public static void init() {

@@ -234,6 +234,45 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 			itemModelGenerator.register(FIRED_CLAY_JUG, Models.GENERATED);
 			itemModelGenerator.register(FIRED_CLAY_WATER_JUG, Models.GENERATED);
 			itemModelGenerator.register(FIRED_CLAY_VESSEL, Models.GENERATED);
+			itemModelGenerator.register(QUERN_WHEEL, Models.GENERATED);
+
+			itemModelGenerator.register(COPPER_INGOT, Models.GENERATED);
+			itemModelGenerator.register(COPPER_CHUNK, Models.GENERATED);
+			itemModelGenerator.register(TIN_INGOT, Models.GENERATED);
+			itemModelGenerator.register(TIN_CHUNK, Models.GENERATED);
+			itemModelGenerator.register(ZINC_INGOT, Models.GENERATED);
+			itemModelGenerator.register(ZINC_CHUNK, Models.GENERATED);
+
+			itemModelGenerator.register(BRONZE_INGOT, Models.GENERATED);
+			itemModelGenerator.register(BRONZE_CHUNK, Models.GENERATED);
+			itemModelGenerator.register(BRASS_INGOT, Models.GENERATED);
+			itemModelGenerator.register(BRASS_CHUNK, Models.GENERATED);
+			itemModelGenerator.register(PEWTER_INGOT, Models.GENERATED);
+			itemModelGenerator.register(PEWTER_CHUNK, Models.GENERATED);
+			itemModelGenerator.register(GOLD_INGOT, Models.GENERATED);
+			itemModelGenerator.register(GOLD_CHUNK, Models.GENERATED);
+			itemModelGenerator.register(BOTCHED_ALLOY_INGOT, Models.GENERATED);
+			itemModelGenerator.register(BOTCHED_ALLOY_CHUNK, Models.GENERATED);
+
+			itemModelGenerator.register(WHITE_DYE, Models.GENERATED);
+			itemModelGenerator.register(ORANGE_DYE, Models.GENERATED);
+			itemModelGenerator.register(MAGENTA_DYE, Models.GENERATED);
+			itemModelGenerator.register(LIGHT_BLUE_DYE, Models.GENERATED);
+			itemModelGenerator.register(YELLOW_DYE, Models.GENERATED);
+			itemModelGenerator.register(LIME_DYE, Models.GENERATED);
+			itemModelGenerator.register(PINK_DYE, Models.GENERATED);
+			itemModelGenerator.register(DARK_GRAY_DYE, Models.GENERATED);
+			itemModelGenerator.register(LIGHT_GRAY_DYE, Models.GENERATED);
+			itemModelGenerator.register(CYAN_DYE, Models.GENERATED);
+			itemModelGenerator.register(PURPLE_DYE, Models.GENERATED);
+			itemModelGenerator.register(BLUE_DYE, Models.GENERATED);
+			itemModelGenerator.register(BROWN_DYE, Models.GENERATED);
+			itemModelGenerator.register(GREEN_DYE, Models.GENERATED);
+			itemModelGenerator.register(RED_DYE, Models.GENERATED);
+			itemModelGenerator.register(BLACK_DYE, Models.GENERATED);
+
+			itemModelGenerator.register(COPPER_COIN, Models.GENERATED);
+			itemModelGenerator.register(GOLD_COIN, Models.GENERATED);
 		}
 
 		@Override

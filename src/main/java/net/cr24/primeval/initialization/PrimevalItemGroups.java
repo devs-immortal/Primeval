@@ -136,6 +136,28 @@ public class PrimevalItemGroups {
                 entries.add(SANDY_CLAY_BRICK);
                 entries.add(DRIED_BRICK);
 
+                entries.add(RAW_COPPER_MALACHITE_SMALL);
+                entries.add(RAW_COPPER_MALACHITE_MEDIUM);
+                entries.add(RAW_COPPER_MALACHITE_LARGE);
+                entries.add(RAW_COPPER_NATIVE_SMALL);
+                entries.add(RAW_COPPER_NATIVE_MEDIUM);
+                entries.add(RAW_COPPER_NATIVE_LARGE);
+                entries.add(RAW_TIN_CASSITERITE_SMALL);
+                entries.add(RAW_TIN_CASSITERITE_MEDIUM);
+                entries.add(RAW_TIN_CASSITERITE_LARGE);
+                entries.add(RAW_ZINC_SPHALERITE_SMALL);
+                entries.add(RAW_ZINC_SPHALERITE_MEDIUM);
+                entries.add(RAW_ZINC_SPHALERITE_LARGE);
+                entries.add(RAW_GOLD_NATIVE_SMALL);
+                entries.add(RAW_GOLD_NATIVE_MEDIUM);
+                entries.add(RAW_GOLD_NATIVE_LARGE);
+                entries.add(RAW_IRON_HEMATITE_SMALL);
+                entries.add(RAW_IRON_HEMATITE_MEDIUM);
+                entries.add(RAW_IRON_HEMATITE_LARGE);
+                entries.add(RAW_LAZURITE_SMALL);
+                entries.add(RAW_LAZURITE_MEDIUM);
+                entries.add(RAW_LAZURITE_LARGE);
+
                 entries.add(MUD_BALL);
                 entries.add(MUD_BRICK);
                 entries.add(CLAY_BALL);
@@ -149,6 +171,41 @@ public class PrimevalItemGroups {
                 entries.add(FIRED_CLAY_JUG);
                 entries.add(CLAY_VESSEL);
                 entries.add(FIRED_CLAY_VESSEL);
+
+                entries.add(COPPER_INGOT);
+                entries.add(COPPER_CHUNK);
+                entries.add(TIN_INGOT);
+                entries.add(TIN_CHUNK);
+                entries.add(ZINC_INGOT);
+                entries.add(ZINC_CHUNK);
+
+                entries.add(BRONZE_INGOT);
+                entries.add(BRONZE_CHUNK);
+                entries.add(BRASS_INGOT);
+                entries.add(BRASS_CHUNK);
+                entries.add(PEWTER_INGOT);
+                entries.add(PEWTER_CHUNK);
+                entries.add(GOLD_INGOT);
+                entries.add(GOLD_CHUNK);
+                entries.add(BOTCHED_ALLOY_INGOT);
+                entries.add(BOTCHED_ALLOY_CHUNK);
+
+                entries.add(WHITE_DYE);
+                entries.add(ORANGE_DYE);
+                entries.add(MAGENTA_DYE);
+                entries.add(LIGHT_BLUE_DYE);
+                entries.add(YELLOW_DYE);
+                entries.add(LIME_DYE);
+                entries.add(PINK_DYE);
+                entries.add(DARK_GRAY_DYE);
+                entries.add(LIGHT_GRAY_DYE);
+                entries.add(CYAN_DYE);
+                entries.add(PURPLE_DYE);
+                entries.add(BLUE_DYE);
+                entries.add(BROWN_DYE);
+                entries.add(GREEN_DYE);
+                entries.add(RED_DYE);
+                entries.add(BLACK_DYE);
             })
     );
 
@@ -163,11 +220,16 @@ public class PrimevalItemGroups {
                 addItemSet(entries, BRONZE_TOOLS);
                 addItemSet(entries, COPPER_TOOL_PARTS);
                 addItemSet(entries, BRONZE_TOOL_PARTS);
+
                 entries.add(WOODEN_BUCKET);
                 entries.add(WOODEN_BUCKET_WATER);
                 entries.add(FIRED_CLAY_JUG);
                 entries.add(FIRED_CLAY_WATER_JUG);
                 entries.add(FIRED_CLAY_VESSEL);
+                entries.add(QUERN_WHEEL);
+
+                entries.add(COPPER_COIN);
+                entries.add(GOLD_COIN);
             })
     );
 
