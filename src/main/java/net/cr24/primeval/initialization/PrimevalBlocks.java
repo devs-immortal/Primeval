@@ -207,7 +207,7 @@ public class PrimevalBlocks {
 //    public static final Block CRUDE_TORCH = registerBlock("crude_torch", new TimedTorchBlock(AbstractBlock.Settings.create().notSolid().sounds(BlockSoundGroup.WOOD).breakInstantly().noCollision().luminance(TimedTorchBlock::getLuminanceFromState).ticksRandomly()), Weight.LIGHT, Size.SMALL, PRIMEVAL_BLOCKS); //todo
 //    public static final Item LIT_CRUDE_TORCH = Registry.register(Registries.ITEM, PrimevalMain.getId("crude_torch_lit"), new WeightedBlockItem(CRUDE_TORCH, new Item.Settings().maxCount(Size.SMALL.getStackSize()), Weight.LIGHT, Size.SMALL));
 //    public static final Block CAMPFIRE = registerBlock("campfire", new PrimevalCampfireBlock(SETTINGS_STONE().luminance(PrimevalCampfireBlock::getLuminanceFromState).nonOpaque()), Weight.HEAVY, Size.LARGE, null);
-//    public static final Block QUERN = registerBlock("quern", new QuernBlock(SETTINGS_STONE().nonOpaque()), Weight.HEAVY, Size.LARGE, PRIMEVAL_BLOCKS);
+    public static final Block QUERN = registerBlock("quern", SETTINGS_STONE().nonOpaque(), QuernBlock::new, Weight.HEAVY, Size.LARGE);
 
     // endregion
 
@@ -224,7 +224,7 @@ public class PrimevalBlocks {
     public static final BlockEntityType<StoragePotBlockEntity> LARGE_POT_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, Primeval.identify("large_pot_block_entity"), FabricBlockEntityTypeBuilder.create(StoragePotBlockEntity::new, LARGE_FIRED_CLAY_POT).build());
     public static final BlockEntityType<WickerBasketBlockEntity> WICKER_BASKET_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, Primeval.identify("wicker_basket_block_entity"), FabricBlockEntityTypeBuilder.create(WickerBasketBlockEntity::new, WICKER_BASKET).build());
 //    public static final BlockEntityType<PrimevalCampfireBlockEntity> CAMPFIRE_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, PrimevalMain.getId("campfire_block_entity"), FabricBlockEntityTypeBuilder.create(PrimevalCampfireBlockEntity::new, CAMPFIRE).build());
-//    public static final BlockEntityType<QuernBlockEntity> QUERN_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, PrimevalMain.getId("quern_block_entity"), FabricBlockEntityTypeBuilder.create(QuernBlockEntity::new, QUERN).build());
+    public static final BlockEntityType<QuernBlockEntity> QUERN_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, Primeval.identify("quern_block_entity"), FabricBlockEntityTypeBuilder.create(QuernBlockEntity::new, QUERN).build());
 
     // endregion
 
@@ -288,7 +288,7 @@ public class PrimevalBlocks {
         BlockEntityRendererRegistry.register(ASH_PILE_BLOCK_ENTITY, AshPileBlockEntityRenderer::new);
         BlockEntityRendererRegistry.register(LAYING_ITEM_BLOCK_ENTITY, LayingItemBlockEntityRenderer::new);
 //        BlockEntityRendererRegistry.register(CAMPFIRE_BLOCK_ENTITY, PrimevalCampfireBlockEntityRenderer::new);
-//        BlockEntityRendererRegistry.register(QUERN_BLOCK_ENTITY, QuernBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.register(QUERN_BLOCK_ENTITY, QuernBlockEntityRenderer::new);
     }
 
     // region HELPER FUNCTIONS

@@ -91,8 +91,7 @@ public class VesselItem extends BundleItem implements IWeightedItem {
             tooltip.add(
                     (Text.translatable("text.primeval.fluid.contains", contents.amount(), Text.translatable(
                             "block." + contents.fluid().getRegistryEntry().getIdAsString().replace(':', '.')
-                    ))
-                    ).formatted(Formatting.GRAY));
+                    ))).formatted(Formatting.GRAY));
         }
         tooltip.add((Text.translatable("⚖ ").append(this.weight.getText()).append(" ⤧ ").append(this.size.getText())).formatted(Formatting.GRAY));
     }

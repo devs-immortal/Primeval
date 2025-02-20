@@ -29,7 +29,7 @@ public class Primeval implements ModInitializer, ClientModInitializer {
 //		PrimevalWorld.init();
 //		PrimevalStructures.init();
 //		PrimevalVillagerTrades.init();
-//		PrimevalSoundEvents.init();
+		PrimevalSoundEvents.init();
 	}
 
 	@Override
