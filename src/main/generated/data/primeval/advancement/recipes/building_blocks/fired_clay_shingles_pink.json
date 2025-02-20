@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_fired_clay_shingles": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primeval:fired_clay_shingles"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "primeval:fired_clay_shingles_pink"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_fired_clay_shingles"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "primeval:fired_clay_shingles_pink"
+    ]
+  }
+}

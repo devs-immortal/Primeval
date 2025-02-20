@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "colored_terracotta",
+  "key": {
+    "#": "primeval:terracotta",
+    "X": "primeval:dye_cyan"
+  },
+  "pattern": [
+    "###",
+    "#X#",
+    "###"
+  ],
+  "result": {
+    "count": 8,
+    "id": "primeval:terracotta_cyan"
+  }
+}

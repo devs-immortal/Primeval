@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "colored_terracotta",
+  "key": {
+    "#": "primeval:fired_clay_shingles",
+    "X": "primeval:dye_magenta"
+  },
+  "pattern": [
+    "###",
+    "#X#",
+    "###"
+  ],
+  "result": {
+    "count": 8,
+    "id": "primeval:fired_clay_shingles_magenta"
+  }
+}

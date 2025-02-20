@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_crude_bricks": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primeval:crude_bricks"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "primeval:crude_bricks_stairs"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_crude_bricks"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "primeval:crude_bricks_stairs"
+    ]
+  }
+}

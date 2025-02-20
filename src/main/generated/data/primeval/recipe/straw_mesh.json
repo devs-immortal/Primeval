@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "primeval:straw",
+    "primeval:straw",
+    "primeval:straw",
+    "primeval:straw",
+    "primeval:straw",
+    "primeval:straw",
+    "primeval:straw",
+    "primeval:straw",
+    "primeval:straw"
+  ],
+  "result": {
+    "count": 1,
+    "id": "primeval:straw_mesh"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_fired_clay_shingles_white": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primeval:fired_clay_shingles_white"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "primeval:fired_clay_shingles_white_stairs"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_fired_clay_shingles_white"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "primeval:fired_clay_shingles_white_stairs"
+    ]
+  }
+}

@@ -1,17 +1,31 @@
 package net.cr24.primeval;
 
+import net.cr24.primeval.initialization.PrimevalTags;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.data.*;
 import net.minecraft.client.render.item.tint.GrassTintSource;
+import net.minecraft.data.recipe.RecipeExporter;
+import net.minecraft.data.recipe.RecipeGenerator;
+import net.minecraft.data.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
+import net.minecraft.recipe.Ingredient;
+import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
+
+import java.util.concurrent.CompletableFuture;
 
 import static net.cr24.primeval.initialization.PrimevalBlocks.*;
 import static net.cr24.primeval.initialization.PrimevalItems.*;
@@ -23,6 +37,7 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 	public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
 		FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
 		pack.addProvider(ModelProvider::new);
+		pack.addProvider(RecipeProvider::new);
 	}
 
 	private static class ModelProvider extends FabricModelProvider {
@@ -363,6 +378,135 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 
 		private static <T extends Iterable<Item>> void registerNormalItemSet(ItemModelGenerator itemModelGenerator, T set) {
 			set.iterator().forEachRemaining((b) -> itemModelGenerator.register(b, Models.GENERATED));
+		}
+	}
+
+	private static class RecipeProvider extends FabricRecipeProvider {
+
+		private static class PrimevalRecipeGenerator extends RecipeGenerator {
+
+			protected PrimevalRecipeGenerator(RegistryWrapper.WrapperLookup registries, RecipeExporter exporter) {
+				super(registries, exporter);
+			}
+
+			@Override
+			public void generate() {
+				// blocks
+				this.createShapeless(RecipeCategory.BUILDING_BLOCKS, COARSE_DIRT, 2).input(DIRT).input(GRAVEL).criterion(hasItem(GRAVEL), this.conditionsFromItem(GRAVEL)).offerTo(this.exporter);
+				this.offer2x2CompactingRecipe(RecipeCategory.BUILDING_BLOCKS, CLAY, CLAY_BALL);
+				this.offer2x2CompactingRecipe(RecipeCategory.BUILDING_BLOCKS, MUD, MUD_BALL);
+				this.createShapeless(RecipeCategory.BUILDING_BLOCKS, DRY_DIRT, 2).input(DIRT).input(SAND).criterion(hasItem(SAND), this.conditionsFromItem(SAND)).offerTo(this.exporter);
+				this.offer2x2CompactingRecipe(RecipeCategory.BUILDING_BLOCKS, COBBLESTONE, ROCK);
+				this.offer2x2CompactingRecipe(RecipeCategory.BUILDING_BLOCKS, SANDSTONE, SAND);
+
+				this.offer2x2CompactingRecipe(RecipeCategory.BUILDING_BLOCKS, STRAW_BLOCK, STRAW);
+				this.createSlabRecipe(RecipeCategory.BUILDING_BLOCKS, STRAW_SLAB, Ingredient.ofItem(STRAW_BLOCK)).criterion(hasItem(STRAW), this.conditionsFromItem(STRAW)).offerTo(this.exporter);
+				this.createStairsRecipe(STRAW_STAIRS, Ingredient.ofItem(STRAW_BLOCK)).criterion(hasItem(STRAW_BLOCK), this.conditionsFromItem(STRAW_BLOCK)).offerTo(this.exporter);
+				this.offerCompactingRecipe(RecipeCategory.BUILDING_BLOCKS, STRAW_MESH, STRAW);
+				this.offerCarpetRecipe(STRAW_MAT, STRAW_MESH);
+
+				offerShapelessColoredBlockSet(TERRACOTTA, COLORED_TERRACOTTA, "colored_terracotta");
+
+				this.offer2x2CompactingRecipe(RecipeCategory.BUILDING_BLOCKS, FIRED_CLAY_SHINGLE_BLOCKS.block(), FIRED_CLAY_TILE, 4);
+				offerBlockSet(FIRED_CLAY_SHINGLE_BLOCKS);
+				offerShapelessColoredBlockSet(FIRED_CLAY_SHINGLE_BLOCKS.block(), new ColoredBlockSet(
+						COLORED_FIRED_CLAY_SHINGLE_BLOCKS.white().block(),
+						COLORED_FIRED_CLAY_SHINGLE_BLOCKS.orange().block(),
+						COLORED_FIRED_CLAY_SHINGLE_BLOCKS.magenta().block(),
+						COLORED_FIRED_CLAY_SHINGLE_BLOCKS.lightBlue().block(),
+						COLORED_FIRED_CLAY_SHINGLE_BLOCKS.yellow().block(),
+						COLORED_FIRED_CLAY_SHINGLE_BLOCKS.lime().block(),
+						COLORED_FIRED_CLAY_SHINGLE_BLOCKS.pink().block(),
+						COLORED_FIRED_CLAY_SHINGLE_BLOCKS.darkGray().block(),
+						COLORED_FIRED_CLAY_SHINGLE_BLOCKS.lightGray().block(),
+						COLORED_FIRED_CLAY_SHINGLE_BLOCKS.cyan().block(),
+						COLORED_FIRED_CLAY_SHINGLE_BLOCKS.purple().block(),
+						COLORED_FIRED_CLAY_SHINGLE_BLOCKS.blue().block(),
+						COLORED_FIRED_CLAY_SHINGLE_BLOCKS.brown().block(),
+						COLORED_FIRED_CLAY_SHINGLE_BLOCKS.green().block(),
+						COLORED_FIRED_CLAY_SHINGLE_BLOCKS.red().block(),
+						COLORED_FIRED_CLAY_SHINGLE_BLOCKS.black().block()
+				), "colored_terracotta");
+				offerColoredBlockSetSet(COLORED_FIRED_CLAY_SHINGLE_BLOCKS);
+
+				offer2x2CrossRecipe(RecipeCategory.BUILDING_BLOCKS, FIRED_CLAY_BRICK_BLOCKS.block(), FIRED_CLAY_BRICK, PrimevalTags.Items.MORTAR, 2);
+				offerBlockSet(FIRED_CLAY_BRICK_BLOCKS);
+				offer2x2CrossRecipe(RecipeCategory.BUILDING_BLOCKS, FIRED_CLAY_TILES_BLOCKS.block(), FIRED_CLAY_TILE, PrimevalTags.Items.MORTAR, 2);
+				offerBlockSet(FIRED_CLAY_TILES_BLOCKS);
+				offer2x2CrossRecipe(RecipeCategory.BUILDING_BLOCKS, DRIED_BRICK_BLOCKS.block(), DRIED_BRICK, PrimevalTags.Items.MORTAR, 2);
+				offerBlockSet(DRIED_BRICK_BLOCKS);
+
+				this.offer2x2CompactingRecipe(RecipeCategory.BUILDING_BLOCKS, MUD_BRICKS.block(), MUD_BRICK, 2);
+				offerBlockSet(MUD_BRICKS);
+
+				offer2x2CrossRecipe(RecipeCategory.BUILDING_BLOCKS, CRUDE_BRICKS.block(), ROCK, PrimevalTags.Items.MORTAR, 2);
+				offerBlockSet(CRUDE_BRICKS);
+				offer2x2CrossRecipe(RecipeCategory.BUILDING_BLOCKS, STONE_BRICKS.block(), STONE_BRICK, PrimevalTags.Items.MORTAR, 2);
+				offerBlockSet(STONE_BRICKS);
+				offerBlockSet(SMOOTH_STONE);
+				offer2x2CrossRecipe(RecipeCategory.BUILDING_BLOCKS, STONE_PAVER.block(), STONE_BRICK, DIRT, 2);
+				offerBlockSet(STONE_PAVER);
+
+
+			}
+
+			private void offerShapelessColoredBlockSet(ItemConvertible base, ColoredBlockSet set, String group) {
+				this.createShaped(RecipeCategory.BUILDING_BLOCKS, set.white(), 8).input('#', base).input('X', WHITE_DYE).pattern("###").pattern("#X#").pattern("###").group(group).criterion(hasItem(base), this.conditionsFromItem(base)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.BUILDING_BLOCKS, set.orange(), 8).input('#', base).input('X', ORANGE_DYE).pattern("###").pattern("#X#").pattern("###").group(group).criterion(hasItem(base), this.conditionsFromItem(base)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.BUILDING_BLOCKS, set.magenta(), 8).input('#', base).input('X', MAGENTA_DYE).pattern("###").pattern("#X#").pattern("###").group(group).criterion(hasItem(base), this.conditionsFromItem(base)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.BUILDING_BLOCKS, set.lightBlue(), 8).input('#', base).input('X', LIGHT_BLUE_DYE).pattern("###").pattern("#X#").pattern("###").group(group).criterion(hasItem(base), this.conditionsFromItem(base)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.BUILDING_BLOCKS, set.yellow(), 8).input('#', base).input('X', YELLOW_DYE).pattern("###").pattern("#X#").pattern("###").group(group).criterion(hasItem(base), this.conditionsFromItem(base)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.BUILDING_BLOCKS, set.lime(), 8).input('#', base).input('X', LIME_DYE).pattern("###").pattern("#X#").pattern("###").group(group).criterion(hasItem(base), this.conditionsFromItem(base)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.BUILDING_BLOCKS, set.pink(), 8).input('#', base).input('X', PINK_DYE).pattern("###").pattern("#X#").pattern("###").group(group).criterion(hasItem(base), this.conditionsFromItem(base)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.BUILDING_BLOCKS, set.darkGray(), 8).input('#', base).input('X', DARK_GRAY_DYE).pattern("###").pattern("#X#").pattern("###").group(group).criterion(hasItem(base), this.conditionsFromItem(base)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.BUILDING_BLOCKS, set.lightGray(), 8).input('#', base).input('X', LIGHT_GRAY_DYE).pattern("###").pattern("#X#").pattern("###").group(group).criterion(hasItem(base), this.conditionsFromItem(base)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.BUILDING_BLOCKS, set.cyan(), 8).input('#', base).input('X', CYAN_DYE).pattern("###").pattern("#X#").pattern("###").group(group).criterion(hasItem(base), this.conditionsFromItem(base)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.BUILDING_BLOCKS, set.purple(), 8).input('#', base).input('X', PURPLE_DYE).pattern("###").pattern("#X#").pattern("###").group(group).criterion(hasItem(base), this.conditionsFromItem(base)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.BUILDING_BLOCKS, set.blue(), 8).input('#', base).input('X', BLUE_DYE).pattern("###").pattern("#X#").pattern("###").group(group).criterion(hasItem(base), this.conditionsFromItem(base)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.BUILDING_BLOCKS, set.brown(), 8).input('#', base).input('X', BROWN_DYE).pattern("###").pattern("#X#").pattern("###").group(group).criterion(hasItem(base), this.conditionsFromItem(base)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.BUILDING_BLOCKS, set.green(), 8).input('#', base).input('X', GREEN_DYE).pattern("###").pattern("#X#").pattern("###").group(group).criterion(hasItem(base), this.conditionsFromItem(base)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.BUILDING_BLOCKS, set.red(), 8).input('#', base).input('X', RED_DYE).pattern("###").pattern("#X#").pattern("###").group(group).criterion(hasItem(base), this.conditionsFromItem(base)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.BUILDING_BLOCKS, set.black(), 8).input('#', base).input('X', BLACK_DYE).pattern("###").pattern("#X#").pattern("###").group(group).criterion(hasItem(base), this.conditionsFromItem(base)).offerTo(this.exporter);
+			}
+
+			private void offerBlockSet(BlockSet set) {
+				var base = set.block();
+				this.createSlabRecipe(RecipeCategory.BUILDING_BLOCKS, set.slab(), Ingredient.ofItem(base)).criterion(hasItem(base), this.conditionsFromItem(base)).offerTo(this.exporter);
+				this.createStairsRecipe(set.stairs(), Ingredient.ofItem(base)).criterion(hasItem(base), this.conditionsFromItem(base)).offerTo(this.exporter);
+			}
+
+			private void offerColoredBlockSetSet(ColoredBlockSetSet set) {
+				for (BlockSet color : set) {
+					offerBlockSet(color);
+				}
+			}
+
+			private void offer2x2CompactingRecipe(RecipeCategory category, ItemConvertible output, ItemConvertible input, int amount) {
+				this.createShaped(category, output, amount).input('#', input).pattern("##").pattern("##").criterion(hasItem(input), this.conditionsFromItem(input)).offerTo(this.exporter);
+			}
+
+			private void offer2x2CrossRecipe(RecipeCategory category, ItemConvertible output, ItemConvertible input1, ItemConvertible input2, int amount) {
+				this.createShaped(category, output, amount).input('A', input1).input('B', input2).pattern("AB").pattern("BA").criterion(hasItem(input1), this.conditionsFromItem(input1)).offerTo(this.exporter);
+			}
+
+			private void offer2x2CrossRecipe(RecipeCategory category, ItemConvertible output, ItemConvertible input1, TagKey<Item> input2, int amount) {
+				this.createShaped(category, output, amount).input('A', input1).input('B', input2).pattern("AB").pattern("BA").criterion(hasItem(input1), this.conditionsFromItem(input1)).offerTo(this.exporter);
+			}
+
+		}
+
+		public RecipeProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+			super(output, registriesFuture);
+		}
+
+		@Override
+		protected RecipeGenerator getRecipeGenerator(RegistryWrapper.WrapperLookup wrapperLookup, RecipeExporter recipeExporter) {
+			return new PrimevalRecipeGenerator(wrapperLookup, recipeExporter);
+		}
+
+		@Override
+		public String getName() {
+			return "Primeval Recipe Provider";
 		}
 	}
 }
