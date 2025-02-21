@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "framed_daub",
+  "key": {
+    "D": "primeval:daub",
+    "S": "primeval:stick"
+  },
+  "pattern": [
+    "SDS",
+    "SDS",
+    "SDS"
+  ],
+  "result": {
+    "count": 3,
+    "id": "primeval:framed_pillar_daub"
+  }
+}

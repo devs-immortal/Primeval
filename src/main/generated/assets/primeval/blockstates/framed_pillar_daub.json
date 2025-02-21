@@ -1,7 +1,16 @@
 {
   "variants": {
-    "": {
+    "axis=x": {
+      "model": "primeval:block/framed_pillar_daub",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
       "model": "primeval:block/framed_pillar_daub"
+    },
+    "axis=z": {
+      "model": "primeval:block/framed_pillar_daub",
+      "x": 90
     }
   }
 }

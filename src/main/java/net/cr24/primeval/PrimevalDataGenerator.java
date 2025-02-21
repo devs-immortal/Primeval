@@ -112,7 +112,7 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 			registerBlockSetModels(blockStateModelGenerator, STONE_PAVER);
 			blockStateModelGenerator.registerSimpleCubeAll(DAUB);
 			blockStateModelGenerator.registerSimpleCubeAll(FRAMED_DAUB);
-			blockStateModelGenerator.registerSimpleCubeAll(FRAMED_PILLAR_DAUB);
+			blockStateModelGenerator.registerAxisRotated(FRAMED_PILLAR_DAUB, TexturedModel.CUBE_COLUMN);
 			blockStateModelGenerator.registerSimpleCubeAll(FRAMED_CROSS_DAUB);
 			blockStateModelGenerator.registerSimpleCubeAll(FRAMED_INVERTED_CROSS_DAUB);
 			blockStateModelGenerator.registerSimpleCubeAll(FRAMED_X_DAUB);
@@ -400,7 +400,7 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 				this.offer2x2CompactingRecipe(RecipeCategory.BUILDING_BLOCKS, SANDSTONE, SAND);
 
 				this.offer2x2CompactingRecipe(RecipeCategory.BUILDING_BLOCKS, STRAW_BLOCK, STRAW);
-				this.createSlabRecipe(RecipeCategory.BUILDING_BLOCKS, STRAW_SLAB, Ingredient.ofItem(STRAW_BLOCK)).criterion(hasItem(STRAW), this.conditionsFromItem(STRAW)).offerTo(this.exporter);
+				this.createSlabRecipe(RecipeCategory.BUILDING_BLOCKS, STRAW_SLAB, Ingredient.ofItem(STRAW_BLOCK)).criterion(hasItem(STRAW_BLOCK), this.conditionsFromItem(STRAW_BLOCK)).offerTo(this.exporter);
 				this.createStairsRecipe(STRAW_STAIRS, Ingredient.ofItem(STRAW_BLOCK)).criterion(hasItem(STRAW_BLOCK), this.conditionsFromItem(STRAW_BLOCK)).offerTo(this.exporter);
 				this.offerCompactingRecipe(RecipeCategory.BUILDING_BLOCKS, STRAW_MESH, STRAW);
 				this.offerCarpetRecipe(STRAW_MAT, STRAW_MESH);
@@ -447,6 +447,15 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 				offer2x2CrossRecipe(RecipeCategory.BUILDING_BLOCKS, STONE_PAVER.block(), STONE_BRICK, DIRT, 2);
 				offerBlockSet(STONE_PAVER);
 
+
+				this.createShapeless(RecipeCategory.BUILDING_BLOCKS, DAUB, 4).input(SAND).input(CLAY_BALL).input(STICK).input(STRAW).criterion(hasItem(CLAY_BALL), this.conditionsFromItem(CLAY_BALL)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.BUILDING_BLOCKS, FRAMED_DAUB, 5).input('D', DAUB).input('S', STICK).pattern("SDS").pattern("DDD").pattern("SDS").group("framed_daub").criterion(hasItem(DAUB), this.conditionsFromItem(DAUB)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.BUILDING_BLOCKS, FRAMED_PILLAR_DAUB, 3).input('D', DAUB).input('S', STICK).pattern("SDS").pattern("SDS").pattern("SDS").group("framed_daub").criterion(hasItem(DAUB), this.conditionsFromItem(DAUB)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.BUILDING_BLOCKS, FRAMED_CROSS_DAUB, 2).input('D', DAUB).input('S', STICK).pattern("DS").pattern("SD").group("framed_daub").criterion(hasItem(DAUB), this.conditionsFromItem(DAUB)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.BUILDING_BLOCKS, FRAMED_INVERTED_CROSS_DAUB, 2).input('D', DAUB).input('S', STICK).pattern("SD").pattern("DS").group("framed_daub").criterion(hasItem(DAUB), this.conditionsFromItem(DAUB)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.BUILDING_BLOCKS, FRAMED_X_DAUB, 4).input('D', DAUB).input('S', STICK).pattern("SDS").pattern("DSD").pattern("SDS").group("framed_daub").criterion(hasItem(DAUB), this.conditionsFromItem(DAUB)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.BUILDING_BLOCKS, FRAMED_PLUS_DAUB, 2).input('D', DAUB).input('S', STICK).pattern("DSD").pattern("SSS").pattern("DSD").group("framed_daub").criterion(hasItem(DAUB), this.conditionsFromItem(DAUB)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.BUILDING_BLOCKS, FRAMED_DIVIDED_DAUB, 2).input('D', DAUB).input('S', STICK).pattern(" S ").pattern("DSD").pattern(" S ").group("framed_daub").criterion(hasItem(DAUB), this.conditionsFromItem(DAUB)).offerTo(this.exporter);
 
 			}
 
