@@ -1,0 +1,9 @@
+{
+  "type": "primeval:quern_grinding",
+  "input": "primeval:charred_bone",
+  "result": {
+    "id": "primeval:dye_black",
+    "count": 3
+  },
+  "wheel_damage":2
+}

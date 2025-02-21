@@ -1,0 +1,9 @@
+{
+  "type": "primeval:quern_grinding",
+  "input": "primeval:raw_lazurite_medium",
+  "result": {
+    "id": "primeval:dye_blue",
+    "count": 5
+  },
+  "wheel_damage":4
+}

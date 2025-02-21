@@ -25,7 +25,7 @@ public class Primeval implements ModInitializer, ClientModInitializer {
 		PrimevalBlocks.init();
 		PrimevalItemGroups.init();
 //		PrimevalFluids.init();
-//		PrimevalRecipes.init();
+		PrimevalRecipes.init();
 //		PrimevalWorld.init();
 //		PrimevalStructures.init();
 //		PrimevalVillagerTrades.init();

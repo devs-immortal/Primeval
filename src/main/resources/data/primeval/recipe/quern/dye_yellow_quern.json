@@ -1,0 +1,9 @@
+{
+  "type": "primeval:quern_grinding",
+  "input": "primeval:dandelion",
+  "result": {
+    "id": "primeval:dye_yellow",
+    "count": 4
+  },
+  "wheel_damage":1
+}

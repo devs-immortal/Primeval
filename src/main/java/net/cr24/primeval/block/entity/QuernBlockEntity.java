@@ -3,6 +3,8 @@ package net.cr24.primeval.block.entity;
 import net.cr24.primeval.PrimevalSoundEvents;
 import net.cr24.primeval.initialization.PrimevalBlocks;
 import net.cr24.primeval.initialization.PrimevalItems;
+import net.cr24.primeval.initialization.PrimevalRecipes;
+import net.cr24.primeval.recipe.QuernRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -13,6 +15,9 @@ import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.recipe.CampfireCookingRecipe;
+import net.minecraft.recipe.RecipeEntry;
+import net.minecraft.recipe.ServerRecipeManager;
 import net.minecraft.recipe.input.SingleStackRecipeInput;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.world.ServerWorld;
@@ -23,6 +28,9 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
+import net.minecraft.world.event.GameEvent;
+
+import java.util.Optional;
 
 public class QuernBlockEntity extends BlockEntity implements Clearable {
 
@@ -41,28 +49,30 @@ public class QuernBlockEntity extends BlockEntity implements Clearable {
         currentAngle = FLOW_ANGLE;
     }
 
-    public static void tick(World world, BlockPos pos, BlockState state, QuernBlockEntity blockEntity) {
+    public static void tick(World world, BlockPos pos, BlockState state, QuernBlockEntity blockEntity, ServerRecipeManager.MatchGetter<SingleStackRecipeInput, QuernRecipe> recipeMatchGetter) {
         float newAngle = MathHelper.lerp(0.05f, blockEntity.currentAngle, blockEntity.targetAngle+FLOW_ANGLE);
         if (newAngle < (blockEntity.targetAngle-2)) {
             blockEntity.makeParticles(world, pos);
         }
         blockEntity.currentAngle = newAngle;
         blockEntity.markDirty();
-        if (blockEntity.currentAngle >= 359.97) {
-            blockEntity.process(world, pos);
+        if (blockEntity.currentAngle >= 359.97 && world instanceof ServerWorld) {
+
+                world.playSound(null, pos, PrimevalSoundEvents.QUERN_PROCESS, SoundCategory.BLOCKS, 0.8f, 0.8f);
+                blockEntity.process((ServerWorld) world, pos, recipeMatchGetter);
+
         }
     }
 
-    public void process(World world, BlockPos pos) {
-        SingleStackRecipeInput singleStackRecipeInput = new SingleStackRecipeInput(inputItem);
-        //Optional<RecipeEntry<QuernRecipe>> recipe = world.getRecipeManager().getFirstMatch(PrimevalRecipes.QUERN_GRINDING, singleStackRecipeInput, world);
+    public void process(ServerWorld world, BlockPos pos, ServerRecipeManager.MatchGetter<SingleStackRecipeInput, QuernRecipe> recipeMatchGetter) {
+        SingleStackRecipeInput singleStackRecipeInput = new SingleStackRecipeInput(this.inputItem);
+        var quernRecipe = recipeMatchGetter.getFirstMatch(singleStackRecipeInput, world);
 
-        //if (recipe.isPresent()) { // TODO
+        if (quernRecipe.isPresent()) {
             int remainder = inputItem.getCount();
             for (int i = 0; i < inputItem.getCount(); i++) {
-                Block.dropStack(world, pos, Direction.UP, new ItemStack(PrimevalItems.YELLOW_DYE));
-                //Block.dropStack(world, pos, Direction.UP, recipe.get().value().getResult());
-                wheelDamage += 45;//recipe.get().value().getWheelDamage();
+                Block.dropStack(world, pos, Direction.UP, quernRecipe.get().value().getResult());
+                wheelDamage += quernRecipe.get().value().getWheelDamage();
                 remainder--;
                 if (wheelDamage > PrimevalItems.QUERN_WHEEL.getComponents().get(DataComponentTypes.MAX_DAMAGE)) {
                     wheelDamage = -1;
@@ -72,14 +82,13 @@ public class QuernBlockEntity extends BlockEntity implements Clearable {
                     break;
                 }
             }
-            if (!world.isClient())
-                world.playSound(null, pos, PrimevalSoundEvents.QUERN_PROCESS, SoundCategory.BLOCKS, 0.8f, 0.8f);
             Block.dropStack(world, pos, Direction.UP, new ItemStack(inputItem.getItem(), remainder));
-            targetAngle = 0;
-            currentAngle = 0;
-            inputItem = ItemStack.EMPTY;
+            this.targetAngle = 0;
+            this.currentAngle = 0;
+            this.inputItem = ItemStack.EMPTY;
             this.markDirty();
-        //}
+            world.updateListeners(pos, this.getCachedState(), this.getCachedState(), Block.NOTIFY_ALL);
+        }
     }
 
     public void makeParticles(World world, BlockPos pos) {

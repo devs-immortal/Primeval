@@ -1,0 +1,9 @@
+{
+  "type": "primeval:quern_grinding",
+  "input": "primeval:lily_of_the_valley",
+  "result": {
+    "id": "primeval:dye_light_gray",
+    "count": 2
+  },
+  "wheel_damage": 1
+}

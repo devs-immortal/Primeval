@@ -1,0 +1,9 @@
+{
+  "type": "primeval:quern_grinding",
+  "input": "primeval:oxeye_daisy",
+  "result": {
+    "id": "primeval:dye_light_gray",
+    "count": 4
+  },
+  "wheel_damage":1
+}

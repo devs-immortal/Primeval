@@ -5,12 +5,20 @@ import net.cr24.primeval.PrimevalSoundEvents;
 import net.cr24.primeval.block.entity.QuernBlockEntity;
 import net.cr24.primeval.initialization.PrimevalBlocks;
 import net.cr24.primeval.initialization.PrimevalItems;
+import net.cr24.primeval.initialization.PrimevalRecipes;
+import net.cr24.primeval.recipe.QuernRecipe;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.block.entity.CampfireBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.CampfireCookingRecipe;
+import net.minecraft.recipe.RecipeType;
+import net.minecraft.recipe.ServerRecipeManager;
+import net.minecraft.recipe.input.SingleStackRecipeInput;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
@@ -83,8 +91,7 @@ public class QuernBlock extends BlockWithEntity {
                 } else {
                     return ActionResult.FAIL;
                 }
-            } else if (true) {
-                //if (world.getRecipeManager().getPropertySet(PrimevalRecipes.QUERN_GRINDING_INPUT).canUse(itemStack)) { // TODO
+            } else if (world.getRecipeManager().getPropertySet(PrimevalRecipes.QUERN_GRINDING_INPUT).canUse(itemStack)) {
                 boolean success = ((QuernBlockEntity) ent).tryPutInputItem(itemStack);
                 if (success) {
                     player.setStackInHand(hand, ItemStack.EMPTY);
@@ -123,6 +130,9 @@ public class QuernBlock extends BlockWithEntity {
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return validateTicker(type, PrimevalBlocks.QUERN_BLOCK_ENTITY, QuernBlockEntity::tick);
+        ServerRecipeManager.MatchGetter<SingleStackRecipeInput, QuernRecipe> matchGetter = world instanceof ServerWorld ? ServerRecipeManager.createCachedMatchGetter(PrimevalRecipes.QUERN_GRINDING) : null;
+        return validateTicker(type, PrimevalBlocks.QUERN_BLOCK_ENTITY, (worldx, pos, statex, blockEntity) -> {
+            QuernBlockEntity.tick(worldx, pos, statex, blockEntity, matchGetter);
+        });
     }
 }

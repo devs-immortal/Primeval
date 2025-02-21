@@ -1,11 +1,12 @@
 {
-	"required": true,
-	"package": "net.cr24.primeval.mixin",
-	"compatibilityLevel": "JAVA_21",
-	"mixins": [
-		"ExampleMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
+  "required": true,
+  "package": "net.cr24.primeval.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "ExampleMixin",
+    "recipe.ServerRecipeManagerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
 	}
 }

@@ -1,0 +1,9 @@
+{
+  "type": "primeval:quern_grinding",
+  "input": "primeval:raw_copper_malachite_large",
+  "result": {
+    "id": "primeval:dye_green",
+    "count": 8
+  },
+  "wheel_damage":6
+}
