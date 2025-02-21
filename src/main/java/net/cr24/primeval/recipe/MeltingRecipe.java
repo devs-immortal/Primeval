@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.cr24.primeval.initialization.PrimevalRecipes;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.impl.transfer.VariantCodecs;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
@@ -12,7 +13,10 @@ import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.recipe.*;
 import net.minecraft.recipe.book.RecipeBookCategory;
 import net.minecraft.recipe.input.SingleStackRecipeInput;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import net.minecraft.util.dynamic.Codecs;
@@ -21,10 +25,10 @@ import net.minecraft.world.World;
 public class MeltingRecipe implements Recipe<SingleStackRecipeInput> {
 
     final Ingredient input;
-    final FluidVariant fluidResult;
+    final RegistryEntry<Fluid> fluidResult;
     final int fluidAmount;
 
-    public MeltingRecipe(Ingredient input, FluidVariant fluidResult, int fluidAmount) {
+    public MeltingRecipe(Ingredient input, RegistryEntry<Fluid> fluidResult, int fluidAmount) {
         this.input = input;
         this.fluidResult = fluidResult;
         this.fluidAmount = fluidAmount;
@@ -49,15 +53,15 @@ public class MeltingRecipe implements Recipe<SingleStackRecipeInput> {
         return this.input;
     }
 
-    public FluidVariant getFluidResult() {
+    public RegistryEntry<Fluid> getFluidResult() {
         return this.fluidResult;
     }
     public int getFluidAmount() {
         return this.fluidAmount;
     }
 
-    public Pair<FluidVariant, Integer> getFluidResultPair() {
-        return new Pair<>(this.fluidResult, fluidAmount);
+    public Pair<RegistryEntry<Fluid>, Integer> getFluidResultPair() {
+        return new Pair<>(fluidResult, fluidAmount);
     }
 
     @Override
@@ -83,12 +87,12 @@ public class MeltingRecipe implements Recipe<SingleStackRecipeInput> {
     public static class Serializer implements RecipeSerializer<MeltingRecipe> {
         private static final MapCodec<MeltingRecipe> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
                 Ingredient.CODEC.fieldOf("input").forGetter((recipe) -> recipe.input),
-                VariantCodecs.FLUID_CODEC.fieldOf("fluid").forGetter((recipe) -> recipe.fluidResult),
+                Registries.FLUID.getEntryCodec().fieldOf("fluid").forGetter((recipe) -> recipe.fluidResult),
                 Codecs.POSITIVE_INT.fieldOf("fluid_amount").forGetter((recipe) -> recipe.fluidAmount)
         ).apply(instance, MeltingRecipe::new));
         private static final PacketCodec<RegistryByteBuf, MeltingRecipe> PACKET_CODEC = PacketCodec.tuple(
                 Ingredient.PACKET_CODEC, MeltingRecipe::getInput,
-                VariantCodecs.FLUID_PACKET_CODEC, MeltingRecipe::getFluidResult,
+                PacketCodecs.registryEntry(RegistryKeys.FLUID), MeltingRecipe::getFluidResult,
                 PacketCodecs.INTEGER, MeltingRecipe::getFluidAmount,
                 MeltingRecipe::new
         );

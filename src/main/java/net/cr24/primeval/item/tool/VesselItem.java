@@ -12,6 +12,7 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.BundleContentsComponent;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.StackReference;
 import net.minecraft.item.BundleItem;
@@ -22,6 +23,7 @@ import net.minecraft.item.tooltip.TooltipData;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.recipe.ServerRecipeManager;
 import net.minecraft.recipe.input.SingleStackRecipeInput;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
@@ -31,9 +33,7 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.Pair;
 
 import javax.swing.text.html.Option;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class VesselItem extends BundleItem implements IWeightedItem {
 
@@ -88,20 +88,27 @@ public class VesselItem extends BundleItem implements IWeightedItem {
     }
 
     public static ItemStack processItem(ItemStack vessel, ServerWorld world, ServerRecipeManager.MatchGetter<SingleStackRecipeInput, MeltingRecipe> recipeMatchGetter) {
-        List<Pair<FluidVariant, Integer>> fluids = null;
+        Map<RegistryEntry<Fluid>, Integer> fluids = new HashMap<>();
         if (vessel.contains(DataComponentTypes.BUNDLE_CONTENTS)) {
             var contents = vessel.get(DataComponentTypes.BUNDLE_CONTENTS).iterate();
             for (ItemStack inputItem : contents) {
-                fluids = new ArrayList<>();
                 SingleStackRecipeInput singleStackRecipeInput = new SingleStackRecipeInput(inputItem);
                 var meltingRecipe = recipeMatchGetter.getFirstMatch(singleStackRecipeInput, world);
                 if (meltingRecipe.isPresent()) {
-                    fluids.add(meltingRecipe.get().value().getFluidResultPair());
+                    var r = meltingRecipe.get().value();
+                    if (fluids.containsKey(r.getFluidResult())) {
+                        System.out.println("adding " + r.getFluidAmount() * inputItem.getCount() + " to " + r.getFluidResult() + " (already contains " + fluids.get(r.getFluidResult()) + ")");
+                        fluids.put(r.getFluidResult(), fluids.get(r.getFluidResult()) + r.getFluidAmount() * inputItem.getCount());
+                    } else {
+                        System.out.println("adding " + r.getFluidAmount() * inputItem.getCount() + " to " + r.getFluidResult() + " (NEW)");
+                        fluids.put(r.getFluidResult(), r.getFluidAmount() * inputItem.getCount());
+                    }
                 }
             }
         }
+        System.out.println(fluids);
         vessel.remove(DataComponentTypes.BUNDLE_CONTENTS);
-        vessel.set(PrimevalDataComponentTypes.FLUID_CONTENTS, new PrimevalDataComponentTypes.FluidContentComponent(FluidVariant.of(Fluids.LAVA), 18000));
+        vessel.set(PrimevalDataComponentTypes.FLUID_CONTENTS, new PrimevalDataComponentTypes.FluidContentComponent(fluids.keySet().stream().findFirst().get(), fluids.get(fluids.keySet().stream().findFirst().get())));
         return vessel;
     }
 
@@ -111,11 +118,11 @@ public class VesselItem extends BundleItem implements IWeightedItem {
 
     @Environment(EnvType.CLIENT)
     public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
-        var contents = stack.getOrDefault(PrimevalDataComponentTypes.FLUID_CONTENTS, new PrimevalDataComponentTypes.FluidContentComponent(FluidVariant.of(Fluids.EMPTY), 0));
+        var contents = stack.getOrDefault(PrimevalDataComponentTypes.FLUID_CONTENTS, new PrimevalDataComponentTypes.FluidContentComponent(RegistryEntry.of(Fluids.EMPTY), 0));
         if (contents.amount() > 0) {
             tooltip.add(
                     (Text.translatable("text.primeval.fluid.contains", contents.amount(), Text.translatable(
-                            "block." + contents.fluid().getRegistryEntry().getIdAsString().replace(':', '.')
+                            "block." + contents.fluid().getIdAsString().replace(':', '.')
                     ))).formatted(Formatting.GRAY));
         }
         tooltip.add((Text.translatable("⚖ ").append(this.weight.getText()).append(" ⤧ ").append(this.size.getText())).formatted(Formatting.GRAY));

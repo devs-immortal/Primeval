@@ -38,7 +38,7 @@ public class MeltingDisplay extends BasicDisplay {
 
     public MeltingDisplay(RecipeEntry<MeltingRecipe> recipe) {
         this(Collections.singletonList(EntryIngredients.ofIngredient(recipe.value().getInput())),
-                Collections.singletonList(EntryIngredients.of(FluidStack.create(recipe.value().getFluidResult().getFluid(), recipe.value().getFluidAmount()))),
+                Collections.singletonList(EntryIngredients.of(FluidStack.create(recipe.value().getFluidResult(), recipe.value().getFluidAmount()))),
                 Optional.ofNullable(recipe.id().getValue())
         );
     }
