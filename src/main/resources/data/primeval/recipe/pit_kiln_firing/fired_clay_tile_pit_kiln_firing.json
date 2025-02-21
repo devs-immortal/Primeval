@@ -1,0 +1,7 @@
+{
+  "type": "primeval:pit_kiln_firing",
+  "input": "primeval:clay_tile",
+  "result": {
+    "id": "primeval:fired_clay_tile"
+  }
+}

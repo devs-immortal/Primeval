@@ -69,7 +69,7 @@ public abstract class SimpleOneToOneRecipe implements Recipe<SingleStackRecipeIn
         private final MapCodec<T> codec;
         private final PacketCodec<RegistryByteBuf, T> packetCodec;
 
-        protected Serializer(RecipeFactory<T> factory) {
+        public Serializer(RecipeFactory<T> factory) {
             this.codec = RecordCodecBuilder.mapCodec((instance) -> instance.group(
                     Ingredient.CODEC.fieldOf("input").forGetter((recipe) -> recipe.input),
                     ItemStack.CODEC.fieldOf("result").forGetter((recipe) -> recipe.result)

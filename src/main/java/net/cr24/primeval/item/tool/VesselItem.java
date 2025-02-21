@@ -2,6 +2,7 @@ package net.cr24.primeval.item.tool;
 
 import net.cr24.primeval.item.IWeightedItem;
 import net.cr24.primeval.item.MoldItem;
+import net.cr24.primeval.recipe.MeltingRecipe;
 import net.cr24.primeval.util.PrimevalDataComponentTypes;
 import net.cr24.primeval.util.Size;
 import net.cr24.primeval.util.Weight;
@@ -14,17 +15,23 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.StackReference;
 import net.minecraft.item.BundleItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.BundleTooltipData;
 import net.minecraft.item.tooltip.TooltipData;
 import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.recipe.ServerRecipeManager;
+import net.minecraft.recipe.input.SingleStackRecipeInput;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.ClickType;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Pair;
 
 import javax.swing.text.html.Option;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -78,6 +85,24 @@ public class VesselItem extends BundleItem implements IWeightedItem {
         } else {
             return false;
         }
+    }
+
+    public static ItemStack processItem(ItemStack vessel, ServerWorld world, ServerRecipeManager.MatchGetter<SingleStackRecipeInput, MeltingRecipe> recipeMatchGetter) {
+        List<Pair<FluidVariant, Integer>> fluids = null;
+        if (vessel.contains(DataComponentTypes.BUNDLE_CONTENTS)) {
+            var contents = vessel.get(DataComponentTypes.BUNDLE_CONTENTS).iterate();
+            for (ItemStack inputItem : contents) {
+                fluids = new ArrayList<>();
+                SingleStackRecipeInput singleStackRecipeInput = new SingleStackRecipeInput(inputItem);
+                var meltingRecipe = recipeMatchGetter.getFirstMatch(singleStackRecipeInput, world);
+                if (meltingRecipe.isPresent()) {
+                    fluids.add(meltingRecipe.get().value().getFluidResultPair());
+                }
+            }
+        }
+        vessel.remove(DataComponentTypes.BUNDLE_CONTENTS);
+        vessel.set(PrimevalDataComponentTypes.FLUID_CONTENTS, new PrimevalDataComponentTypes.FluidContentComponent(FluidVariant.of(Fluids.LAVA), 18000));
+        return vessel;
     }
 
     public Optional<TooltipData> getTooltipData(ItemStack stack) {

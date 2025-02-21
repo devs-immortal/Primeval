@@ -202,7 +202,7 @@ public class PrimevalBlocks {
     public static final Block LARGE_DECORATIVE_FIRED_CLAY_POT = registerBlock("fired_large_decorative_clay_pot", SETTINGS_FIRED_CLAY().nonOpaque(), DecorativePotBlock::new, Weight.HEAVY, Size.LARGE);
     public static final Block WICKER_BASKET = registerBlock("wicker_basket", SETTINGS_REFINED_WOOD().nonOpaque(), WickerBasketBlock::new, Weight.NORMAL, Size.LARGE);
 
-    //public static final Block PIT_KILN = registerBlockWithoutItem("pit_kiln", new PitKilnBlock(AbstractBlock.Settings.create().strength(1.0F).sounds(BlockSoundGroup.GRASS).nonOpaque()));
+    public static final Block PIT_KILN = registerBlockWithoutItem("pit_kiln", AbstractBlock.Settings.create().strength(1.0F).sounds(BlockSoundGroup.GRASS).nonOpaque(), PitKilnBlock::new);
     public static final Block CRUDE_CRAFTING_BENCH = registerBlock("crude_crafting_bench", SETTINGS_REFINED_WOOD(), PrimevalCraftingTableBlock::new, Weight.HEAVY, Size.LARGE);
 //    public static final Block CRUDE_TORCH = registerBlock("crude_torch", new TimedTorchBlock(AbstractBlock.Settings.create().notSolid().sounds(BlockSoundGroup.WOOD).breakInstantly().noCollision().luminance(TimedTorchBlock::getLuminanceFromState).ticksRandomly()), Weight.LIGHT, Size.SMALL, PRIMEVAL_BLOCKS); //todo
 //    public static final Item LIT_CRUDE_TORCH = Registry.register(Registries.ITEM, PrimevalMain.getId("crude_torch_lit"), new WeightedBlockItem(CRUDE_TORCH, new Item.Settings().maxCount(Size.SMALL.getStackSize()), Weight.LIGHT, Size.SMALL));
@@ -217,7 +217,7 @@ public class PrimevalBlocks {
 
     // region BLOCK ENTITIES
 
-//    public static final BlockEntityType<PitKilnBlockEntity> PIT_KILN_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, PrimevalMain.getId("pit_kiln_block_entity"), FabricBlockEntityTypeBuilder.create(PitKilnBlockEntity::new, PIT_KILN).build());
+    public static final BlockEntityType<PitKilnBlockEntity> PIT_KILN_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, Primeval.identify("pit_kiln_block_entity"), FabricBlockEntityTypeBuilder.create(PitKilnBlockEntity::new, PIT_KILN).build());
     public static final BlockEntityType<AshPileBlockEntity> ASH_PILE_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, Primeval.identify("ash_pile_block_entity"), FabricBlockEntityTypeBuilder.create(AshPileBlockEntity::new, ASH_PILE).build());
     public static final BlockEntityType<LayingItemBlockEntity> LAYING_ITEM_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, Primeval.identify("laying_item_block_entity"), FabricBlockEntityTypeBuilder.create(LayingItemBlockEntity::new, LAYING_ITEM).build());
     public static final BlockEntityType<CrateBlockEntity> CRATE_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, Primeval.identify("crate_block_entity"), FabricBlockEntityTypeBuilder.create(CrateBlockEntity::new, OAK_CRATE, BIRCH_CRATE, SPRUCE_CRATE).build());
@@ -284,7 +284,7 @@ public class PrimevalBlocks {
         );
 
         // Block Renderers
-//        BlockEntityRendererRegistry.register(PIT_KILN_BLOCK_ENTITY, PitKilnBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.register(PIT_KILN_BLOCK_ENTITY, PitKilnBlockEntityRenderer::new);
         BlockEntityRendererRegistry.register(ASH_PILE_BLOCK_ENTITY, AshPileBlockEntityRenderer::new);
         BlockEntityRendererRegistry.register(LAYING_ITEM_BLOCK_ENTITY, LayingItemBlockEntityRenderer::new);
 //        BlockEntityRendererRegistry.register(CAMPFIRE_BLOCK_ENTITY, PrimevalCampfireBlockEntityRenderer::new);

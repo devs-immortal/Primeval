@@ -1,0 +1,7 @@
+{
+  "type": "primeval:pit_kiln_firing",
+  "input": "primeval:block_of_clay",
+  "result": {
+    "id": "primeval:terracotta"
+  }
+}

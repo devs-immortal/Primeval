@@ -1,19 +1,18 @@
 package net.cr24.primeval.recipe.rei;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import dev.architectury.fluid.FluidStack;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.display.DisplaySerializer;
 import me.shedaniel.rei.api.common.display.basic.BasicDisplay;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
-import net.cr24.primeval.recipe.QuernRecipe;
+import net.cr24.primeval.recipe.MeltingRecipe;
+import net.cr24.primeval.recipe.PitKilnFiringRecipe;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.recipe.RecipeEntry;
-import net.minecraft.recipe.StonecuttingRecipe;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
@@ -21,37 +20,31 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public class QuernDisplay extends BasicDisplay {
+public class MeltingDisplay extends BasicDisplay {
 
-    public static final DisplaySerializer<QuernDisplay> SERIALIZER = DisplaySerializer.of(
+    public static final DisplaySerializer<MeltingDisplay> SERIALIZER = DisplaySerializer.of(
             RecordCodecBuilder.mapCodec((instance) -> instance.group(
-                    EntryIngredient.codec().listOf().fieldOf("inputs").forGetter(BasicDisplay::getInputEntries),
-                    EntryIngredient.codec().listOf().fieldOf("outputs").forGetter(BasicDisplay::getOutputEntries),
-                    Identifier.CODEC.optionalFieldOf("location").forGetter(BasicDisplay::getDisplayLocation),
-                    Codec.INT.fieldOf("WheelDamage").forGetter(QuernDisplay::getWheelDamage)
-                    ).apply(instance, QuernDisplay::new)
+                            EntryIngredient.codec().listOf().fieldOf("inputs").forGetter(BasicDisplay::getInputEntries),
+                            EntryIngredient.codec().listOf().fieldOf("outputs").forGetter(BasicDisplay::getOutputEntries),
+                            Identifier.CODEC.optionalFieldOf("location").forGetter(BasicDisplay::getDisplayLocation)
+                    ).apply(instance, MeltingDisplay::new)
             ),
             PacketCodec.tuple(
                     EntryIngredient.streamCodec().collect(PacketCodecs.toList()), BasicDisplay::getInputEntries,
                     EntryIngredient.streamCodec().collect(PacketCodecs.toList()), BasicDisplay::getOutputEntries,
                     PacketCodecs.optional(Identifier.PACKET_CODEC), BasicDisplay::getDisplayLocation,
-                    PacketCodecs.INTEGER, QuernDisplay::getWheelDamage,
-                    QuernDisplay::new)
+                    MeltingDisplay::new)
     );
 
-    private final int wheelDamage;
-
-    public QuernDisplay(RecipeEntry<QuernRecipe> recipe) {
+    public MeltingDisplay(RecipeEntry<MeltingRecipe> recipe) {
         this(Collections.singletonList(EntryIngredients.ofIngredient(recipe.value().getInput())),
-                Collections.singletonList(EntryIngredients.of(recipe.value().getResult())),
-                Optional.ofNullable(recipe.id().getValue()),
-                recipe.value().getWheelDamage()
+                Collections.singletonList(EntryIngredients.of(FluidStack.create(recipe.value().getFluidResult().getFluid(), recipe.value().getFluidAmount()))),
+                Optional.ofNullable(recipe.id().getValue())
         );
     }
 
-    public QuernDisplay(List<EntryIngredient> inputs, List<EntryIngredient> outputs, Optional<Identifier> location, int damage) {
+    public MeltingDisplay(List<EntryIngredient> inputs, List<EntryIngredient> outputs, Optional<Identifier> location) {
         super(inputs, outputs, location);
-        this.wheelDamage = damage;
     }
 
     public final EntryIngredient getIn() {
@@ -62,17 +55,13 @@ public class QuernDisplay extends BasicDisplay {
         return this.getOutputEntries().get(0);
     }
 
-    public final int getWheelDamage() { return this.wheelDamage; }
-
-
     @Override
     public CategoryIdentifier<?> getCategoryIdentifier() {
-        return PrimevalREIIntegration.QUERN;
+        return PrimevalREIIntegration.MELTING;
     }
 
     @Override
     public @Nullable DisplaySerializer<? extends Display> getSerializer() {
         return SERIALIZER;
     }
-
 }
