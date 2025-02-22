@@ -1,5 +1,7 @@
 package net.cr24.primeval.block;
 
+import net.cr24.primeval.block.functional.PitKilnBlock;
+import net.cr24.primeval.initialization.PrimevalBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
@@ -14,10 +16,10 @@ public class StrawLayeredBlock extends LayeredBlock {
 
     @Override
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
-//        if (state.get(LAYERS) == 1 && PitKilnBlock.isSoilSurrounded(world, pos)) {
-//            world.setBlockState(pos, PrimevalBlocks.PIT_KILN.getDefaultState(), 0); // TODO
-//        } else {
+        if (state.get(LAYERS) == 1 && PitKilnBlock.isSoilSurrounded(world, pos)) {
+            world.setBlockState(pos, PrimevalBlocks.PIT_KILN.getDefaultState(), 0);
+        } else {
             super.neighborUpdate(state, world, pos, sourceBlock, wireOrientation, notify);
-//        }
+        }
     }
 }

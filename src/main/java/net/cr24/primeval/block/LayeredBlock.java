@@ -1,5 +1,7 @@
 package net.cr24.primeval.block;
 
+import net.cr24.primeval.block.functional.PitKilnBlock;
+import net.cr24.primeval.initialization.PrimevalBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -93,8 +95,8 @@ public class LayeredBlock extends Block {
         if (blockState.isOf(this)) {
             int i = blockState.get(LAYERS);
             return blockState.with(LAYERS, Math.min(8, i + 1));
-//        } else if (PitKilnBlock.isSoilSurrounded(world, ctx.getBlockPos())) {
-//            return PrimevalBlocks.PIT_KILN.getDefaultState(); // TODO
+        } else if (PitKilnBlock.isSoilSurrounded(world, ctx.getBlockPos())) {
+            return PrimevalBlocks.PIT_KILN.getDefaultState();
         } else {
             return super.getPlacementState(ctx);
         }

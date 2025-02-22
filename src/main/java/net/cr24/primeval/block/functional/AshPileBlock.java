@@ -29,17 +29,17 @@ public class AshPileBlock extends BlockWithEntity {
     @Override
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
         super.neighborUpdate(state, world, pos, sourceBlock, wireOrientation, notify);
-//        if (!PitKilnBlock.isSoilSurrounded(world, pos)) { // if not surrounded properly
-//            BlockEntity blockEntity = world.getBlockEntity(pos);
-//            if (blockEntity instanceof AshPileBlockEntity) {
-//                for (ItemStack stack : ((AshPileBlockEntity) blockEntity).getItems()) {
-//                    dropStack(world, pos, stack);
-//                }
-//                world.getBlockEntity(pos).markRemoved();
-//            }
-//
-//            world.breakBlock(pos, true);
-//        } // TODO
+        if (!PitKilnBlock.isSoilSurrounded(world, pos)) { // if not surrounded properly
+            BlockEntity blockEntity = world.getBlockEntity(pos);
+            if (blockEntity instanceof AshPileBlockEntity) {
+                for (ItemStack stack : ((AshPileBlockEntity) blockEntity).getItems()) {
+                    dropStack(world, pos, stack);
+                }
+                world.getBlockEntity(pos).markRemoved();
+            }
+
+            world.breakBlock(pos, true);
+        }
     }
 
     @Override
