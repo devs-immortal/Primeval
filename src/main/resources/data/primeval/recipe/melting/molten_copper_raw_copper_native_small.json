@@ -1,6 +1,6 @@
 {
   "type": "primeval:melting",
   "input": "primeval:raw_copper_native_small",
-  "fluid": "minecraft:lava",
-  "fluid_amount": 500
+  "fluid": "primeval:molten_copper",
+  "fluid_amount": 1000
 }

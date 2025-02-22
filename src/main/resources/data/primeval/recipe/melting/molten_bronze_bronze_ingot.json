@@ -1,0 +1,6 @@
+{
+  "type": "primeval:melting",
+  "input": "primeval:bronze_ingot",
+  "fluid": "primeval:molten_bronze",
+  "fluid_amount": 9000
+}

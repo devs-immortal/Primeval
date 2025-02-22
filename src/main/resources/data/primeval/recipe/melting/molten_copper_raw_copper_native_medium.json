@@ -1,0 +1,6 @@
+{
+  "type": "primeval:melting",
+  "input": "primeval:raw_copper_native_medium",
+  "fluid": "primeval:molten_copper",
+  "fluid_amount": 3000
+}

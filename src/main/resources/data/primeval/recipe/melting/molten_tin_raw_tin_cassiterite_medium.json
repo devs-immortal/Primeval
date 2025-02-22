@@ -1,0 +1,6 @@
+{
+  "type": "primeval:melting",
+  "input": "primeval:raw_tin_cassiterite_medium",
+  "fluid": "primeval:molten_tin",
+  "fluid_amount": 3000
+}

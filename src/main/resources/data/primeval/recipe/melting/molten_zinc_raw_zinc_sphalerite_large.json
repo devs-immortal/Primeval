@@ -1,6 +1,6 @@
 {
   "type": "primeval:melting",
   "input": "primeval:raw_zinc_sphalerite_large",
-  "fluid": "minecraft:water",
-  "fluid_amount": 1000
+  "fluid": "primeval:molten_zinc",
+  "fluid_amount": 9000
 }

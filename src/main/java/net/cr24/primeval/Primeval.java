@@ -1,5 +1,6 @@
 package net.cr24.primeval;
 
+import net.cr24.primeval.fluid.PrimevalFluids;
 import net.cr24.primeval.initialization.*;
 import net.cr24.primeval.screen.PrimevalScreens;
 import net.cr24.primeval.util.PrimevalDataComponentTypes;
@@ -24,7 +25,7 @@ public class Primeval implements ModInitializer, ClientModInitializer {
 		PrimevalTypes.init();
 		PrimevalBlocks.init();
 		PrimevalItemGroups.init();
-//		PrimevalFluids.init();
+		PrimevalFluids.init();
 		PrimevalRecipes.init();
 //		PrimevalWorld.init();
 //		PrimevalStructures.init();
@@ -37,7 +38,7 @@ public class Primeval implements ModInitializer, ClientModInitializer {
 	public void onInitializeClient() {
 //		PrimevalItems.initClient();
 		PrimevalBlocks.initClient();
-//		PrimevalFluids.clientInit();
+		PrimevalFluids.initClient();
 	}
 
 	public static Identifier identify(String id) {

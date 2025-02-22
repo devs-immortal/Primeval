@@ -1,0 +1,6 @@
+{
+  "type": "primeval:melting",
+  "input": "primeval:raw_copper_malachite_small",
+  "fluid": "primeval:molten_copper",
+  "fluid_amount": 1000
+}

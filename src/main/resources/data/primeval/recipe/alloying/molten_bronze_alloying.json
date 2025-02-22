@@ -1,14 +1,14 @@
 {
   "type": "primeval:alloying",
   "fluids": {
-    "minecraft:water": {
+    "primeval:molten_copper": {
       "max": 0.9,
       "min": 0.8
     },
-    "minecraft:lava": {
+    "primeval:molten_tin": {
       "max": 0.2,
       "min": 0.1
     }
   },
-  "result": "minecraft:water"
+  "result": "primeval:molten_bronze"
 }

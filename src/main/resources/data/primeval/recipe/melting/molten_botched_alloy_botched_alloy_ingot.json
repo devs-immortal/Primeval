@@ -1,0 +1,6 @@
+{
+  "type": "primeval:melting",
+  "input": "primeval:botched_alloy_ingot",
+  "fluid": "primeval:molten_botched_alloy",
+  "fluid_amount": 9000
+}

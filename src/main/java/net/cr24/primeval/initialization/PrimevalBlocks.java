@@ -5,6 +5,7 @@ import net.cr24.primeval.block.*;
 import net.cr24.primeval.block.entity.*;
 import net.cr24.primeval.block.functional.*;
 import net.cr24.primeval.block.plant.*;
+import net.cr24.primeval.fluid.PrimevalFluids;
 import net.cr24.primeval.item.WeightedBlockItem;
 import net.cr24.primeval.util.*;
 import net.cr24.primeval.world.trunker.BirchTrunker;
@@ -21,6 +22,7 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -211,7 +213,19 @@ public class PrimevalBlocks {
 
     // endregion
 
+    // region FLUIDS
 
+    public static final Block MOLTEN_COPPER = registerMoltenFluid("molten_copper", PrimevalFluids.MOLTEN_COPPER);
+    public static final Block MOLTEN_TIN = registerMoltenFluid("molten_tin", PrimevalFluids.MOLTEN_TIN);
+    public static final Block MOLTEN_ZINC = registerMoltenFluid("molten_zinc", PrimevalFluids.MOLTEN_ZINC);
+
+    public static final Block MOLTEN_BRONZE = registerMoltenFluid("molten_bronze", PrimevalFluids.MOLTEN_BRONZE);
+    public static final Block MOLTEN_BRASS = registerMoltenFluid("molten_brass", PrimevalFluids.MOLTEN_BRASS);
+    public static final Block MOLTEN_PEWTER = registerMoltenFluid("molten_pewter", PrimevalFluids.MOLTEN_PEWTER);
+    public static final Block MOLTEN_GOLD = registerMoltenFluid("molten_gold", PrimevalFluids.MOLTEN_GOLD);
+    public static final Block MOLTEN_BOTCHED_ALLOY = registerMoltenFluid("molten_botched_alloy", PrimevalFluids.MOLTEN_BOTCHED_ALLOY);
+
+    // endregion
 
 
 
@@ -317,6 +331,10 @@ public class PrimevalBlocks {
             action.accept(registeredBlock);
         }
         return registeredBlock;
+    }
+
+    private static Block registerMoltenFluid(String id, FlowableFluid fluid) {
+        return registerBlockWithoutItem(id, AbstractBlock.Settings.copy(Blocks.LAVA), (s) -> new FluidBlock(fluid, s));
     }
 
     @FunctionalInterface

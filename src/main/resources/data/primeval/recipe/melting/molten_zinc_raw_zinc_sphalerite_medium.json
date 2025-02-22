@@ -1,0 +1,6 @@
+{
+  "type": "primeval:melting",
+  "input": "primeval:raw_zinc_sphalerite_medium",
+  "fluid": "primeval:molten_zinc",
+  "fluid_amount": 3000
+}

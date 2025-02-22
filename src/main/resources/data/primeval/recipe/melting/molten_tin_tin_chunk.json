@@ -1,0 +1,6 @@
+{
+  "type": "primeval:melting",
+  "input": "primeval:tin_chunk",
+  "fluid": "primeval:molten_tin",
+  "fluid_amount": 1000
+}

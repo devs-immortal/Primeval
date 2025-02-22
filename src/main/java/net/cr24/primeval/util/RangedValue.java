@@ -66,6 +66,6 @@ public class RangedValue {
     public Text toPercentLabel() {
         int upperPercent = (int) (100 * this.upperAmount);
         int lowerPercent = (int) (100 * this.lowerAmount);
-        return Text.translatable("" + upperPercent + "-" + lowerPercent + "%");
+        return Text.translatable(lowerPercent + "-" + upperPercent + "%");
     }
 }

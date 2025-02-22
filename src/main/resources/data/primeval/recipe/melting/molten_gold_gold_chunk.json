@@ -1,0 +1,6 @@
+{
+  "type": "primeval:melting",
+  "input": "primeval:gold_chunk",
+  "fluid": "primeval:molten_gold",
+  "fluid_amount": 1000
+}

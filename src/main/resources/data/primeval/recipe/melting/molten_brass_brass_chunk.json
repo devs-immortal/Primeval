@@ -1,0 +1,6 @@
+{
+  "type": "primeval:melting",
+  "input": "primeval:brass_chunk",
+  "fluid": "primeval:molten_brass",
+  "fluid_amount": 1000
+}
