@@ -17,8 +17,8 @@ public class PrimevalRecipes {
 //    public static final RegistryKey<RecipePropertySet> OPEN_FIRE_INPUT;
     public static final RecipeType<MeltingRecipe> MELTING;
     public static final RecipeSerializer<MeltingRecipe> MELTING_SERIALIZER;
-//    public static final RecipeType<AlloyingRecipe> ALLOYING;
-//    public static final RecipeSerializer<AlloyingRecipe> ALLOYING_SERIALIZER;
+    public static final RecipeType<AlloyingRecipe> ALLOYING;
+    public static final RecipeSerializer<AlloyingRecipe> ALLOYING_SERIALIZER;
     public static final RecipeType<QuernRecipe> QUERN_GRINDING;
     public static final RecipeSerializer<QuernRecipe> QUERN_GRINDING_SERIALIZER;
     public static final RegistryKey<RecipePropertySet> QUERN_GRINDING_INPUT;
@@ -49,11 +49,11 @@ public class PrimevalRecipes {
         });
         MELTING_SERIALIZER = Registry.register(Registries.RECIPE_SERIALIZER, Primeval.identify("melting"), new MeltingRecipe.Serializer());
 
-//        ALLOYING = Registry.register(Registries.RECIPE_TYPE, PrimevalMain.getId("alloying"), new RecipeType<AlloyingRecipe>() {
-//            @Override
-//            public String toString() {return "primeval:alloying";}
-//        });
-//        ALLOYING_SERIALIZER = Registry.register(Registries.RECIPE_SERIALIZER, PrimevalMain.getId("alloying"), new AlloyingRecipe.Serializer());
+        ALLOYING = Registry.register(Registries.RECIPE_TYPE, Primeval.identify("alloying"), new RecipeType<AlloyingRecipe>() {
+            @Override
+            public String toString() {return "primeval:alloying";}
+        });
+        ALLOYING_SERIALIZER = Registry.register(Registries.RECIPE_SERIALIZER, Primeval.identify("alloying"), new AlloyingRecipe.Serializer());
 
         QUERN_GRINDING = Registry.register(Registries.RECIPE_TYPE, Primeval.identify("quern_grinding"), new RecipeType<QuernRecipe>() {
             @Override

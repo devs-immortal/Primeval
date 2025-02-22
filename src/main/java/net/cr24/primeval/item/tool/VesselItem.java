@@ -107,7 +107,7 @@ public class VesselItem extends BundleItem implements IWeightedItem {
             }
         }
         System.out.println(fluids);
-        vessel.remove(DataComponentTypes.BUNDLE_CONTENTS);
+        vessel.remove(DataComponentTypes.BUNDLE_CONTENTS); // TODO
         vessel.set(PrimevalDataComponentTypes.FLUID_CONTENTS, new PrimevalDataComponentTypes.FluidContentComponent(fluids.keySet().stream().findFirst().get(), fluids.get(fluids.keySet().stream().findFirst().get())));
         return vessel;
     }
