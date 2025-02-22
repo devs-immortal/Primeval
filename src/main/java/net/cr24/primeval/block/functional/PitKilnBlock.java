@@ -7,8 +7,10 @@ import net.cr24.primeval.initialization.PrimevalBlocks;
 import net.cr24.primeval.initialization.PrimevalItems;
 import net.cr24.primeval.initialization.PrimevalRecipes;
 import net.cr24.primeval.initialization.PrimevalTags;
+import net.cr24.primeval.recipe.AlloyingRecipe;
 import net.cr24.primeval.recipe.MeltingRecipe;
 import net.cr24.primeval.recipe.PitKilnFiringRecipe;
+import net.cr24.primeval.util.FluidInput;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -238,8 +240,9 @@ public class PitKilnBlock extends BlockWithEntity {
         if (world instanceof ServerWorld) {
             ServerRecipeManager.MatchGetter<SingleStackRecipeInput, PitKilnFiringRecipe> matchGetter = ServerRecipeManager.createCachedMatchGetter(PrimevalRecipes.PIT_KILN_FIRING);
             ServerRecipeManager.MatchGetter<SingleStackRecipeInput, MeltingRecipe> vesselMatchGetter = ServerRecipeManager.createCachedMatchGetter(PrimevalRecipes.MELTING);
+            ServerRecipeManager.MatchGetter<FluidInput, AlloyingRecipe> alloyMatchGetter = ServerRecipeManager.createCachedMatchGetter(PrimevalRecipes.ALLOYING);
             return validateTicker(type, PrimevalBlocks.PIT_KILN_BLOCK_ENTITY, (worldx, pos, statex, blockEntity) -> {
-                PitKilnBlockEntity.serverTick((ServerWorld) world, pos, statex, blockEntity, matchGetter, vesselMatchGetter);
+                PitKilnBlockEntity.serverTick((ServerWorld) world, pos, statex, blockEntity, matchGetter, vesselMatchGetter, alloyMatchGetter);
             });
         }
         return null;

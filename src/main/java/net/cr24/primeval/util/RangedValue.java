@@ -55,7 +55,7 @@ public class RangedValue {
     }
 
     // Util
-    public boolean valueIsWithin(double value) {
+    public boolean valueIsWithin(float value) {
         return (value <= upperAmount && value >= lowerAmount);
     }
 

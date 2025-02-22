@@ -48,7 +48,7 @@ public class AlloyingRecipe implements Recipe<FluidInput> {
         }
         for (RegistryEntry<Fluid> f : inventoryFluids.keySet()) {
             int stepAmount = inventoryFluids.get(f);
-            double percent = ((double)stepAmount) / ((double)overallAmount);
+            float percent = ((float)stepAmount) / ((float)overallAmount);
             if (!fluidInputs.get(f).valueIsWithin(percent)) {
                 return false;
             }

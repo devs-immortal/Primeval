@@ -1,8 +1,12 @@
 package net.cr24.primeval.item.tool;
 
+import net.cr24.primeval.fluid.PrimevalFluids;
+import net.cr24.primeval.initialization.PrimevalRecipes;
 import net.cr24.primeval.item.IWeightedItem;
 import net.cr24.primeval.item.MoldItem;
+import net.cr24.primeval.recipe.AlloyingRecipe;
 import net.cr24.primeval.recipe.MeltingRecipe;
+import net.cr24.primeval.util.FluidInput;
 import net.cr24.primeval.util.PrimevalDataComponentTypes;
 import net.cr24.primeval.util.Size;
 import net.cr24.primeval.util.Weight;
@@ -21,6 +25,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.BundleTooltipData;
 import net.minecraft.item.tooltip.TooltipData;
 import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.recipe.ServerRecipeManager;
 import net.minecraft.recipe.input.SingleStackRecipeInput;
 import net.minecraft.registry.entry.RegistryEntry;
@@ -87,28 +92,50 @@ public class VesselItem extends BundleItem implements IWeightedItem {
         }
     }
 
-    public static ItemStack processItem(ItemStack vessel, ServerWorld world, ServerRecipeManager.MatchGetter<SingleStackRecipeInput, MeltingRecipe> recipeMatchGetter) {
+    public static ItemStack processItem(ItemStack vessel, ServerWorld world, ServerRecipeManager.MatchGetter<SingleStackRecipeInput, MeltingRecipe> meltingMatchGetter, ServerRecipeManager.MatchGetter<FluidInput, AlloyingRecipe> alloyMatchGetter) {
+        // fluids from contents
         Map<RegistryEntry<Fluid>, Integer> fluids = new HashMap<>();
+        int overallFluid = 0;
+
         if (vessel.contains(DataComponentTypes.BUNDLE_CONTENTS)) {
             var contents = vessel.get(DataComponentTypes.BUNDLE_CONTENTS).iterate();
             for (ItemStack inputItem : contents) {
                 SingleStackRecipeInput singleStackRecipeInput = new SingleStackRecipeInput(inputItem);
-                var meltingRecipe = recipeMatchGetter.getFirstMatch(singleStackRecipeInput, world);
+                var meltingRecipe = meltingMatchGetter.getFirstMatch(singleStackRecipeInput, world);
                 if (meltingRecipe.isPresent()) {
                     var r = meltingRecipe.get().value();
                     if (fluids.containsKey(r.getFluidResult())) {
-                        System.out.println("adding " + r.getFluidAmount() * inputItem.getCount() + " to " + r.getFluidResult() + " (already contains " + fluids.get(r.getFluidResult()) + ")");
+                        //System.out.println("adding " + r.getFluidAmount() * inputItem.getCount() + " to " + r.getFluidResult() + " (already contains " + fluids.get(r.getFluidResult()) + ")");
                         fluids.put(r.getFluidResult(), fluids.get(r.getFluidResult()) + r.getFluidAmount() * inputItem.getCount());
                     } else {
-                        System.out.println("adding " + r.getFluidAmount() * inputItem.getCount() + " to " + r.getFluidResult() + " (NEW)");
+                        //System.out.println("adding " + r.getFluidAmount() * inputItem.getCount() + " to " + r.getFluidResult() + " (NEW)");
                         fluids.put(r.getFluidResult(), r.getFluidAmount() * inputItem.getCount());
                     }
+                    overallFluid += r.getFluidAmount() * inputItem.getCount();
                 }
             }
         }
-        System.out.println(fluids);
-        vessel.remove(DataComponentTypes.BUNDLE_CONTENTS); // TODO
-        vessel.set(PrimevalDataComponentTypes.FLUID_CONTENTS, new PrimevalDataComponentTypes.FluidContentComponent(fluids.keySet().stream().findFirst().get(), fluids.get(fluids.keySet().stream().findFirst().get())));
+        //System.out.println(fluids);
+
+        // output fluid
+        RegistryEntry<Fluid> resultFluid;
+        if (fluids.size() == 1) {
+            resultFluid = fluids.keySet().stream().findFirst().get();
+            //System.out.println("ONLY ONE FLUID");
+        } else {
+            //System.out.println("ATTEMPTING ALLOY");
+            FluidInput input = new FluidInput(fluids);
+            Optional<AlloyingRecipe> recipe = alloyMatchGetter.getFirstMatch(input, world).map(RecipeEntry::value);
+            if (recipe.isPresent()) {
+                resultFluid = recipe.get().getFluidResult();
+            } else {
+                resultFluid = PrimevalFluids.MOLTEN_BOTCHED_ALLOY.getRegistryEntry();
+            }
+        }
+        //System.out.println("result = " + resultFluid + "  overallFluid = " + overallFluid);
+
+        vessel.remove(DataComponentTypes.BUNDLE_CONTENTS);
+        vessel.set(PrimevalDataComponentTypes.FLUID_CONTENTS, new PrimevalDataComponentTypes.FluidContentComponent(resultFluid, overallFluid));
         return vessel;
     }
 

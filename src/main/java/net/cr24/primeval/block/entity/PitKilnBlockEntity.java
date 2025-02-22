@@ -3,9 +3,11 @@ package net.cr24.primeval.block.entity;
 import net.cr24.primeval.initialization.PrimevalBlocks;
 import net.cr24.primeval.initialization.PrimevalItems;
 import net.cr24.primeval.item.tool.VesselItem;
+import net.cr24.primeval.recipe.AlloyingRecipe;
 import net.cr24.primeval.recipe.MeltingRecipe;
 import net.cr24.primeval.recipe.PitKilnFiringRecipe;
 import net.cr24.primeval.recipe.QuernRecipe;
+import net.cr24.primeval.util.FluidInput;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -69,11 +71,11 @@ public class PitKilnBlockEntity extends BlockEntity implements Clearable {
         nbt.putInt("burnTimer", this.burnTimer);
     }
 
-    public static void serverTick(ServerWorld serverWorld, BlockPos pos, BlockState state, PitKilnBlockEntity blockEntity, ServerRecipeManager.MatchGetter<SingleStackRecipeInput, PitKilnFiringRecipe> recipeMatchGetter, ServerRecipeManager.MatchGetter<SingleStackRecipeInput, MeltingRecipe> vesselRecipeMatchGetter) {
+    public static void serverTick(ServerWorld serverWorld, BlockPos pos, BlockState state, PitKilnBlockEntity blockEntity, ServerRecipeManager.MatchGetter<SingleStackRecipeInput, PitKilnFiringRecipe> recipeMatchGetter, ServerRecipeManager.MatchGetter<SingleStackRecipeInput, MeltingRecipe> vesselRecipeMatchGetter, ServerRecipeManager.MatchGetter<FluidInput, AlloyingRecipe> alloyMatchGetter) {
         if (blockEntity.burnTimer > 0) {
             blockEntity.burnTimer--;
         } else if (blockEntity.burnTimer == 0) { // WHEN FINISHES FIRING
-            ItemStack[] results = blockEntity.processItems(serverWorld, recipeMatchGetter, vesselRecipeMatchGetter);
+            ItemStack[] results = blockEntity.processItems(serverWorld, recipeMatchGetter, vesselRecipeMatchGetter, alloyMatchGetter);
             serverWorld.removeBlockEntity(pos);
             serverWorld.setBlockState(pos, PrimevalBlocks.ASH_PILE.getDefaultState());
             BlockEntity newBlockEntity = serverWorld.getBlockEntity(pos);
@@ -134,10 +136,10 @@ public class PitKilnBlockEntity extends BlockEntity implements Clearable {
         return ret;
     }
 
-    public ItemStack[] processItems(ServerWorld serverWorld, ServerRecipeManager.MatchGetter<SingleStackRecipeInput, PitKilnFiringRecipe> kilnRecipeMatchGetter, ServerRecipeManager.MatchGetter<SingleStackRecipeInput, MeltingRecipe> vesselRecipeMatchGetter) {
+    public ItemStack[] processItems(ServerWorld serverWorld, ServerRecipeManager.MatchGetter<SingleStackRecipeInput, PitKilnFiringRecipe> kilnRecipeMatchGetter, ServerRecipeManager.MatchGetter<SingleStackRecipeInput, MeltingRecipe> vesselRecipeMatchGetter, ServerRecipeManager.MatchGetter<FluidInput, AlloyingRecipe> alloyMatchGetter) {
         for (int i = 0; i < 4; i++) {
             if (this.inventory[i].getItem() instanceof VesselItem) {
-                this.inventory[i] = VesselItem.processItem(this.inventory[i], serverWorld, vesselRecipeMatchGetter);
+                this.inventory[i] = VesselItem.processItem(this.inventory[i], serverWorld, vesselRecipeMatchGetter, alloyMatchGetter);
             } else {
                 SingleStackRecipeInput singleStackRecipeInput = new SingleStackRecipeInput(this.inventory[i]);
                 Optional<ItemStack> result = kilnRecipeMatchGetter.getFirstMatch(singleStackRecipeInput, serverWorld).map((recipe) -> (recipe.value()).craft(singleStackRecipeInput, world.getRegistryManager()));
