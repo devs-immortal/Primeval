@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_straw": {
+    "has_straw_block": {
       "conditions": {
         "items": [
           {
-            "items": "primeval:straw"
+            "items": "primeval:straw_block"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_straw"
+      "has_straw_block"
     ]
   ],
   "rewards": {
