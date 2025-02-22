@@ -164,7 +164,7 @@ public class PrimevalItems {
     public static final Item FIRED_CLAY_INGOT_MOLD = registerMold("ingot", Weight.NORMAL, Size.MEDIUM, PrimevalTags.Fluids.ALL_MOLD_FLUIDS, 9000);
     public static final Item FIRED_CLAY_AXE_HEAD_MOLD = registerMold("axe_head", Weight.NORMAL, Size.MEDIUM, PrimevalTags.Fluids.TOOL_MOLD_FLUIDS, 9000 * 3);
     public static final Item FIRED_CLAY_CHISEL_HEAD_MOLD = registerMold("chisel_head", Weight.NORMAL, Size.MEDIUM, PrimevalTags.Fluids.TOOL_MOLD_FLUIDS, 9000 * 2);
-    public static final Item FIRED_CLAY_KNIFE_BLADE_MOLD = registerMold("knife_blade", Weight.NORMAL, Size.MEDIUM, PrimevalTags.Fluids.TOOL_MOLD_FLUIDS, 9000 * 2);
+    public static final Item FIRED_CLAY_KNIFE_BLADE_MOLD = registerMold("knife_blade", Weight.NORMAL, Size.MEDIUM, PrimevalTags.Fluids.TOOL_MOLD_FLUIDS, 9000);
     public static final Item FIRED_CLAY_PICKAXE_HEAD_MOLD = registerMold("pickaxe_head", Weight.NORMAL, Size.MEDIUM, PrimevalTags.Fluids.TOOL_MOLD_FLUIDS, 9000 * 3);
     public static final Item FIRED_CLAY_SHOVEL_HEAD_MOLD = registerMold("shovel_head", Weight.NORMAL, Size.MEDIUM, PrimevalTags.Fluids.TOOL_MOLD_FLUIDS, 9000);
     public static final Item FIRED_CLAY_SWORD_BLADE_MOLD = registerMold("sword_blade", Weight.NORMAL, Size.MEDIUM, PrimevalTags.Fluids.TOOL_MOLD_FLUIDS, 9000 * 2);

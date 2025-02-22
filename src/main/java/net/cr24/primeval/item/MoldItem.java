@@ -40,7 +40,7 @@ public class MoldItem extends WeightedItem {
             var heldFluid = stack.getOrDefault(PrimevalDataComponentTypes.FLUID_CONTENTS, new PrimevalDataComponentTypes.FluidContentComponent(RegistryEntry.of(Fluids.EMPTY), 0));
             int moldCapacity = mold.getCapacity();
             // if fluid is valid to enter and either the mold is empty or it holds the same fluid and still has room
-            if (mold.fluidIsValid(heldFluid.fluid()) && (heldFluid.fluid().value() == Fluids.EMPTY || (heldFluid.fluid() == incomingFluid.fluid() && heldFluid.amount() < moldCapacity))) {
+            if (mold.fluidIsValid(incomingFluid.fluid()) && (heldFluid.fluid().value() == Fluids.EMPTY || (heldFluid.fluid() == incomingFluid.fluid() && heldFluid.amount() < moldCapacity))) {
                 int amountToInsert = Math.min(moldCapacity - heldFluid.amount(), Math.min(MAX_INSERTION_AMOUNT, incomingFluid.amount()));
                 stack.set(PrimevalDataComponentTypes.FLUID_CONTENTS, new PrimevalDataComponentTypes.FluidContentComponent(incomingFluid.fluid(), heldFluid.amount() + amountToInsert));
                 int remainingVesselAmount = incomingFluid.amount() - amountToInsert;

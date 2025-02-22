@@ -1,6 +1,8 @@
 package net.cr24.primeval;
 
+import net.cr24.primeval.fluid.PrimevalFluids;
 import net.cr24.primeval.initialization.PrimevalTags;
+import net.cr24.primeval.item.property.FluidContentProperty;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
@@ -9,22 +11,34 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.data.*;
+import net.minecraft.client.render.item.model.ItemModel;
+import net.minecraft.client.render.item.model.SelectItemModel;
+import net.minecraft.client.render.item.property.select.TrimMaterialProperty;
+import net.minecraft.client.render.item.tint.DyeTintSource;
 import net.minecraft.client.render.item.tint.GrassTintSource;
+import net.minecraft.client.render.item.tint.TintSource;
 import net.minecraft.data.recipe.RecipeExporter;
 import net.minecraft.data.recipe.RecipeGenerator;
 import net.minecraft.data.recipe.ShapedRecipeJsonBuilder;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
+import net.minecraft.item.equipment.EquipmentAsset;
+import net.minecraft.item.equipment.trim.ArmorTrimMaterial;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import static net.cr24.primeval.initialization.PrimevalBlocks.*;
@@ -252,21 +266,21 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 			itemModelGenerator.register(QUERN_WHEEL, Models.GENERATED);
 
 			itemModelGenerator.register(CLAY_INGOT_MOLD, Models.GENERATED);
-			itemModelGenerator.register(FIRED_CLAY_INGOT_MOLD, Models.GENERATED);
+			registerFiredMold(itemModelGenerator, FIRED_CLAY_INGOT_MOLD, PrimevalFluids.ALL_MOLD_FLUIDS);
 			itemModelGenerator.register(CLAY_AXE_HEAD_MOLD, Models.GENERATED);
-			itemModelGenerator.register(FIRED_CLAY_AXE_HEAD_MOLD, Models.GENERATED);
+			registerFiredMold(itemModelGenerator, FIRED_CLAY_AXE_HEAD_MOLD, PrimevalFluids.TOOL_MOLD_FLUIDS);
 			itemModelGenerator.register(CLAY_CHISEL_HEAD_MOLD, Models.GENERATED);
-			itemModelGenerator.register(FIRED_CLAY_CHISEL_HEAD_MOLD, Models.GENERATED);
+			registerFiredMold(itemModelGenerator, FIRED_CLAY_CHISEL_HEAD_MOLD, PrimevalFluids.TOOL_MOLD_FLUIDS);
 			itemModelGenerator.register(CLAY_KNIFE_BLADE_MOLD, Models.GENERATED);
-			itemModelGenerator.register(FIRED_CLAY_KNIFE_BLADE_MOLD, Models.GENERATED);
+			registerFiredMold(itemModelGenerator, FIRED_CLAY_KNIFE_BLADE_MOLD, PrimevalFluids.TOOL_MOLD_FLUIDS);
 			itemModelGenerator.register(CLAY_PICKAXE_HEAD_MOLD, Models.GENERATED);
-			itemModelGenerator.register(FIRED_CLAY_PICKAXE_HEAD_MOLD, Models.GENERATED);
+			registerFiredMold(itemModelGenerator, FIRED_CLAY_PICKAXE_HEAD_MOLD, PrimevalFluids.TOOL_MOLD_FLUIDS);
 			itemModelGenerator.register(CLAY_SHOVEL_HEAD_MOLD, Models.GENERATED);
-			itemModelGenerator.register(FIRED_CLAY_SHOVEL_HEAD_MOLD, Models.GENERATED);
+			registerFiredMold(itemModelGenerator, FIRED_CLAY_SHOVEL_HEAD_MOLD, PrimevalFluids.TOOL_MOLD_FLUIDS);
 			itemModelGenerator.register(CLAY_SWORD_BLADE_MOLD, Models.GENERATED);
-			itemModelGenerator.register(FIRED_CLAY_SWORD_BLADE_MOLD, Models.GENERATED);
+			registerFiredMold(itemModelGenerator, FIRED_CLAY_SWORD_BLADE_MOLD, PrimevalFluids.TOOL_MOLD_FLUIDS);
 			itemModelGenerator.register(CLAY_HOE_HEAD_MOLD, Models.GENERATED);
-			itemModelGenerator.register(FIRED_CLAY_HOE_HEAD_MOLD, Models.GENERATED);
+			registerFiredMold(itemModelGenerator, FIRED_CLAY_HOE_HEAD_MOLD, PrimevalFluids.TOOL_MOLD_FLUIDS);
 
 			itemModelGenerator.register(COPPER_INGOT, Models.GENERATED);
 			itemModelGenerator.register(COPPER_CHUNK, Models.GENERATED);
@@ -378,6 +392,22 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 
 		private static <T extends Iterable<Item>> void registerNormalItemSet(ItemModelGenerator itemModelGenerator, T set) {
 			set.iterator().forEachRemaining((b) -> itemModelGenerator.register(b, Models.GENERATED));
+		}
+
+		public final void registerFiredMold(ItemModelGenerator itemModelGenerator, Item item, List<Fluid> validFluids) {
+			Identifier id = ModelIds.getItemModelId(item);
+			Identifier identifier2 = TextureMap.getId(item);
+			List<SelectItemModel.SwitchCase<RegistryKey<Fluid>>> list = new ArrayList(validFluids.size());
+
+			for (var f : validFluids) {
+				var filledId = id.withSuffixedPath("_" + f.getRegistryEntry().getKey().get().getValue().getPath());
+				list.add(ItemModels.switchCase(f.getRegistryEntry().registryKey(), ItemModels.basic(filledId)));
+				Models.GENERATED.upload(filledId, TextureMap.layer0(filledId), itemModelGenerator.modelCollector);
+			}
+
+			Models.GENERATED.upload(id, TextureMap.layer0(identifier2), itemModelGenerator.modelCollector);
+			ItemModel.Unbaked unbaked2 = ItemModels.basic(id);
+			itemModelGenerator.output.accept(item, ItemModels.select(new FluidContentProperty(), unbaked2, list));
 		}
 	}
 

@@ -4,27 +4,15 @@ import net.cr24.primeval.Primeval;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
-import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandler;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
-import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.texture.Sprite;
-import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.resource.Resource;
-import net.minecraft.resource.ResourceManager;
-import net.minecraft.resource.ResourceType;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.BlockRenderView;
 
-import java.util.function.Function;
+import java.util.List;
 
 public class PrimevalFluids {
 
@@ -38,6 +26,21 @@ public class PrimevalFluids {
     public static final FlowableFluid MOLTEN_GOLD = registerFluid("molten_gold", new StillMoltenMetalFluid.Gold());
     public static final FlowableFluid MOLTEN_BOTCHED_ALLOY = registerFluid("molten_botched_alloy", new StillMoltenMetalFluid.Botched());
 
+
+    public static List<Fluid> TOOL_MOLD_FLUIDS = List.of(
+            MOLTEN_COPPER,
+            MOLTEN_BRONZE
+    );
+    public static List<Fluid> ALL_MOLD_FLUIDS = List.of(
+            MOLTEN_COPPER,
+            MOLTEN_TIN,
+            MOLTEN_ZINC,
+            MOLTEN_BRONZE,
+            MOLTEN_BRASS,
+            MOLTEN_PEWTER,
+            MOLTEN_GOLD,
+            MOLTEN_BOTCHED_ALLOY
+    );
 
     public static void init() {}
 

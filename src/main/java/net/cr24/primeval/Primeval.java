@@ -2,6 +2,7 @@ package net.cr24.primeval;
 
 import net.cr24.primeval.fluid.PrimevalFluids;
 import net.cr24.primeval.initialization.*;
+import net.cr24.primeval.item.property.FluidContentProperty;
 import net.cr24.primeval.screen.PrimevalScreens;
 import net.cr24.primeval.util.PrimevalDataComponentTypes;
 import net.fabricmc.api.ClientModInitializer;
@@ -9,6 +10,8 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.api.ModInitializer;
 
+import net.minecraft.client.render.item.property.select.CustomModelDataStringProperty;
+import net.minecraft.client.render.item.property.select.SelectProperties;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +42,7 @@ public class Primeval implements ModInitializer, ClientModInitializer {
 //		PrimevalItems.initClient();
 		PrimevalBlocks.initClient();
 		PrimevalFluids.initClient();
+		SelectProperties.ID_MAPPER.put(identify("fluid_contents"), FluidContentProperty.TYPE);
 	}
 
 	public static Identifier identify(String id) {
