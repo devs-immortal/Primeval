@@ -1,0 +1,26 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "cases": [
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "primeval:item/fired_clay_mold_sword_blade_molten_copper"
+        },
+        "when": "primeval:molten_copper"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "primeval:item/fired_clay_mold_sword_blade_molten_bronze"
+        },
+        "when": "primeval:molten_bronze"
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "primeval:item/fired_clay_mold_sword_blade"
+    },
+    "property": "primeval:fluid_contents"
+  }
+}

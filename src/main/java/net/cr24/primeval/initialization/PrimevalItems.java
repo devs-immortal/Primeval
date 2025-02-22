@@ -2,6 +2,7 @@ package net.cr24.primeval.initialization;
 
 import net.cr24.primeval.Primeval;
 import net.cr24.primeval.block.PrimevalFarmlandBlock;
+import net.cr24.primeval.fluid.PrimevalFluids;
 import net.cr24.primeval.item.*;
 import net.cr24.primeval.item.tool.*;
 import net.cr24.primeval.util.Size;
@@ -9,12 +10,14 @@ import net.cr24.primeval.util.Weight;
 import net.minecraft.block.*;
 import net.minecraft.component.type.ConsumableComponents;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.TagKey;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -158,14 +161,14 @@ public class PrimevalItems {
     public static final Item CLAY_HOE_HEAD_MOLD = registerItem("clay_mold_hoe_head", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
 
     public static final List<Item> FIRED_MOLDS = new ArrayList<>(8);
-    public static final Item FIRED_CLAY_INGOT_MOLD = registerMold("ingot", Weight.NORMAL, Size.MEDIUM, 9000);
-    public static final Item FIRED_CLAY_AXE_HEAD_MOLD = registerMold("axe_head", Weight.NORMAL, Size.MEDIUM, 9000 * 3);
-    public static final Item FIRED_CLAY_CHISEL_HEAD_MOLD = registerMold("chisel_head", Weight.NORMAL, Size.MEDIUM, 9000 * 2);
-    public static final Item FIRED_CLAY_KNIFE_BLADE_MOLD = registerMold("knife_blade", Weight.NORMAL, Size.MEDIUM, 9000 * 2);
-    public static final Item FIRED_CLAY_PICKAXE_HEAD_MOLD = registerMold("pickaxe_head", Weight.NORMAL, Size.MEDIUM, 9000 * 3);
-    public static final Item FIRED_CLAY_SHOVEL_HEAD_MOLD = registerMold("shovel_head", Weight.NORMAL, Size.MEDIUM, 9000);
-    public static final Item FIRED_CLAY_SWORD_BLADE_MOLD = registerMold("sword_blade", Weight.NORMAL, Size.MEDIUM, 9000 * 2);
-    public static final Item FIRED_CLAY_HOE_HEAD_MOLD = registerMold("hoe_head", Weight.NORMAL, Size.MEDIUM, 9000 * 2);
+    public static final Item FIRED_CLAY_INGOT_MOLD = registerMold("ingot", Weight.NORMAL, Size.MEDIUM, PrimevalTags.Fluids.ALL_MOLD_FLUIDS, 9000);
+    public static final Item FIRED_CLAY_AXE_HEAD_MOLD = registerMold("axe_head", Weight.NORMAL, Size.MEDIUM, PrimevalTags.Fluids.TOOL_MOLD_FLUIDS, 9000 * 3);
+    public static final Item FIRED_CLAY_CHISEL_HEAD_MOLD = registerMold("chisel_head", Weight.NORMAL, Size.MEDIUM, PrimevalTags.Fluids.TOOL_MOLD_FLUIDS, 9000 * 2);
+    public static final Item FIRED_CLAY_KNIFE_BLADE_MOLD = registerMold("knife_blade", Weight.NORMAL, Size.MEDIUM, PrimevalTags.Fluids.TOOL_MOLD_FLUIDS, 9000 * 2);
+    public static final Item FIRED_CLAY_PICKAXE_HEAD_MOLD = registerMold("pickaxe_head", Weight.NORMAL, Size.MEDIUM, PrimevalTags.Fluids.TOOL_MOLD_FLUIDS, 9000 * 3);
+    public static final Item FIRED_CLAY_SHOVEL_HEAD_MOLD = registerMold("shovel_head", Weight.NORMAL, Size.MEDIUM, PrimevalTags.Fluids.TOOL_MOLD_FLUIDS, 9000);
+    public static final Item FIRED_CLAY_SWORD_BLADE_MOLD = registerMold("sword_blade", Weight.NORMAL, Size.MEDIUM, PrimevalTags.Fluids.TOOL_MOLD_FLUIDS, 9000 * 2);
+    public static final Item FIRED_CLAY_HOE_HEAD_MOLD = registerMold("hoe_head", Weight.NORMAL, Size.MEDIUM, PrimevalTags.Fluids.TOOL_MOLD_FLUIDS, 9000 * 2);
 
     // endregion
 
@@ -228,8 +231,8 @@ public class PrimevalItems {
         return Registry.register(Registries.ITEM, identify(id), factory.create(w, s, settings.registryKey(itemKey)));
     }
 
-    private static Item registerMold(String formId, Weight weight, Size size, int amount) {
-        Item registered = registerItem("fired_clay_mold_" + formId, SETTINGS_BASIC(), (w, s, settings) -> new MoldItem(w, s, amount, settings), weight, size);
+    private static Item registerMold(String formId, Weight weight, Size size, TagKey<Fluid> validFluids, int amount) {
+        Item registered = registerItem("fired_clay_mold_" + formId, SETTINGS_BASIC(), (w, s, settings) -> new MoldItem(w, s, amount, validFluids, settings), weight, size);
         FIRED_MOLDS.add(registered);
         return registered;
     }

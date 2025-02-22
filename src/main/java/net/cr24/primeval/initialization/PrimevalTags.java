@@ -2,6 +2,7 @@ package net.cr24.primeval.initialization;
 
 import net.cr24.primeval.Primeval;
 import net.minecraft.block.Block;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
@@ -62,6 +63,15 @@ public class PrimevalTags {
 
         private static TagKey<Item> register(String id) {
             return TagKey.of(RegistryKeys.ITEM, Primeval.identify(id));
+        }
+    }
+
+    public static class Fluids {
+        public static final TagKey<Fluid> ALL_MOLD_FLUIDS = register("all_mold_fluids");
+        public static final TagKey<Fluid> TOOL_MOLD_FLUIDS = register("tool_mold_fluids");
+
+        private static TagKey<Fluid> register(String id) {
+            return TagKey.of(RegistryKeys.FLUID, Primeval.identify(id));
         }
     }
 }

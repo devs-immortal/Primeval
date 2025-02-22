@@ -1,0 +1,68 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "cases": [
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "primeval:item/fired_clay_mold_ingot_molten_copper"
+        },
+        "when": "primeval:molten_copper"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "primeval:item/fired_clay_mold_ingot_molten_tin"
+        },
+        "when": "primeval:molten_tin"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "primeval:item/fired_clay_mold_ingot_molten_zinc"
+        },
+        "when": "primeval:molten_zinc"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "primeval:item/fired_clay_mold_ingot_molten_bronze"
+        },
+        "when": "primeval:molten_bronze"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "primeval:item/fired_clay_mold_ingot_molten_brass"
+        },
+        "when": "primeval:molten_brass"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "primeval:item/fired_clay_mold_ingot_molten_pewter"
+        },
+        "when": "primeval:molten_pewter"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "primeval:item/fired_clay_mold_ingot_molten_gold"
+        },
+        "when": "primeval:molten_gold"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "primeval:item/fired_clay_mold_ingot_molten_botched_alloy"
+        },
+        "when": "primeval:molten_botched_alloy"
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "primeval:item/fired_clay_mold_ingot"
+    },
+    "property": "primeval:fluid_contents"
+  }
+}

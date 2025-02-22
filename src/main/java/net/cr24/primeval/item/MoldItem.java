@@ -6,47 +6,57 @@ import net.cr24.primeval.util.Weight;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Pair;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MoldItem extends WeightedItem {
 
-    public int capacity;
+    public final int capacity;
+    public final TagKey<Fluid> validFluids;
     private static final int MAX_INSERTION_AMOUNT = 9000;
 
-    public MoldItem(Weight weight, Size size, int capacity, Settings settings) {
+    public MoldItem(Weight weight, Size size, int capacity, TagKey<Fluid> validFluids, Settings settings) {
         super(weight, size, 1, settings);
         this.capacity = capacity;
+        this.validFluids = validFluids;
     }
 
     public int getCapacity() {
         return this.capacity;
     }
 
-    public static Pair<Boolean, PrimevalDataComponentTypes.FluidContentComponent> insertFluid(PrimevalDataComponentTypes.FluidContentComponent incomingFluid, ItemStack mold) {
-        var heldFluid = mold.getOrDefault(PrimevalDataComponentTypes.FLUID_CONTENTS, new PrimevalDataComponentTypes.FluidContentComponent(RegistryEntry.of(Fluids.EMPTY), 0));
-        int moldCapacity = ((MoldItem)mold.getItem()).getCapacity();
-        // if mold is empty or holds same fluid and still has room
-        if (heldFluid.fluid().value() == Fluids.EMPTY || (heldFluid.fluid() == incomingFluid.fluid() && heldFluid.amount() < moldCapacity)) {
-            int amountToInsert = Math.min(moldCapacity - heldFluid.amount(), Math.min(MAX_INSERTION_AMOUNT, incomingFluid.amount()));
-            mold.set(PrimevalDataComponentTypes.FLUID_CONTENTS, new PrimevalDataComponentTypes.FluidContentComponent(incomingFluid.fluid(), heldFluid.amount() + amountToInsert));
-            int remainingVesselAmount = incomingFluid.amount() - amountToInsert;
-            if (remainingVesselAmount == 0) {
-                return new Pair<>(true, null);
-            } else {
-                return new Pair<>(true, new PrimevalDataComponentTypes.FluidContentComponent(incomingFluid.fluid(), remainingVesselAmount));
+    public static Pair<Boolean, PrimevalDataComponentTypes.FluidContentComponent> insertFluid(PrimevalDataComponentTypes.FluidContentComponent incomingFluid, ItemStack stack) {
+        if (stack.getItem() instanceof MoldItem mold) {
+            var heldFluid = stack.getOrDefault(PrimevalDataComponentTypes.FLUID_CONTENTS, new PrimevalDataComponentTypes.FluidContentComponent(RegistryEntry.of(Fluids.EMPTY), 0));
+            int moldCapacity = mold.getCapacity();
+            // if fluid is valid to enter and either the mold is empty or it holds the same fluid and still has room
+            if (mold.fluidIsValid(heldFluid.fluid()) && (heldFluid.fluid().value() == Fluids.EMPTY || (heldFluid.fluid() == incomingFluid.fluid() && heldFluid.amount() < moldCapacity))) {
+                int amountToInsert = Math.min(moldCapacity - heldFluid.amount(), Math.min(MAX_INSERTION_AMOUNT, incomingFluid.amount()));
+                stack.set(PrimevalDataComponentTypes.FLUID_CONTENTS, new PrimevalDataComponentTypes.FluidContentComponent(incomingFluid.fluid(), heldFluid.amount() + amountToInsert));
+                int remainingVesselAmount = incomingFluid.amount() - amountToInsert;
+                if (remainingVesselAmount == 0) {
+                    return new Pair<>(true, null);
+                } else {
+                    return new Pair<>(true, new PrimevalDataComponentTypes.FluidContentComponent(incomingFluid.fluid(), remainingVesselAmount));
+                }
             }
-        } else {
-            // indicates could not fill
-            return new Pair<>(false, null);
         }
+        // indicates could not fill
+        return new Pair<>(false, null);
+    }
+
+    public boolean fluidIsValid(RegistryEntry<Fluid> inFluid) {
+        return inFluid.isIn(validFluids);
     }
 
     @Environment(EnvType.CLIENT)
