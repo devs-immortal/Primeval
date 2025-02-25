@@ -1,0 +1,8 @@
+{
+  "type": "primeval:mold_casting",
+  "mold": "primeval:fired_clay_mold_axe_head",
+  "fluid": "primeval:molten_copper",
+  "result": {
+    "id": "primeval:copper_axe_head"
+  }
+}

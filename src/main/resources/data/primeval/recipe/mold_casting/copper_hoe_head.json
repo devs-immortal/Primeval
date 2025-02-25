@@ -1,0 +1,8 @@
+{
+  "type": "primeval:mold_casting",
+  "mold": "primeval:fired_clay_mold_hoe_head",
+  "fluid": "primeval:molten_copper",
+  "result": {
+    "id": "primeval:copper_hoe_head"
+  }
+}

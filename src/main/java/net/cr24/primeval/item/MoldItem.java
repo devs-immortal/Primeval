@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 public class MoldItem extends WeightedItem {
 
-    public final int capacity;
+    final int capacity;
     public final TagKey<Fluid> validFluids;
     private static final int MAX_INSERTION_AMOUNT = 9000;
 

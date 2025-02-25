@@ -1,13 +1,37 @@
 package net.cr24.primeval.recipe.rei;
 
+import dev.architectury.event.CompoundEventResult;
 import me.shedaniel.rei.api.common.display.DisplaySerializerRegistry;
+import me.shedaniel.rei.api.common.fluid.FluidSupportProvider;
 import me.shedaniel.rei.api.common.plugins.REICommonPlugin;
 import me.shedaniel.rei.api.common.registry.display.ServerDisplayRegistry;
+import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.cr24.primeval.Primeval;
 import net.cr24.primeval.initialization.PrimevalRecipes;
+import net.cr24.primeval.item.MoldItem;
 import net.cr24.primeval.recipe.*;
+import net.cr24.primeval.util.PrimevalDataComponentTypes;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+
+import java.util.stream.Stream;
 
 public class PrimevalREICommonIntegration implements REICommonPlugin {
+
+    @Override
+    public void registerFluidSupport(FluidSupportProvider support) {
+        support.register(entry -> {
+            ItemStack stack = entry.getValue();
+            Item item = stack.getItem();
+            if (stack.contains(PrimevalDataComponentTypes.FLUID_CONTENTS)) {
+                return CompoundEventResult.interruptTrue(Stream.of(EntryStacks.of(
+                        stack.get(PrimevalDataComponentTypes.FLUID_CONTENTS).fluid().value(),
+                        item instanceof MoldItem ? ((MoldItem) item).getCapacity() : 9000
+                        )));
+            }
+            return CompoundEventResult.pass();
+        });
+    }
 
     @Override
     public void registerDisplays(ServerDisplayRegistry registry) {
@@ -16,6 +40,7 @@ public class PrimevalREICommonIntegration implements REICommonPlugin {
         registry.beginRecipeFiller(AlloyingRecipe.class).filterType(PrimevalRecipes.ALLOYING).fill(AlloyingDisplay::new);
 //        registry.registerRecipeFiller(OpenFireRecipe.class, PrimevalRecipes.OPEN_FIRE, OpenFireDisplay::new);
         registry.beginRecipeFiller(QuernRecipe.class).filterType(PrimevalRecipes.QUERN_GRINDING).fill(QuernDisplay::new);
+        new MoldCastingRecipeFiller().registerDisplays(registry);
     }
 
     @Override

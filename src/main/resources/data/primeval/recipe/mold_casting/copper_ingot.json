@@ -1,0 +1,8 @@
+{
+  "type": "primeval:mold_casting",
+  "mold": "primeval:fired_clay_mold_ingot",
+  "fluid": "primeval:molten_copper",
+  "result": {
+    "id": "primeval:copper_ingot"
+  }
+}

@@ -42,7 +42,7 @@ dependencies {
 	modRuntimeOnly "dev.architectury:architectury-fabric:${project.architectury_version}"
 
 	// REI
-	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
+	modCompileOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
 	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
 }
 
