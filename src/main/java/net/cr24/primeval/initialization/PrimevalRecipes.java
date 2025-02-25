@@ -23,7 +23,8 @@ public class PrimevalRecipes {
     public static final RecipeSerializer<QuernRecipe> QUERN_GRINDING_SERIALIZER;
     public static final RegistryKey<RecipePropertySet> QUERN_GRINDING_INPUT;
 
-//    public static final RecipeSerializer<ClayMoldCastingRecipe> CLAY_MOLD_CASTING_SERIALIZER;
+    public static final RecipeType<MoldCastingRecipe> MOLD_CASTING;
+    public static final RecipeSerializer<MoldCastingRecipe> MOLD_CASTING_SERIALIZER;
 
     public static final RecipeType<ItemDamagingRecipe> ITEM_DAMAGING;
     public static final RecipeSerializer<ItemDamagingRecipe> ITEM_DAMAGING_SERIALIZER;
@@ -62,7 +63,11 @@ public class PrimevalRecipes {
         QUERN_GRINDING_SERIALIZER = Registry.register(Registries.RECIPE_SERIALIZER, Primeval.identify("quern_grinding"), new QuernRecipe.Serializer());
         QUERN_GRINDING_INPUT = RegistryKey.of(RecipePropertySet.REGISTRY, Primeval.identify("quern_input"));
 
-//        CLAY_MOLD_CASTING_SERIALIZER = Registry.register(Registries.RECIPE_SERIALIZER, PrimevalMain.getId("clay_mold_casting"), new ClayMoldCastingRecipe.Serializer());
+        MOLD_CASTING = Registry.register(Registries.RECIPE_TYPE, Primeval.identify("mold_casting"), new RecipeType<MoldCastingRecipe>() {
+            @Override
+            public String toString() {return "primeval:mold_casting";}
+        });
+        MOLD_CASTING_SERIALIZER = Registry.register(Registries.RECIPE_SERIALIZER, Primeval.identify("mold_casting"), new MoldCastingRecipe.Serializer());
 
         ITEM_DAMAGING = Registry.register(Registries.RECIPE_TYPE, Primeval.identify("item_damaging"), new RecipeType<ItemDamagingRecipe>() {
             @Override

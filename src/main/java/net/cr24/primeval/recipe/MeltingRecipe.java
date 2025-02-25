@@ -60,10 +60,6 @@ public class MeltingRecipe implements Recipe<SingleStackRecipeInput> {
         return this.fluidAmount;
     }
 
-    public Pair<RegistryEntry<Fluid>, Integer> getFluidResultPair() {
-        return new Pair<>(fluidResult, fluidAmount);
-    }
-
     @Override
     public RecipeSerializer<MeltingRecipe> getSerializer() {
         return PrimevalRecipes.MELTING_SERIALIZER;

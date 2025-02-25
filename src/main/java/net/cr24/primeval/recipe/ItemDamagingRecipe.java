@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.component.DataComponentTypes;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
@@ -50,17 +49,13 @@ public class ItemDamagingRecipe extends ShapelessRecipe {
     }
 
     public static class Serializer implements RecipeSerializer<ItemDamagingRecipe> {
-        private static final MapCodec<ItemDamagingRecipe> CODEC = RecordCodecBuilder.mapCodec((instance) -> {
-            return instance.group(Codec.STRING.optionalFieldOf("group", "").forGetter((recipe) -> {
-                return recipe.group;
-            }), CraftingRecipeCategory.CODEC.fieldOf("category").orElse(CraftingRecipeCategory.MISC).forGetter((recipe) -> {
-                return recipe.category;
-            }), ItemStack.VALIDATED_CODEC.fieldOf("result").forGetter((recipe) -> {
-                return recipe.result;
-            }), Ingredient.CODEC.listOf(1, 9).fieldOf("ingredients").forGetter((recipe) -> {
-                return recipe.ingredients;
-            })).apply(instance, ItemDamagingRecipe::new);
-        });
+        private static final MapCodec<ItemDamagingRecipe> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
+                Codec.STRING.optionalFieldOf("group", "").forGetter((recipe) -> recipe.group),
+                CraftingRecipeCategory.CODEC.fieldOf("category").orElse(CraftingRecipeCategory.MISC).forGetter((recipe) -> recipe.category),
+                ItemStack.VALIDATED_CODEC.fieldOf("result").forGetter((recipe) -> recipe.result),
+                Ingredient.CODEC.listOf(1, 9).fieldOf("ingredients").forGetter((recipe) -> recipe.ingredients)
+        ).apply(instance, ItemDamagingRecipe::new));
+
         public static final PacketCodec<RegistryByteBuf, ItemDamagingRecipe> PACKET_CODEC;
 
         public Serializer() {
@@ -75,15 +70,13 @@ public class ItemDamagingRecipe extends ShapelessRecipe {
         }
 
         static {
-            PACKET_CODEC = PacketCodec.tuple(PacketCodecs.STRING, (recipe) -> {
-                return recipe.group;
-            }, CraftingRecipeCategory.PACKET_CODEC, (recipe) -> {
-                return recipe.category;
-            }, ItemStack.PACKET_CODEC, (recipe) -> {
-                return recipe.result;
-            }, Ingredient.PACKET_CODEC.collect(PacketCodecs.toList()), (recipe) -> {
-                return recipe.ingredients;
-            }, ItemDamagingRecipe::new);
+            PACKET_CODEC = PacketCodec.tuple(
+                    PacketCodecs.STRING, (recipe) -> recipe.group,
+                    CraftingRecipeCategory.PACKET_CODEC, (recipe) -> recipe.category,
+                    ItemStack.PACKET_CODEC, (recipe) -> recipe.result,
+                    Ingredient.PACKET_CODEC.collect(PacketCodecs.toList()), (recipe) -> recipe.ingredients,
+                    ItemDamagingRecipe::new
+            );
         }
     }
 }
