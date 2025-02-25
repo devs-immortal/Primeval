@@ -1,0 +1,11 @@
+{
+  "type": "primeval:item_damaging",
+  "category": "building",
+  "ingredients": [
+    "primeval:stone",
+    "#primeval:chisels"
+  ],
+  "result": {
+    "id": "primeval:smooth_stone"
+  }
+}

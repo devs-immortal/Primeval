@@ -25,7 +25,7 @@ public class PrimevalRecipes {
 
 //    public static final RecipeSerializer<ClayMoldCastingRecipe> CLAY_MOLD_CASTING_SERIALIZER;
 
-
+    public static final RecipeType<ItemDamagingRecipe> ITEM_DAMAGING;
     public static final RecipeSerializer<ItemDamagingRecipe> ITEM_DAMAGING_SERIALIZER;
 
 
@@ -64,6 +64,10 @@ public class PrimevalRecipes {
 
 //        CLAY_MOLD_CASTING_SERIALIZER = Registry.register(Registries.RECIPE_SERIALIZER, PrimevalMain.getId("clay_mold_casting"), new ClayMoldCastingRecipe.Serializer());
 
+        ITEM_DAMAGING = Registry.register(Registries.RECIPE_TYPE, Primeval.identify("item_damaging"), new RecipeType<ItemDamagingRecipe>() {
+            @Override
+            public String toString() {return "primeval:item_damaging";}
+        });
         ITEM_DAMAGING_SERIALIZER = Registry.register(Registries.RECIPE_SERIALIZER, Primeval.identify("item_damaging"), new ItemDamagingRecipe.Serializer());
     }
 
