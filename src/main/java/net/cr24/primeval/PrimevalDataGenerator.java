@@ -17,6 +17,7 @@ import net.minecraft.client.render.item.property.select.TrimMaterialProperty;
 import net.minecraft.client.render.item.tint.DyeTintSource;
 import net.minecraft.client.render.item.tint.GrassTintSource;
 import net.minecraft.client.render.item.tint.TintSource;
+import net.minecraft.data.recipe.CraftingRecipeJsonBuilder;
 import net.minecraft.data.recipe.RecipeExporter;
 import net.minecraft.data.recipe.RecipeGenerator;
 import net.minecraft.data.recipe.ShapedRecipeJsonBuilder;
@@ -478,7 +479,7 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 				offerBlockSet(STONE_PAVER);
 
 
-				this.createShapeless(RecipeCategory.BUILDING_BLOCKS, DAUB, 4).input(SAND).input(CLAY_BALL).input(STICK).input(STRAW).criterion(hasItem(CLAY_BALL), this.conditionsFromItem(CLAY_BALL)).offerTo(this.exporter);
+				this.createShapeless(RecipeCategory.BUILDING_BLOCKS, DAUB, 4).input(SAND).input(CLAY_BALL).input(STRAW).criterion(hasItem(CLAY_BALL), this.conditionsFromItem(CLAY_BALL)).offerTo(this.exporter);
 				this.createShaped(RecipeCategory.BUILDING_BLOCKS, FRAMED_DAUB, 5).input('D', DAUB).input('S', STICK).pattern("SDS").pattern("DDD").pattern("SDS").group("framed_daub").criterion(hasItem(DAUB), this.conditionsFromItem(DAUB)).offerTo(this.exporter);
 				this.createShaped(RecipeCategory.BUILDING_BLOCKS, FRAMED_PILLAR_DAUB, 3).input('D', DAUB).input('S', STICK).pattern("SDS").pattern("SDS").pattern("SDS").group("framed_daub").criterion(hasItem(DAUB), this.conditionsFromItem(DAUB)).offerTo(this.exporter);
 				this.createShaped(RecipeCategory.BUILDING_BLOCKS, FRAMED_CROSS_DAUB, 2).input('D', DAUB).input('S', STICK).pattern("DS").pattern("SD").group("framed_daub").criterion(hasItem(DAUB), this.conditionsFromItem(DAUB)).offerTo(this.exporter);
@@ -486,6 +487,29 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 				this.createShaped(RecipeCategory.BUILDING_BLOCKS, FRAMED_X_DAUB, 4).input('D', DAUB).input('S', STICK).pattern("SDS").pattern("DSD").pattern("SDS").group("framed_daub").criterion(hasItem(DAUB), this.conditionsFromItem(DAUB)).offerTo(this.exporter);
 				this.createShaped(RecipeCategory.BUILDING_BLOCKS, FRAMED_PLUS_DAUB, 2).input('D', DAUB).input('S', STICK).pattern("DSD").pattern("SSS").pattern("DSD").group("framed_daub").criterion(hasItem(DAUB), this.conditionsFromItem(DAUB)).offerTo(this.exporter);
 				this.createShaped(RecipeCategory.BUILDING_BLOCKS, FRAMED_DIVIDED_DAUB, 2).input('D', DAUB).input('S', STICK).pattern(" S ").pattern("DSD").pattern(" S ").group("framed_daub").criterion(hasItem(DAUB), this.conditionsFromItem(DAUB)).offerTo(this.exporter);
+
+				this.offer2x2CompactingRecipe(RecipeCategory.BUILDING_BLOCKS, WICKER.block(), STICK, 2);
+				offerWoodBlockSet(OAK_PLANK_BLOCKS, OAK_LOG);
+				offerWoodBlockSet(BIRCH_PLANK_BLOCKS, BIRCH_LOG);
+				offerWoodBlockSet(SPRUCE_PLANK_BLOCKS, SPRUCE_LOG);
+				offerBlockSet(WICKER);
+				this.createDoorRecipe(WICKER_DOOR, Ingredient.ofItem(WICKER.block())).criterion(hasItem(WICKER.block()), this.conditionsFromItem(WICKER.block())).offerTo(this.exporter);
+				this.createTrapdoorRecipe(WICKER_TRAPDOOR, Ingredient.ofItem(WICKER.block())).criterion(hasItem(WICKER.block()), this.conditionsFromItem(WICKER.block())).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.DECORATIONS, WICKER_BARS, 16).input('#', WICKER.block()).pattern("###").pattern("###").criterion(hasItem(WICKER.block()), this.conditionsFromItem(WICKER.block())).offerTo(this.exporter);
+
+				this.createShaped(RecipeCategory.DECORATIONS, ROPE, 3).input('#', STRAW).pattern("#").pattern("#").pattern("#").criterion(hasItem(STRAW), this.conditionsFromItem(STRAW)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.DECORATIONS, ROPE_LADDER, 6).input('#', ROPE).input('X', STICK).pattern("#X#").pattern("#X#").pattern("#X#").criterion(hasItem(ROPE), this.conditionsFromItem(ROPE)).offerTo(this.exporter);
+
+				offerCrateRecipe(OAK_CRATE, OAK_PLANK_BLOCKS);
+				offerCrateRecipe(BIRCH_CRATE, BIRCH_PLANK_BLOCKS);
+				offerCrateRecipe(SPRUCE_CRATE, SPRUCE_PLANK_BLOCKS);
+
+				this.createShaped(RecipeCategory.DECORATIONS, LARGE_CLAY_POT).input('B', CLAY).input('C', CLAY_BALL).pattern("C C").pattern("C C").pattern("CBC").criterion(hasItem(CLAY_BALL), this.conditionsFromItem(CLAY_BALL)).offerTo(this.exporter);
+				this.createShapeless(RecipeCategory.DECORATIONS, LARGE_FIRED_CLAY_POT).input(LARGE_DECORATIVE_FIRED_CLAY_POT).criterion(hasItem(LARGE_DECORATIVE_FIRED_CLAY_POT), this.conditionsFromItem(LARGE_DECORATIVE_FIRED_CLAY_POT)).offerTo(this.exporter);
+				this.createShapeless(RecipeCategory.DECORATIONS, LARGE_DECORATIVE_FIRED_CLAY_POT).input(LARGE_FIRED_CLAY_POT).input(DIRT).criterion(hasItem(LARGE_FIRED_CLAY_POT), this.conditionsFromItem(LARGE_FIRED_CLAY_POT)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.DECORATIONS, WICKER_BASKET).input('W', WICKER.block()).pattern(" W ").pattern("W W").pattern("WWW").criterion(hasItem(WICKER.block()), this.conditionsFromItem(WICKER.block())).offerTo(this.exporter);
+
+				this.createShaped(RecipeCategory.DECORATIONS, CRUDE_CRAFTING_BENCH).input('P', PrimevalTags.Items.PLANKS).input('S', STRAW).pattern("SS").pattern("PP").criterion("has_planks", this.conditionsFromTag(PrimevalTags.Items.PLANKS)).offerTo(this.exporter);
 
 			}
 
@@ -514,6 +538,18 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 				this.createStairsRecipe(set.stairs(), Ingredient.ofItem(base)).criterion(hasItem(base), this.conditionsFromItem(base)).offerTo(this.exporter);
 			}
 
+			private void offerWoodBlockSet(WoodBlockSet set, ItemConvertible log) {
+				var base = set.block();
+				this.createSlabRecipe(RecipeCategory.BUILDING_BLOCKS, set.slab(), Ingredient.ofItem(base)).criterion(hasItem(base), this.conditionsFromItem(base)).offerTo(this.exporter);
+				this.createStairsRecipe(set.stairs(), Ingredient.ofItem(base)).criterion(hasItem(base), this.conditionsFromItem(base)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.BUILDING_BLOCKS, set.panel(), 4).input('#', base).input('X', STICK).pattern("###").pattern("XXX").pattern("###").criterion(hasItem(base), this.conditionsFromItem(base)).offerTo(this.exporter);
+				offerFenceRecipe(RecipeCategory.DECORATIONS, set.fence(), set.block(), STICK, 3);
+				offerFenceRecipe(RecipeCategory.DECORATIONS, set.logFence(), log, STICK, 3);
+				offerFenceRecipe(RecipeCategory.DECORATIONS, set.fenceGate(), STICK, set.block(), 2);
+				this.createDoorRecipe(set.door(), Ingredient.ofItem(set.block())).criterion(hasItem(base), this.conditionsFromItem(base)).offerTo(this.exporter);
+				this.createTrapdoorRecipe(set.trapdoor(), Ingredient.ofItem(set.block())).criterion(hasItem(base), this.conditionsFromItem(base)).offerTo(this.exporter);
+			}
+
 			private void offerColoredBlockSetSet(ColoredBlockSetSet set) {
 				for (BlockSet color : set) {
 					offerBlockSet(color);
@@ -530,6 +566,14 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 
 			private void offer2x2CrossRecipe(RecipeCategory category, ItemConvertible output, ItemConvertible input1, TagKey<Item> input2, int amount) {
 				this.createShaped(category, output, amount).input('A', input1).input('B', input2).pattern("AB").pattern("BA").criterion(hasItem(input1), this.conditionsFromItem(input1)).offerTo(this.exporter);
+			}
+
+			private void offerFenceRecipe(RecipeCategory category, ItemConvertible output, ItemConvertible inputSide, ItemConvertible inputMiddle, int amount) {
+				this.createShaped(category, output, amount).input('W', inputSide).input('#', inputMiddle).pattern("W#W").pattern("W#W").criterion(hasItem(inputSide), this.conditionsFromItem(inputSide)).offerTo(this.exporter);
+			}
+
+			private void offerCrateRecipe(ItemConvertible crate, WoodBlockSet set) {
+				this.createShaped(RecipeCategory.DECORATIONS, crate, 1).input('W', set.block()).input('S', set.slab()).pattern("SSS").pattern("W W").pattern("WWW").criterion(hasItem(set.block()), this.conditionsFromItem(set.block())).offerTo(this.exporter);
 			}
 
 		}

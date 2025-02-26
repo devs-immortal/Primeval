@@ -1,0 +1,7 @@
+{
+  "type": "primeval:pit_kiln_firing",
+  "input": "primeval:large_clay_pot",
+  "result": {
+    "id": "primeval:fired_large_clay_pot"
+  }
+}

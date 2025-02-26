@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "primeval:fired_large_decorative_clay_pot"
+  ],
+  "result": {
+    "count": 1,
+    "id": "primeval:fired_large_clay_pot"
+  }
+}
