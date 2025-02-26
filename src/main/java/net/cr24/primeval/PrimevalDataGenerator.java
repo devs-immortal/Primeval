@@ -511,6 +511,45 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 
 				this.createShaped(RecipeCategory.DECORATIONS, CRUDE_CRAFTING_BENCH).input('P', PrimevalTags.Items.PLANKS).input('S', STRAW).pattern("SS").pattern("PP").criterion("has_planks", this.conditionsFromTag(PrimevalTags.Items.PLANKS)).offerTo(this.exporter);
 
+				// items
+				this.createShapeless(RecipeCategory.MISC, STRAW, 4).input(STRAW_BLOCK).criterion(hasItem(STRAW_BLOCK), this.conditionsFromItem(STRAW_BLOCK)).offerTo(this.exporter);
+				this.createShapeless(RecipeCategory.MISC, ROCK, 4).input(COBBLESTONE).criterion(hasItem(COBBLESTONE), this.conditionsFromItem(COBBLESTONE)).offerTo(this.exporter);
+				this.createShapeless(RecipeCategory.MISC, STICK, 2).input(REEDS).criterion(hasItem(REEDS), this.conditionsFromItem(REEDS)).offerTo(this.exporter);
+
+				this.createShapeless(RecipeCategory.MISC, CEMENT_MIX, 4).input(CRUSHED_TERRACOTTA).input(ASHES).input(ASHES).criterion(hasItem(ASHES), this.conditionsFromItem(ASHES)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.MISC, CEMENT, 12).input('W', WOODEN_BUCKET_WATER).input('C', CEMENT_MIX).pattern("CCC").pattern("CWC").pattern("CCC").criterion(hasItem(CEMENT_MIX), this.conditionsFromItem(CEMENT_MIX)).offerTo(this.exporter);
+
+				this.createShapeless(RecipeCategory.MISC, SANDY_CLAY_BALL, 2).input(SAND).input(CLAY_BALL).criterion(hasItem(CLAY_BALL), this.conditionsFromItem(CLAY_BALL)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.MISC, SANDY_CLAY_BRICK, 2).input('C', SANDY_CLAY_BALL).pattern("CCC").criterion(hasItem(SANDY_CLAY_BALL), this.conditionsFromItem(SANDY_CLAY_BALL)).offerTo(this.exporter);
+				this.createShapeless(RecipeCategory.MISC, MUD_BALL, 4).input(MUD).criterion(hasItem(MUD), this.conditionsFromItem(MUD)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.MISC, MUD_BRICK, 2).input('C', MUD_BALL).pattern("CCC").criterion(hasItem(MUD_BALL), this.conditionsFromItem(MUD_BALL)).offerTo(this.exporter);
+
+				this.createShapeless(RecipeCategory.MISC, CLAY_BALL, 4).input(CLAY).criterion(hasItem(CLAY), this.conditionsFromItem(CLAY)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.MISC, CLAY_BRICK, 2).input('C', CLAY_BALL).pattern("CCC").criterion(hasItem(CLAY_BALL), this.conditionsFromItem(CLAY_BALL)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.MISC, CLAY_BOWL).input('C', CLAY_BALL).pattern("C C").pattern(" C ").criterion(hasItem(CLAY_BALL), this.conditionsFromItem(CLAY_BALL)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.MISC, CLAY_TILE, 2).input('C', CLAY_BALL).pattern("CC").criterion(hasItem(CLAY_BALL), this.conditionsFromItem(CLAY_BALL)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.MISC, CLAY_JUG).input('C', CLAY_BALL).pattern("CC ").pattern("C C").pattern("CC ").criterion(hasItem(CLAY_BALL), this.conditionsFromItem(CLAY_BALL)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.MISC, CLAY_VESSEL).input('C', CLAY_BALL).pattern("C C").pattern("CCC").criterion(hasItem(CLAY_BALL), this.conditionsFromItem(CLAY_BALL)).offerTo(this.exporter);
+
+				this.createShaped(RecipeCategory.TOOLS, FLINT_AXE).input('F', FLINT).input('S', STICK).input('T', STRAW).pattern("FT").pattern("FS").criterion(hasItem(FLINT), this.conditionsFromItem(FLINT)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.TOOLS, FLINT_KNIFE).input('F', FLINT).input('S', STICK).input('T', STRAW).pattern("TF").pattern("S ").criterion(hasItem(FLINT), this.conditionsFromItem(FLINT)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.TOOLS, FLINT_SHOVEL).input('F', FLINT).input('S', STICK).input('T', STRAW).pattern("TF").pattern(" S").criterion(hasItem(FLINT), this.conditionsFromItem(FLINT)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.TOOLS, FLINT_SPEAR).input('F', FLINT).input('S', STICK).input('T', STRAW).pattern("  F").pattern(" ST").pattern("S  ").criterion(hasItem(FLINT), this.conditionsFromItem(FLINT)).offerTo(this.exporter);
+				offerToolSet(COPPER_TOOLS, COPPER_TOOL_PARTS);
+				offerToolSet(BRONZE_TOOLS, BRONZE_TOOL_PARTS);
+
+				this.createShaped(RecipeCategory.TOOLS, WOODEN_BUCKET).input('P', PrimevalTags.Items.PLANKS).pattern("P P").pattern(" P ").criterion("has_planks", this.conditionsFromTag(PrimevalTags.Items.PLANKS)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.MISC, QUERN_WHEEL).input('Q', SMOOTH_STONE.slab()).input('S', STICK).pattern("S").pattern("Q").criterion(hasItem(SMOOTH_STONE.block()), this.conditionsFromItem(SMOOTH_STONE.block())).offerTo(this.exporter);
+
+				this.createShaped(RecipeCategory.MISC, CLAY_INGOT_MOLD).input('C', CLAY_BALL).pattern("CCC").pattern("   ").pattern("CCC").criterion(hasItem(CLAY_BALL), this.conditionsFromItem(CLAY_BALL)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.MISC, CLAY_AXE_HEAD_MOLD).input('C', CLAY_BALL).pattern("  C").pattern(" CC").pattern("CCC").criterion(hasItem(CLAY_BALL), this.conditionsFromItem(CLAY_BALL)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.MISC, CLAY_CHISEL_HEAD_MOLD).input('C', CLAY_BALL).pattern("CC ").pattern("C C").pattern("CCC").criterion(hasItem(CLAY_BALL), this.conditionsFromItem(CLAY_BALL)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.MISC, CLAY_KNIFE_BLADE_MOLD).input('C', CLAY_BALL).pattern("CCC").pattern("C C").pattern("CCC").criterion(hasItem(CLAY_BALL), this.conditionsFromItem(CLAY_BALL)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.MISC, CLAY_PICKAXE_HEAD_MOLD).input('C', CLAY_BALL).pattern("CCC").pattern("CCC").criterion(hasItem(CLAY_BALL), this.conditionsFromItem(CLAY_BALL)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.MISC, CLAY_SHOVEL_HEAD_MOLD).input('C', CLAY_BALL).pattern("C C").pattern("CCC").pattern("CCC").criterion(hasItem(CLAY_BALL), this.conditionsFromItem(CLAY_BALL)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.MISC, CLAY_SWORD_BLADE_MOLD).input('C', CLAY_BALL).pattern("C C").pattern("C C").pattern("CCC").criterion(hasItem(CLAY_BALL), this.conditionsFromItem(CLAY_BALL)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.MISC, CLAY_HOE_HEAD_MOLD).input('C', CLAY_BALL).pattern("C  ").pattern("CCC").pattern("CCC").criterion(hasItem(CLAY_BALL), this.conditionsFromItem(CLAY_BALL)).offerTo(this.exporter);
+
 			}
 
 			private void offerShapelessColoredBlockSet(ItemConvertible base, ColoredBlockSet set, String group) {
@@ -574,6 +613,22 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 
 			private void offerCrateRecipe(ItemConvertible crate, WoodBlockSet set) {
 				this.createShaped(RecipeCategory.DECORATIONS, crate, 1).input('W', set.block()).input('S', set.slab()).pattern("SSS").pattern("W W").pattern("WWW").criterion(hasItem(set.block()), this.conditionsFromItem(set.block())).offerTo(this.exporter);
+			}
+
+			private void offerToolSet(ToolSet toolSet, ToolPartSet toolPartSet) {
+				offerToolAssembly(RecipeCategory.TOOLS, toolSet.axe(), toolPartSet.axe_head());
+				offerToolAssembly(RecipeCategory.TOOLS, toolSet.chisel(), toolPartSet.chisel_head());
+				offerToolAssembly(RecipeCategory.TOOLS, toolSet.knife(), toolPartSet.knife_blade());
+				offerToolAssembly(RecipeCategory.TOOLS, toolSet.pickaxe(), toolPartSet.pickaxe_head());
+				offerToolAssembly(RecipeCategory.TOOLS, toolSet.shovel(), toolPartSet.shovel_head());
+				offerToolAssembly(RecipeCategory.COMBAT, toolSet.sword(), toolPartSet.sword_blade());
+				offerToolAssembly(RecipeCategory.TOOLS, toolSet.hoe(), toolPartSet.hoe_head());
+				this.createShaped(RecipeCategory.COMBAT, toolSet.spear()).input('H', toolPartSet.sword_blade()).input('S', STICK).pattern("  H").pattern(" S ").pattern("S  ").criterion(hasItem(toolPartSet.sword_blade()), this.conditionsFromItem(toolPartSet.sword_blade())).offerTo(this.exporter);
+
+			}
+
+			private void offerToolAssembly(RecipeCategory category, ItemConvertible tool, ItemConvertible head) {
+				this.createShapeless(category, tool).input(STICK).input(head).criterion(hasItem(head), this.conditionsFromItem(head)).offerTo(this.exporter);
 			}
 
 		}

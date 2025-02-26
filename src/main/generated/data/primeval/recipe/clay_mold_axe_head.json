@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "primeval:clay_ball"
+  },
+  "pattern": [
+    "  C",
+    " CC",
+    "CCC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "primeval:clay_mold_axe_head"
+  }
+}

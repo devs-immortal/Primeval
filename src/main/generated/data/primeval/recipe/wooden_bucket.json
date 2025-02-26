@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "P": "#primeval:planks"
+  },
+  "pattern": [
+    "P P",
+    " P "
+  ],
+  "result": {
+    "count": 1,
+    "id": "primeval:wooden_bucket"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    "primeval:stick",
+    "primeval:copper_sword_blade"
+  ],
+  "result": {
+    "count": 1,
+    "id": "primeval:copper_sword"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_ashes": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primeval:ashes"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "primeval:cement_mix"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_ashes"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "primeval:cement_mix"
+    ]
+  }
+}

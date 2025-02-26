@@ -1,8 +1,0 @@
-{
-  "type": "primeval:mold_casting",
-  "mold": "primeval:fired_clay_mold_pickaxe_head",
-  "fluid": "primeval:molten_copper",
-  "result": {
-    "id": "primeval:copper_pickaxe_head"
-  }
-}

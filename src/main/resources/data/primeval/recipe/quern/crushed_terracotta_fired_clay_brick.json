@@ -1,0 +1,9 @@
+{
+  "type": "primeval:quern_grinding",
+  "input": "primeval:fired_clay_brick",
+  "result": {
+    "id": "primeval:crushed_terracotta",
+    "count": 1
+  },
+  "wheel_damage": 1
+}

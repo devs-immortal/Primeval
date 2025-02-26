@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "H": "primeval:copper_sword_blade",
+    "S": "primeval:stick"
+  },
+  "pattern": [
+    "  H",
+    " S ",
+    "S  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "primeval:copper_spear"
+  }
+}

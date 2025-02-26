@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    "primeval:stick",
+    "primeval:bronze_knife_blade"
+  ],
+  "result": {
+    "count": 1,
+    "id": "primeval:bronze_knife"
+  }
+}

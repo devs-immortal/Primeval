@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_clay_ball": {
+      "conditions": {
+        "items": [
+          {
+            "items": "primeval:clay_ball"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "primeval:clay_mold_axe_head"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_clay_ball"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "primeval:clay_mold_axe_head"
+    ]
+  }
+}

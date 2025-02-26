@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "primeval:dye_pink",
+    "primeval:dye_purple"
+  ],
+  "result": {
+    "count": 2,
+    "id": "primeval:dye_magenta"
+  }
+}

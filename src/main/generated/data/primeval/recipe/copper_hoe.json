@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    "primeval:stick",
+    "primeval:copper_hoe_head"
+  ],
+  "result": {
+    "count": 1,
+    "id": "primeval:copper_hoe"
+  }
+}

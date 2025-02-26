@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "Q": "primeval:smooth_stone_slab",
+    "S": "primeval:stick"
+  },
+  "pattern": [
+    "S",
+    "Q"
+  ],
+  "result": {
+    "count": 1,
+    "id": "primeval:quern_wheel"
+  }
+}

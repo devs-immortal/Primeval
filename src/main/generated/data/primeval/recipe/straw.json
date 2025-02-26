@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "primeval:straw_block"
+  ],
+  "result": {
+    "count": 4,
+    "id": "primeval:straw"
+  }
+}

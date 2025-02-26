@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "F": "primeval:flint",
+    "S": "primeval:stick",
+    "T": "primeval:straw"
+  },
+  "pattern": [
+    "  F",
+    " ST",
+    "S  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "primeval:flint_spear"
+  }
+}

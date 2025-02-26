@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "primeval:cement_mix",
+    "W": "primeval:wooden_bucket_water"
+  },
+  "pattern": [
+    "CCC",
+    "CWC",
+    "CCC"
+  ],
+  "result": {
+    "count": 12,
+    "id": "primeval:cement"
+  }
+}

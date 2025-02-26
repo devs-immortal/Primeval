@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "primeval:cobblestone"
+  ],
+  "result": {
+    "count": 4,
+    "id": "primeval:rock"
+  }
+}
