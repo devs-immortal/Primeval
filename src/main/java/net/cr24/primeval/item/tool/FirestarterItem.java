@@ -55,7 +55,7 @@ public class FirestarterItem extends WeightedItem {
 //                        ((PrimevalCampfireBlockEntity) blockEntity).setLit(true);
 //                    }
 //                } else if (AbstractFireBlock.canPlaceAt(world, pos2, result.getSide())) {
-                    setFire(world, (PlayerEntity) user, pos2);
+                    setFire(world, pos2);
 //                }
 //            }
             if (!world.isClient) world.playSound(null, pos, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.BLOCKS, 0.5f, world.getRandom().nextFloat() * 0.4f + 0.8f);
@@ -82,7 +82,7 @@ public class FirestarterItem extends WeightedItem {
         return ActionResult.FAIL;
     }
 
-    private void setFire(World world, PlayerEntity player, BlockPos pos) {
+    private void setFire(World world, BlockPos pos) {
         BlockState blockState2 = AbstractFireBlock.getState(world, pos);
         world.setBlockState(pos, blockState2, Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD);
     }

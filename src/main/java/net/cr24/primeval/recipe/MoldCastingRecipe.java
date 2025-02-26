@@ -1,6 +1,5 @@
 package net.cr24.primeval.recipe;
 
-import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.cr24.primeval.fluid.FallbackFluid;
@@ -67,13 +66,6 @@ public class MoldCastingRecipe implements CraftingRecipe {
     public ItemStack getResult() {
         return this.result;
     }
-
-//    private DataResult<Ingredient> isMold(Ingredient ingredient) {
-//        for (var item : ingredient.getMatchingItems().toList()) {
-//            if (item.)
-//        }
-//        return
-//    } // TODO
 
     @Override
     public RecipeSerializer<? extends CraftingRecipe> getSerializer() {

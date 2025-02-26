@@ -41,7 +41,7 @@ import java.util.function.Consumer;
 import static net.cr24.primeval.Primeval.identify;
 
 /*
- * This class stores all blocks and fluids in the mod.
+ * This class stores all blocks in the mod.
  */
 public class PrimevalBlocks {
 

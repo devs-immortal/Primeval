@@ -49,7 +49,7 @@ public abstract class SimpleOneToOneRecipe implements Recipe<SingleStackRecipeIn
     
     @Override
     public RecipeBookCategory getRecipeBookCategory() {
-        return null; //TODO?
+        return null;
     }
 
     public abstract ItemStack createIcon();
