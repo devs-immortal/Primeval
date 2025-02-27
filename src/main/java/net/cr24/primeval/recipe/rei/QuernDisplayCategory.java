@@ -38,7 +38,7 @@ public class QuernDisplayCategory implements DisplayCategory<QuernDisplay> {
         List<Widget> widgets = Lists.newArrayList();
         widgets.add(Widgets.createRecipeBase(bounds));
         widgets.add(Widgets.createTexturedWidget(Primeval.identify("textures/gui/quern_wheel_widget.png"), startPoint.x + 13, startPoint.y + 4, 0, 0, 51, 17, 51, 17));
-        widgets.add(Widgets.createLabel(new Point(startPoint.x+40, startPoint.y+19), Text.of(display.getWheelDamage()+"*")));
+        widgets.add(Widgets.createLabel(new Point(startPoint.x+40, startPoint.y+17), Text.of(display.getWheelDamage()+"*")));
         widgets.add(Widgets.createResultSlotBackground(new Point(startPoint.x + 75, startPoint.y + 5)));
         widgets.add(Widgets.createSlot(new Point(startPoint.x - 10, startPoint.y + 5)).entries(display.getIn()).markInput());
         widgets.add(Widgets.createSlot(new Point(startPoint.x + 75, startPoint.y + 5)).entries(display.getOut()).disableBackground().markOutput());

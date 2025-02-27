@@ -38,7 +38,7 @@ public class PrimevalREICommonIntegration implements REICommonPlugin {
         registry.beginRecipeFiller(PitKilnFiringRecipe.class).filterType(PrimevalRecipes.PIT_KILN_FIRING).fill(PitKilnFiringDisplay::new);
         registry.beginRecipeFiller(MeltingRecipe.class).filterType(PrimevalRecipes.MELTING).fill(MeltingDisplay::new);
         registry.beginRecipeFiller(AlloyingRecipe.class).filterType(PrimevalRecipes.ALLOYING).fill(AlloyingDisplay::new);
-//        registry.registerRecipeFiller(OpenFireRecipe.class, PrimevalRecipes.OPEN_FIRE, OpenFireDisplay::new);
+        registry.beginRecipeFiller(OpenFireRecipe.class).filterType(PrimevalRecipes.OPEN_FIRE).fill(OpenFireDisplay::new);
         registry.beginRecipeFiller(QuernRecipe.class).filterType(PrimevalRecipes.QUERN_GRINDING).fill(QuernDisplay::new);
         new MoldCastingRecipeFiller().registerDisplays(registry);
     }
@@ -48,6 +48,7 @@ public class PrimevalREICommonIntegration implements REICommonPlugin {
         registry.register(Primeval.identify("pit_kiln_firing"), PitKilnFiringDisplay.SERIALIZER);
         registry.register(Primeval.identify("melting"), MeltingDisplay.SERIALIZER);
         registry.register(Primeval.identify("alloying"), AlloyingDisplay.SERIALIZER);
+        registry.register(Primeval.identify("open_fire"), OpenFireDisplay.SERIALIZER);
         registry.register(Primeval.identify("quern"), QuernDisplay.SERIALIZER);
     }
 

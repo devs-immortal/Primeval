@@ -12,9 +12,9 @@ public class PrimevalRecipes {
 
     public static final RecipeType<PitKilnFiringRecipe> PIT_KILN_FIRING;
     public static final RecipeSerializer<PitKilnFiringRecipe> PIT_KILN_FIRING_SERIALIZER;
-//    public static final RecipeType<OpenFireRecipe> OPEN_FIRE;
-//    public static final RecipeSerializer<OpenFireRecipe> OPEN_FIRE_SERIALIZER;
-//    public static final RegistryKey<RecipePropertySet> OPEN_FIRE_INPUT;
+    public static final RecipeType<OpenFireRecipe> OPEN_FIRE;
+    public static final RecipeSerializer<OpenFireRecipe> OPEN_FIRE_SERIALIZER;
+    public static final RegistryKey<RecipePropertySet> OPEN_FIRE_INPUT;
     public static final RecipeType<MeltingRecipe> MELTING;
     public static final RecipeSerializer<MeltingRecipe> MELTING_SERIALIZER;
     public static final RecipeType<AlloyingRecipe> ALLOYING;
@@ -37,12 +37,12 @@ public class PrimevalRecipes {
         });
         PIT_KILN_FIRING_SERIALIZER = Registry.register(Registries.RECIPE_SERIALIZER, Primeval.identify("pit_kiln_firing"), new SimpleOneToOneRecipe.Serializer<>(PitKilnFiringRecipe::new));
 
-//        OPEN_FIRE = Registry.register(Registries.RECIPE_TYPE, PrimevalMain.getId("open_fire"), new RecipeType<OpenFireRecipe>() {
-//            @Override
-//            public String toString() {return "primeval:open_fire";}
-//        });
-//        OPEN_FIRE_SERIALIZER = Registry.register(Registries.RECIPE_SERIALIZER, PrimevalMain.getId("open_fire"), new OpenFireRecipe.Serializer());
-//        OPEN_FIRE_INPUT = RegistryKey.of(RegistryKey.ofRegistry(Identifier.ofVanilla("recipe_property_set")), PrimevalMain.getId("open_fire"));
+        OPEN_FIRE = Registry.register(Registries.RECIPE_TYPE, Primeval.identify("open_fire"), new RecipeType<OpenFireRecipe>() {
+            @Override
+            public String toString() {return "primeval:open_fire";}
+        });
+        OPEN_FIRE_SERIALIZER = Registry.register(Registries.RECIPE_SERIALIZER, Primeval.identify("open_fire"), new OpenFireRecipe.Serializer());
+        OPEN_FIRE_INPUT = RegistryKey.of(RecipePropertySet.REGISTRY, Primeval.identify("open_fire_input"));
 
         MELTING = Registry.register(Registries.RECIPE_TYPE, Primeval.identify("melting"), new RecipeType<MeltingRecipe>() {
             @Override

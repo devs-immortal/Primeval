@@ -104,7 +104,7 @@ public class PrimevalBlocks {
     public static final Block BUSH = registerBlock("bush", SETTINGS_PLANT(), PrimevalPlantBlock::new, Weight.VERY_LIGHT, Size.SMALL);
     public static final Block SPIKED_PLANT = registerBlock("plant_0", SETTINGS_PLANT(), PrimevalPlantBlock::new, Weight.VERY_LIGHT, Size.SMALL);
     public static final Block LEAFY_PLANT = registerBlock("plant_1", SETTINGS_PLANT(), PrimevalPlantBlock::new, Weight.VERY_LIGHT, Size.SMALL);
-    public static final Block SHRUB = registerBlock("shrub", SETTINGS_PLANT(), PrimevalPlantBlock::new, Weight.LIGHT, Size.MEDIUM);
+    public static final Block SHRUB = registerBlock("shrub", AbstractBlock.Settings.create().mapColor(MapColor.GREEN).strength(0.05f, 0f).sounds(BlockSoundGroup.GRASS).noCollision(), PrimevalPlantBlock::new, Weight.LIGHT, Size.MEDIUM);
     public static final Block MOSS = registerBlock("moss", SETTINGS_PLANT().ticksRandomly(), SpreadingMossBlock::new, Weight.VERY_LIGHT, Size.SMALL);
     // Flowers
     public static final Block POPPY = registerBlock("poppy", SETTINGS_PLANT(), PrimevalPlantBlock::new, Weight.VERY_LIGHT, Size.SMALL);
@@ -208,7 +208,7 @@ public class PrimevalBlocks {
     public static final Block CRUDE_CRAFTING_BENCH = registerBlock("crude_crafting_bench", SETTINGS_REFINED_WOOD(), PrimevalCraftingTableBlock::new, Weight.HEAVY, Size.LARGE);
 //    public static final Block CRUDE_TORCH = registerBlock("crude_torch", new TimedTorchBlock(AbstractBlock.Settings.create().notSolid().sounds(BlockSoundGroup.WOOD).breakInstantly().noCollision().luminance(TimedTorchBlock::getLuminanceFromState).ticksRandomly()), Weight.LIGHT, Size.SMALL, PRIMEVAL_BLOCKS); //todo
 //    public static final Item LIT_CRUDE_TORCH = Registry.register(Registries.ITEM, PrimevalMain.getId("crude_torch_lit"), new WeightedBlockItem(CRUDE_TORCH, new Item.Settings().maxCount(Size.SMALL.getStackSize()), Weight.LIGHT, Size.SMALL));
-//    public static final Block CAMPFIRE = registerBlock("campfire", new PrimevalCampfireBlock(SETTINGS_STONE().luminance(PrimevalCampfireBlock::getLuminanceFromState).nonOpaque()), Weight.HEAVY, Size.LARGE, null);
+    public static final Block CAMPFIRE = registerBlock("campfire", SETTINGS_STONE().luminance(PrimevalCampfireBlock::getLuminanceFromState).nonOpaque(), PrimevalCampfireBlock::new, Weight.HEAVY, Size.LARGE);
     public static final Block QUERN = registerBlock("quern", SETTINGS_STONE().nonOpaque(), QuernBlock::new, Weight.HEAVY, Size.LARGE);
 
     // endregion
@@ -237,7 +237,7 @@ public class PrimevalBlocks {
     public static final BlockEntityType<CrateBlockEntity> CRATE_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, Primeval.identify("crate_block_entity"), FabricBlockEntityTypeBuilder.create(CrateBlockEntity::new, OAK_CRATE, BIRCH_CRATE, SPRUCE_CRATE).build());
     public static final BlockEntityType<StoragePotBlockEntity> LARGE_POT_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, Primeval.identify("large_pot_block_entity"), FabricBlockEntityTypeBuilder.create(StoragePotBlockEntity::new, LARGE_FIRED_CLAY_POT).build());
     public static final BlockEntityType<WickerBasketBlockEntity> WICKER_BASKET_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, Primeval.identify("wicker_basket_block_entity"), FabricBlockEntityTypeBuilder.create(WickerBasketBlockEntity::new, WICKER_BASKET).build());
-//    public static final BlockEntityType<PrimevalCampfireBlockEntity> CAMPFIRE_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, PrimevalMain.getId("campfire_block_entity"), FabricBlockEntityTypeBuilder.create(PrimevalCampfireBlockEntity::new, CAMPFIRE).build());
+    public static final BlockEntityType<PrimevalCampfireBlockEntity> CAMPFIRE_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, Primeval.identify("campfire_block_entity"), FabricBlockEntityTypeBuilder.create(PrimevalCampfireBlockEntity::new, CAMPFIRE).build());
     public static final BlockEntityType<QuernBlockEntity> QUERN_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, Primeval.identify("quern_block_entity"), FabricBlockEntityTypeBuilder.create(QuernBlockEntity::new, QUERN).build());
 
     // endregion
@@ -273,7 +273,7 @@ public class PrimevalBlocks {
                 SPRUCE_LEAVES,
                 /* Misc */
                 //CRUDE_TORCH,
-                //CAMPFIRE,
+                CAMPFIRE,
                 ROPE,
                 ROPE_LADDER,
                 OAK_PLANK_BLOCKS.door(),
@@ -301,7 +301,7 @@ public class PrimevalBlocks {
         BlockEntityRendererRegistry.register(PIT_KILN_BLOCK_ENTITY, PitKilnBlockEntityRenderer::new);
         BlockEntityRendererRegistry.register(ASH_PILE_BLOCK_ENTITY, AshPileBlockEntityRenderer::new);
         BlockEntityRendererRegistry.register(LAYING_ITEM_BLOCK_ENTITY, LayingItemBlockEntityRenderer::new);
-//        BlockEntityRendererRegistry.register(CAMPFIRE_BLOCK_ENTITY, PrimevalCampfireBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.register(CAMPFIRE_BLOCK_ENTITY, PrimevalCampfireBlockEntityRenderer::new);
         BlockEntityRendererRegistry.register(QUERN_BLOCK_ENTITY, QuernBlockEntityRenderer::new);
     }
 

@@ -1,9 +1,12 @@
 package net.cr24.primeval.item.tool;
 
+import net.cr24.primeval.block.entity.PrimevalCampfireBlockEntity;
+import net.cr24.primeval.block.functional.PrimevalCampfireBlock;
 import net.cr24.primeval.initialization.PrimevalBlocks;
 import net.cr24.primeval.initialization.PrimevalItems;
 import net.cr24.primeval.initialization.PrimevalTags;
 import net.cr24.primeval.item.*;
+import net.cr24.primeval.util.PrimevalUtil;
 import net.cr24.primeval.util.Size;
 import net.cr24.primeval.util.Weight;
 import net.minecraft.block.AbstractFireBlock;
@@ -37,27 +40,27 @@ public class FirestarterItem extends WeightedItem {
         if (result.getType() == HitResult.Type.BLOCK && offHand.getItem() == PrimevalItems.STICK) {
             BlockPos pos = result.getBlockPos();
             BlockState existingState = world.getBlockState(pos);
-//            if (existingState.getBlock() == PrimevalBlocks.CRUDE_TORCH) {
-//                int burnoutStage = existingState.get(TimedTorchBlock.BURNOUT_STAGE);
-//                if (burnoutStage != 5) {
-//                    world.setBlockState(pos, existingState.with(TimedTorchBlock.BURNOUT_STAGE, 1));
-//                }
-//            } else if (existingState.getBlock() == PrimevalBlocks.CAMPFIRE) {
-//                PrimevalCampfireBlock.tryLight(world, pos, existingState);
-//            } else {
+            /*if (existingState.getBlock() == PrimevalBlocks.CRUDE_TORCH) {
+                int burnoutStage = existingState.get(TimedTorchBlock.BURNOUT_STAGE);
+                if (burnoutStage != 5) {
+                    world.setBlockState(pos, existingState.with(TimedTorchBlock.BURNOUT_STAGE, 1));
+                } // TODO
+            } else*/ if (existingState.getBlock() == PrimevalBlocks.CAMPFIRE) {
+                PrimevalCampfireBlock.tryLight(world, pos, existingState);
+            } else {
                 BlockPos pos2 = pos.offset(result.getSide());
 
-//                if (world.getBlockState(pos2.down()).isIn(PrimevalTags.Blocks.CAMPFIRE_BASE) && PrimevalUtil.itemEntitiesInBlock(world, pos2, PrimevalTags.Items.LOGS, PrimevalTags.Items.ROCKS, PrimevalTags.Items.ROCKS, PrimevalTags.Items.CAMPFIRE_KINDLING)) {
-//                    world.setBlockState(pos2, PrimevalBlocks.CAMPFIRE.getDefaultState().with(PrimevalCampfireBlock.LIT, true));
-//                    BlockEntity blockEntity = world.getBlockEntity(pos2);
-//                    if (!world.isClient && blockEntity instanceof PrimevalCampfireBlockEntity) {
-//                        ((PrimevalCampfireBlockEntity) blockEntity).addFuel(world.getBlockState(pos2), world, pos2, 1200);
-//                        ((PrimevalCampfireBlockEntity) blockEntity).setLit(true);
-//                    }
-//                } else if (AbstractFireBlock.canPlaceAt(world, pos2, result.getSide())) {
+                if (world.getBlockState(pos2.down()).isIn(PrimevalTags.Blocks.CAMPFIRE_BASE) && PrimevalUtil.itemEntitiesInBlock(world, pos2, PrimevalTags.Items.LOGS, PrimevalTags.Items.ROCKS, PrimevalTags.Items.ROCKS, PrimevalTags.Items.CAMPFIRE_KINDLING)) {
+                    world.setBlockState(pos2, PrimevalBlocks.CAMPFIRE.getDefaultState().with(PrimevalCampfireBlock.LIT, true));
+                    BlockEntity blockEntity = world.getBlockEntity(pos2);
+                    if (!world.isClient && blockEntity instanceof PrimevalCampfireBlockEntity) {
+                        ((PrimevalCampfireBlockEntity) blockEntity).addFuel(world.getBlockState(pos2), world, pos2, 1200);
+                        ((PrimevalCampfireBlockEntity) blockEntity).setLit(true);
+                    }
+                } else if (AbstractFireBlock.canPlaceAt(world, pos2, result.getSide())) {
                     setFire(world, pos2);
-//                }
-//            }
+                }
+            }
             if (!world.isClient) world.playSound(null, pos, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.BLOCKS, 0.5f, world.getRandom().nextFloat() * 0.4f + 0.8f);
         }
         return stack;

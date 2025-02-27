@@ -1,0 +1,9 @@
+{
+  "type": "primeval:open_fire",
+  "input": "#primeval:logs",
+  "result": {
+    "id": "primeval:ashes",
+    "count": 4
+  },
+  "cook_time": 200
+}

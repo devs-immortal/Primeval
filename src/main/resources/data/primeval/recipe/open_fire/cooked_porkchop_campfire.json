@@ -1,0 +1,9 @@
+{
+  "type": "primeval:open_fire",
+  "input": "primeval:porkchop",
+  "result": {
+    "id": "primeval:cooked_porkchop",
+    "count": 1
+  },
+  "cook_time": 600
+}

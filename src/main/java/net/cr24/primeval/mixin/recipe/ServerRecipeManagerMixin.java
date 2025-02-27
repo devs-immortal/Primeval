@@ -28,6 +28,7 @@ public class ServerRecipeManagerMixin {
     private static void initServerRecipeManager(CallbackInfo ci) {
         SOLE_INGREDIENT_GETTERS = new HashMap<>(SOLE_INGREDIENT_GETTERS);
         SOLE_INGREDIENT_GETTERS.put(PrimevalRecipes.QUERN_GRINDING_INPUT, simpleGetter(PrimevalRecipes.QUERN_GRINDING));
+        SOLE_INGREDIENT_GETTERS.put(PrimevalRecipes.OPEN_FIRE_INPUT, simpleGetter(PrimevalRecipes.OPEN_FIRE));
         SOLE_INGREDIENT_GETTERS = Collections.unmodifiableMap(SOLE_INGREDIENT_GETTERS);
     }
 
