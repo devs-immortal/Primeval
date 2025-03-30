@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "primeval:lazurite_ore_field",
+      "weight": 1
+    } 
+  ],
+  "placement": {
+    "salt": 69420,
+    "spacing": 40,
+    "separation": 8,
+    "type": "minecraft:random_spread"
+  }
+}

@@ -3,10 +3,12 @@ package net.cr24.primeval;
 import net.cr24.primeval.fluid.PrimevalFluids;
 import net.cr24.primeval.initialization.PrimevalTags;
 import net.cr24.primeval.item.property.FluidContentProperty;
+import net.cr24.primeval.world.gen.feature.PrimevalFeatures;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -29,9 +31,7 @@ import net.minecraft.item.equipment.EquipmentAsset;
 import net.minecraft.item.equipment.trim.ArmorTrimMaterial;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.*;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.state.property.Properties;
@@ -48,11 +48,19 @@ import static net.minecraft.client.data.TextureMap.getSubId;
 import static net.minecraft.client.data.TexturedModel.makeFactory;
 
 public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
+
 	@Override
 	public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
 		FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
 		pack.addProvider(ModelProvider::new);
 		pack.addProvider(RecipeProvider::new);
+		pack.addProvider(PrimevalFeatures::new);
+	}
+
+	@Override
+	public void buildRegistry(RegistryBuilder registryBuilder) {
+		registryBuilder.addRegistry(RegistryKeys.CONFIGURED_FEATURE, PrimevalFeatures::bootstrapConfiguredFeatures);
+		registryBuilder.addRegistry(RegistryKeys.PLACED_FEATURE, PrimevalFeatures::bootstrapPlacedFeatures);
 	}
 
 	private static class ModelProvider extends FabricModelProvider {

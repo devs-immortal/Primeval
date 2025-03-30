@@ -1,0 +1,20 @@
+{
+  "type": "primeval:laying_item_patch",
+  "config": {
+    "item1": {
+      "count": 1,
+      "id": "primeval:stick"
+    },
+    "item2": {
+      "count": 1,
+      "id": "primeval:stick"
+    },
+    "tries": {
+      "type": "minecraft:uniform",
+      "max_inclusive": 12,
+      "min_inclusive": 8
+    },
+    "xzSpread": 7,
+    "y_spread": 3
+  }
+}

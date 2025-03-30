@@ -1,0 +1,114 @@
+{
+  "carvers": [
+    "minecraft:cave",
+    "minecraft:cave_extra_underground",
+    "minecraft:canyon"
+  ],
+  "downfall": 0.4,
+  "effects": {
+    "fog_color": 12638463,
+    "grass_color": 9551193,
+    "mood_sound": {
+      "block_search_extent": 8,
+      "offset": 2.0,
+      "sound": "minecraft:ambient.cave",
+      "tick_delay": 6000
+    },
+    "sky_color": 7907327,
+    "water_color": 5404090,
+    "water_fog_color": 329011
+  },
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "primeval:ore_dirt",
+      "primeval:ore_gravel",
+      "primeval:ore_fossil"
+    ],
+    [],
+    [
+      "minecraft:spring_water"
+    ],
+    [
+      "primeval:trunked_tree_oak_plains",
+      "primeval:patch_tall_grass_plains",
+      "primeval:patch_bush",
+      "primeval:patch_shrub",
+      "primeval:patch_water_reed",
+      "primeval:river_grass",
+      "primeval:patch_poppy",
+      "primeval:patch_dandelion",
+      "primeval:patch_oxeye_daisy",
+      "primeval:patch_wild_carrots",
+      "primeval:patch_wild_wheat",
+      "primeval:moss_rare",
+      "primeval:laying_item_patch_stick",
+      "primeval:laying_item_patch_flint",
+      "primeval:laying_item_patch_rock",
+      "primeval:laying_item_patch_native_copper",
+      "primeval:laying_item_patch_malachite_copper",
+      "primeval:laying_item_patch_mixed_copper",
+      "primeval:laying_item_patch_sphalerite_zinc"
+    ],
+    [
+      "minecraft:freeze_top_layer"
+    ]
+  ],
+  "has_precipitation": true,
+  "spawn_costs": {},
+  "spawners": {
+    "ambient": [
+      {
+        "type": "minecraft:bat",
+        "maxCount": 8,
+        "minCount": 8,
+        "weight": 10
+      }
+    ],
+    "axolotls": [],
+    "creature": [
+      {
+        "type": "minecraft:pig",
+        "maxCount": 10,
+        "minCount": 5,
+        "weight": 20
+      }
+    ],
+    "misc": [],
+    "monster": [
+      {
+        "type": "minecraft:spider",
+        "maxCount": 4,
+        "minCount": 3,
+        "weight": 50
+      },
+      {
+        "type": "minecraft:zombie",
+        "maxCount": 5,
+        "minCount": 4,
+        "weight": 200
+      },
+      {
+        "type": "minecraft:skeleton",
+        "maxCount": 3,
+        "minCount": 2,
+        "weight": 100
+      },
+      {
+        "type": "minecraft:creeper",
+        "maxCount": 3,
+        "minCount": 1,
+        "weight": 75
+      }
+    ],
+    "underground_water_creature": [],
+    "water_ambient": [],
+    "water_creature": []
+  },
+  "temperature": 0.8
+}

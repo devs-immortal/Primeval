@@ -1,0 +1,20 @@
+{
+  "type": "primeval:laying_item_patch",
+  "config": {
+    "item1": {
+      "count": 1,
+      "id": "primeval:raw_tin_cassiterite_small"
+    },
+    "item2": {
+      "count": 1,
+      "id": "primeval:raw_tin_cassiterite_medium"
+    },
+    "tries": {
+      "type": "minecraft:uniform",
+      "max_inclusive": 13,
+      "min_inclusive": 9
+    },
+    "xzSpread": 7,
+    "y_spread": 3
+  }
+}

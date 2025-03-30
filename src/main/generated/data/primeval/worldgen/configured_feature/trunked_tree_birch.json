@@ -1,0 +1,19 @@
+{
+  "type": "primeval:trunked_tree",
+  "config": {
+    "sapling": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "primeval:birch_sapling",
+        "Properties": {
+          "centered": "false"
+        }
+      }
+    },
+    "tick_tries": {
+      "type": "minecraft:uniform",
+      "max_inclusive": 150,
+      "min_inclusive": 110
+    }
+  }
+}

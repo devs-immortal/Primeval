@@ -1,0 +1,20 @@
+{
+  "type": "primeval:laying_item_patch",
+  "config": {
+    "item1": {
+      "count": 1,
+      "id": "primeval:rock"
+    },
+    "item2": {
+      "count": 1,
+      "id": "primeval:rock"
+    },
+    "tries": {
+      "type": "minecraft:uniform",
+      "max_inclusive": 12,
+      "min_inclusive": 6
+    },
+    "xzSpread": 7,
+    "y_spread": 3
+  }
+}

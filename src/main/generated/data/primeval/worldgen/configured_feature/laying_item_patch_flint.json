@@ -1,0 +1,20 @@
+{
+  "type": "primeval:laying_item_patch",
+  "config": {
+    "item1": {
+      "count": 1,
+      "id": "primeval:flint"
+    },
+    "item2": {
+      "count": 1,
+      "id": "primeval:flint"
+    },
+    "tries": {
+      "type": "minecraft:uniform",
+      "max_inclusive": 6,
+      "min_inclusive": 3
+    },
+    "xzSpread": 5,
+    "y_spread": 3
+  }
+}

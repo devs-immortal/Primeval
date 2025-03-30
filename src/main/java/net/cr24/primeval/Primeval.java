@@ -5,6 +5,8 @@ import net.cr24.primeval.initialization.*;
 import net.cr24.primeval.item.property.FluidContentProperty;
 import net.cr24.primeval.screen.PrimevalScreens;
 import net.cr24.primeval.util.PrimevalDataComponentTypes;
+import net.cr24.primeval.world.gen.feature.PrimevalFeatures;
+import net.cr24.primeval.world.gen.structure.PrimevalStructures;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -31,7 +33,8 @@ public class Primeval implements ModInitializer, ClientModInitializer {
 		PrimevalFluids.init();
 		PrimevalRecipes.init();
 //		PrimevalWorld.init();
-//		PrimevalStructures.init();
+		PrimevalFeatures.init();
+		PrimevalStructures.init();
 //		PrimevalVillagerTrades.init();
 		PrimevalSoundEvents.init();
 	}
@@ -39,7 +42,6 @@ public class Primeval implements ModInitializer, ClientModInitializer {
 	@Override
 	@Environment(EnvType.CLIENT)
 	public void onInitializeClient() {
-//		PrimevalItems.initClient();
 		PrimevalBlocks.initClient();
 		PrimevalFluids.initClient();
 		SelectProperties.ID_MAPPER.put(identify("fluid_contents"), FluidContentProperty.TYPE);

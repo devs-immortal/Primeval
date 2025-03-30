@@ -1,0 +1,10 @@
+{
+  "values": [
+    "primeval:inland/plains",
+    "primeval:inland/taiga",
+    "primeval:inland/rocky_outcrop",
+    "primeval:inland/crumbling_cliffs",
+    "primeval:coastal/sandy_shore",
+    "primeval:ocean"
+  ]
+}

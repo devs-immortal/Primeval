@@ -1,0 +1,20 @@
+{
+  "type": "primeval:laying_item_patch",
+  "config": {
+    "item1": {
+      "count": 1,
+      "id": "primeval:raw_copper_native_small"
+    },
+    "item2": {
+      "count": 1,
+      "id": "primeval:raw_copper_malachite_small"
+    },
+    "tries": {
+      "type": "minecraft:uniform",
+      "max_inclusive": 10,
+      "min_inclusive": 5
+    },
+    "xzSpread": 5,
+    "y_spread": 3
+  }
+}
