@@ -6,6 +6,7 @@ import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.world.biome.Biome;
 
 public class PrimevalTags {
 
@@ -72,6 +73,19 @@ public class PrimevalTags {
 
         private static TagKey<Fluid> register(String id) {
             return TagKey.of(RegistryKeys.FLUID, Primeval.identify(id));
+        }
+    }
+
+    public static class Biomes {
+        public static final TagKey<Biome> HAS_COPPER = register("has_copper");
+        public static final TagKey<Biome> HAS_GOLD = register("has_gold");
+        public static final TagKey<Biome> HAS_LAZURITE = register("has_lazurite");
+        public static final TagKey<Biome> HAS_TIN = register("has_tin");
+        public static final TagKey<Biome> HAS_ZINC = register("has_zinc");
+        public static final TagKey<Biome> RAISED_ORES = register("raised_ores");
+
+        private static TagKey<Biome> register(String id) {
+            return TagKey.of(RegistryKeys.BIOME, Primeval.identify(id));
         }
     }
 }

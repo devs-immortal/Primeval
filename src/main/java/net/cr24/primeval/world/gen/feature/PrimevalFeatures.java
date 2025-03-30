@@ -166,13 +166,13 @@ public class PrimevalFeatures extends FabricDynamicRegistryProvider {
         registerPlacedFeature(registerable, "laying_item_patch_flint", RarityFilterPlacementModifier.of(2), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
         registerPlacedFeature(registerable, "laying_item_patch_rock", RarityFilterPlacementModifier.of(2), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
 
-        registerPlacedFeature(registerable, "laying_item_patch_native_copper", getWeightedCountPlacementModifier(130, 1), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
-        registerPlacedFeature(registerable, "laying_item_patch_malachite_copper", getWeightedCountPlacementModifier(210, 1), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
-        registerPlacedFeature(registerable, "laying_item_patch_mixed_copper", getWeightedCountPlacementModifier(70, 1), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
+        registerPlacedFeature(registerable, "laying_item_patch_native_copper", getWeightedCountPlacementModifier(65, 1), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
+        registerPlacedFeature(registerable, "laying_item_patch_malachite_copper", getWeightedCountPlacementModifier(105, 1), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
+        registerPlacedFeature(registerable, "laying_item_patch_mixed_copper", getWeightedCountPlacementModifier(35, 1), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
 
-        registerPlacedFeature(registerable, "laying_item_patch_cassiterite_tin", getWeightedCountPlacementModifier(160, 1), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
+        registerPlacedFeature(registerable, "laying_item_patch_cassiterite_tin", getWeightedCountPlacementModifier(80, 1), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
 
-        registerPlacedFeature(registerable, "laying_item_patch_sphalerite_zinc", getWeightedCountPlacementModifier(220, 1), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
+        registerPlacedFeature(registerable, "laying_item_patch_sphalerite_zinc", getWeightedCountPlacementModifier(110, 1), SquarePlacementModifier.of(), HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG), BiomePlacementModifier.of());
 
         // TREES
         registerPlacedFeature(registerable, "trunked_tree_oak_plains", "trunked_tree_oak", getWeightedCountPlacementModifier(57, 2, 1), SquarePlacementModifier.of(), SurfaceWaterDepthFilterPlacementModifier.of(0), HeightmapPlacementModifier.of(Heightmap.Type.OCEAN_FLOOR), BlockFilterPlacementModifier.of(BlockPredicate.wouldSurvive(PrimevalBlocks.OAK_SAPLING.getDefaultState(), Vec3i.ZERO)), BiomePlacementModifier.of());

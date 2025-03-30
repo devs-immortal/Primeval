@@ -5,7 +5,6 @@
     "primeval:inland/birch_forest",
     "primeval:inland/taiga",
     "primeval:inland/rocky_outcrop",
-    "primeval:coastal/rocky_shore",
-    "primeval:ocean"
+    "primeval:coastal/rocky_shore"
   ]
 }

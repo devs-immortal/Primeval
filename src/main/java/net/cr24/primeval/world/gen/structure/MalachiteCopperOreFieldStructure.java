@@ -3,6 +3,7 @@ package net.cr24.primeval.world.gen.structure;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import net.cr24.primeval.initialization.PrimevalBlocks;
+import net.cr24.primeval.initialization.PrimevalTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.structure.StructurePiecesCollector;
 import net.minecraft.world.Heightmap;
@@ -26,7 +27,12 @@ public class MalachiteCopperOreFieldStructure extends Structure {
     }
 
     private static void addPieces(StructurePiecesCollector collector, Structure.Context context) {
-        int height = context.random().nextBetween(-50, -25);
+        int height;
+        if (context.biomeSource().getBiome(context.chunkPos().getStartX(), 100, context.chunkPos().getStartZ(), context.noiseConfig().getMultiNoiseSampler()).isIn(PrimevalTags.Biomes.RAISED_ORES)) {
+            height = context.random().nextBetween(-15, 0);
+        } else {
+            height = context.random().nextBetween(-50, -25);
+        }
         BlockState[] ores = new BlockState[] {
                 PrimevalBlocks.COPPER_MALACHITE_ORE.large().getDefaultState(),
                 PrimevalBlocks.COPPER_MALACHITE_ORE.medium().getDefaultState(),

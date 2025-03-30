@@ -35,17 +35,15 @@
       "minecraft:spring_water"
     ],
     [
-      "primeval:trunked_tree_oak_plains",
-      "primeval:patch_tall_grass_plains",
-      "primeval:patch_bush",
+      "primeval:trunked_tree_dense_oak_forest",
+      "primeval:patch_short_grass_sparse",
+      "primeval:patch_spiked_plant",
       "primeval:patch_shrub",
       "primeval:patch_water_reed",
       "primeval:river_grass",
       "primeval:patch_poppy",
-      "primeval:patch_dandelion",
-      "primeval:patch_oxeye_daisy",
-      "primeval:patch_wild_carrots",
-      "primeval:patch_wild_wheat",
+      "primeval:patch_wild_beans",
+      "primeval:patch_wild_potato",
       "primeval:moss_rare",
       "primeval:laying_item_patch_stick",
       "primeval:laying_item_patch_flint",
@@ -53,7 +51,7 @@
       "primeval:laying_item_patch_native_copper",
       "primeval:laying_item_patch_malachite_copper",
       "primeval:laying_item_patch_mixed_copper",
-      "primeval:laying_item_patch_sphalerite_zinc"
+      "primeval:laying_item_patch_cassiterite_tin"
     ],
     [
       "minecraft:freeze_top_layer"
