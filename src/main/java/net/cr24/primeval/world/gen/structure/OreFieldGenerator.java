@@ -1,6 +1,8 @@
 package net.cr24.primeval.world.gen.structure;
 
+import net.cr24.primeval.initialization.PrimevalTags;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.registry.Registries;
@@ -94,7 +96,7 @@ public class OreFieldGenerator {
         }
 
         public boolean validBlock(StructureWorldAccess world, int x, int y, int z, BlockBox box) {
-            return this.getBlockAt(world, x, y, z, box).isIn(BlockTags.BASE_STONE_OVERWORLD);
+            return this.getBlockAt(world, x, y, z, box).isIn(PrimevalTags.Blocks.NATURAL_STONE);
         }
 
     }
