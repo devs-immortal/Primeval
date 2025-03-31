@@ -1,6 +1,7 @@
 package net.cr24.primeval;
 
 import net.cr24.primeval.fluid.PrimevalFluids;
+import net.cr24.primeval.initialization.PrimevalItems;
 import net.cr24.primeval.initialization.PrimevalTags;
 import net.cr24.primeval.item.property.FluidContentProperty;
 import net.cr24.primeval.world.gen.feature.PrimevalFeatures;
@@ -8,42 +9,43 @@ import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.client.data.*;
 import net.minecraft.client.render.item.model.ItemModel;
 import net.minecraft.client.render.item.model.SelectItemModel;
-import net.minecraft.client.render.item.property.select.TrimMaterialProperty;
-import net.minecraft.client.render.item.tint.DyeTintSource;
 import net.minecraft.client.render.item.tint.GrassTintSource;
-import net.minecraft.client.render.item.tint.TintSource;
-import net.minecraft.data.recipe.CraftingRecipeJsonBuilder;
 import net.minecraft.data.recipe.RecipeExporter;
 import net.minecraft.data.recipe.RecipeGenerator;
-import net.minecraft.data.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
-import net.minecraft.item.equipment.EquipmentAsset;
-import net.minecraft.item.equipment.trim.ArmorTrimMaterial;
+import net.minecraft.loot.LootPool;
+import net.minecraft.loot.LootTable;
+import net.minecraft.loot.condition.*;
+import net.minecraft.loot.entry.ItemEntry;
+import net.minecraft.loot.entry.LeafEntry;
+import net.minecraft.loot.entry.LootPoolEntry;
+import net.minecraft.loot.function.SetCountLootFunction;
+import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
+import net.minecraft.loot.provider.number.UniformLootNumberProvider;
+import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.*;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import static net.cr24.primeval.initialization.PrimevalBlocks.*;
 import static net.cr24.primeval.initialization.PrimevalItems.*;
+import static net.cr24.primeval.initialization.PrimevalItems.RAW_COPPER_NATIVE_SMALL;
 import static net.minecraft.client.data.TextureMap.getSubId;
 import static net.minecraft.client.data.TexturedModel.makeFactory;
 
@@ -54,6 +56,7 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 		FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
 		pack.addProvider(ModelProvider::new);
 		pack.addProvider(RecipeProvider::new);
+		pack.addProvider(LootTableProvider::new);
 		pack.addProvider(PrimevalFeatures::new);
 	}
 
@@ -654,5 +657,192 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 		public String getName() {
 			return "Primeval Recipe Provider";
 		}
+	}
+
+	private static class LootTableProvider extends FabricBlockLootTableProvider {
+
+		protected LootTableProvider(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+			super(dataOutput, registryLookup);
+		}
+
+		@Override
+		public void generate() {
+			// terrain
+			addDrop(DIRT);
+			addDrop(COARSE_DIRT);
+			addDrop(CLAY, (block -> this.drops(CLAY_BALL, ConstantLootNumberProvider.create(4))));
+			addDrop(MUD, (block -> this.drops(MUD_BALL, ConstantLootNumberProvider.create(4))));
+			addDrop(DRY_DIRT);
+			addDrop(GRASSY_DIRT, (block -> this.drops(DIRT)));
+			addDrop(GRASSY_CLAY, (block -> this.drops(CLAY_BALL, ConstantLootNumberProvider.create(4))));
+			addDrop(SAND);
+			addDrop(GRAVEL);
+			addDrop(COBBLESTONE);
+			addDrop(STONE, (block -> this.drops(ROCK, UniformLootNumberProvider.create(3, 5))));
+			addDrop(SANDSTONE, (block -> this.drops(SAND, UniformLootNumberProvider.create(2, 4))));
+			addDrop(DIRT_FARMLAND, (block -> this.drops(DIRT)));
+			addDrop(CLAY_FARMLAND, (block -> this.drops(CLAY_BALL, ConstantLootNumberProvider.create(4))));
+
+			// plants
+			addDrop(OAK_LOG_BLOCK, (block -> this.drops(OAK_LOG)));
+			addDrop(BIRCH_LOG_BLOCK, (block -> this.drops(BIRCH_LOG)));
+			addDrop(SPRUCE_LOG_BLOCK, (block -> this.drops(SPRUCE_LOG)));
+			addDrop(OAK_LEAVES, (block -> this.leafDrops(OAK_SAPLING)));
+			addDrop(BIRCH_LEAVES, (block -> this.leafDrops(BIRCH_SAPLING)));
+			addDrop(SPRUCE_LEAVES, (block -> this.leafDrops(SPRUCE_SAPLING)));
+			addDrop(OAK_SAPLING);
+			addDrop(BIRCH_SAPLING);
+			addDrop(SPRUCE_SAPLING);
+			addDrop(GRASS, (block -> this.brushDrops()));
+			addDrop(BUSH, (block -> this.brushDrops()));
+			addDrop(SPIKED_PLANT, (block -> this.brushDrops()));
+			addDrop(LEAFY_PLANT, (block -> this.brushDrops()));
+			addDrop(SHRUB, (block -> this.dropsWithKnife(SHRUB)));
+			//addDrop(MOSS, (block -> this.dropsWithKnife(MOSS)));
+			// flowers
+			addDrop(POPPY, (block -> this.dropsWithKnife(POPPY)));
+			addDrop(DANDELION, (block -> this.dropsWithKnife(DANDELION)));
+			addDrop(OXEYE_DAISY, (block -> this.dropsWithKnife(OXEYE_DAISY)));
+			addDrop(CORNFLOWER, (block -> this.dropsWithKnife(CORNFLOWER)));
+			addDrop(LILY_OF_THE_VALLEY, (block -> this.dropsWithKnife(LILY_OF_THE_VALLEY)));
+			// misc
+			addDrop(REEDS);
+			//addDrop(RIVER_GRASS);
+
+			// ores
+			addDrop(COPPER_MALACHITE_ORE.large(), (block -> this.oreSetDrops(COPPER_MALACHITE_ORE.large(), RAW_COPPER_MALACHITE_LARGE)));
+			addDrop(COPPER_MALACHITE_ORE.medium(), (block -> this.oreSetDrops(COPPER_MALACHITE_ORE.medium(), RAW_COPPER_MALACHITE_MEDIUM)));
+			addDrop(COPPER_MALACHITE_ORE.small(), (block -> this.oreSetDrops(COPPER_MALACHITE_ORE.small(), RAW_COPPER_MALACHITE_SMALL)));
+			addDrop(COPPER_NATIVE_ORE.large(), (block -> this.oreSetDrops(COPPER_NATIVE_ORE.large(), RAW_COPPER_NATIVE_LARGE)));
+			addDrop(COPPER_NATIVE_ORE.medium(), (block -> this.oreSetDrops(COPPER_NATIVE_ORE.medium(), RAW_COPPER_NATIVE_MEDIUM)));
+			addDrop(COPPER_NATIVE_ORE.small(), (block -> this.oreSetDrops(COPPER_NATIVE_ORE.small(), RAW_COPPER_NATIVE_SMALL)));
+			addDrop(TIN_CASSITERITE_ORE.large(), (block -> this.oreSetDrops(TIN_CASSITERITE_ORE.large(), RAW_TIN_CASSITERITE_LARGE)));
+			addDrop(TIN_CASSITERITE_ORE.medium(), (block -> this.oreSetDrops(TIN_CASSITERITE_ORE.medium(), RAW_TIN_CASSITERITE_MEDIUM)));
+			addDrop(TIN_CASSITERITE_ORE.small(), (block -> this.oreSetDrops(TIN_CASSITERITE_ORE.small(), RAW_TIN_CASSITERITE_SMALL)));
+			addDrop(GOLD_NATIVE_ORE.large(), (block -> this.oreSetDrops(GOLD_NATIVE_ORE.large(), RAW_GOLD_NATIVE_LARGE)));
+			addDrop(GOLD_NATIVE_ORE.medium(), (block -> this.oreSetDrops(GOLD_NATIVE_ORE.medium(), RAW_GOLD_NATIVE_MEDIUM)));
+			addDrop(GOLD_NATIVE_ORE.small(), (block -> this.oreSetDrops(GOLD_NATIVE_ORE.small(), RAW_GOLD_NATIVE_SMALL)));
+			addDrop(IRON_HEMATITE_ORE.large(), (block -> this.oreSetDrops(IRON_HEMATITE_ORE.large(), RAW_IRON_HEMATITE_LARGE)));
+			addDrop(IRON_HEMATITE_ORE.medium(), (block -> this.oreSetDrops(IRON_HEMATITE_ORE.medium(), RAW_IRON_HEMATITE_MEDIUM)));
+			addDrop(IRON_HEMATITE_ORE.small(), (block -> this.oreSetDrops(IRON_HEMATITE_ORE.small(), RAW_IRON_HEMATITE_SMALL)));
+			addDrop(LAZURITE_ORE.large(), (block -> this.oreSetDrops(LAZURITE_ORE.large(), RAW_LAZURITE_LARGE)));
+			addDrop(LAZURITE_ORE.medium(), (block -> this.oreSetDrops(LAZURITE_ORE.medium(), RAW_LAZURITE_MEDIUM)));
+			addDrop(LAZURITE_ORE.small(), (block -> this.oreSetDrops(LAZURITE_ORE.small(), RAW_LAZURITE_SMALL)));
+			addDrop(FOSSIL, (block -> this.fossilDrops(FOSSIL)));
+
+			// crafted blocks
+			addDrop(STRAW_BLOCK);
+			addDrop(STRAW_STAIRS);
+			addDrop(STRAW_SLAB, this::slabDrops);
+			addDrop(STRAW_MESH);
+			addDrop(STRAW_MAT);
+			addDrop(TERRACOTTA);
+			coloredBlockSetDrops(COLORED_TERRACOTTA);
+			blockSetDrops(FIRED_CLAY_SHINGLE_BLOCKS);
+			coloredBlockSetSetDrops(COLORED_FIRED_CLAY_SHINGLE_BLOCKS);
+			blockSetDrops(FIRED_CLAY_BRICK_BLOCKS);
+			blockSetDrops(FIRED_CLAY_TILES_BLOCKS);
+			blockSetDrops(DRIED_BRICK_BLOCKS);
+			blockSetDrops(MUD_BRICKS);
+			blockSetDrops(CRUDE_BRICKS);
+			blockSetDrops(STONE_BRICKS);
+			blockSetDrops(SMOOTH_STONE);
+			addDrop(STONE_INDENT);
+			addDrop(STONE_PILLAR);
+			blockSetDrops(STONE_PAVER);
+			addDrop(DAUB);
+			addDrop(FRAMED_DAUB);
+			addDrop(FRAMED_PILLAR_DAUB);
+			addDrop(FRAMED_CROSS_DAUB);
+			addDrop(FRAMED_INVERTED_CROSS_DAUB);
+			addDrop(FRAMED_X_DAUB);
+			addDrop(FRAMED_PLUS_DAUB);
+			addDrop(FRAMED_DIVIDED_DAUB);
+			woodBlockSetDrops(OAK_PLANK_BLOCKS);
+			woodBlockSetDrops(BIRCH_PLANK_BLOCKS);
+			woodBlockSetDrops(SPRUCE_PLANK_BLOCKS);
+			blockSetDrops(WICKER);
+			addDrop(WICKER_DOOR, this::doorDrops);
+			addDrop(WICKER_TRAPDOOR);
+			addDrop(WICKER_BARS);
+			addDrop(ROPE);
+			addDrop(ROPE_LADDER);
+
+			// crops
+
+			// technical blocks
+			addDrop(OAK_CRATE);
+			addDrop(BIRCH_CRATE);
+			addDrop(SPRUCE_CRATE);
+			addDrop(LARGE_CLAY_POT);
+			addDrop(LARGE_FIRED_CLAY_POT);
+			addDrop(LARGE_DECORATIVE_FIRED_CLAY_POT);
+			addDrop(WICKER_BASKET);
+			addDrop(CRUDE_CRAFTING_BENCH);
+			addDrop(QUERN);
+
+		}
+
+		public void coloredBlockSetDrops(ColoredBlockSet set) {
+			for (Block b : set) {
+				addDrop(b);
+			}
+		}
+
+		public void coloredBlockSetSetDrops(ColoredBlockSetSet set) {
+			for (BlockSet bs : set) {
+				blockSetDrops(bs);
+			}
+		}
+
+		public void blockSetDrops(BlockSet set) {
+			addDrop(set.block());
+			addDrop(set.stairs());
+			addDrop(set.slab(), this::slabDrops);
+		}
+
+		public void woodBlockSetDrops(WoodBlockSet set) {
+			addDrop(set.block());
+			addDrop(set.stairs());
+			addDrop(set.slab(), this::slabDrops);
+			addDrop(set.panel());
+			addDrop(set.fence());
+			addDrop(set.logFence());
+			addDrop(set.fenceGate());
+			addDrop(set.door(), this::doorDrops);
+			addDrop(set.trapdoor());
+
+		}
+
+		public LootTable.Builder oreSetDrops(Block block, Item raw) {
+			return LootTable.builder().pool(this.addSurvivesExplosionCondition(block, LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0F)).with(ItemEntry.builder(raw))))
+					.pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0F)).with(this.applyExplosionDecay(block, ItemEntry.builder(COBBLESTONE).conditionally(RandomChanceLootCondition.builder(0.4F)))));
+		}
+
+		public LootTable.Builder fossilDrops(Block block) {
+			return LootTable.builder().pool(this.addSurvivesExplosionCondition(block, LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0F)).with(ItemEntry.builder(BONE).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0F, 4.0F))))));
+		}
+
+		public LootTable.Builder leafDrops(Block sapling) {
+			return LootTable.builder().pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0F)).with((ItemEntry.builder(sapling).conditionally(this.createToolTagCondition(PrimevalTags.Items.KNIVES)).conditionally(RandomChanceLootCondition.builder(0.15F)))))
+					.pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0F)).with(this.applyExplosionDecay(STICK, ItemEntry.builder(STICK).conditionally(RandomChanceLootCondition.builder(0.05F)))));
+		}
+
+		public LootTable.Builder brushDrops() {
+			return LootTable.builder().pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0F)).with((ItemEntry.builder(STRAW).conditionally(this.createDropsWithKnifeCondition()))));
+		}
+
+		public LootCondition.Builder createDropsWithKnifeCondition() {
+			return this.createToolTagCondition(PrimevalTags.Items.KNIVES);
+		}
+
+		public LootTable.Builder dropsWithKnife(ItemConvertible item) {
+			return LootTable.builder().pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0F)).conditionally(this.createDropsWithKnifeCondition()).with(ItemEntry.builder(item)));
+		}
+
+		public LootCondition.Builder createToolTagCondition(TagKey<Item> tag) {
+			return MatchToolLootCondition.builder(ItemPredicate.Builder.create().tag(this.registries.getOrThrow(RegistryKeys.ITEM), tag));
+		}
+
 	}
 }
