@@ -62,7 +62,7 @@ public abstract class AbstractTrunker {
     public abstract List<BlockPos> tickTrunk(BlockState state, WorldAccess world, BlockPos pos, Random random, Direction[] directions);
 
     protected void placeLeaves(WorldAccess world, BlockPos pos, Direction growingFrom) {
-        if (world.getBlockState(pos).isAir()) {
+        if (world.getBlockState(pos).isAir() && world.getBlockState(pos.offset(growingFrom)).getBlock() instanceof TrunkBlock) {
             world.setBlockState(pos, leafBlockState, 3);
             world.setBlockState(pos.offset(growingFrom), world.getBlockState(pos.offset(growingFrom)).with(TrunkBlock.DIRECTION_MAP.get(growingFrom.getOpposite()), true), 4);
         }

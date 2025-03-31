@@ -6,8 +6,10 @@ import net.cr24.primeval.util.Weight;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
+import net.minecraft.component.type.ToolComponent;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
@@ -67,6 +69,7 @@ public class PrimevalKnifeItem extends Item implements IWeightedItem {
 
     private static Settings applySettings(ToolMaterial toolMaterial, float attackDamage, float attackSpeed, Settings settings) {
         return settings.maxDamage(toolMaterial.durability())
+                .component(DataComponentTypes.TOOL, new ToolComponent(List.of(), 1.0F, 1))
                 .repairable(toolMaterial.repairItems())
                 .enchantable(toolMaterial.enchantmentValue())
                 .attributeModifiers(AttributeModifiersComponent.builder()

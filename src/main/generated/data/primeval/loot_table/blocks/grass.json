@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:match_tool",
+              "predicate": {
+                "items": "#primeval:knives"
+              }
+            }
+          ],
+          "name": "primeval:straw"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}
