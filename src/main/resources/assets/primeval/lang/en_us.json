@@ -208,7 +208,8 @@
     "block.primeval.rope_ladder": "Rope Ladder",
 
     "block.primeval.crude_crafting_bench": "Crude Crafting Bench",
-    "block.primeval.crude_torch": "Crude Torch",
+    "item.primeval.crude_torch_lit": "Lit Crude Torch",
+    "item.primeval.crude_torch": "Crude Torch",
     "block.primeval.campfire": "Campfire",
     "block.primeval.oak_crate": "Oak Storage Crate",
     "block.primeval.birch_crate": "Birch Storage Crate",

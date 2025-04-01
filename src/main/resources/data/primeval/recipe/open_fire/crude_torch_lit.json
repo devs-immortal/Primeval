@@ -1,0 +1,8 @@
+{
+  "type": "primeval:open_fire",
+  "input": "primeval:crude_torch",
+  "result": {
+    "id": "primeval:crude_torch_lit"
+  },
+  "cook_time": 60
+}

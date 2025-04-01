@@ -206,8 +206,7 @@ public class PrimevalBlocks {
 
     public static final Block PIT_KILN = registerBlockWithoutItem("pit_kiln", AbstractBlock.Settings.create().strength(1.0F).sounds(BlockSoundGroup.GRASS).nonOpaque(), PitKilnBlock::new);
     public static final Block CRUDE_CRAFTING_BENCH = registerBlock("crude_crafting_bench", SETTINGS_REFINED_WOOD(), PrimevalCraftingTableBlock::new, Weight.HEAVY, Size.LARGE);
-//    public static final Block CRUDE_TORCH = registerBlock("crude_torch", new TimedTorchBlock(AbstractBlock.Settings.create().notSolid().sounds(BlockSoundGroup.WOOD).breakInstantly().noCollision().luminance(TimedTorchBlock::getLuminanceFromState).ticksRandomly()), Weight.LIGHT, Size.SMALL, PRIMEVAL_BLOCKS); //todo
-//    public static final Item LIT_CRUDE_TORCH = Registry.register(Registries.ITEM, PrimevalMain.getId("crude_torch_lit"), new WeightedBlockItem(CRUDE_TORCH, new Item.Settings().maxCount(Size.SMALL.getStackSize()), Weight.LIGHT, Size.SMALL));
+    public static final Block CRUDE_TORCH = registerBlockWithoutItem("crude_torch", AbstractBlock.Settings.create().notSolid().sounds(BlockSoundGroup.WOOD).breakInstantly().noCollision().luminance(TimedTorchBlock::getLuminanceFromState), TimedTorchBlock::new);
     public static final Block CAMPFIRE = registerBlock("campfire", SETTINGS_STONE().luminance(PrimevalCampfireBlock::getLuminanceFromState).nonOpaque(), PrimevalCampfireBlock::new, Weight.HEAVY, Size.LARGE);
     public static final Block QUERN = registerBlock("quern", SETTINGS_STONE().nonOpaque(), QuernBlock::new, Weight.HEAVY, Size.LARGE);
 

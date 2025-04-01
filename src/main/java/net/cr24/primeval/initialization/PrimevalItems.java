@@ -72,6 +72,9 @@ public class PrimevalItems {
     public static final Item BIRCH_LOG = registerItem("birch_log", SETTINGS_BASIC(), (w, s, settings) -> new LogItem(PrimevalBlocks.BIRCH_LOG_BLOCK, PrimevalBlocks.BIRCH_LOG_PILE, w, s, settings), Weight.HEAVY, Size.LARGE);
     public static final Item SPRUCE_LOG = registerItem("spruce_log", SETTINGS_BASIC(), (w, s, settings) -> new LogItem(PrimevalBlocks.SPRUCE_LOG_BLOCK, PrimevalBlocks.SPRUCE_LOG_PILE, w, s, settings), Weight.HEAVY, Size.LARGE);
 
+    public static final Item LIT_CRUDE_TORCH = registerItem("crude_torch_lit", SETTINGS_BASIC(), (w, s, settings) -> new WeightedBlockItem(PrimevalBlocks.CRUDE_TORCH, w, s, settings), Weight.LIGHT, Size.SMALL);
+    public static final Item UNLIT_CRUDE_TORCH = registerItem("crude_torch", SETTINGS_BASIC(), (w, s, settings) -> new WeightedBlockItem(PrimevalBlocks.CRUDE_TORCH, w, s, settings), Weight.LIGHT, Size.SMALL);
+
 
 
     // endregion

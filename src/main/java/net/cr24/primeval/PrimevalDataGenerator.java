@@ -192,9 +192,17 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 			itemModelGenerator.output.accept(STRAW,
 					ItemModels.basic(ModelIds.getItemModelId(STRAW))
 			);
+			itemModelGenerator.output.accept(LIT_CRUDE_TORCH,
+					ItemModels.basic(ModelIds.getBlockSubModelId(CRUDE_TORCH, "_lit"))
+			);
+			itemModelGenerator.output.accept(UNLIT_CRUDE_TORCH,
+					ItemModels.basic(ModelIds.getBlockSubModelId(CRUDE_TORCH, "_unlit"))
+			);
 
 			// items
 			itemModelGenerator.upload(STRAW, Models.GENERATED);
+			itemModelGenerator.upload(LIT_CRUDE_TORCH, Models.GENERATED);
+			itemModelGenerator.upload(UNLIT_CRUDE_TORCH, Models.GENERATED);
 			itemModelGenerator.registerWithTextureSource(STICK, Items.STICK, Models.GENERATED);
 			itemModelGenerator.register(OAK_LOG, Models.GENERATED);
 			itemModelGenerator.register(BIRCH_LOG, Models.GENERATED);

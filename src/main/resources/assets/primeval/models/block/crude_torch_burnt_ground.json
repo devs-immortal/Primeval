@@ -1,0 +1,6 @@
+{
+  "parent": "primeval:block/torch_ground_short",
+  "textures": {
+    "torch": "primeval:block/crude_torch_burnt"
+  }
+}
