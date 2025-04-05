@@ -193,10 +193,10 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 					ItemModels.basic(ModelIds.getItemModelId(STRAW))
 			);
 			itemModelGenerator.output.accept(LIT_CRUDE_TORCH,
-					ItemModels.basic(ModelIds.getBlockSubModelId(CRUDE_TORCH, "_lit"))
+					ItemModels.basic(ModelIds.getItemSubModelId(CRUDE_TORCH.asItem(), "_lit"))
 			);
 			itemModelGenerator.output.accept(UNLIT_CRUDE_TORCH,
-					ItemModels.basic(ModelIds.getBlockSubModelId(CRUDE_TORCH, "_unlit"))
+					ItemModels.basic(ModelIds.getItemSubModelId(CRUDE_TORCH.asItem(), ""))
 			);
 
 			// items
@@ -301,6 +301,8 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 			registerFiredMold(itemModelGenerator, FIRED_CLAY_SWORD_BLADE_MOLD, PrimevalFluids.TOOL_MOLD_FLUIDS);
 			itemModelGenerator.register(CLAY_HOE_HEAD_MOLD, Models.GENERATED);
 			registerFiredMold(itemModelGenerator, FIRED_CLAY_HOE_HEAD_MOLD, PrimevalFluids.TOOL_MOLD_FLUIDS);
+			itemModelGenerator.register(CLAY_PROSPECTING_PICKAXE_HEAD_MOLD, Models.GENERATED);
+			registerFiredMold(itemModelGenerator, FIRED_CLAY_PROSPECTING_PICKAXE_HEAD_MOLD, PrimevalFluids.TOOL_MOLD_FLUIDS);
 
 			itemModelGenerator.register(COPPER_INGOT, Models.GENERATED);
 			itemModelGenerator.register(COPPER_CHUNK, Models.GENERATED);
@@ -407,6 +409,7 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 			itemModelGenerator.register(set.shovel(), Models.HANDHELD);
 			itemModelGenerator.register(set.sword(), Models.HANDHELD);
 			itemModelGenerator.register(set.hoe(), Models.HANDHELD);
+			itemModelGenerator.register(set.prospecting_pickaxe(), Models.HANDHELD);
 			itemModelGenerator.registerWithInHandModel(set.spear());
 		}
 
@@ -568,6 +571,7 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 				this.createShaped(RecipeCategory.MISC, CLAY_SHOVEL_HEAD_MOLD).input('C', CLAY_BALL).pattern("C C").pattern("CCC").pattern("CCC").criterion(hasItem(CLAY_BALL), this.conditionsFromItem(CLAY_BALL)).offerTo(this.exporter);
 				this.createShaped(RecipeCategory.MISC, CLAY_SWORD_BLADE_MOLD).input('C', CLAY_BALL).pattern("C C").pattern("C C").pattern("CCC").criterion(hasItem(CLAY_BALL), this.conditionsFromItem(CLAY_BALL)).offerTo(this.exporter);
 				this.createShaped(RecipeCategory.MISC, CLAY_HOE_HEAD_MOLD).input('C', CLAY_BALL).pattern("C  ").pattern("CCC").pattern("CCC").criterion(hasItem(CLAY_BALL), this.conditionsFromItem(CLAY_BALL)).offerTo(this.exporter);
+				this.createShaped(RecipeCategory.MISC, CLAY_PROSPECTING_PICKAXE_HEAD_MOLD).input('C', CLAY_BALL).pattern("  C").pattern("CC ").pattern("CCC").criterion(hasItem(CLAY_BALL), this.conditionsFromItem(CLAY_BALL)).offerTo(this.exporter);
 
 			}
 
@@ -642,6 +646,7 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 				offerToolAssembly(RecipeCategory.TOOLS, toolSet.shovel(), toolPartSet.shovel_head());
 				offerToolAssembly(RecipeCategory.COMBAT, toolSet.sword(), toolPartSet.sword_blade());
 				offerToolAssembly(RecipeCategory.TOOLS, toolSet.hoe(), toolPartSet.hoe_head());
+				offerToolAssembly(RecipeCategory.TOOLS, toolSet.prospecting_pickaxe(), toolPartSet.prospecting_pickaxe_head());
 				this.createShaped(RecipeCategory.COMBAT, toolSet.spear()).input('H', toolPartSet.sword_blade()).input('S', STICK).pattern("  H").pattern(" S ").pattern("S  ").criterion(hasItem(toolPartSet.sword_blade()), this.conditionsFromItem(toolPartSet.sword_blade())).offerTo(this.exporter);
 
 			}

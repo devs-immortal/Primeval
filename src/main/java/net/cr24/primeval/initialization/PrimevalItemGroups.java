@@ -190,6 +190,8 @@ public class PrimevalItemGroups {
                 entries.add(FIRED_CLAY_SWORD_BLADE_MOLD);
                 entries.add(CLAY_HOE_HEAD_MOLD);
                 entries.add(FIRED_CLAY_HOE_HEAD_MOLD);
+                entries.add(CLAY_PROSPECTING_PICKAXE_HEAD_MOLD);
+                entries.add(FIRED_CLAY_PROSPECTING_PICKAXE_HEAD_MOLD);
 
                 entries.add(COPPER_INGOT);
                 entries.add(COPPER_CHUNK);

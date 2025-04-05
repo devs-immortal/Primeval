@@ -339,6 +339,7 @@
     "item.primeval.copper_shovel_head": "Copper Shovel Head",
     "item.primeval.copper_sword_blade": "Copper Medium Blade",
     "item.primeval.copper_hoe_head": "Copper Hoe Head",
+    "item.primeval.copper_prospecting_pickaxe_head": "Copper Prospecting Pickaxe Head",
     
     "item.primeval.bronze_axe_head": "Bronze Axe Head",
     "item.primeval.bronze_chisel_head": "Bronze Chisel Head",
@@ -347,6 +348,7 @@
     "item.primeval.bronze_shovel_head": "Bronze Shovel Head",
     "item.primeval.bronze_sword_blade": "Bronze Medium Blade",
     "item.primeval.bronze_hoe_head": "Bronze Hoe Head",
+    "item.primeval.bronze_prospecting_pickaxe_head": "Bronze Prospecting Pickaxe Head",
     
     
     "item.primeval.clay_mold_ingot": "Clay Ingot Mold",
@@ -357,6 +359,7 @@
     "item.primeval.clay_mold_shovel_head": "Clay Shovel Head Mold",
     "item.primeval.clay_mold_sword_blade": "Clay Medium Blade Mold",
     "item.primeval.clay_mold_hoe_head": "Clay Hoe Head Mold",
+    "item.primeval.clay_mold_prospecting_pickaxe_head": "Clay Prospecting Pickaxe Head Mold",
     
     "item.primeval.fired_clay_mold_ingot": "Fired Clay Ingot Mold",
     "item.primeval.fired_clay_mold_axe_head": "Fired Clay Axe Head Mold",
@@ -366,6 +369,7 @@
     "item.primeval.fired_clay_mold_shovel_head": "Fired Clay Shovel Head Mold",
     "item.primeval.fired_clay_mold_sword_blade": "Fired Clay Medium Blade Mold",
     "item.primeval.fired_clay_mold_hoe_head": "Fired Clay Hoe Head Mold",
+    "item.primeval.fired_clay_mold_prospecting_pickaxe_head": "Fired Clay Prospecting Pickaxe Head Mold",
     
     
     "item.primeval.flint_axe": "Flint Hatchet",
@@ -380,6 +384,7 @@
     "item.primeval.copper_shovel": "Copper Shovel",
     "item.primeval.copper_sword": "Copper Shortsword",
     "item.primeval.copper_hoe": "Copper Hoe",
+    "item.primeval.copper_prospecting_pickaxe": "Copper Prospecting Pickaxe",
     "item.primeval.copper_spear": "Copper Spear",
     
     "item.primeval.bronze_axe": "Bronze Axe",
@@ -389,6 +394,7 @@
     "item.primeval.bronze_shovel": "Bronze Shovel",
     "item.primeval.bronze_sword": "Bronze Shortsword",
     "item.primeval.bronze_hoe": "Bronze Hoe",
+    "item.primeval.bronze_prospecting_pickaxe": "Bronze Prospecting Pickaxe",
     "item.primeval.bronze_spear": "Bronze Spear",
     
     "item.primeval.wooden_bucket": "Wooden Bucket",

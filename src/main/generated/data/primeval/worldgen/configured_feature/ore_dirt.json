@@ -10,7 +10,7 @@
         },
         "target": {
           "predicate_type": "minecraft:tag_match",
-          "tag": "primeval:natural_stone"
+          "tag": "primeval:ore_replaceable"
         }
       }
     ]
