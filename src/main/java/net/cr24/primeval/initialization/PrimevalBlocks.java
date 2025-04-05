@@ -194,7 +194,7 @@ public class PrimevalBlocks {
 
     public static final Block STRAW_PILE = registerBlockWithoutItem("straw", SETTINGS_STRAW(), StrawLayeredBlock::new);
     public static final Block ASH_PILE = registerBlockWithoutItem("ash_pile", AbstractBlock.Settings.create().strength(0.5F).sounds(BlockSoundGroup.SAND), AshPileBlock::new);
-    public static final Block LAYING_ITEM = registerBlockWithoutItem("laying_item", AbstractBlock.Settings.create().noCollision().nonOpaque().breakInstantly(), LayingItemBlock::new);
+    public static final Block LAYING_ITEM = registerBlockWithoutItem("laying_item", AbstractBlock.Settings.create().notSolid().breakInstantly().noCollision(), LayingItemBlock::new);
     public static final Block OAK_CRATE = registerBlock("oak_crate", SETTINGS_REFINED_WOOD(), CrateBlock::new, Weight.HEAVY, Size.LARGE);
     public static final Block BIRCH_CRATE = registerBlock("birch_crate", SETTINGS_REFINED_WOOD(), CrateBlock::new, Weight.HEAVY, Size.LARGE);
     public static final Block SPRUCE_CRATE = registerBlock("spruce_crate", SETTINGS_REFINED_WOOD(), CrateBlock::new, Weight.HEAVY, Size.LARGE);
@@ -271,7 +271,7 @@ public class PrimevalBlocks {
                 SPRUCE_SAPLING,
                 SPRUCE_LEAVES,
                 /* Misc */
-                //CRUDE_TORCH,
+                CRUDE_TORCH,
                 CAMPFIRE,
                 ROPE,
                 ROPE_LADDER,

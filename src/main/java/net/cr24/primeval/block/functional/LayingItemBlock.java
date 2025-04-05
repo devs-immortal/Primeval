@@ -5,6 +5,8 @@ import net.cr24.primeval.block.entity.LayingItemBlockEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
@@ -51,6 +53,15 @@ public class LayingItemBlock extends BlockWithEntity {
         }
         blockEntity.markRemoved();
         return state;
+    }
+
+    @Override
+    protected void onStacksDropped(BlockState state, ServerWorld world, BlockPos pos, ItemStack tool, boolean dropExperience) {
+        super.onStacksDropped(state, world, pos, tool, dropExperience);
+        BlockEntity blockEntity = world.getBlockEntity(pos);
+        if (blockEntity instanceof LayingItemBlockEntity) {
+            dropStack(world, pos, ((LayingItemBlockEntity) blockEntity).getItem());
+        }
     }
 
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {

@@ -51,7 +51,6 @@ public class TimedTorchBlock extends Block {
     public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
         int stage = state.get(BURNOUT_STAGE);
         if (stage != 0 && stage < 5) {
-            System.out.println(stage);
             world.scheduleBlockTick(pos, PrimevalBlocks.CRUDE_TORCH, TICKS*stage);
         }
     }
@@ -91,8 +90,9 @@ public class TimedTorchBlock extends Block {
     public BlockState getStateForNeighborUpdate(BlockState state, WorldView world, ScheduledTickView tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random) {
         Direction torchDirection = state.get(DIRECTION);
         BlockPos placedOn = pos.offset(torchDirection);
-        if (torchDirection == Direction.DOWN && !world.getBlockState(placedOn).isSideSolid(world, placedOn, Direction.UP, SideShapeType.CENTER)) {
-            return Blocks.AIR.getDefaultState();
+        if (torchDirection == Direction.DOWN) {
+            if (!world.getBlockState(placedOn).isSideSolid(world, placedOn, Direction.UP, SideShapeType.CENTER))
+                return Blocks.AIR.getDefaultState();
         } else if (!world.getBlockState(placedOn).isSideSolidFullSquare(world, placedOn, torchDirection.getOpposite())) {
             return Blocks.AIR.getDefaultState();
         }

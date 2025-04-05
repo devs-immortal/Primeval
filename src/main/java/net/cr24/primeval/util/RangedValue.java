@@ -2,6 +2,7 @@ package net.cr24.primeval.util;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.cr24.primeval.Primeval;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.TransferVariant;
 import net.fabricmc.fabric.impl.transfer.VariantCodecs;
@@ -35,7 +36,7 @@ public class RangedValue {
 
     public RangedValue(float u, float l) {
         if (l > u) {
-            System.out.println("Invalid Alloy Ratio is being defined!\n  Upper: "+u+"\n  Lower: "+l);
+            Primeval.LOGGER.error("Invalid Alloy Ratio is being defined!\n  Upper: "+u+"\n  Lower: "+l);
         }
         this.upperAmount = u;
         this.lowerAmount = l;
