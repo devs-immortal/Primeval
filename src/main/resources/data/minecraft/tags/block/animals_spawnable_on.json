@@ -1,5 +1,6 @@
 {
   "values": [
-    "minecraft:grass_block"
+    "primeval:grassy_dirt",
+    "primeval:grassy_clay"
   ]
 }

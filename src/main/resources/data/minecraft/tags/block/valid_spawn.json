@@ -1,6 +1,7 @@
 {
   "values": [
-    "minecraft:grass_block",
-    "minecraft:podzol"
+    "primeval:grassy_dirt",
+    "primeval:grassy_clay",
+    "primeval:sand"
   ]
 }

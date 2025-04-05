@@ -41,7 +41,7 @@ public class PrimevalItems {
     public static final Item FLINT = registerItem("flint", SETTINGS_BASIC(), FlintItem::new, Weight.LIGHT, Size.SMALL);
     public static final Item ROCK = registerItem("rock", SETTINGS_BASIC(), WeightedItem::new, Weight.LIGHT, Size.SMALL);
     public static final Item STONE_BRICK = registerItem("stone_brick", SETTINGS_BASIC(), WeightedItem::new, Weight.LIGHT, Size.SMALL);
-    public static final Item ASHES = registerItem("ashes", SETTINGS_BASIC(), WeightedItem::new, Weight.VERY_LIGHT, Size.SMALL);
+    public static final Item ASHES = registerItem("ashes", SETTINGS_BASIC().fireproof(), WeightedItem::new, Weight.VERY_LIGHT, Size.SMALL);
     public static final Item CRUSHED_TERRACOTTA = registerItem("crushed_terracotta", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.SMALL);
     public static final Item CEMENT_MIX = registerItem("cement_mix", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.SMALL);
     public static final Item CEMENT = registerItem("cement", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.SMALL);

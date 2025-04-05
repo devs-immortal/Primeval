@@ -1,5 +1,6 @@
 package net.cr24.primeval;
 
+import net.cr24.primeval.entity.PrimevalVillagerTrades;
 import net.cr24.primeval.fluid.PrimevalFluids;
 import net.cr24.primeval.initialization.*;
 import net.cr24.primeval.item.property.FluidContentProperty;
@@ -32,10 +33,9 @@ public class Primeval implements ModInitializer, ClientModInitializer {
 		PrimevalItemGroups.init();
 		PrimevalFluids.init();
 		PrimevalRecipes.init();
-//		PrimevalWorld.init();
 		PrimevalFeatures.init();
 		PrimevalStructures.init();
-//		PrimevalVillagerTrades.init();
+		PrimevalVillagerTrades.init();
 		PrimevalSoundEvents.init();
 	}
 

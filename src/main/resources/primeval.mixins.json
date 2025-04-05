@@ -3,10 +3,16 @@
   "package": "net.cr24.primeval.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "ExampleMixin",
-    "recipe.ServerRecipeManagerMixin"
+    "entity.mob.AbstractSkeletonEntityMixin",
+    "entity.mob.ZombieEntityMixin",
+    "item.ItemStackMixin",
+    "recipe.ServerRecipeManagerMixin",
+    "world.GameRulesMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-	}
+  },
+  "client": [
+    "item.LeadItemMixin"
+  ]
 }
