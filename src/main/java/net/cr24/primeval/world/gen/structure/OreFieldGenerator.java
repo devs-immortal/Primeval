@@ -1,13 +1,12 @@
 package net.cr24.primeval.world.gen.structure;
 
+import net.cr24.primeval.initialization.PrimevalBlocks;
 import net.cr24.primeval.initialization.PrimevalTags;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.registry.Registries;
 import net.minecraft.structure.*;
-import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -16,7 +15,6 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.feature.DungeonFeature;
 
 import java.awt.geom.Point2D;
 
@@ -95,8 +93,9 @@ public class OreFieldGenerator {
             this.addBlock(world, block, x, y, z, box);
         }
 
-        public boolean validBlock(StructureWorldAccess world, int x, int y, int z, BlockBox box) {
-            return this.getBlockAt(world, x, y, z, box).isIn(PrimevalTags.Blocks.NATURAL_STONE);
+        public boolean validBlock(StructureWorldAccess world, int x, int y, int z, BlockBox box, Random random) {
+            return this.getBlockAt(world, x, y, z, box).isIn(PrimevalTags.Blocks.ORE_REPLACEABLE) ||
+                    this.getBlockAt(world, x, y, z, box).isIn(PrimevalTags.Blocks.ORE_SEMI_REPLACEABLE) && random.nextBoolean();
         }
 
     }
@@ -130,7 +129,7 @@ public class OreFieldGenerator {
             for (int i = -size; i < size; i++) {
                 for (int j = -size; j < size; j++) {
                     for (int k = -size / 2; k <= size / 2; k++) {
-                        if (center.distance(i, j) < size - Math.abs(k / 2) && blob.validBlock(world, xOffset + i, yOffset + k, zOffset + j, chunkBox)) {
+                        if (center.distance(i, j) < size - Math.abs(k / 2) && blob.validBlock(world, xOffset + i, yOffset + k, zOffset + j, chunkBox, random)) {
                             float threshold = random.nextFloat();
                             if (threshold > richness) {
                                 blob.pAddBlock(world, largeState, xOffset + i, yOffset + k, zOffset + j, chunkBox);
@@ -140,6 +139,8 @@ public class OreFieldGenerator {
                                 blob.pAddBlock(world, smallState, xOffset + i, yOffset + k, zOffset + j, chunkBox);
                             } else if (threshold > richness / 8) {
                                 blob.pAddBlock(world, extraState, xOffset + i, yOffset + k, zOffset + j, chunkBox);
+                            } else {
+                                blob.pAddBlock(world, PrimevalBlocks.GRAVEL.getDefaultState(), xOffset + i, yOffset + k, zOffset + j, chunkBox);
                             }
                         }
                     }

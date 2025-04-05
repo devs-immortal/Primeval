@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "primeval:grassy_dirt",
+    "primeval:dirt",
+    "primeval:coarse_dirt"
+  ]
+}

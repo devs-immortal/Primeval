@@ -40,6 +40,7 @@ public class NativeCopperOreFieldStructure extends Structure {
                 PrimevalBlocks.STONE.getDefaultState()
         };
         // Motherlode
+        collector.addPiece(new OreFieldGenerator.Blob(context.random(), context.chunkPos().getStartX(), context.chunkPos().getStartZ(), 0, 20, 6, 3, 4, 0.5f, ores));
         collector.addPiece(new OreFieldGenerator.Blob(context.random(), context.chunkPos().getStartX(), context.chunkPos().getStartZ(), height, 60, 8, 7, 9, 0.5f, ores));
         // Inner ring
         int innerRingRadius = 32;

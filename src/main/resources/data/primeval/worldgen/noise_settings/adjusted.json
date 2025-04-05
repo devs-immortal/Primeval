@@ -3176,7 +3176,8 @@
             "if_true": {
               "type": "minecraft:biome",
               "biome_is": [
-                "primeval:coastal/rocky_shore"
+                "primeval:coastal/rocky_shore",
+                "primeval:ocean"
               ]
             },
             "then_run": {

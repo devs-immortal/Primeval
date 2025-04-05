@@ -40,6 +40,7 @@ public class MalachiteCopperOreFieldStructure extends Structure {
                 PrimevalBlocks.STONE.getDefaultState()
         };
         // Motherlode
+        collector.addPiece(new OreFieldGenerator.Blob(context.random(), context.chunkPos().getStartX(), context.chunkPos().getStartZ(), 0, 20, 9, 2, 3, 0.3f, ores));
         collector.addPiece(new OreFieldGenerator.Blob(context.random(), context.chunkPos().getStartX(), context.chunkPos().getStartZ(), height, 70, 10, 5, 7, 0.3f, ores));
         // Inner ring
         int innerRingRadius = 26;

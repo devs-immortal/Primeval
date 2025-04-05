@@ -21,7 +21,8 @@ public class PrimevalTags {
         public static final TagKey<Block> LIGHT_SOIL = register("light_soil");
         public static final TagKey<Block> LOGS = register("logs");
         public static final TagKey<Block> MEDIUM_SOIL = register("medium_soil");
-        public static final TagKey<Block> NATURAL_STONE = register("natural_stone");
+        public static final TagKey<Block> ORE_REPLACEABLE = register("ore_replaceable");
+        public static final TagKey<Block> ORE_SEMI_REPLACEABLE = register("ore_semi_replaceable");
         // Needs Diamond Tool
         // Needs Iron Tool
         // Needs Stone Tool

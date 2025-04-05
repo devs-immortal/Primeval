@@ -40,6 +40,7 @@ public class LazuriteOreFieldStructure extends Structure {
                 PrimevalBlocks.GOLD_NATIVE_ORE.small().getDefaultState()
         };
         // Motherlode
+        collector.addPiece(new OreFieldGenerator.Blob(context.random(), context.chunkPos().getStartX(), context.chunkPos().getStartZ(), 0, 10, 4, 2, 3, 0.5f, ores));
         collector.addPiece(new OreFieldGenerator.Blob(context.random(), context.chunkPos().getStartX(), context.chunkPos().getStartZ(), height, 45, 5, 5, 7, 0.45f, ores));
         // Inner ring
         int innerRingRadius = 36;

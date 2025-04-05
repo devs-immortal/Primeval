@@ -287,15 +287,15 @@ public class PrimevalFeatures extends FabricDynamicRegistryProvider {
                 UniformFloatProvider.create(0.5f, 0.8f)
         );
         public static final OreFeatureConfig FOSSIL_ORE_BLOBS = new OreFeatureConfig(
-                List.of(OreFeatureConfig.createTarget(new TagMatchRuleTest(PrimevalTags.Blocks.NATURAL_STONE), PrimevalBlocks.FOSSIL.getDefaultState())),
+                List.of(OreFeatureConfig.createTarget(new TagMatchRuleTest(PrimevalTags.Blocks.ORE_REPLACEABLE), PrimevalBlocks.FOSSIL.getDefaultState())),
                 3
         );
         public static final OreFeatureConfig DIRT_ORE_BLOBS = new OreFeatureConfig(
-                List.of(OreFeatureConfig.createTarget(new TagMatchRuleTest(PrimevalTags.Blocks.NATURAL_STONE), PrimevalBlocks.DIRT.getDefaultState())),
+                List.of(OreFeatureConfig.createTarget(new TagMatchRuleTest(PrimevalTags.Blocks.ORE_REPLACEABLE), PrimevalBlocks.DIRT.getDefaultState())),
                 33
         );
         public static final OreFeatureConfig GRAVEL_ORE_BLOBS = new OreFeatureConfig(
-                List.of(OreFeatureConfig.createTarget(new TagMatchRuleTest(PrimevalTags.Blocks.NATURAL_STONE), PrimevalBlocks.GRAVEL.getDefaultState())),
+                List.of(OreFeatureConfig.createTarget(new TagMatchRuleTest(PrimevalTags.Blocks.ORE_REPLACEABLE), PrimevalBlocks.GRAVEL.getDefaultState())),
                 45
         );
 

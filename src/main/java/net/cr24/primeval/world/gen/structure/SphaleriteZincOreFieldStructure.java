@@ -40,6 +40,7 @@ public class SphaleriteZincOreFieldStructure extends Structure {
                 PrimevalBlocks.ZINC_SPHALERITE_ORE.small().getDefaultState()
         };
         // Motherlode
+        collector.addPiece(new OreFieldGenerator.Blob(context.random(), context.chunkPos().getStartX(), context.chunkPos().getStartZ(), 0, 30, 7, 3, 4, 0.5f, ores));
         collector.addPiece(new OreFieldGenerator.Blob(context.random(), context.chunkPos().getStartX(), context.chunkPos().getStartZ(), height, 60, 8, 7, 9, 0.5f, ores));
         // Inner ring
         int innerRingRadius = 32;

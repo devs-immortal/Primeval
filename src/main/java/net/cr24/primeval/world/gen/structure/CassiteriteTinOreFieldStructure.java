@@ -40,6 +40,7 @@ public class CassiteriteTinOreFieldStructure extends Structure {
                 PrimevalBlocks.STONE.getDefaultState()
         };
         // Motherlode
+        collector.addPiece(new OreFieldGenerator.Blob(context.random(), context.chunkPos().getStartX(), context.chunkPos().getStartZ(), 0, 30, 8, 3, 5, 0.4f, ores));
         collector.addPiece(new OreFieldGenerator.Blob(context.random(), context.chunkPos().getStartX(), context.chunkPos().getStartZ(), height, 80, 7, 8, 9, 0.7f, ores));
         // Inner ring
         int innerRingRadius = 40;
