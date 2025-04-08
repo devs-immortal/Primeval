@@ -29,6 +29,7 @@ public class PrimevalTags {
         public static final TagKey<Block> COPPER_ORES = register("ores_copper");
         public static final TagKey<Block> GOLD_ORES = register("ores_gold");
         public static final TagKey<Block> IRON_ORES = register("ores_iron");
+        public static final TagKey<Block> LAZURITE_ORES = register("ores_lazurite");
         public static final TagKey<Block> TIN_ORES = register("ores_tin");
         public static final TagKey<Block> ZINC_ORES = register("ores_zinc");
         public static final TagKey<Block> SOIL = register("soil");
