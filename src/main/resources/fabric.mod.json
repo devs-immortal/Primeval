@@ -3,13 +3,13 @@
 	"id": "primeval",
 	"version": "${version}",
 	"name": "Primeval",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "Primeval aims for a complete overhaul of Minecraft systems to create a rustic, realistic game progression.",
 	"authors": [
-		"Me!"
+		"cr24"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://immortaldevs.net/wiki/primeval",
+		"sources": "https://github.com/devs-immortal/Primeval"
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/primeval/icon.png",
@@ -39,8 +39,5 @@
 		"minecraft": "~1.21.4",
 		"java": ">=21",
 		"fabric-api": "*"
-	},
-	"suggests": {
-		"another-mod": "*"
 	}
 }
