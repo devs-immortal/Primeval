@@ -230,6 +230,14 @@
   "block.primeval.molten_botched_alloy": "Molten Botched Alloy",
 
 
+  "block.primeval.oak_trunk": "Oak Trunk",
+  "block.primeval.birch_trunk": "Birch Trunk",
+  "block.primeval.spruce_trunk": "Spruce Trunk",
+  "block.primeval.ash_pile": "Ash Pile",
+  "block.primeval.laying_item": "Laying Item",
+  "block.primeval.pit_kiln": "Pit Kiln",
+
+
   "item.primeval.straw": "Straw",
   "item.primeval.stick": "Stick",
   "item.primeval.string": "String",

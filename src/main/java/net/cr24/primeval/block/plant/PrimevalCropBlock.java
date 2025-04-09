@@ -83,7 +83,7 @@ public class PrimevalCropBlock extends PlantBlock {
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return heights.get(state.get(AGE));
+        return heights.get(Math.min(state.get(AGE), maxAge));
     }
 
     protected static VoxelShape getShapeWithHeight(double height) {
