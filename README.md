@@ -9,5 +9,5 @@ Start in the stone age and work your way up through many anchient and medieval t
 ## Translation
 Primeval makes use of crowd sourced translations.
 
-**You can help translate Primeval into additional languages here: [crowdin.com](https://crowdin.com/project/primeval).**
+**You can help translate Primeval into additional languages here: NOT YET AVAILABLE :(.**
 
