@@ -842,7 +842,8 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 		}
 
 		public LootTable.Builder brushDrops() {
-			return LootTable.builder().pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0F)).with((ItemEntry.builder(STRAW).conditionally(this.createDropsWithKnifeCondition()))));
+			return LootTable.builder().pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0F)).with((ItemEntry.builder(STRAW).conditionally(this.createDropsWithKnifeCondition()))))
+					.pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0F)).with(this.applyExplosionDecay(STRAW, ItemEntry.builder(STRAW).conditionally(RandomChanceLootCondition.builder(0.1F)))));
 		}
 
 		public LootCondition.Builder createDropsWithKnifeCondition() {
