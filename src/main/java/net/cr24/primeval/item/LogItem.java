@@ -40,6 +40,8 @@ public class LogItem extends WeightedBlockItem {
                 context.getWorld().playSound(null, context.getBlockPos(), SoundEvents.BLOCK_WOOD_PLACE, SoundCategory.BLOCKS, 0.7f, context.getWorld().getRandom().nextFloat() * 0.4f + 0.8f);
             }
         }
+        if (!context.getPlayer().isInCreativeMode())
+            context.getStack().decrement(1);
         return ActionResult.SUCCESS;
     }
 
