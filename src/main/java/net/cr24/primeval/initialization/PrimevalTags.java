@@ -53,6 +53,7 @@ public class PrimevalTags {
 
         public static final TagKey<Item> BURNS_TO_ASH = register("burns_to_ash");
 
+        public static final TagKey<Item> CHISELS = register("chisels");
         public static final TagKey<Item> KNIVES = register("knives");
         public static final TagKey<Item> LOGS = register("logs");
         public static final TagKey<Item> ROCKS = register("rocks");

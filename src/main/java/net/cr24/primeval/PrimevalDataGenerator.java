@@ -16,6 +16,7 @@ import net.minecraft.client.data.*;
 import net.minecraft.client.render.item.model.ItemModel;
 import net.minecraft.client.render.item.model.SelectItemModel;
 import net.minecraft.client.render.item.tint.GrassTintSource;
+import net.minecraft.data.loottable.LootTableGenerator;
 import net.minecraft.data.recipe.RecipeExporter;
 import net.minecraft.data.recipe.RecipeGenerator;
 import net.minecraft.fluid.Fluid;
@@ -24,6 +25,7 @@ import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
+import net.minecraft.loot.LootTables;
 import net.minecraft.loot.condition.*;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.entry.LeafEntry;
@@ -691,7 +693,7 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 			addDrop(SAND);
 			addDrop(GRAVEL);
 			addDrop(COBBLESTONE);
-			addDrop(STONE, (block -> this.drops(ROCK, UniformLootNumberProvider.create(3, 5))));
+			addDrop(STONE, (block -> this.stoneDrops(block, ROCK)));
 			addDrop(SANDSTONE, (block -> this.drops(SAND, UniformLootNumberProvider.create(2, 4))));
 			addDrop(DIRT_FARMLAND, (block -> this.drops(DIRT)));
 			addDrop(CLAY_FARMLAND, (block -> this.drops(CLAY_BALL, ConstantLootNumberProvider.create(4))));
@@ -836,14 +838,22 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 			return LootTable.builder().pool(this.addSurvivesExplosionCondition(block, LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0F)).with(ItemEntry.builder(BONE).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2.0F, 4.0F))))));
 		}
 
+		public LootTable.Builder stoneDrops(Block stone, ItemConvertible rocks) {
+			return drops(stone, createDropsWithChiselCondition(), ItemEntry.builder(rocks).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(3, 5))));
+		}
+
 		public LootTable.Builder leafDrops(Block sapling) {
-			return LootTable.builder().pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0F)).with((ItemEntry.builder(sapling).conditionally(this.createToolTagCondition(PrimevalTags.Items.KNIVES)).conditionally(RandomChanceLootCondition.builder(0.15F)))))
+			return LootTable.builder().pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0F)).with((ItemEntry.builder(sapling).conditionally(createDropsWithKnifeCondition()).conditionally(RandomChanceLootCondition.builder(0.15F)))))
 					.pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0F)).with(this.applyExplosionDecay(STICK, ItemEntry.builder(STICK).conditionally(RandomChanceLootCondition.builder(0.05F)))));
 		}
 
 		public LootTable.Builder brushDrops() {
 			return LootTable.builder().pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0F)).with((ItemEntry.builder(STRAW).conditionally(this.createDropsWithKnifeCondition()))))
 					.pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0F)).with(this.applyExplosionDecay(STRAW, ItemEntry.builder(STRAW).conditionally(RandomChanceLootCondition.builder(0.1F)))));
+		}
+
+		public LootCondition.Builder createDropsWithChiselCondition() {
+			return this.createToolTagCondition(PrimevalTags.Items.CHISELS);
 		}
 
 		public LootCondition.Builder createDropsWithKnifeCondition() {
