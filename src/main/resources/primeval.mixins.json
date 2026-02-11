@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "entity.mob.AbstractSkeletonEntityMixin",
+    "entity.mob.WanderingTraderEntityMixin",
     "entity.mob.ZombieEntityMixin",
     "item.ItemStackMixin",
     "recipe.ServerRecipeManagerMixin",

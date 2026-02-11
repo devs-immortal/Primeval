@@ -6,10 +6,11 @@ import net.cr24.primeval.util.Weight;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
+import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.item.MiningToolItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.tag.BlockTags;
@@ -22,9 +23,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.HashMap;
-import java.util.List;
+import java.util.function.Consumer;
 
-public class PrimevalHoeItem extends MiningToolItem implements IWeightedItem {
+public class PrimevalHoeItem extends Item implements IWeightedItem {
 
     private final Weight weight;
     private final Size size;
@@ -32,7 +33,7 @@ public class PrimevalHoeItem extends MiningToolItem implements IWeightedItem {
     public static HashMap<Block, Block> hoeables = new HashMap<>();
 
     public PrimevalHoeItem(ToolMaterial material, float attackDamage, float attackSpeed, Weight weight, Size size, Settings settings) {
-        super(material, BlockTags.HOE_MINEABLE, attackDamage, attackSpeed, settings);
+        super(settings.tool(material, BlockTags.HOE_MINEABLE, attackDamage, attackSpeed, 0.0F));
         this.weight = weight;
         this.size = size;
     }
@@ -57,10 +58,11 @@ public class PrimevalHoeItem extends MiningToolItem implements IWeightedItem {
         }
     }
 
+    @Override
     @Environment(EnvType.CLIENT)
-    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
-        super.appendTooltip(stack, context, tooltip, type);
-        tooltip.add((Text.translatable("⚖ ").append(this.weight.getText()).append(" ⤧ ").append(this.size.getText())).formatted(Formatting.GRAY));
+    public void appendTooltip(ItemStack stack, Item.TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type) {
+        super.appendTooltip(stack, context, displayComponent, textConsumer, type);
+        textConsumer.accept((Text.translatable("⚖ ").append(this.weight.getText()).append(" ⤧ ").append(this.size.getText())).formatted(Formatting.GRAY));
     }
 
     @Override

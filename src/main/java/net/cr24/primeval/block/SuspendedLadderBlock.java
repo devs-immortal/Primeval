@@ -50,7 +50,7 @@ public class SuspendedLadderBlock extends LadderBlock {
         if (stack.getItem() instanceof BlockItem && ((BlockItem) stack.getItem()).getBlock() instanceof SuspendedLadderBlock) {
             for (int i = 1; i <= 20; i++) {
                 if (world.getBlockState(pos.down(i)).isAir() && this.canPlaceAt(state, world, pos.down(i))) {
-                    world.playSoundAtBlockCenter(pos, SoundEvents.BLOCK_WOOD_PLACE, SoundCategory.BLOCKS, 1.0f, 1.0f, true);
+                    world.playSoundAtBlockCenterClient(pos, SoundEvents.BLOCK_WOOD_PLACE, SoundCategory.BLOCKS, 1.0f, 1.0f, true);
                     stack.decrementUnlessCreative(1, player);
                     world.setBlockState(pos.down(i), state);
                     return ActionResult.SUCCESS;

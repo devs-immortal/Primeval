@@ -3,6 +3,7 @@ package net.cr24.primeval.initialization;
 import net.cr24.primeval.Primeval;
 import net.cr24.primeval.block.PrimevalFarmlandBlock;
 import net.cr24.primeval.fluid.PrimevalFluids;
+import net.cr24.primeval.initialization.PrimevalItemActions.Consumable;
 import net.cr24.primeval.item.*;
 import net.cr24.primeval.item.tool.*;
 import net.cr24.primeval.util.Size;

@@ -21,7 +21,7 @@ public class FertilizerItem extends WeightedItem {
     private final int fertilizeAmount;
     private final PrimevalFarmlandBlock.PrimevalFarmlandBlockFertilizerType type;
 
-    public FertilizerItem(int fertilizeAmount, PrimevalFarmlandBlock.PrimevalFarmlandBlockFertilizerType type, Weight weight, Size size, Settings settings) {
+    public FertilizerItem(int fertilizeAmount, PrimevalFarmlandBlock.PrimevalFarmlandBlockFertilizerType type, Weight weight, Size size, net.minecraft.item.Item.Settings settings) {
         super(weight, size, settings);
         this.fertilizeAmount = fertilizeAmount;
         this.type = type;

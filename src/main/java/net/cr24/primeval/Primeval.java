@@ -13,8 +13,10 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.api.ModInitializer;
 
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.render.item.property.select.CustomModelDataStringProperty;
 import net.minecraft.client.render.item.property.select.SelectProperties;
+import net.minecraft.util.ErrorReporter;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,4 +52,8 @@ public class Primeval implements ModInitializer, ClientModInitializer {
 	public static Identifier identify(String id) {
 		return Identifier.of(MOD_ID, id);
 	}
+
+    public static ErrorReporter errorReporter(BlockEntity be) {
+        return new ErrorReporter.Logging(be.getReporterContext(), LOGGER);
+    }
 }

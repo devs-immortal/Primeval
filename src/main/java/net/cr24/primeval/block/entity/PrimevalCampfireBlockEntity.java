@@ -1,5 +1,6 @@
 package net.cr24.primeval.block.entity;
 
+import net.cr24.primeval.Primeval;
 import net.cr24.primeval.block.functional.PrimevalCampfireBlock;
 import net.cr24.primeval.initialization.PrimevalBlocks;
 import net.cr24.primeval.recipe.OpenFireRecipe;
@@ -16,6 +17,9 @@ import net.minecraft.recipe.ServerRecipeManager;
 import net.minecraft.recipe.input.SingleStackRecipeInput;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.storage.NbtWriteView;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.Clearable;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
@@ -40,32 +44,31 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
         super(PrimevalBlocks.CAMPFIRE_BLOCK_ENTITY, pos, state);
     }
 
-    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
-        super.readNbt(nbt, registries);
-        int[] is;
+    protected void readData(ReadView view) {
+        super.readData(view);
         this.itemsBeingCooked.clear();
-        Inventories.readNbt(nbt, this.itemsBeingCooked, registries);
-        if (nbt.contains("CookingTimes", 11)) {
-            is = nbt.getIntArray("CookingTimes");
-            System.arraycopy(is, 0, this.cookingTimes, 0, Math.min(this.cookingTotalTimes.length, is.length));
+        Inventories.readData(view, this.itemsBeingCooked);
+        var cookingTime = view.getOptionalIntArray("CookingTimes");
+        if (cookingTime.isPresent()) {
+            System.arraycopy(cookingTime.get(), 0, this.cookingTimes, 0, Math.min(this.cookingTotalTimes.length, cookingTime.get().length));
         }
-        if (nbt.contains("CookingTotalTimes", 11)) {
-            is = nbt.getIntArray("CookingTotalTimes");
-            System.arraycopy(is, 0, this.cookingTotalTimes, 0, Math.min(this.cookingTotalTimes.length, is.length));
+        var cookingTotalTime = view.getOptionalIntArray("CookingTotalTimes");
+        if (cookingTotalTime.isPresent()) {
+            System.arraycopy(cookingTotalTime.get(), 0, this.cookingTotalTimes, 0, Math.min(this.cookingTotalTimes.length, cookingTotalTime.get().length));
         }
-        this.burnTime = nbt.getInt("BurnTime");
-        this.fuel = nbt.getInt("Fuel");
-        this.lit = nbt.getBoolean("Lit");
+        this.burnTime = view.getInt("BurnTime", 0);
+        this.fuel = view.getInt("Fuel", 0);
+        this.lit = view.getBoolean("Lit", false);
     }
 
-    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
-        super.writeNbt(nbt, registries);
-        Inventories.writeNbt(nbt, this.itemsBeingCooked, true, registries);
-        nbt.putIntArray("CookingTimes", this.cookingTimes);
-        nbt.putIntArray("CookingTotalTimes", this.cookingTotalTimes);
-        nbt.putInt("BurnTime", this.burnTime);
-        nbt.putInt("Fuel", this.fuel);
-        nbt.putBoolean("Lit", this.lit);
+    protected void writeData(WriteView view) {
+        super.writeData(view);
+        Inventories.writeData(view, this.itemsBeingCooked);
+        view.putIntArray("CookingTimes", this.cookingTimes);
+        view.putIntArray("CookingTotalTimes", this.cookingTotalTimes);
+        view.putInt("BurnTime", this.burnTime);
+        view.putInt("Fuel", this.fuel);
+        view.putBoolean("Lit", this.lit);
     }
 
     public DefaultedList<ItemStack> getItemsBeingCooked() {
@@ -195,7 +198,7 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
             double g = (double)pos.getZ() + 0.15;
             if (j > 1) g += 0.7;
             for (int k = 0; k < 4; ++k) {
-                world.addParticle(ParticleTypes.SMOKE, d, e, g, 0.0, 5.0E-4, 0.0);
+                world.addParticleClient(ParticleTypes.SMOKE, d, e, g, 0.0, 5.0E-4, 0.0);
             }
         }
     }
@@ -207,12 +210,9 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
 
     @Override
     public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registries) {
-        NbtCompound nbtCompound = new NbtCompound();
-        Inventories.writeNbt(nbtCompound, this.itemsBeingCooked, true, registries);
-        nbtCompound.putInt("BurnTime", this.burnTime);
-        nbtCompound.putInt("Fuel", this.fuel);
-        nbtCompound.putBoolean("Lit", this.lit);
-        return nbtCompound;
+        var writeView = NbtWriteView.create(Primeval.errorReporter(this), registries);
+        writeData(writeView);
+        return writeView.getNbt();
     }
 
     public BlockEntityUpdateS2CPacket toUpdatePacket() {

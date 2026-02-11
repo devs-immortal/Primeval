@@ -12,6 +12,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.tick.ScheduledTickView;
@@ -96,6 +97,11 @@ public class CollapsibleBlock extends FallingBlock {
 
     @Override
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+    }
+
+    @Override
+    public int getColor(BlockState state, BlockView world, BlockPos pos) {
+        return state.getMapColor(world, pos).color;
     }
 
     protected FallingBlockEntity createFallingBlockEntity(World world, BlockPos fallPos, BlockPos origin) {

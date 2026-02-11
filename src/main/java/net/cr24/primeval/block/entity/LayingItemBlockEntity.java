@@ -1,13 +1,20 @@
 package net.cr24.primeval.block.entity;
 
+import net.cr24.primeval.Primeval;
 import net.cr24.primeval.initialization.PrimevalBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.storage.NbtWriteView;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.Clearable;
+import net.minecraft.util.ErrorReporter;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 
 public class LayingItemBlockEntity extends BlockEntity implements Clearable {
@@ -21,19 +28,15 @@ public class LayingItemBlockEntity extends BlockEntity implements Clearable {
         randomInt = (pos.getX() + pos.getY()*2 + pos.getZ()*3)%4;
     }
 
-    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
-        super.readNbt(nbt, registries);
-        if (nbt.contains("item")) {
-            this.item = ItemStack.fromNbt(registries, nbt.getCompound("item")).orElse(ItemStack.EMPTY);
-        } else {
-            this.item = ItemStack.EMPTY;
-        }
+    protected void readData(ReadView view) {
+        super.readData(view);
+        this.item = view.read("item", ItemStack.CODEC).orElse(ItemStack.EMPTY);
     }
 
-    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
-        super.writeNbt(nbt, registries);
+    protected void writeData(WriteView view) {
+        super.writeData(view);
         if (!this.item.isEmpty()) {
-            nbt.put("item", this.item.toNbt(registries));
+            view.put("item", ItemStack.CODEC, this.item);
         }
     }
 
@@ -47,11 +50,9 @@ public class LayingItemBlockEntity extends BlockEntity implements Clearable {
 
     @Override
     public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registries) {
-        NbtCompound nbtCompound = new NbtCompound();
-        if (!this.item.isEmpty()) {
-            nbtCompound.put("item", this.item.toNbt(registries));
-        }
-        return nbtCompound;
+        var writeView = NbtWriteView.create(Primeval.errorReporter(this), registries);
+        writeData(writeView);
+        return writeView.getNbt();
     }
 
     public ItemStack getItem() {

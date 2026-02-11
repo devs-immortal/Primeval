@@ -107,8 +107,8 @@ public class TimedTorchBlock extends Block {
             double d = (double)pos.getX() + 0.5;
             double e = (double)pos.getY() + 0.85;
             double f = (double)pos.getZ() + 0.5;
-            world.addParticle(ParticleTypes.SMOKE, d + direction.getOffsetX() * 0.27, e + direction.getOffsetY() * 0.125, f + direction.getOffsetZ() * 0.27, 0.0, 0.0, 0.0);
-            world.addParticle(ParticleTypes.FLAME, d + direction.getOffsetX() * 0.27, e + direction.getOffsetY() * 0.125, f + direction.getOffsetZ() * 0.27, 0.0, 0.0, 0.0);
+            world.addParticleClient(ParticleTypes.SMOKE, d + direction.getOffsetX() * 0.27, e + direction.getOffsetY() * 0.125, f + direction.getOffsetZ() * 0.27, 0.0, 0.0, 0.0);
+            world.addParticleClient(ParticleTypes.FLAME, d + direction.getOffsetX() * 0.27, e + direction.getOffsetY() * 0.125, f + direction.getOffsetZ() * 0.27, 0.0, 0.0, 0.0);
         }
     }
 

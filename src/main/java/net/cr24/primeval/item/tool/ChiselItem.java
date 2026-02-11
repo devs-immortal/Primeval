@@ -7,19 +7,21 @@ import net.cr24.primeval.util.Weight;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
+import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
 import java.util.List;
+import java.util.function.Consumer;
 
-public class ChiselItem extends MiningToolItem implements IWeightedItem {
+public class ChiselItem extends Item implements IWeightedItem {
     private final Weight weight;
     private final Size size;
 
     public ChiselItem(ToolMaterial material, float attackDamage, float attackSpeed, Weight weight, Size size, Settings settings) {
-        super(material, PrimevalTags.Blocks.MINEABLE_CHISEL, attackDamage, attackSpeed, settings);
+        super(settings.tool(material, PrimevalTags.Blocks.MINEABLE_CHISEL, attackDamage, attackSpeed, 0.0F));
         this.weight = weight;
         this.size = size;
     }
@@ -28,10 +30,11 @@ public class ChiselItem extends MiningToolItem implements IWeightedItem {
         return super.getMiningSpeed(stack, state) * 0.5f;
     }
 
+    @Override
     @Environment(EnvType.CLIENT)
-    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
-        super.appendTooltip(stack, context, tooltip, type);
-        tooltip.add((Text.translatable("⚖ ").append(this.weight.getText()).append(" ⤧ ").append(this.size.getText())).formatted(Formatting.GRAY));
+    public void appendTooltip(ItemStack stack, Item.TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type) {
+        super.appendTooltip(stack, context, displayComponent, textConsumer, type);
+        textConsumer.accept((Text.translatable("⚖ ").append(this.weight.getText()).append(" ⤧ ").append(this.size.getText())).formatted(Formatting.GRAY));
     }
 
     @Override

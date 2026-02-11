@@ -42,9 +42,9 @@ public class CollapsingBlockEntity extends FallingBlockEntity {
         this.intersectionChecked = true;
         this.updatePosition(x, y + (double)((1.0F - this.getHeight()) / 2.0F), z);
         this.setVelocity(Vec3d.ZERO);
-        this.prevX = x;
-        this.prevY = y;
-        this.prevZ = z;
+        this.lastX = x;
+        this.lastY = y;
+        this.lastZ = z;
         this.origin = origin;
         this.sourceBlock = sourceBlock;
         this.setFallingBlockPos(this.getBlockPos());
@@ -104,7 +104,7 @@ public class CollapsingBlockEntity extends FallingBlockEntity {
     }
 
     @Override
-    public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
+    public boolean handleFallDamage(double fallDistance, float damagePerDistance, DamageSource damageSource) {
         int i = MathHelper.ceil(fallDistance - 1.0F);
         if (i > 0) {
             Predicate<Entity> predicate = EntityPredicates.EXCEPT_CREATIVE_OR_SPECTATOR.and((entity) -> entity.isAlive() && (entity instanceof LivingEntity || entity instanceof ItemEntity));

@@ -30,7 +30,7 @@ import java.util.List;
 
 public class WaterWoodenBucketItem extends WeightedItem {
 
-    public WaterWoodenBucketItem(Weight weight, Size size, Settings settings) {
+    public WaterWoodenBucketItem(Weight weight, Size size, net.minecraft.item.Item.Settings settings) {
         super(weight, size, 1, settings);
     }
 
@@ -74,7 +74,7 @@ public class WaterWoodenBucketItem extends WeightedItem {
             double velocityX = (random.nextDouble()-0.5)*2;
             double velocityY = (random.nextDouble()+0.5);
             double velocityZ = (random.nextDouble()-0.5)*2;
-            world.addParticle(ParticleTypes.SPLASH, x, y, z, velocityX, velocityY, velocityZ);
+            world.addParticleClient(ParticleTypes.SPLASH, x, y, z, velocityX, velocityY, velocityZ);
         }
     }
 

@@ -1,7 +1,13 @@
 package net.cr24.primeval;
 
 import net.cr24.primeval.fluid.PrimevalFluids;
+import net.cr24.primeval.initialization.PrimevalBlocks.BlockSet;
+import net.cr24.primeval.initialization.PrimevalBlocks.ColoredBlockSet;
+import net.cr24.primeval.initialization.PrimevalBlocks.ColoredBlockSetSet;
+import net.cr24.primeval.initialization.PrimevalBlocks.WoodBlockSet;
 import net.cr24.primeval.initialization.PrimevalItems;
+import net.cr24.primeval.initialization.PrimevalItems.ToolPartSet;
+import net.cr24.primeval.initialization.PrimevalItems.ToolSet;
 import net.cr24.primeval.initialization.PrimevalTags;
 import net.cr24.primeval.item.property.FluidContentProperty;
 import net.cr24.primeval.world.gen.feature.PrimevalFeatures;
@@ -12,10 +18,12 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.data.*;
 import net.minecraft.client.render.item.model.ItemModel;
 import net.minecraft.client.render.item.model.SelectItemModel;
 import net.minecraft.client.render.item.tint.GrassTintSource;
+import net.minecraft.client.render.model.json.WeightedVariant;
 import net.minecraft.data.loottable.LootTableGenerator;
 import net.minecraft.data.recipe.RecipeExporter;
 import net.minecraft.data.recipe.RecipeGenerator;
@@ -163,7 +171,7 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 			blockStateModelGenerator.registerTrapdoor(WICKER_TRAPDOOR);
 			registerBars(blockStateModelGenerator, WICKER_BARS);
 			blockStateModelGenerator.registerItemModel(ROPE.asItem());
-			blockStateModelGenerator.registerAxisRotated(ROPE, ModelIds.getBlockModelId(ROPE));
+			blockStateModelGenerator.registerAxisRotated(ROPE, BlockStateModelGenerator.createWeightedVariant(ModelIds.getBlockModelId(ROPE)));
 			blockStateModelGenerator.registerNorthDefaultHorizontalRotation(ROPE_LADDER);
 			blockStateModelGenerator.registerItemModel(ROPE_LADDER);
 
@@ -382,25 +390,25 @@ public class PrimevalDataGenerator implements DataGeneratorEntrypoint {
 		}
 
 		private static void registerCarpet(BlockStateModelGenerator blockStateModelGenerator, Block wool, Block carpet) {
-			Identifier identifier = TexturedModel.CARPET.get(wool).upload(carpet, blockStateModelGenerator.modelCollector);
-			blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(carpet, identifier));
+            WeightedVariant weightedVariant = BlockStateModelGenerator.createWeightedVariant(TexturedModel.CARPET.get(wool).upload(carpet, blockStateModelGenerator.modelCollector));
+			blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(carpet, weightedVariant));
 		}
 
 		private void registerPillar(BlockStateModelGenerator blockStateModelGenerator, Block side, Block end) {
 			TextureMap textureMap = TextureMap.sideEnd(TextureMap.getId(side), TextureMap.getId(end));
-			Identifier identifier = Models.CUBE_COLUMN.upload(side, textureMap, blockStateModelGenerator.modelCollector);
-			blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(side, identifier));
+            WeightedVariant weightedVariant = BlockStateModelGenerator.createWeightedVariant(Models.CUBE_COLUMN.upload(side, textureMap, blockStateModelGenerator.modelCollector));
+			blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(side, weightedVariant));
 		}
 
 		private void registerBars(BlockStateModelGenerator blockStateModelGenerator, Block bars) {
-			Identifier identifier = ModelIds.getBlockSubModelId(bars, "_post_ends");
-			Identifier identifier2 = ModelIds.getBlockSubModelId(bars, "_post");
-			Identifier identifier3 = ModelIds.getBlockSubModelId(bars, "_cap");
-			Identifier identifier4 = ModelIds.getBlockSubModelId(bars, "_cap_alt");
-			Identifier identifier5 = ModelIds.getBlockSubModelId(bars, "_side");
-			Identifier identifier6 = ModelIds.getBlockSubModelId(bars, "_side_alt");
-			blockStateModelGenerator.blockStateCollector.accept(MultipartBlockStateSupplier.create(bars).with(BlockStateVariant.create().put(VariantSettings.MODEL, identifier)).with(When.create().set(Properties.NORTH, false).set(Properties.EAST, false).set(Properties.SOUTH, false).set(Properties.WEST, false), BlockStateVariant.create().put(VariantSettings.MODEL, identifier2)).with(When.create().set(Properties.NORTH, true).set(Properties.EAST, false).set(Properties.SOUTH, false).set(Properties.WEST, false), BlockStateVariant.create().put(VariantSettings.MODEL, identifier3)).with(When.create().set(Properties.NORTH, false).set(Properties.EAST, true).set(Properties.SOUTH, false).set(Properties.WEST, false), BlockStateVariant.create().put(VariantSettings.MODEL, identifier3).put(VariantSettings.Y, VariantSettings.Rotation.R90)).with(When.create().set(Properties.NORTH, false).set(Properties.EAST, false).set(Properties.SOUTH, true).set(Properties.WEST, false), BlockStateVariant.create().put(VariantSettings.MODEL, identifier4)).with(When.create().set(Properties.NORTH, false).set(Properties.EAST, false).set(Properties.SOUTH, false).set(Properties.WEST, true), BlockStateVariant.create().put(VariantSettings.MODEL, identifier4).put(VariantSettings.Y, VariantSettings.Rotation.R90)).with(When.create().set(Properties.NORTH, true), BlockStateVariant.create().put(VariantSettings.MODEL, identifier5)).with(When.create().set(Properties.EAST, true), BlockStateVariant.create().put(VariantSettings.MODEL, identifier5).put(VariantSettings.Y, VariantSettings.Rotation.R90)).with(When.create().set(Properties.SOUTH, true), BlockStateVariant.create().put(VariantSettings.MODEL, identifier6)).with(When.create().set(Properties.WEST, true), BlockStateVariant.create().put(VariantSettings.MODEL, identifier6).put(VariantSettings.Y, VariantSettings.Rotation.R90)));
-			blockStateModelGenerator.registerItemModel(bars);
+            WeightedVariant weightedVariant = BlockStateModelGenerator.createWeightedVariant(ModelIds.getBlockSubModelId(bars, "_post_ends"));
+            WeightedVariant weightedVariant2 = BlockStateModelGenerator.createWeightedVariant(ModelIds.getBlockSubModelId(bars, "_post"));
+            WeightedVariant weightedVariant3 = BlockStateModelGenerator.createWeightedVariant(ModelIds.getBlockSubModelId(bars, "_cap"));
+            WeightedVariant weightedVariant4 = BlockStateModelGenerator.createWeightedVariant(ModelIds.getBlockSubModelId(bars, "_cap_alt"));
+            WeightedVariant weightedVariant5 = BlockStateModelGenerator.createWeightedVariant(ModelIds.getBlockSubModelId(bars, "_side"));
+            WeightedVariant weightedVariant6 = BlockStateModelGenerator.createWeightedVariant(ModelIds.getBlockSubModelId(bars, "_side_alt"));
+			blockStateModelGenerator.blockStateCollector.accept(MultipartBlockModelDefinitionCreator.create(bars).with(weightedVariant).with(BlockStateModelGenerator.createMultipartConditionBuilder().put(Properties.NORTH, false).put(Properties.EAST, false).put(Properties.SOUTH, false).put(Properties.WEST, false), weightedVariant2).with(BlockStateModelGenerator.createMultipartConditionBuilder().put(Properties.NORTH, true).put(Properties.EAST, false).put(Properties.SOUTH, false).put(Properties.WEST, false), weightedVariant3).with(BlockStateModelGenerator.createMultipartConditionBuilder().put(Properties.NORTH, false).put(Properties.EAST, true).put(Properties.SOUTH, false).put(Properties.WEST, false), weightedVariant3.apply(BlockStateModelGenerator.ROTATE_Y_90)).with(BlockStateModelGenerator.createMultipartConditionBuilder().put(Properties.NORTH, false).put(Properties.EAST, false).put(Properties.SOUTH, true).put(Properties.WEST, false), weightedVariant4).with(BlockStateModelGenerator.createMultipartConditionBuilder().put(Properties.NORTH, false).put(Properties.EAST, false).put(Properties.SOUTH, false).put(Properties.WEST, true), weightedVariant4.apply(BlockStateModelGenerator.ROTATE_Y_90)).with(BlockStateModelGenerator.createMultipartConditionBuilder().put(Properties.NORTH, true), weightedVariant5).with(BlockStateModelGenerator.createMultipartConditionBuilder().put(Properties.EAST, true), weightedVariant5.apply(BlockStateModelGenerator.ROTATE_Y_90)).with(BlockStateModelGenerator.createMultipartConditionBuilder().put(Properties.SOUTH, true), weightedVariant6).with(BlockStateModelGenerator.createMultipartConditionBuilder().put(Properties.WEST, true), weightedVariant6.apply(BlockStateModelGenerator.ROTATE_Y_90)));
+            blockStateModelGenerator.registerItemModel(bars);
 		}
 
 		private static void registerToolSet(ItemModelGenerator itemModelGenerator, ToolSet set) {

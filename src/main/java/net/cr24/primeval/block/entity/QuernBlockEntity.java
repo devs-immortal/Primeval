@@ -1,5 +1,6 @@
 package net.cr24.primeval.block.entity;
 
+import net.cr24.primeval.Primeval;
 import net.cr24.primeval.PrimevalSoundEvents;
 import net.cr24.primeval.initialization.PrimevalBlocks;
 import net.cr24.primeval.initialization.PrimevalItems;
@@ -22,6 +23,9 @@ import net.minecraft.recipe.input.SingleStackRecipeInput;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.storage.NbtWriteView;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.Clearable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -94,12 +98,12 @@ public class QuernBlockEntity extends BlockEntity implements Clearable {
     public void makeParticles(World world, BlockPos pos) {
         if (world.isClient) {
             Random rand = Random.create();
-            world.addParticle(
+            world.addParticleClient(
                     new ItemStackParticleEffect(ParticleTypes.ITEM, inputItem),
                     pos.getX()+0.5f, pos.getY()+0.5f, pos.getZ()+0.5f,
                     rand.nextFloat()*0.8-0.4, rand.nextFloat()*0.01, rand.nextFloat()*0.8-0.4
             );
-            world.addParticle(
+            world.addParticleClient(
                     new BlockStateParticleEffect(ParticleTypes.BLOCK, PrimevalBlocks.SMOOTH_STONE.block().getDefaultState()),
                     pos.getX()+0.5f, pos.getY()+0.5f, pos.getZ()+0.5f,
                     rand.nextFloat()*0.4-0.2, 0, rand.nextFloat()*0.4-0.2
@@ -110,7 +114,7 @@ public class QuernBlockEntity extends BlockEntity implements Clearable {
         if (world.isClient) {
             Random rand = Random.create();
             for (int i = 0; i < 16; i++) {
-                world.addParticle(
+                world.addParticleClient(
                         new BlockStateParticleEffect(ParticleTypes.BLOCK, PrimevalBlocks.QUERN.getDefaultState()),
                         pos.getX()+0.5f, pos.getY()+0.5f, pos.getZ()+0.5f,
                         rand.nextFloat()*0.5-0.25, rand.nextFloat()*0.2, rand.nextFloat()*0.5-0.25
@@ -161,26 +165,22 @@ public class QuernBlockEntity extends BlockEntity implements Clearable {
         }
     }
 
-    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
-        super.readNbt(nbt, registries);
-        if (nbt.contains("input_item")) {
-            inputItem = ItemStack.fromNbt(registries, nbt.getCompound("input_item")).orElse(ItemStack.EMPTY);
-        } else {
-            inputItem = ItemStack.EMPTY;
-        }
-        wheelDamage = nbt.getInt("wheel_health");
-        targetAngle = nbt.getFloat("target_angle");
-        currentAngle = nbt.getFloat("current_angle");
+    protected void readData(ReadView view) {
+        super.readData(view);
+        this.inputItem = view.read("input_item", ItemStack.CODEC).orElse(ItemStack.EMPTY);
+        wheelDamage = view.getInt("wheel_health", -1);
+        targetAngle = view.getFloat("target_angle", 0);
+        currentAngle = view.getFloat("current_angle", FLOW_ANGLE);
     }
 
-    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
-        super.writeNbt(nbt, registries);
-        if (!inputItem.isEmpty()) {
-            nbt.put("input_item", inputItem.toNbt(registries));
+    protected void writeData(WriteView view) {
+        super.writeData(view);
+        if (!this.inputItem.isEmpty()) {
+            view.put("input_item", ItemStack.CODEC, this.inputItem);
         }
-        nbt.putInt("wheel_health", wheelDamage);
-        nbt.putFloat("target_angle", targetAngle);
-        nbt.putFloat("current_angle", currentAngle);
+        view.putInt("wheel_health", wheelDamage);
+        view.putFloat("target_angle", targetAngle);
+        view.putFloat("current_angle", currentAngle);
     }
 
     public BlockEntityUpdateS2CPacket toUpdatePacket() {
@@ -189,14 +189,9 @@ public class QuernBlockEntity extends BlockEntity implements Clearable {
 
     @Override
     public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registries) {
-        NbtCompound nbtCompound = new NbtCompound();
-        if (!inputItem.isEmpty()) {
-            nbtCompound.put("input_item", inputItem.toNbt(registries));
-        }
-        nbtCompound.putInt("wheel_health", wheelDamage);
-        nbtCompound.putFloat("target_angle", targetAngle);
-        nbtCompound.putFloat("current_angle", currentAngle);
-        return nbtCompound;
+        var writeView = NbtWriteView.create(Primeval.errorReporter(this), registries);
+        writeData(writeView);
+        return writeView.getNbt();
     }
 
     @Override

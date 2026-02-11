@@ -15,7 +15,7 @@ import net.minecraft.registry.*;
 import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.structure.rule.TagMatchRuleTest;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.collection.DataPool;
+import net.minecraft.util.collection.Pool;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.math.floatprovider.UniformFloatProvider;
 import net.minecraft.util.math.intprovider.ConstantIntProvider;
@@ -216,7 +216,7 @@ public class PrimevalFeatures extends FabricDynamicRegistryProvider {
 
     private static CountPlacementModifier getWeightedCountPlacementModifier(int i, int j, int k) {
         return CountPlacementModifier.of(new WeightedListIntProvider(
-                DataPool.<IntProvider>builder()
+                Pool.<IntProvider>builder()
                         .add(ConstantIntProvider.create(0), i)
                         .add(ConstantIntProvider.create(1), j)
                         .add(ConstantIntProvider.create(2), k)
@@ -226,7 +226,7 @@ public class PrimevalFeatures extends FabricDynamicRegistryProvider {
 
     private static CountPlacementModifier getWeightedCountPlacementModifier(int i, int j) {
         return CountPlacementModifier.of(new WeightedListIntProvider(
-                DataPool.<IntProvider>builder()
+                Pool.<IntProvider>builder()
                         .add(ConstantIntProvider.create(0), i)
                         .add(ConstantIntProvider.create(3), j)
                         .build())
@@ -235,7 +235,7 @@ public class PrimevalFeatures extends FabricDynamicRegistryProvider {
 
     private static CountPlacementModifier getCommonWeightedCountPlacementModifier(int i, int j) {
         return CountPlacementModifier.of(new WeightedListIntProvider(
-                DataPool.<IntProvider>builder()
+                Pool.<IntProvider>builder()
                         .add(ConstantIntProvider.create(2), i)
                         .add(ConstantIntProvider.create(5), j)
                         .build())
@@ -277,7 +277,7 @@ public class PrimevalFeatures extends FabricDynamicRegistryProvider {
                 SimpleBlockStateProvider.of(PrimevalBlocks.LAZURITE_ORE.large()),
                 SimpleBlockStateProvider.of(PrimevalBlocks.LAZURITE_ORE.medium()),
                 new WeightedBlockStateProvider(
-                        DataPool.<BlockState>builder()
+                        Pool.<BlockState>builder()
                             .add(PrimevalBlocks.LAZURITE_ORE.small().getDefaultState(), 12)
                             .add(PrimevalBlocks.GOLD_NATIVE_ORE.small().getDefaultState(), 1)
                 ),
@@ -311,7 +311,7 @@ public class PrimevalFeatures extends FabricDynamicRegistryProvider {
                 7,
                 3,
                 blockProviderFeature(new WeightedBlockStateProvider(
-                        DataPool.<BlockState>builder()
+                        Pool.<BlockState>builder()
                                 .add(getGrassAtState(0), 3)
                                 .add(getGrassAtState(1), 2)
                                 .add(getGrassAtState(2), 1)
@@ -322,7 +322,7 @@ public class PrimevalFeatures extends FabricDynamicRegistryProvider {
                 7,
                 3,
                 blockProviderFeature(new WeightedBlockStateProvider(
-                        DataPool.<BlockState>builder()
+                        Pool.<BlockState>builder()
                                 .add(getGrassAtState(0), 3)
                                 .add(getGrassAtState(1), 2)
                                 .add(getGrassAtState(2), 2)

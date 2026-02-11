@@ -1,6 +1,7 @@
 package net.cr24.primeval.initialization;
 
 import net.cr24.primeval.Primeval;
+import net.cr24.primeval.initialization.PrimevalBlocks.BlockSet;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;

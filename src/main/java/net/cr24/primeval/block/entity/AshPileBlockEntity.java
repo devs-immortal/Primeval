@@ -1,5 +1,6 @@
 package net.cr24.primeval.block.entity;
 
+import net.cr24.primeval.Primeval;
 import net.cr24.primeval.initialization.PrimevalBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -9,7 +10,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.storage.NbtWriteView;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.Clearable;
+import net.minecraft.util.ErrorReporter;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 
@@ -24,15 +29,15 @@ public class AshPileBlockEntity extends BlockEntity implements Clearable {
         inventory = DefaultedList.ofSize(4, ItemStack.EMPTY);
     }
 
-    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
-        super.readNbt(nbt, registries);
-        inventory = DefaultedList.ofSize(4, ItemStack.EMPTY);
-        Inventories.readNbt(nbt, this.inventory, registries);
+    protected void readData(ReadView view) {
+        super.readData(view);
+        this.inventory = DefaultedList.ofSize(4, ItemStack.EMPTY);
+        Inventories.readData(view, this.inventory);
     }
 
-    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
-        super.writeNbt(nbt, registries);
-        Inventories.writeNbt(nbt, this.inventory, registries);
+    protected void writeData(WriteView view) {
+        super.writeData(view);
+        Inventories.writeData(view, this.inventory);
     }
 
     public BlockEntityUpdateS2CPacket toUpdatePacket() {
@@ -48,9 +53,9 @@ public class AshPileBlockEntity extends BlockEntity implements Clearable {
 
     @Override
     public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registries) {
-        NbtCompound nbtCompound = new NbtCompound();
-        Inventories.writeNbt(nbtCompound, this.inventory, registries);
-        return nbtCompound;
+        var writeView = NbtWriteView.create(Primeval.errorReporter(this), registries);
+        writeData(writeView);
+        return writeView.getNbt();
     }
 
     public List<ItemStack> getItems() {

@@ -18,7 +18,7 @@ public class LogItem extends WeightedBlockItem {
 
     private final Block logPileBlock;
 
-    public LogItem(Block block, Block logPileBlock, Weight weight, Size size, Settings settings) {
+    public LogItem(Block block, Block logPileBlock, Weight weight, Size size, net.minecraft.item.Item.Settings settings) {
         super(block, weight, size, settings);
         this.logPileBlock = logPileBlock;
     }

@@ -27,7 +27,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class FirestarterItem extends WeightedItem {
-    public FirestarterItem(Weight weight, Size size, Settings settings) {
+    public FirestarterItem(Weight weight, Size size, net.minecraft.item.Item.Settings settings) {
         super(weight, size, settings);
     }
 

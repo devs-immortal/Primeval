@@ -1,5 +1,6 @@
 package net.cr24.primeval.block.entity;
 
+import net.cr24.primeval.Primeval;
 import net.cr24.primeval.initialization.PrimevalBlocks;
 import net.cr24.primeval.initialization.PrimevalItems;
 import net.cr24.primeval.item.tool.VesselItem;
@@ -11,6 +12,7 @@ import net.cr24.primeval.util.FluidInput;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
@@ -18,7 +20,12 @@ import net.minecraft.recipe.ServerRecipeManager;
 import net.minecraft.recipe.input.SingleStackRecipeInput;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.storage.NbtWriteView;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.Clearable;
+import net.minecraft.util.ErrorReporter;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.Optional;
@@ -40,35 +47,27 @@ public class PitKilnBlockEntity extends BlockEntity implements Clearable {
         this.burnTimer = -1;
     }
 
-    public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
-        super.readNbt(nbt, registries);
+    protected void readData(ReadView view) {
+        super.readData(view);
         for (int i = 0; i < 4; i++) {
             this.logs.clear();
-            if (nbt.contains(("Log"+i), 10)) {
-                this.logs.push(ItemStack.fromNbt(registries, nbt.getCompound(("Log"+i))).orElse(ItemStack.EMPTY));
-            } else {
-                this.logs.push(ItemStack.EMPTY);
-            }
-            if (nbt.contains(("Item"+i), 10)) {
-                this.inventory[i] = ItemStack.fromNbt(registries, nbt.getCompound(("Item"+i))).orElse(ItemStack.EMPTY);
-            } else {
-                this.logs.push(ItemStack.EMPTY);
-            }
+            this.logs.push(view.read("Log"+i, ItemStack.CODEC).orElse(ItemStack.EMPTY));
+            this.inventory[i] = view.read("Item"+i, ItemStack.CODEC).orElse(ItemStack.EMPTY);
         }
-        this.burnTimer = nbt.getInt("burnTimer");
+        this.burnTimer = view.getInt("burnTimer", -1);
     }
 
-    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
-        super.writeNbt(nbt, registries);
+    protected void writeData(WriteView view) {
+        super.writeData(view);
         for (int i = 0; i < 4; i++) {
             if (i < this.logs.size() && !this.logs.get(i).isEmpty()) {
-                nbt.put(("Log"+i), this.logs.get(i).toNbt(registries));
+                view.put("Log"+i, ItemStack.CODEC, this.logs.get(i));
             }
             if (!this.inventory[i].isEmpty()) {
-                nbt.put(("Item"+i), this.inventory[i].toNbt(registries));
+                view.put("Item"+i, ItemStack.CODEC, this.inventory[i]);
             }
         }
-        nbt.putInt("burnTimer", this.burnTimer);
+        view.putInt("burnTimer", this.burnTimer);
     }
 
     public static void serverTick(ServerWorld serverWorld, BlockPos pos, BlockState state, PitKilnBlockEntity blockEntity, ServerRecipeManager.MatchGetter<SingleStackRecipeInput, PitKilnFiringRecipe> recipeMatchGetter, ServerRecipeManager.MatchGetter<SingleStackRecipeInput, MeltingRecipe> vesselRecipeMatchGetter, ServerRecipeManager.MatchGetter<FluidInput, AlloyingRecipe> alloyMatchGetter) {
@@ -91,14 +90,9 @@ public class PitKilnBlockEntity extends BlockEntity implements Clearable {
 
     @Override
     public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registries) {
-        NbtCompound nbtCompound = new NbtCompound();
-        for (int i = 0; i < 4; i++) {
-            if (!this.inventory[i].isEmpty()) {
-                nbtCompound.put(("Item"+i), this.inventory[i].toNbt(registries));
-            }
-        }
-        nbtCompound.putInt("burnTimer", this.burnTimer);
-        return nbtCompound;
+        var writeView = NbtWriteView.create(Primeval.errorReporter(this), registries);
+        writeData(writeView);
+        return writeView.getNbt();
     }
 
     public void addLog(ItemStack stack) {

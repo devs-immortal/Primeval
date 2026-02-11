@@ -30,7 +30,7 @@ import java.util.List;
 
 public class WoodenBucketItem extends WeightedItem {
 
-    public WoodenBucketItem(Weight weight, Size size, Settings settings) {
+    public WoodenBucketItem(Weight weight, Size size, net.minecraft.item.Item.Settings settings) {
         super(weight, size, 4, settings);
     }
 
@@ -41,7 +41,7 @@ public class WoodenBucketItem extends WeightedItem {
         if (blockHitResult.getType() != HitResult.Type.MISS) {
             if (blockHitResult.getType() == HitResult.Type.BLOCK) {
                 BlockPos blockPos = blockHitResult.getBlockPos();
-                if (!world.canPlayerModifyAt(user, blockPos)) {
+                if (!world.canEntityModifyAt(user, blockPos)) {
                     return ActionResult.PASS;
                 }
 

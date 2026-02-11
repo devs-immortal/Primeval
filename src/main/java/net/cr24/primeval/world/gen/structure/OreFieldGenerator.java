@@ -53,14 +53,14 @@ public class OreFieldGenerator {
 
         public Blob(NbtCompound nbt) {
             super(PrimevalStructures.ORE_FIELD_PIECE, nbt);
-            this.height = nbt.getInt("Height");
-            this.size = nbt.getInt("Size");
-            this.ballParams = nbt.getIntArray("BallParams");
-            this.richness = nbt.getFloat("Richness");
-            this.largeState = NbtHelper.toBlockState(Registries.BLOCK, nbt.getCompound("LargeState"));
-            this.mediumState = NbtHelper.toBlockState(Registries.BLOCK, nbt.getCompound("MediumState"));
-            this.smallState = NbtHelper.toBlockState(Registries.BLOCK, nbt.getCompound("SmallState"));
-            this.extraState = NbtHelper.toBlockState(Registries.BLOCK, nbt.getCompound("ExtraState"));
+            this.height = nbt.getInt("Height").orElseThrow();
+            this.size = nbt.getInt("Size").orElseThrow();
+            this.ballParams = nbt.getIntArray("BallParams").orElseThrow();
+            this.richness = nbt.getFloat("Richness").orElseThrow();
+            this.largeState = NbtHelper.toBlockState(Registries.BLOCK, nbt.getCompound("LargeState").orElseThrow());
+            this.mediumState = NbtHelper.toBlockState(Registries.BLOCK, nbt.getCompound("MediumState").orElseThrow());
+            this.smallState = NbtHelper.toBlockState(Registries.BLOCK, nbt.getCompound("SmallState").orElseThrow());
+            this.extraState = NbtHelper.toBlockState(Registries.BLOCK, nbt.getCompound("ExtraState").orElseThrow());
         }
 
 

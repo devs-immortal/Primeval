@@ -8,6 +8,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
+import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
@@ -24,13 +25,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class PrimevalSpearItem extends Item implements IWeightedItem {
 
     private final Weight weight;
     private final Size size;
 
-    public PrimevalSpearItem(ToolMaterial toolMaterial, float attackDamage, float attackSpeed, Weight weight, Size size, Settings settings) {
+    public PrimevalSpearItem(ToolMaterial toolMaterial, float attackDamage, float attackSpeed, Weight weight, Size size, net.minecraft.item.Item.Settings settings) {
         super(applySettings(toolMaterial, attackDamage, attackSpeed, settings));
         this.weight = weight;
         this.size = size;
@@ -40,18 +42,18 @@ public class PrimevalSpearItem extends Item implements IWeightedItem {
         return !miner.isCreative();
     }
 
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        return true;
+    public void postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
     }
 
     public void postDamageEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         stack.damage(1, attacker, EquipmentSlot.MAINHAND);
     }
 
+    @Override
     @Environment(EnvType.CLIENT)
-    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
-        super.appendTooltip(stack, context, tooltip, type);
-        tooltip.add((Text.translatable("⚖ ").append(this.weight.getText()).append(" ⤧ ").append(this.size.getText())).formatted(Formatting.GRAY));
+    public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type) {
+        super.appendTooltip(stack, context, displayComponent, textConsumer, type);
+        textConsumer.accept((Text.translatable("⚖ ").append(this.weight.getText()).append(" ⤧ ").append(this.size.getText())).formatted(Formatting.GRAY));
     }
 
     @Override
@@ -64,7 +66,7 @@ public class PrimevalSpearItem extends Item implements IWeightedItem {
         return size;
     }
 
-    private static Settings applySettings(ToolMaterial toolMaterial, float attackDamage, float attackSpeed, Settings settings) {
+    private static net.minecraft.item.Item.Settings applySettings(ToolMaterial toolMaterial, float attackDamage, float attackSpeed, net.minecraft.item.Item.Settings settings) {
         return settings.maxDamage(toolMaterial.durability())
                 .repairable(toolMaterial.repairItems())
                 .enchantable(toolMaterial.enchantmentValue())

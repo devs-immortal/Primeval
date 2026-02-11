@@ -1,6 +1,7 @@
 package net.cr24.primeval.screen;
 
 import net.cr24.primeval.Primeval;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.render.RenderLayer;
@@ -23,7 +24,7 @@ public class Primeval3x5ContainerScreen extends HandledScreen<Primeval3x5Contain
 
     @Override
     protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
-        context.drawTexture(RenderLayer::getGuiTextured, TEXTURE, x, y, 0.0F, 0.0F, this.backgroundWidth, 166, 256, 256);
+        context.drawTexture(RenderPipelines.GUI_TEXTURED, TEXTURE, x, y, 0.0F, 0.0F, this.backgroundWidth, 166, 256, 256);
     }
 
     @Override

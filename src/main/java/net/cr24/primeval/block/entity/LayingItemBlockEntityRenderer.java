@@ -4,13 +4,11 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
-import net.minecraft.client.render.entity.DisplayEntityRenderer;
-import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.item.ItemDisplayContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ModelTransformationMode;
 import net.minecraft.util.math.RotationAxis;
-import org.joml.Quaternionf;
+import net.minecraft.util.math.Vec3d;
 
 public class LayingItemBlockEntityRenderer implements BlockEntityRenderer<LayingItemBlockEntity> {
 
@@ -18,7 +16,7 @@ public class LayingItemBlockEntityRenderer implements BlockEntityRenderer<Laying
     }
 
     @Override
-    public void render(LayingItemBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+    public void render(LayingItemBlockEntity entity, float tickProgress, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, Vec3d cameraPos) {
         ItemStack item = entity.getItem();
         int randomInt = entity.getRandomInt();
         matrices.translate(0.5, 0.0, 0.5);
@@ -26,6 +24,6 @@ public class LayingItemBlockEntityRenderer implements BlockEntityRenderer<Laying
         matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(-90));
         matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(90 * randomInt));
         matrices.translate(0.0, -0.1, -0.0);
-        MinecraftClient.getInstance().getItemRenderer().renderItem(item, ModelTransformationMode.GROUND, light, overlay, matrices, vertexConsumers, entity.getWorld(), 0);
+        MinecraftClient.getInstance().getItemRenderer().renderItem(item, ItemDisplayContext.GROUND, light, overlay, matrices, vertexConsumers, entity.getWorld(), 0);
     }
 }

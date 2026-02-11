@@ -6,6 +6,7 @@ import net.cr24.primeval.util.Size;
 import net.cr24.primeval.util.Weight;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.GlassBottleItem;
 import net.minecraft.item.Item;
@@ -28,13 +29,14 @@ import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class EmptyJugItem extends Item implements IWeightedItem {
 
     private final Weight weight;
     private final Size size;
 
-    public EmptyJugItem(Weight weight, Size size, Settings settings) {
+    public EmptyJugItem(Weight weight, Size size, net.minecraft.item.Item.Settings settings) {
         super(settings.maxCount(1));
         this.weight = weight;
         this.size = size;
@@ -47,7 +49,7 @@ public class EmptyJugItem extends Item implements IWeightedItem {
         if (blockHitResult.getType() != HitResult.Type.MISS) {
             if (blockHitResult.getType() == HitResult.Type.BLOCK) {
                 BlockPos blockPos = blockHitResult.getBlockPos();
-                if (!world.canPlayerModifyAt(user, blockPos)) {
+                if (!world.canEntityModifyAt(user, blockPos)) {
                     return ActionResult.PASS;
                 }
 
@@ -66,10 +68,11 @@ public class EmptyJugItem extends Item implements IWeightedItem {
         return ItemUsage.exchangeStack(stack, player, outputStack);
     }
 
+    @Override
     @Environment(EnvType.CLIENT)
-    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
-        super.appendTooltip(stack, context, tooltip, type);
-        tooltip.add((Text.translatable("⚖ ").append(this.weight.getText()).append(" ⤧ ").append(this.size.getText())).formatted(Formatting.GRAY));
+    public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type) {
+        super.appendTooltip(stack, context, displayComponent, textConsumer, type);
+        textConsumer.accept((Text.translatable("⚖ ").append(this.weight.getText()).append(" ⤧ ").append(this.size.getText())).formatted(Formatting.GRAY));
     }
 
     @Override

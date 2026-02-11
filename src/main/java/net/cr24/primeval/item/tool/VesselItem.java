@@ -15,6 +15,7 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.BundleContentsComponent;
+import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
@@ -39,13 +40,14 @@ import net.minecraft.util.Pair;
 
 import javax.swing.text.html.Option;
 import java.util.*;
+import java.util.function.Consumer;
 
 public class VesselItem extends BundleItem implements IWeightedItem {
 
     private final Weight weight;
     private final Size size;
 
-    public VesselItem(Weight weight, Size size, Settings settings) {
+    public VesselItem(Weight weight, Size size, net.minecraft.item.Item.Settings settings) {
         super(settings.maxCount(1).component(DataComponentTypes.BUNDLE_CONTENTS, BundleContentsComponent.DEFAULT));
         this.weight = weight;
         this.size = size;
@@ -143,16 +145,18 @@ public class VesselItem extends BundleItem implements IWeightedItem {
         return stack.contains(PrimevalDataComponentTypes.FLUID_CONTENTS) ? Optional.empty() : super.getTooltipData(stack);
     }
 
+    @Override
     @Environment(EnvType.CLIENT)
-    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+    public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type) {
+        super.appendTooltip(stack, context, displayComponent, textConsumer, type);
+        textConsumer.accept((Text.translatable("⚖ ").append(this.weight.getText()).append(" ⤧ ").append(this.size.getText())).formatted(Formatting.GRAY));
         var contents = stack.getOrDefault(PrimevalDataComponentTypes.FLUID_CONTENTS, new PrimevalDataComponentTypes.FluidContentComponent(RegistryEntry.of(Fluids.EMPTY), 0));
         if (contents.amount() > 0) {
-            tooltip.add(
+            textConsumer.accept(
                     (Text.translatable("text.primeval.fluid.contains", contents.amount(), Text.translatable(
                             "block." + contents.fluid().getIdAsString().replace(':', '.')
                     ))).formatted(Formatting.GRAY));
         }
-        tooltip.add((Text.translatable("⚖ ").append(this.weight.getText()).append(" ⤧ ").append(this.size.getText())).formatted(Formatting.GRAY));
     }
 
     @Override

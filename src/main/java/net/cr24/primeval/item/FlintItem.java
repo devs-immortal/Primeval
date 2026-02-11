@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 import static net.cr24.primeval.item.tool.PrimevalHoeItem.hoeables;
 
 public class FlintItem extends WeightedItem {
-    public FlintItem(Weight weight, Size size, Settings settings) {
+    public FlintItem(Weight weight, Size size, net.minecraft.item.Item.Settings settings) {
         super(weight, size, settings);
     }
 
