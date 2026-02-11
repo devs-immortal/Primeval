@@ -20,11 +20,13 @@ import java.util.*;
 
 public class ProspectingPickaxeItem extends PrimevalPickaxeItem {
 
-    private static final int HORIZONTAL_SEARCH_RANGE = 8;
-    private static final int VERTICAL_SEARCH_RANGE = 6;
+    private final int horizontalSearchRange;
+    private final int verticalSearchRange;
 
-    public ProspectingPickaxeItem(ToolMaterial material, float attackDamage, float attackSpeed, Weight weight, Size size, Settings settings) {
+    public ProspectingPickaxeItem(ToolMaterial material, float attackDamage, float attackSpeed, int horizontalSearchRange, int verticalSearchRange, Weight weight, Size size, Settings settings) {
         super(material, attackDamage, attackSpeed, weight, size, settings);
+        this.horizontalSearchRange = horizontalSearchRange;
+        this.verticalSearchRange = verticalSearchRange;
     }
 
     public ActionResult useOnBlock(ItemUsageContext context) {
@@ -36,9 +38,9 @@ public class ProspectingPickaxeItem extends PrimevalPickaxeItem {
 
         var scanMap = setupDict();
 
-        for (int x = -HORIZONTAL_SEARCH_RANGE; x <= HORIZONTAL_SEARCH_RANGE; x++) {
-            for (int z = -HORIZONTAL_SEARCH_RANGE; z <= HORIZONTAL_SEARCH_RANGE; z++) {
-                for (int y = -VERTICAL_SEARCH_RANGE*2; y <= VERTICAL_SEARCH_RANGE; y++) {
+        for (int x = -horizontalSearchRange; x <= horizontalSearchRange; x++) {
+            for (int z = -horizontalSearchRange; z <= horizontalSearchRange; z++) {
+                for (int y = -verticalSearchRange*2; y <= verticalSearchRange; y++) {
                     BlockState blockAt = world.getBlockState(pos.add(x, y, z));
                     for (var tag : scanMap.entrySet()) {
                         if (blockAt.isIn(tag.getKey())) {

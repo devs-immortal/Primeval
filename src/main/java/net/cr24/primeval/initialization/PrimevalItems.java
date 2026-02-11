@@ -66,7 +66,7 @@ public class PrimevalItems {
     public static final Item CLAY_TILE = registerItem("clay_tile", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.SMALL);
     public static final Item FIRED_CLAY_TILE = registerItem("fired_clay_tile", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.SMALL);
     public static final Item CLAY_JUG = registerItem("clay_jug", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
-    public static final Item CLAY_VESSEL = registerItem("clay_vessel", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Item CLAY_VESSEL = registerItem("clay_vessel", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.LARGE);
 
     // logs
     public static final Item OAK_LOG = registerItem("oak_log", SETTINGS_BASIC(), (w, s, settings) -> new LogItem(PrimevalBlocks.OAK_LOG_BLOCK, PrimevalBlocks.OAK_LOG_PILE, w, s, settings), Weight.HEAVY, Size.LARGE);
@@ -139,8 +139,8 @@ public class PrimevalItems {
     public static final Item FLINT_KNIFE = registerItem("flint_knife", SETTINGS_BASIC(), (w, s, settings) -> new PrimevalKnifeItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.KNIFE_DAMAGE_MULTIPLIER, -3.0f, w, s, settings), Weight.HEAVY, Size.LARGE);
     public static final Item FLINT_SHOVEL = registerItem("flint_shovel", SETTINGS_BASIC(), (w, s, settings) -> new PrimevalShovelItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.BLUNT_DAMAGE_MULTIPLIER, -3.0f, w, s, settings), Weight.HEAVY, Size.LARGE);
     public static final Item FLINT_SPEAR = registerItem("flint_spear", SETTINGS_BASIC(), (w, s, settings) -> new PrimevalSpearItem(PrimevalToolMaterials.FLINT, PrimevalToolMaterials.SPEAR_DAMAGE_MULTIPLIER, -3.5f, w, s, settings), Weight.HEAVY, Size.LARGE);
-    public static final ToolSet COPPER_TOOLS = ToolSet.from("copper", PrimevalToolMaterials.COPPER, PrimevalToolMaterials.COPPER_WEAK,1.5f);
-    public static final ToolSet BRONZE_TOOLS = ToolSet.from("bronze", PrimevalToolMaterials.BRONZE, PrimevalToolMaterials.BRONZE_WEAK, 1.5f);
+    public static final ToolSet COPPER_TOOLS = ToolSet.from("copper", PrimevalToolMaterials.COPPER, PrimevalToolMaterials.COPPER_WEAK,1.5f, 8, 6);
+    public static final ToolSet BRONZE_TOOLS = ToolSet.from("bronze", PrimevalToolMaterials.BRONZE, PrimevalToolMaterials.BRONZE_WEAK, 1.5f, 11, 9);
 
     // Tool Parts
     public static final ToolPartSet COPPER_TOOL_PARTS = ToolPartSet.from("copper");
@@ -149,8 +149,8 @@ public class PrimevalItems {
     // Other
     public static final Item WOODEN_BUCKET = registerItem("wooden_bucket", SETTINGS_BASIC(), WoodenBucketItem::new, Weight.NORMAL, Size.MEDIUM);
     public static final Item WOODEN_BUCKET_WATER = registerItem("wooden_bucket_water", SETTINGS_BASIC().recipeRemainder(WOODEN_BUCKET), WaterWoodenBucketItem::new, Weight.NORMAL, Size.MEDIUM);
-    public static final Item FIRED_CLAY_JUG = registerItem("fired_clay_jug", SETTINGS_BASIC(), EmptyJugItem::new, Weight.NORMAL, Size.LARGE);
-    public static final Item FIRED_CLAY_WATER_JUG = registerItem("fired_clay_jug_filled", SETTINGS_BASIC().recipeRemainder(FIRED_CLAY_JUG).food(foodComponent(0, 0f, true), ConsumableComponents.drink().build()).useRemainder(FIRED_CLAY_JUG), WeightedItem::new, Weight.NORMAL, Size.LARGE);
+    public static final Item FIRED_CLAY_JUG = registerItem("fired_clay_jug", SETTINGS_BASIC(), EmptyJugItem::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Item FIRED_CLAY_WATER_JUG = registerItem("fired_clay_jug_filled", SETTINGS_BASIC().recipeRemainder(FIRED_CLAY_JUG).food(foodComponent(0, 0f, true), ConsumableComponents.drink().build()).useRemainder(FIRED_CLAY_JUG), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
     public static final Item FIRED_CLAY_VESSEL = registerItem("fired_clay_vessel", SETTINGS_BASIC(), VesselItem::new, Weight.NORMAL, Size.LARGE);
     public static final Item QUERN_WHEEL = registerItem("quern_wheel", SETTINGS_BASIC().maxDamage(99), (w, s, settings) -> new WeightedItem(w, s, 1, settings), Weight.HEAVY, Size.MEDIUM);
 
@@ -253,7 +253,7 @@ public class PrimevalItems {
             return Arrays.stream(new Item[]{axe, chisel, knife, pickaxe, shovel, sword, hoe, prospecting_pickaxe, spear}).iterator();
         }
 
-        public static ToolSet from(String material_id, ToolMaterial material, ToolMaterial materialWeak, float attackDamage) {
+        public static ToolSet from(String material_id, ToolMaterial material, ToolMaterial materialWeak, float attackDamage, int prospectingHorizontal, int prospectingVertical) {
             return new ToolSet(
                     registerItem(material_id + "_axe", SETTINGS_BASIC(), (w, s, settings) -> new PrimevalAxeItem(material, attackDamage, -3.0f, w, s, settings), Weight.HEAVY, Size.LARGE),
                     registerItem(material_id + "_chisel", SETTINGS_BASIC(), (w, s, settings) -> new ChiselItem(material, attackDamage * PrimevalToolMaterials.BLUNT_DAMAGE_MULTIPLIER, -3.0f, w, s, settings), Weight.HEAVY, Size.MEDIUM),
@@ -262,7 +262,7 @@ public class PrimevalItems {
                     registerItem(material_id + "_shovel", SETTINGS_BASIC(), (w, s, settings) -> new PrimevalShovelItem(material, attackDamage * PrimevalToolMaterials.BLUNT_DAMAGE_MULTIPLIER, -3.0f, w, s, settings), Weight.HEAVY, Size.LARGE),
                     registerItem(material_id + "_sword", SETTINGS_BASIC(), (w, s, settings) -> new PrimevalSwordItem(material, attackDamage * PrimevalToolMaterials.SWORD_DAMAGE_MULTIPLIER, -2.5f, w, s, settings), Weight.HEAVY, Size.LARGE),
                     registerItem(material_id + "_hoe", SETTINGS_BASIC(), (w, s, settings) -> new PrimevalHoeItem(material, attackDamage * PrimevalToolMaterials.BLUNT_DAMAGE_MULTIPLIER, -3.0f, w, s, settings), Weight.HEAVY, Size.LARGE),
-                    registerItem(material_id + "_prospecting_pickaxe", SETTINGS_BASIC(), (w, s, settings) -> new ProspectingPickaxeItem(materialWeak, attackDamage, -3.0f, w, s, settings), Weight.HEAVY, Size.MEDIUM),
+                    registerItem(material_id + "_prospecting_pickaxe", SETTINGS_BASIC(), (w, s, settings) -> new ProspectingPickaxeItem(materialWeak, attackDamage, -3.0f, prospectingHorizontal, prospectingVertical, w, s, settings), Weight.HEAVY, Size.MEDIUM),
                     registerItem(material_id + "_spear", SETTINGS_BASIC(), (w, s, settings) -> new PrimevalSpearItem(material, attackDamage * PrimevalToolMaterials.SPEAR_DAMAGE_MULTIPLIER, -3.5f, w, s, settings), Weight.HEAVY, Size.LARGE)
             );
 
