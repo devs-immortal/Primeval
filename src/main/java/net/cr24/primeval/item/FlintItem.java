@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -13,7 +14,7 @@ import net.minecraft.world.level.block.Block;
 import static net.cr24.primeval.item.tool.PrimevalHoeItem.hoeables;
 
 public class FlintItem extends WeightedItem {
-    public FlintItem(Weight weight, Size size, net.minecraft.world.item.Item.Properties settings) {
+    public FlintItem(Weight weight, Size size, Item.Properties settings) {
         super(weight, size, settings);
     }
 

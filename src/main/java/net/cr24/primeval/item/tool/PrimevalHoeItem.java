@@ -30,7 +30,7 @@ public class PrimevalHoeItem extends Item implements IWeightedItem {
 
     public static HashMap<Block, Block> hoeables = new HashMap<>();
 
-    public PrimevalHoeItem(ToolMaterial material, float attackDamage, float attackSpeed, Weight weight, Size size, net.minecraft.world.item.Item.Properties settings) {
+    public PrimevalHoeItem(ToolMaterial material, float attackDamage, float attackSpeed, Weight weight, Size size, Item.Properties settings) {
         super(settings.tool(material, BlockTags.MINEABLE_WITH_HOE, attackDamage, attackSpeed, 0.0F));
         this.weight = weight;
         this.size = size;

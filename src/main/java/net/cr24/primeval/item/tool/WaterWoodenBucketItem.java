@@ -16,6 +16,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
@@ -26,7 +27,7 @@ import java.util.List;
 
 public class WaterWoodenBucketItem extends WeightedItem {
 
-    public WaterWoodenBucketItem(Weight weight, Size size, net.minecraft.world.item.Item.Properties settings) {
+    public WaterWoodenBucketItem(Weight weight, Size size, Item.Properties settings) {
         super(weight, size, 1, settings);
     }
 

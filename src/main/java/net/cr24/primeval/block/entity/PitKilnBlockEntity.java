@@ -28,8 +28,8 @@ import java.util.Optional;
 import java.util.Stack;
 
 public class PitKilnBlockEntity extends BlockEntity implements Clearable {
-
-    public static final int[] FIRING_TIMES = new int[] {-1, 6200, 8800, 11200, 12800};
+    //                                                      5:00  7:00  8:30   9:30
+    public static final int[] FIRING_TIMES = new int[] {-1, 6000, 8400, 10200, 11400};
     //public static final int[] FIRING_TIMES = new int[] {-1, 20, 20, 20, 20};
 
     private Stack<ItemStack> logs;

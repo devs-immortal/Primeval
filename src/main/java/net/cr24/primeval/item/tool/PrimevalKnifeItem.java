@@ -33,7 +33,7 @@ public class PrimevalKnifeItem extends Item implements IWeightedItem {
     private final Weight weight;
     private final Size size;
 
-    public PrimevalKnifeItem(ToolMaterial toolMaterial, float attackDamage, float attackSpeed, Weight weight, Size size, net.minecraft.world.item.Item.Properties settings) {
+    public PrimevalKnifeItem(ToolMaterial toolMaterial, float attackDamage, float attackSpeed, Weight weight, Size size, Item.Properties settings) {
         super(applySettings(toolMaterial, attackDamage, attackSpeed, settings));
         this.weight = weight;
         this.size = size;
@@ -67,7 +67,7 @@ public class PrimevalKnifeItem extends Item implements IWeightedItem {
         return size;
     }
 
-    private static net.minecraft.world.item.Item.Properties applySettings(ToolMaterial toolMaterial, float attackDamage, float attackSpeed, net.minecraft.world.item.Item.Properties settings) {
+    private static Item.Properties applySettings(ToolMaterial toolMaterial, float attackDamage, float attackSpeed, Item.Properties settings) {
         return settings.durability(toolMaterial.durability())
                 .component(DataComponents.TOOL, new Tool(List.of(), 1.0F, 1, false))
                 .repairable(toolMaterial.repairItems())

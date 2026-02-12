@@ -7,10 +7,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ShovelItem;
-import net.minecraft.world.item.ToolMaterial;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.TooltipDisplay;
 import java.util.List;
 import java.util.function.Consumer;
@@ -20,7 +17,7 @@ public class PrimevalShovelItem extends ShovelItem implements IWeightedItem {
     private final Weight weight;
     private final Size size;
 
-    public PrimevalShovelItem(ToolMaterial material, float attackDamage, float attackSpeed, Weight weight, Size size, net.minecraft.world.item.Item.Properties settings) {
+    public PrimevalShovelItem(ToolMaterial material, float attackDamage, float attackSpeed, Weight weight, Size size, Item.Properties settings) {
         super(material, attackDamage, attackSpeed, settings);
         this.weight = weight;
         this.size = size;

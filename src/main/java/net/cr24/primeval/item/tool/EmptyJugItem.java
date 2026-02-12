@@ -34,7 +34,7 @@ public class EmptyJugItem extends Item implements IWeightedItem {
     private final Weight weight;
     private final Size size;
 
-    public EmptyJugItem(Weight weight, Size size, net.minecraft.world.item.Item.Properties settings) {
+    public EmptyJugItem(Weight weight, Size size, Item.Properties settings) {
         super(settings.stacksTo(1));
         this.weight = weight;
         this.size = size;

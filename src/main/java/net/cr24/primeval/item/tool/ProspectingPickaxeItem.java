@@ -9,6 +9,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.item.context.UseOnContext;
@@ -22,7 +23,7 @@ public class ProspectingPickaxeItem extends PrimevalPickaxeItem {
     private final int horizontalSearchRange;
     private final int verticalSearchRange;
 
-    public ProspectingPickaxeItem(ToolMaterial material, float attackDamage, float attackSpeed, int horizontalSearchRange, int verticalSearchRange, Weight weight, Size size, net.minecraft.world.item.Item.Properties settings) {
+    public ProspectingPickaxeItem(ToolMaterial material, float attackDamage, float attackSpeed, int horizontalSearchRange, int verticalSearchRange, Weight weight, Size size, Item.Properties settings) {
         super(material, attackDamage, attackSpeed, weight, size, settings);
         this.horizontalSearchRange = horizontalSearchRange;
         this.verticalSearchRange = verticalSearchRange;

@@ -11,6 +11,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Tuple;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
@@ -26,7 +27,7 @@ public class MoldItem extends WeightedItem {
     public final TagKey<Fluid> validFluids;
     private static final int MAX_INSERTION_AMOUNT = 9000;
 
-    public MoldItem(Weight weight, Size size, int capacity, TagKey<Fluid> validFluids, net.minecraft.world.item.Item.Properties settings) {
+    public MoldItem(Weight weight, Size size, int capacity, TagKey<Fluid> validFluids, Item.Properties settings) {
         super(weight, size, 1, settings);
         this.capacity = capacity;
         this.validFluids = validFluids;

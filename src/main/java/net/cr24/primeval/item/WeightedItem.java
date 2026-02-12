@@ -19,14 +19,14 @@ public class WeightedItem extends Item implements IWeightedItem {
     protected final Weight weight;
     protected final Size size;
 
-    public WeightedItem(Weight weight, Size size, net.minecraft.world.item.Item.Properties settings) {
+    public WeightedItem(Weight weight, Size size, Item.Properties settings) {
         super(settings.stacksTo(size.getStackSize()));
         this.weight = weight;
         this.size = size;
     }
 
     // Constructor without size-dependent max-count
-    public WeightedItem(Weight weight, Size size, int stackSize, net.minecraft.world.item.Item.Properties settings) {
+    public WeightedItem(Weight weight, Size size, int stackSize, Item.Properties settings) {
         super(settings.stacksTo(stackSize));
         this.weight = weight;
         this.size = size;

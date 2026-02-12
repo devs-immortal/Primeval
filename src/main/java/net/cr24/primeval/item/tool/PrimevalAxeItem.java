@@ -23,7 +23,7 @@ public class PrimevalAxeItem extends AxeItem implements IWeightedItem {
     private final Weight weight;
     private final Size size;
 
-    public PrimevalAxeItem(ToolMaterial material, float attackDamage, float attackSpeed, Weight weight, Size size, net.minecraft.world.item.Item.Properties settings) {
+    public PrimevalAxeItem(ToolMaterial material, float attackDamage, float attackSpeed, Weight weight, Size size, Item.Properties settings) {
         super(material, attackDamage, attackSpeed, settings);
         this.weight = weight;
         this.size = size;

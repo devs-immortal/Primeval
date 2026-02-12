@@ -25,6 +25,7 @@ import net.minecraft.world.inventory.ClickAction;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.BundleItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.BundleContents;
@@ -43,7 +44,7 @@ public class VesselItem extends BundleItem implements IWeightedItem {
     private final Weight weight;
     private final Size size;
 
-    public VesselItem(Weight weight, Size size, net.minecraft.world.item.Item.Properties settings) {
+    public VesselItem(Weight weight, Size size, Item.Properties settings) {
         super(settings.stacksTo(1).component(DataComponents.BUNDLE_CONTENTS, BundleContents.EMPTY));
         this.weight = weight;
         this.size = size;

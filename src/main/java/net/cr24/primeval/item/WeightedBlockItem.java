@@ -7,6 +7,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
@@ -21,7 +22,7 @@ public class WeightedBlockItem extends BlockItem implements IWeightedItem {
     private final Weight weight;
     private final Size size;
 
-    public WeightedBlockItem(Block block, Weight weight, Size size, net.minecraft.world.item.Item.Properties settings) {
+    public WeightedBlockItem(Block block, Weight weight, Size size, Item.Properties settings) {
         super(block, settings.stacksTo(size.getStackSize()));
         this.weight = weight;
         this.size = size;

@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -18,7 +19,7 @@ public class LogItem extends WeightedBlockItem {
 
     private final Block logPileBlock;
 
-    public LogItem(Block block, Block logPileBlock, Weight weight, Size size, net.minecraft.world.item.Item.Properties settings) {
+    public LogItem(Block block, Block logPileBlock, Weight weight, Size size, Item.Properties settings) {
         super(block, weight, size, settings);
         this.logPileBlock = logPileBlock;
     }

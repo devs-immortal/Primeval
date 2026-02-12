@@ -20,7 +20,7 @@ public class ChiselItem extends Item implements IWeightedItem {
     private final Weight weight;
     private final Size size;
 
-    public ChiselItem(ToolMaterial material, float attackDamage, float attackSpeed, Weight weight, Size size, net.minecraft.world.item.Item.Properties settings) {
+    public ChiselItem(ToolMaterial material, float attackDamage, float attackSpeed, Weight weight, Size size, Item.Properties settings) {
         super(settings.tool(material, PrimevalTags.Blocks.MINEABLE_CHISEL, attackDamage, attackSpeed, 0.0F));
         this.weight = weight;
         this.size = size;
