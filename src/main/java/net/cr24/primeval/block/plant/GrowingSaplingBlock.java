@@ -2,11 +2,11 @@ package net.cr24.primeval.block.plant;
 
 import net.cr24.primeval.initialization.PrimevalTags;
 import net.cr24.primeval.world.trunker.AbstractTrunker;
-import net.minecraft.block.BlockState;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class GrowingSaplingBlock extends PrimevalPlantBlock {
 
@@ -15,21 +15,21 @@ public class GrowingSaplingBlock extends PrimevalPlantBlock {
 
     public final AbstractTrunker trunker;
 
-    public GrowingSaplingBlock(AbstractTrunker trunker, Settings settings) {
+    public GrowingSaplingBlock(AbstractTrunker trunker, Properties settings) {
         super(settings);
         this.trunker = trunker;
     }
 
-    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
         if (inGrowableArea(world, pos)) {
             trunker.growSapling(world, pos, random);
         }
     }
 
-    public boolean inGrowableArea(World world, BlockPos pos) {
-        if (world.getBlockState(pos.down()).isIn(PrimevalTags.Blocks.SPECIAL_PLANTABLE)) return false;
+    public boolean inGrowableArea(Level world, BlockPos pos) {
+        if (world.getBlockState(pos.below()).is(PrimevalTags.Blocks.SPECIAL_PLANTABLE)) return false;
         // If too dark
-        if (world.getLightLevel(pos) < 11) return false;
+        if (world.getMaxLocalRawBrightness(pos) < 11) return false;
         // If not in air bubble
         int maxX = pos.getX() + GROW_RADIUS;
         int maxY = pos.getY() + GROW_HEIGHT;

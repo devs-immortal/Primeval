@@ -10,10 +10,10 @@ import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.cr24.primeval.recipe.MeltingRecipe;
 import net.cr24.primeval.recipe.PitKilnFiringRecipe;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.recipe.RecipeEntry;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
@@ -29,17 +29,17 @@ public class MeltingDisplay extends BasicDisplay {
                             Identifier.CODEC.optionalFieldOf("location").forGetter(BasicDisplay::getDisplayLocation)
                     ).apply(instance, MeltingDisplay::new)
             ),
-            PacketCodec.tuple(
-                    EntryIngredient.streamCodec().collect(PacketCodecs.toList()), BasicDisplay::getInputEntries,
-                    EntryIngredient.streamCodec().collect(PacketCodecs.toList()), BasicDisplay::getOutputEntries,
-                    PacketCodecs.optional(Identifier.PACKET_CODEC), BasicDisplay::getDisplayLocation,
+            StreamCodec.composite(
+                    EntryIngredient.streamCodec().apply(ByteBufCodecs.list()), BasicDisplay::getInputEntries,
+                    EntryIngredient.streamCodec().apply(ByteBufCodecs.list()), BasicDisplay::getOutputEntries,
+                    ByteBufCodecs.optional(Identifier.STREAM_CODEC), BasicDisplay::getDisplayLocation,
                     MeltingDisplay::new)
     );
 
-    public MeltingDisplay(RecipeEntry<MeltingRecipe> recipe) {
+    public MeltingDisplay(RecipeHolder<MeltingRecipe> recipe) {
         this(Collections.singletonList(EntryIngredients.ofIngredient(recipe.value().getInput())),
                 Collections.singletonList(EntryIngredients.of(FluidStack.create(recipe.value().getFluidResult(), recipe.value().getFluidAmount()))),
-                Optional.ofNullable(recipe.id().getValue())
+                Optional.ofNullable(recipe.id().identifier())
         );
     }
 

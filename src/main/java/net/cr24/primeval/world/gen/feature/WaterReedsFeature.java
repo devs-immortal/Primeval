@@ -3,36 +3,36 @@ package net.cr24.primeval.world.gen.feature;
 import com.mojang.serialization.Codec;
 import net.cr24.primeval.block.plant.ReedsBlock;
 import net.cr24.primeval.initialization.PrimevalBlocks;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.Heightmap;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.util.FeatureContext;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class WaterReedsFeature extends Feature<DefaultFeatureConfig> {
-    public WaterReedsFeature(Codec<DefaultFeatureConfig> codec) {
+public class WaterReedsFeature extends Feature<NoneFeatureConfiguration> {
+    public WaterReedsFeature(Codec<NoneFeatureConfiguration> codec) {
         super(codec);
     }
 
-    public boolean generate(FeatureContext<DefaultFeatureConfig> context) {
+    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
         boolean bl = false;
-        Random random = context.getRandom();
-        StructureWorldAccess structureWorldAccess = context.getWorld();
-        BlockPos blockPos = context.getOrigin();
+        RandomSource random = context.random();
+        WorldGenLevel structureWorldAccess = context.level();
+        BlockPos blockPos = context.origin();
         int i = random.nextInt(8) - random.nextInt(8);
         int j = random.nextInt(8) - random.nextInt(8);
-        int k = structureWorldAccess.getTopY(Heightmap.Type.OCEAN_FLOOR, blockPos.getX() + i, blockPos.getZ() + j);
+        int k = structureWorldAccess.getHeight(Heightmap.Types.OCEAN_FLOOR, blockPos.getX() + i, blockPos.getZ() + j);
         BlockPos blockPos2 = new BlockPos(blockPos.getX() + i, k, blockPos.getZ() + j);
-        if (structureWorldAccess.getBlockState(blockPos2).isOf(Blocks.WATER) && structureWorldAccess.getBlockState(blockPos2.up()).isAir()) {
-            BlockState blockState = PrimevalBlocks.REEDS.getDefaultState();
-            if (blockState.canPlaceAt(structureWorldAccess, blockPos2)) {
-                structureWorldAccess.setBlockState(blockPos2, blockState.with(ReedsBlock.WATERLOGGED, true).with(ReedsBlock.CAP, false), 2);
-                structureWorldAccess.setBlockState(blockPos2.up(), blockState.with(ReedsBlock.CAP, false).with(ReedsBlock.AGE, 1), 2);
-                structureWorldAccess.setBlockState(blockPos2.up(2), blockState.with(ReedsBlock.CAP, true).with(ReedsBlock.AGE, 2), 2);
+        if (structureWorldAccess.getBlockState(blockPos2).is(Blocks.WATER) && structureWorldAccess.getBlockState(blockPos2.above()).isAir()) {
+            BlockState blockState = PrimevalBlocks.REEDS.defaultBlockState();
+            if (blockState.canSurvive(structureWorldAccess, blockPos2)) {
+                structureWorldAccess.setBlock(blockPos2, blockState.setValue(ReedsBlock.WATERLOGGED, true).setValue(ReedsBlock.CAP, false), 2);
+                structureWorldAccess.setBlock(blockPos2.above(), blockState.setValue(ReedsBlock.CAP, false).setValue(ReedsBlock.AGE, 1), 2);
+                structureWorldAccess.setBlock(blockPos2.above(2), blockState.setValue(ReedsBlock.CAP, true).setValue(ReedsBlock.AGE, 2), 2);
                 bl = true;
             }
         }

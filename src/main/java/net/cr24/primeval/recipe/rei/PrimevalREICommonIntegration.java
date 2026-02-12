@@ -11,9 +11,8 @@ import net.cr24.primeval.initialization.PrimevalRecipes;
 import net.cr24.primeval.item.MoldItem;
 import net.cr24.primeval.recipe.*;
 import net.cr24.primeval.util.PrimevalDataComponentTypes;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import java.util.stream.Stream;
 
 public class PrimevalREICommonIntegration implements REICommonPlugin {
@@ -23,7 +22,7 @@ public class PrimevalREICommonIntegration implements REICommonPlugin {
         support.register(entry -> {
             ItemStack stack = entry.getValue();
             Item item = stack.getItem();
-            if (stack.contains(PrimevalDataComponentTypes.FLUID_CONTENTS)) {
+            if (stack.has(PrimevalDataComponentTypes.FLUID_CONTENTS)) {
                 return CompoundEventResult.interruptTrue(Stream.of(EntryStacks.of(
                         stack.get(PrimevalDataComponentTypes.FLUID_CONTENTS).fluid().value(),
                         item instanceof MoldItem ? ((MoldItem) item).getCapacity() : 9000

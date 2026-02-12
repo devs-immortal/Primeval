@@ -1,9 +1,9 @@
 package net.cr24.primeval.block.entity;
 
 import net.cr24.primeval.initialization.PrimevalBlocks;
-import net.minecraft.block.BlockState;
-import net.minecraft.text.Text;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class WickerBasketBlockEntity extends NineStorageBlockEntity {
 
@@ -12,8 +12,8 @@ public class WickerBasketBlockEntity extends NineStorageBlockEntity {
     }
 
     @Override
-    protected Text getContainerName() {
-        return Text.translatable("container.primeval.wicker_basket");
+    protected Component getDefaultName() {
+        return Component.translatable("container.primeval.wicker_basket");
     }
 
 }

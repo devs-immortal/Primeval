@@ -1,40 +1,37 @@
 package net.cr24.primeval.initialization;
 
-import net.minecraft.component.type.ConsumableComponent;
-import net.minecraft.component.type.FoodComponent;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.item.consume.ApplyEffectsConsumeEffect;
-import net.minecraft.item.consume.ConsumeEffect;
-import net.minecraft.item.consume.UseAction;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.sound.SoundEvents;
-
 import java.util.Arrays;
 import java.util.List;
+import net.minecraft.core.Holder;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.ItemUseAnimation;
+import net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect;
+import net.minecraft.world.item.consume_effects.ConsumeEffect;
 
 public class PrimevalItemActions {
 
-    public static FoodComponent foodComponent(int nutrition, float saturationModifier) {
-        return new FoodComponent.Builder().nutrition(nutrition).saturationModifier(saturationModifier).build();
+    public static FoodProperties foodComponent(int nutrition, float saturationModifier) {
+        return new FoodProperties.Builder().nutrition(nutrition).saturationModifier(saturationModifier).build();
     }
 
-    public static FoodComponent foodComponent(int nutrition, float saturationModifier, boolean alwaysEat) {
+    public static FoodProperties foodComponent(int nutrition, float saturationModifier, boolean alwaysEat) {
         if (alwaysEat) {
-            return new FoodComponent.Builder().nutrition(nutrition).saturationModifier(saturationModifier).alwaysEdible().build();
+            return new FoodProperties.Builder().nutrition(nutrition).saturationModifier(saturationModifier).alwaysEdible().build();
         } else {
-            return new FoodComponent.Builder().nutrition(nutrition).saturationModifier(saturationModifier).build();
+            return new FoodProperties.Builder().nutrition(nutrition).saturationModifier(saturationModifier).build();
         }
     }
 
-    public static ConsumableComponent consumableComponent(Consumable... consumeEffects) {
-        return new ConsumableComponent(1.6f, UseAction.EAT, SoundEvents.ENTITY_GENERIC_EAT, true, Arrays.stream(consumeEffects).map(Consumable::asConsumeEffect).toList());
+    public static net.minecraft.world.item.component.Consumable consumableComponent(Consumable... consumeEffects) {
+        return new net.minecraft.world.item.component.Consumable(1.6f, ItemUseAnimation.EAT, SoundEvents.GENERIC_EAT, true, Arrays.stream(consumeEffects).map(Consumable::asConsumeEffect).toList());
     }
 
-    public record Consumable(RegistryEntry<StatusEffect> effect, int duration, int amplifier, float chance) {
+    public record Consumable(Holder<MobEffect> effect, int duration, int amplifier, float chance) {
         public ConsumeEffect asConsumeEffect() {
-            return new ApplyEffectsConsumeEffect(new StatusEffectInstance(effect, duration, amplifier), chance);
+            return new ApplyStatusEffectsConsumeEffect(new MobEffectInstance(effect, duration, amplifier), chance);
         }
     }
 

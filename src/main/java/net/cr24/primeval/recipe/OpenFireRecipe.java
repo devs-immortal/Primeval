@@ -3,15 +3,17 @@ package net.cr24.primeval.recipe;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.cr24.primeval.initialization.PrimevalRecipes;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.recipe.*;
-import net.minecraft.recipe.book.RecipeBookCategory;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.dynamic.Codecs;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.util.ExtraCodecs;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.PlacementInfo;
+import net.minecraft.world.item.crafting.RecipeBookCategory;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.block.Blocks;
 
 public class OpenFireRecipe extends SimpleOneToOneRecipe {
 
@@ -42,12 +44,12 @@ public class OpenFireRecipe extends SimpleOneToOneRecipe {
     }
 
     @Override
-    public IngredientPlacement getIngredientPlacement() {
-        return IngredientPlacement.NONE;
+    public PlacementInfo placementInfo() {
+        return PlacementInfo.NOT_PLACEABLE;
     }
 
     @Override
-    public RecipeBookCategory getRecipeBookCategory() {
+    public RecipeBookCategory recipeBookCategory() {
         return null;
     }
 
@@ -55,12 +57,12 @@ public class OpenFireRecipe extends SimpleOneToOneRecipe {
         private static final MapCodec<OpenFireRecipe> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
                 Ingredient.CODEC.fieldOf("input").forGetter((recipe) -> recipe.input),
                 ItemStack.CODEC.fieldOf("result").forGetter((recipe) -> recipe.result),
-                Codecs.POSITIVE_INT.fieldOf("cook_time").forGetter((recipe) -> recipe.cookTime)
+                ExtraCodecs.POSITIVE_INT.fieldOf("cook_time").forGetter((recipe) -> recipe.cookTime)
         ).apply(instance, OpenFireRecipe::new));
-        private static final PacketCodec<RegistryByteBuf, OpenFireRecipe> PACKET_CODEC = PacketCodec.tuple(
-                Ingredient.PACKET_CODEC, OpenFireRecipe::getInput,
-                ItemStack.PACKET_CODEC, OpenFireRecipe::getResult,
-                PacketCodecs.INTEGER, OpenFireRecipe::getCookTime,
+        private static final StreamCodec<RegistryFriendlyByteBuf, OpenFireRecipe> PACKET_CODEC = StreamCodec.composite(
+                Ingredient.CONTENTS_STREAM_CODEC, OpenFireRecipe::getInput,
+                ItemStack.STREAM_CODEC, OpenFireRecipe::getResult,
+                ByteBufCodecs.INT, OpenFireRecipe::getCookTime,
                 OpenFireRecipe::new
         );
 
@@ -71,7 +73,7 @@ public class OpenFireRecipe extends SimpleOneToOneRecipe {
             return this.CODEC;
         }
 
-        public PacketCodec<RegistryByteBuf, OpenFireRecipe> packetCodec() {
+        public StreamCodec<RegistryFriendlyByteBuf, OpenFireRecipe> streamCodec() {
             return this.PACKET_CODEC;
         }
     }

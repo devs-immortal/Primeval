@@ -1,15 +1,15 @@
 package net.cr24.primeval.world.gen.structure;
 
 import net.cr24.primeval.Primeval;
-import net.minecraft.registry.Registries;
-import net.minecraft.structure.StructurePieceType;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.util.Identifier;
-import net.minecraft.registry.Registry;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.structure.Structure;
-import net.minecraft.world.gen.structure.StructureType;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.StructureType;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
 
 public class PrimevalStructures {
 
@@ -17,7 +17,7 @@ public class PrimevalStructures {
     public static final TagKey<Biome> HAS_NATIVE_COPPER = tagkey("has_copper");
 
     private static TagKey<Biome> tagkey(String id) {
-        return TagKey.of(RegistryKeys.BIOME, Primeval.identify(id));
+        return TagKey.create(Registries.BIOME, Primeval.identify(id));
     }
 
     /* STRUCTURES */
@@ -37,7 +37,7 @@ public class PrimevalStructures {
     public static final StructurePieceType ORE_FIELD_PIECE = OreFieldGenerator.Blob::new;
 
     private static TagKey<Structure> tagKey(String name) {
-        return TagKey.of(RegistryKeys.STRUCTURE, Primeval.identify(name));
+        return TagKey.create(Registries.STRUCTURE, Primeval.identify(name));
     }
 
     public static void init() {
@@ -51,10 +51,10 @@ public class PrimevalStructures {
     }
 
     private static <T extends Structure> void register(TagKey<? extends T> name, StructureType<? extends T> type) {
-        var id = name.id();
-        Registry.register(Registries.STRUCTURE_TYPE, id, type);
+        var id = name.location();
+        Registry.register(BuiltInRegistries.STRUCTURE_TYPE, id, type);
     }
     private static <T extends Structure> void register(Identifier id, StructurePieceType pieceType) {
-        Registry.register(Registries.STRUCTURE_PIECE, id, pieceType);
+        Registry.register(BuiltInRegistries.STRUCTURE_PIECE, id, pieceType);
     }
 }

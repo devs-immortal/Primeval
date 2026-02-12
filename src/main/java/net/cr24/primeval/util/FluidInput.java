@@ -1,25 +1,23 @@
 package net.cr24.primeval.util;
 
-import net.minecraft.fluid.Fluid;
-import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.input.RecipeInput;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.util.Pair;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import net.minecraft.core.Holder;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeInput;
+import net.minecraft.world.level.material.Fluid;
 
 public class FluidInput implements RecipeInput {
 
-    Map<RegistryEntry<Fluid>, Integer> fluidContents;
+    Map<Holder<Fluid>, Integer> fluidContents;
 
-    public FluidInput(Map<RegistryEntry<Fluid>, Integer> fluids) {
+    public FluidInput(Map<Holder<Fluid>, Integer> fluids) {
         this.fluidContents = fluids;
     }
 
     @Override
-    public ItemStack getStackInSlot(int slot) {
+    public ItemStack getItem(int slot) {
         return ItemStack.EMPTY;
     }
 
@@ -32,7 +30,7 @@ public class FluidInput implements RecipeInput {
         return fluidContents.isEmpty();
     }
 
-    public Map<RegistryEntry<Fluid>, Integer> getContents() {
+    public Map<Holder<Fluid>, Integer> getContents() {
         return fluidContents;
     }
 }

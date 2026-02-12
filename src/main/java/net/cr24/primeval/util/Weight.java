@@ -1,7 +1,6 @@
 package net.cr24.primeval.util;
 
-import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableTextContent;
+import net.minecraft.network.chat.Component;
 
 public enum Weight {
     VERY_LIGHT,
@@ -10,20 +9,20 @@ public enum Weight {
     HEAVY,
     VERY_HEAVY;
 
-    public Text getText() {
+    public Component getText() {
         switch(this) {
             case VERY_LIGHT:
-                return Text.translatable("text.primeval.weight.very_light");
+                return Component.translatable("text.primeval.weight.very_light");
             case LIGHT:
-                return Text.translatable("text.primeval.weight.light");
+                return Component.translatable("text.primeval.weight.light");
             case NORMAL:
-                return Text.translatable("text.primeval.weight.normal");
+                return Component.translatable("text.primeval.weight.normal");
             case HEAVY:
-                return Text.translatable("text.primeval.weight.heavy");
+                return Component.translatable("text.primeval.weight.heavy");
             case VERY_HEAVY:
-                return Text.translatable("text.primeval.weight.very_heavy");
+                return Component.translatable("text.primeval.weight.very_heavy");
         }
-        return Text.translatable("text.primeval.weight.normal");
+        return Component.translatable("text.primeval.weight.normal");
     }
 
 }

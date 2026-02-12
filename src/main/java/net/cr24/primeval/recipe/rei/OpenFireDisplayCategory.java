@@ -11,7 +11,7 @@ import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.cr24.primeval.initialization.PrimevalBlocks;
 import net.cr24.primeval.initialization.PrimevalItems;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
 import java.util.List;
 
 public class OpenFireDisplayCategory implements DisplayCategory<OpenFireDisplay> {
@@ -21,8 +21,8 @@ public class OpenFireDisplayCategory implements DisplayCategory<OpenFireDisplay>
     }
 
     @Override
-    public Text getTitle() {
-        return Text.translatable("category.primeval.open_fire");
+    public Component getTitle() {
+        return Component.translatable("category.primeval.open_fire");
     }
 
     @Override
@@ -36,7 +36,7 @@ public class OpenFireDisplayCategory implements DisplayCategory<OpenFireDisplay>
         List<Widget> widgets = Lists.newArrayList();
         widgets.add(Widgets.createRecipeBase(bounds));
         widgets.add(Widgets.createArrow(new Point(startPoint.x + 27, startPoint.y + 4)));
-        widgets.add(Widgets.createLabel(new Point(startPoint.x+40, startPoint.y+23), Text.of(display.getCookTime()+"⧖")));
+        widgets.add(Widgets.createLabel(new Point(startPoint.x+40, startPoint.y+23), Component.nullToEmpty(display.getCookTime()+"⧖")));
         widgets.add(Widgets.createResultSlotBackground(new Point(startPoint.x + 61, startPoint.y + 5)));
         widgets.add(Widgets.createSlot(new Point(startPoint.x + 4, startPoint.y + 5)).entries(display.getIn()).markInput());
         widgets.add(Widgets.createSlot(new Point(startPoint.x + 61, startPoint.y + 5)).entries(display.getOut()).disableBackground().markOutput());

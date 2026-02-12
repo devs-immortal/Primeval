@@ -1,35 +1,38 @@
 package net.cr24.primeval.block;
 
 import net.cr24.primeval.item.tool.PrimevalHoeItem;
-import net.minecraft.block.*;
-import net.minecraft.registry.tag.FluidTags;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.IntProperty;
-import net.minecraft.util.StringIdentifiable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.tick.ScheduledTickView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.util.RandomSource;
+import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.FenceGateBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class PrimevalFarmlandBlock extends SemiSupportedBlock {
 
-    public static final IntProperty MOISTURE;
-    public static final IntProperty FERTILIZED;
+    public static final IntegerProperty MOISTURE;
+    public static final IntegerProperty FERTILIZED;
     public static final EnumProperty<PrimevalFarmlandBlockFertilizerType> TYPE;
     public final Block turnsTo;
-    protected static final VoxelShape SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 15.0, 16.0);
+    protected static final VoxelShape SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 15.0, 16.0);
 
-    public PrimevalFarmlandBlock(float percentPerSide, Block resultBlock, Block[] sourceBlocks, Settings settings) {
+    public PrimevalFarmlandBlock(float percentPerSide, Block resultBlock, Block[] sourceBlocks, Properties settings) {
         this(percentPerSide, resultBlock, resultBlock, sourceBlocks, settings);
     }
 
-    public PrimevalFarmlandBlock(float percentPerSide, Block fallBlock, Block turnsTo, Block[] sourceBlocks, Settings settings) {
+    public PrimevalFarmlandBlock(float percentPerSide, Block fallBlock, Block turnsTo, Block[] sourceBlocks, Properties settings) {
         super(percentPerSide, fallBlock, settings);
         this.turnsTo = turnsTo;
         for (Block b : sourceBlocks) {
@@ -38,17 +41,17 @@ public class PrimevalFarmlandBlock extends SemiSupportedBlock {
     }
 
     @Override
-    public BlockState getStateForNeighborUpdate(BlockState state, WorldView world, ScheduledTickView tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random) {
+    public BlockState updateShape(BlockState state, LevelReader world, ScheduledTickAccess tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
         if (direction == Direction.UP) {
             if (!(neighborState.getBlock() instanceof FenceGateBlock) && neighborState.isSolid()) {
-                return turnsTo.getDefaultState();
+                return turnsTo.defaultBlockState();
             }
         }
-        return super.getStateForNeighborUpdate(state, world, tickView, pos, direction, neighborPos, neighborState, random);
+        return super.updateShape(state, world, tickView, pos, direction, neighborPos, neighborState, random);
     }
 
     @Override
-    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
         super.randomTick(state, world, pos, random);
         BlockPos[] adjacent = new BlockPos[] {
                 pos.north(),
@@ -58,22 +61,22 @@ public class PrimevalFarmlandBlock extends SemiSupportedBlock {
         };
         int highest = 0;
         for (BlockPos b : adjacent) {
-            if (world.getFluidState(b).isIn(FluidTags.WATER)) {
+            if (world.getFluidState(b).is(FluidTags.WATER)) {
                 highest = 4;
             } else {
                 BlockState dest = world.getBlockState(b);
-                if (dest.getBlock() instanceof PrimevalFarmlandBlock && highest < dest.get(MOISTURE)) {
-                    highest = dest.get(PrimevalFarmlandBlock.MOISTURE) - 1;
+                if (dest.getBlock() instanceof PrimevalFarmlandBlock && highest < dest.getValue(MOISTURE)) {
+                    highest = dest.getValue(PrimevalFarmlandBlock.MOISTURE) - 1;
                 }
             }
         }
-        world.setBlockState(pos, state.with(MOISTURE, highest));
-        if (!isWaterInRange(world, pos) && state.get(MOISTURE) == 0 && highest == 0) {
-            world.setBlockState(pos, turnsTo.getDefaultState());
+        world.setBlockAndUpdate(pos, state.setValue(MOISTURE, highest));
+        if (!isWaterInRange(world, pos) && state.getValue(MOISTURE) == 0 && highest == 0) {
+            world.setBlockAndUpdate(pos, turnsTo.defaultBlockState());
         }
     }
 
-    private boolean isWaterInRange(World world, BlockPos pos) {
+    private boolean isWaterInRange(Level world, BlockPos pos) {
         int maxRange = 4;
 
         int step = -maxRange;
@@ -82,7 +85,7 @@ public class PrimevalFarmlandBlock extends SemiSupportedBlock {
         while (!found && step <= maxRange) {
             int searchSize = maxRange - Math.abs(step);
             for (int y = -searchSize; y <= searchSize; y++) {
-                if (world.getFluidState(pos.north(step).east(y)).isIn(FluidTags.WATER)) found = true;
+                if (world.getFluidState(pos.north(step).east(y)).is(FluidTags.WATER)) found = true;
             }
             step++;
         }
@@ -90,31 +93,31 @@ public class PrimevalFarmlandBlock extends SemiSupportedBlock {
     }
 
     @Override
-    public boolean hasSidedTransparency(BlockState state) {
+    public boolean useShapeForLightOcclusion(BlockState state) {
         return true;
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
 
     @Override
-    public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+    public VoxelShape getCollisionShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
 
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(MOISTURE, FERTILIZED, TYPE);
     }
 
     static {
-        MOISTURE = IntProperty.of("moisture", 0, 4);
-        FERTILIZED = IntProperty.of("fertilized", 0, 15);
-        TYPE = EnumProperty.of("fertilizer_type", PrimevalFarmlandBlockFertilizerType.class);
+        MOISTURE = IntegerProperty.create("moisture", 0, 4);
+        FERTILIZED = IntegerProperty.create("fertilized", 0, 15);
+        TYPE = EnumProperty.create("fertilizer_type", PrimevalFarmlandBlockFertilizerType.class);
     }
 
-    public enum PrimevalFarmlandBlockFertilizerType implements StringIdentifiable {
+    public enum PrimevalFarmlandBlockFertilizerType implements StringRepresentable {
         NONE("none"),
         BONEMEAL("bonemeal");
 
@@ -129,7 +132,7 @@ public class PrimevalFarmlandBlock extends SemiSupportedBlock {
         }
 
         @Override
-        public String asString() {
+        public String getSerializedName() {
             return this.name;
         }
     }

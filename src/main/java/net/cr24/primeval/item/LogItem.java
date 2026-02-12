@@ -3,57 +3,57 @@ package net.cr24.primeval.item;
 import net.cr24.primeval.block.functional.LogPileBlock;
 import net.cr24.primeval.util.Size;
 import net.cr24.primeval.util.Weight;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
 import org.jetbrains.annotations.Nullable;
 
 public class LogItem extends WeightedBlockItem {
 
     private final Block logPileBlock;
 
-    public LogItem(Block block, Block logPileBlock, Weight weight, Size size, net.minecraft.item.Item.Settings settings) {
+    public LogItem(Block block, Block logPileBlock, Weight weight, Size size, net.minecraft.world.item.Item.Properties settings) {
         super(block, weight, size, settings);
         this.logPileBlock = logPileBlock;
     }
 
-    public ActionResult place(ItemPlacementContext context) {
+    public InteractionResult place(BlockPlaceContext context) {
         if (!context.canPlace()) {
-            return ActionResult.FAIL;
+            return InteractionResult.FAIL;
         } else {
-            ItemPlacementContext itemPlacementContext = this.getPlacementContext(context);
+            BlockPlaceContext itemPlacementContext = this.updatePlacementContext(context);
             if (itemPlacementContext == null) {
-                return ActionResult.FAIL;
+                return InteractionResult.FAIL;
             } else {
                 BlockState blockState = this.getPlacementState(itemPlacementContext);
                 if (blockState == null) {
-                    return ActionResult.FAIL;
-                } else if (!this.place(itemPlacementContext, blockState)) {
-                    return ActionResult.FAIL;
+                    return InteractionResult.FAIL;
+                } else if (!this.placeBlock(itemPlacementContext, blockState)) {
+                    return InteractionResult.FAIL;
                 }
-                context.getWorld().playSound(null, context.getBlockPos(), SoundEvents.BLOCK_WOOD_PLACE, SoundCategory.BLOCKS, 0.7f, context.getWorld().getRandom().nextFloat() * 0.4f + 0.8f);
+                context.getLevel().playSound(null, context.getClickedPos(), SoundEvents.WOOD_PLACE, SoundSource.BLOCKS, 0.7f, context.getLevel().getRandom().nextFloat() * 0.4f + 0.8f);
             }
         }
-        if (!context.getPlayer().isInCreativeMode())
-            context.getStack().decrement(1);
-        return ActionResult.SUCCESS;
+        if (!context.getPlayer().hasInfiniteMaterials())
+            context.getItemInHand().shrink(1);
+        return InteractionResult.SUCCESS;
     }
 
     @Nullable
-    protected BlockState getPlacementState(ItemPlacementContext context) {
+    protected BlockState getPlacementState(BlockPlaceContext context) {
         BlockState blockState;
-        if (context.getPlayer() != null && context.getPlayer().isSneaking()) {
-            World world = context.getWorld();
-            BlockPos pos = context.getBlockPos();
-            blockState = logPileBlock.getDefaultState().with(LogPileBlock.WATERLOGGED, world.getFluidState(pos).getFluid() == Fluids.WATER);
+        if (context.getPlayer() != null && context.getPlayer().isShiftKeyDown()) {
+            Level world = context.getLevel();
+            BlockPos pos = context.getClickedPos();
+            blockState = logPileBlock.defaultBlockState().setValue(LogPileBlock.WATERLOGGED, world.getFluidState(pos).getType() == Fluids.WATER);
         } else {
-            blockState = this.getBlock().getPlacementState(context);
+            blockState = this.getBlock().getStateForPlacement(context);
         }
         return blockState != null && this.canPlace(context, blockState) ? blockState : null;
     }

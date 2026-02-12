@@ -7,9 +7,8 @@ import me.shedaniel.rei.plugin.common.displays.crafting.DefaultCustomShapelessDi
 import net.cr24.primeval.item.MoldItem;
 import net.cr24.primeval.recipe.MoldCastingRecipe;
 import net.cr24.primeval.util.PrimevalDataComponentTypes;
-import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.RecipeEntry;
-
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -22,13 +21,13 @@ public class MoldCastingRecipeFiller implements CraftingRecipeFiller<MoldCasting
     }
 
     @Override
-    public Collection<Display> apply(RecipeEntry<MoldCastingRecipe> recipe) {
-        MoldItem mold = (MoldItem) recipe.value().getMold().getMatchingItems().findAny().get().value();
+    public Collection<Display> apply(RecipeHolder<MoldCastingRecipe> recipe) {
+        MoldItem mold = (MoldItem) recipe.value().getMold().items().findAny().get().value();
         ItemStack filledMold = new ItemStack(mold);
         filledMold.set(PrimevalDataComponentTypes.FLUID_CONTENTS, new PrimevalDataComponentTypes.FluidContentComponent(recipe.value().getFluid(), mold.getCapacity()));
         return List.of(new DefaultCustomShapelessDisplay(
                 List.of(EntryIngredients.of(filledMold)),
                 List.of(EntryIngredients.of(recipe.value().getResult())),
-                Optional.of(recipe.id().getValue())));
+                Optional.of(recipe.id().identifier())));
     }
 }

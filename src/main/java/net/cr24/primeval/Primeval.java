@@ -12,12 +12,10 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.api.ModInitializer;
-
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.client.render.item.property.select.CustomModelDataStringProperty;
-import net.minecraft.client.render.item.property.select.SelectProperties;
-import net.minecraft.util.ErrorReporter;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.renderer.item.properties.select.SelectItemModelProperties;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.ProblemReporter;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,14 +44,14 @@ public class Primeval implements ModInitializer, ClientModInitializer {
 	public void onInitializeClient() {
 		PrimevalBlocks.initClient();
 		PrimevalFluids.initClient();
-		SelectProperties.ID_MAPPER.put(identify("fluid_contents"), FluidContentProperty.TYPE);
+		SelectItemModelProperties.ID_MAPPER.put(identify("fluid_contents"), FluidContentProperty.TYPE);
 	}
 
 	public static Identifier identify(String id) {
-		return Identifier.of(MOD_ID, id);
+		return Identifier.fromNamespaceAndPath(MOD_ID, id);
 	}
 
-    public static ErrorReporter errorReporter(BlockEntity be) {
-        return new ErrorReporter.Logging(be.getReporterContext(), LOGGER);
+    public static ProblemReporter errorReporter(BlockEntity be) {
+        return new ProblemReporter.ScopedCollector(be.problemPath(), LOGGER);
     }
 }

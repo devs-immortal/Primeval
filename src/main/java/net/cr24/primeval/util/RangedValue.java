@@ -7,28 +7,23 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.TransferVariant;
 import net.fabricmc.fabric.impl.transfer.VariantCodecs;
 import net.fabricmc.fabric.impl.transfer.fluid.FluidVariantImpl;
-import net.minecraft.component.ComponentChanges;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableTextContent;
-import net.minecraft.util.dynamic.Codecs;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.util.ExtraCodecs;
 
 public class RangedValue {
 
     // Codecs
     public static final Codec<RangedValue> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
-            Codecs.POSITIVE_FLOAT.fieldOf("max").forGetter(RangedValue::getUpper),
-            Codecs.POSITIVE_FLOAT.fieldOf("min").forGetter(RangedValue::getLower)
+            ExtraCodecs.POSITIVE_FLOAT.fieldOf("max").forGetter(RangedValue::getUpper),
+            ExtraCodecs.POSITIVE_FLOAT.fieldOf("min").forGetter(RangedValue::getLower)
     ).apply(instance, RangedValue::new));
 
-    public static final PacketCodec<RegistryByteBuf, RangedValue> PACKET_CODEC = PacketCodec.tuple(
-            PacketCodecs.FLOAT, RangedValue::getUpper,
-            PacketCodecs.FLOAT, RangedValue::getLower,
+    public static final StreamCodec<RegistryFriendlyByteBuf, RangedValue> PACKET_CODEC = StreamCodec.composite(
+            ByteBufCodecs.FLOAT, RangedValue::getUpper,
+            ByteBufCodecs.FLOAT, RangedValue::getLower,
             RangedValue::new);
 
     private float upperAmount;
@@ -64,9 +59,9 @@ public class RangedValue {
 //        return "RangedFluid of "+this.fluid+" between "+this.upperAmount+" and "+this.lowerAmount;
 //    }
 
-    public Text toPercentLabel() {
+    public Component toPercentLabel() {
         int upperPercent = (int) (100 * this.upperAmount);
         int lowerPercent = (int) (100 * this.lowerAmount);
-        return Text.translatable(lowerPercent + "-" + upperPercent + "%");
+        return Component.translatable(lowerPercent + "-" + upperPercent + "%");
     }
 }

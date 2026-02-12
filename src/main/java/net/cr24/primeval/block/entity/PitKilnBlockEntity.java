@@ -9,25 +9,21 @@ import net.cr24.primeval.recipe.MeltingRecipe;
 import net.cr24.primeval.recipe.PitKilnFiringRecipe;
 import net.cr24.primeval.recipe.QuernRecipe;
 import net.cr24.primeval.util.FluidInput;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.inventory.Inventories;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.recipe.ServerRecipeManager;
-import net.minecraft.recipe.input.SingleStackRecipeInput;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.storage.NbtWriteView;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.Clearable;
-import net.minecraft.util.ErrorReporter;
-import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.math.BlockPos;
-
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.Clearable;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.TagValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import java.util.Optional;
 import java.util.Stack;
 
@@ -47,36 +43,36 @@ public class PitKilnBlockEntity extends BlockEntity implements Clearable {
         this.burnTimer = -1;
     }
 
-    protected void readData(ReadView view) {
-        super.readData(view);
+    protected void loadAdditional(ValueInput view) {
+        super.loadAdditional(view);
         for (int i = 0; i < 4; i++) {
             this.logs.clear();
             this.logs.push(view.read("Log"+i, ItemStack.CODEC).orElse(ItemStack.EMPTY));
             this.inventory[i] = view.read("Item"+i, ItemStack.CODEC).orElse(ItemStack.EMPTY);
         }
-        this.burnTimer = view.getInt("burnTimer", -1);
+        this.burnTimer = view.getIntOr("burnTimer", -1);
     }
 
-    protected void writeData(WriteView view) {
-        super.writeData(view);
+    protected void saveAdditional(ValueOutput view) {
+        super.saveAdditional(view);
         for (int i = 0; i < 4; i++) {
             if (i < this.logs.size() && !this.logs.get(i).isEmpty()) {
-                view.put("Log"+i, ItemStack.CODEC, this.logs.get(i));
+                view.store("Log"+i, ItemStack.CODEC, this.logs.get(i));
             }
             if (!this.inventory[i].isEmpty()) {
-                view.put("Item"+i, ItemStack.CODEC, this.inventory[i]);
+                view.store("Item"+i, ItemStack.CODEC, this.inventory[i]);
             }
         }
         view.putInt("burnTimer", this.burnTimer);
     }
 
-    public static void serverTick(ServerWorld serverWorld, BlockPos pos, BlockState state, PitKilnBlockEntity blockEntity, ServerRecipeManager.MatchGetter<SingleStackRecipeInput, PitKilnFiringRecipe> recipeMatchGetter, ServerRecipeManager.MatchGetter<SingleStackRecipeInput, MeltingRecipe> vesselRecipeMatchGetter, ServerRecipeManager.MatchGetter<FluidInput, AlloyingRecipe> alloyMatchGetter) {
+    public static void serverTick(ServerLevel serverWorld, BlockPos pos, BlockState state, PitKilnBlockEntity blockEntity, RecipeManager.CachedCheck<SingleRecipeInput, PitKilnFiringRecipe> recipeMatchGetter, RecipeManager.CachedCheck<SingleRecipeInput, MeltingRecipe> vesselRecipeMatchGetter, RecipeManager.CachedCheck<FluidInput, AlloyingRecipe> alloyMatchGetter) {
         if (blockEntity.burnTimer > 0) {
             blockEntity.burnTimer--;
         } else if (blockEntity.burnTimer == 0) { // WHEN FINISHES FIRING
             ItemStack[] results = blockEntity.processItems(serverWorld, recipeMatchGetter, vesselRecipeMatchGetter, alloyMatchGetter);
             serverWorld.removeBlockEntity(pos);
-            serverWorld.setBlockState(pos, PrimevalBlocks.ASH_PILE.getDefaultState());
+            serverWorld.setBlockAndUpdate(pos, PrimevalBlocks.ASH_PILE.defaultBlockState());
             BlockEntity newBlockEntity = serverWorld.getBlockEntity(pos);
             if (newBlockEntity instanceof AshPileBlockEntity) {
                 ((AshPileBlockEntity) newBlockEntity).setItems(results);
@@ -84,20 +80,20 @@ public class PitKilnBlockEntity extends BlockEntity implements Clearable {
         }
     }
 
-    public BlockEntityUpdateS2CPacket toUpdatePacket() {
-        return BlockEntityUpdateS2CPacket.create(this);
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registries) {
-        var writeView = NbtWriteView.create(Primeval.errorReporter(this), registries);
-        writeData(writeView);
-        return writeView.getNbt();
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        var writeView = TagValueOutput.createWithContext(Primeval.errorReporter(this), registries);
+        saveAdditional(writeView);
+        return writeView.buildResult();
     }
 
     public void addLog(ItemStack stack) {
         this.logs.push(stack);
-        this.markDirty();
+        this.setChanged();
     }
 
     public ItemStack[] getLogs() {
@@ -105,14 +101,14 @@ public class PitKilnBlockEntity extends BlockEntity implements Clearable {
     }
 
     public ItemStack removeLog() {
-        this.markDirty();
+        this.setChanged();
         return this.logs.pop();
     }
 
     public boolean addItem(ItemStack stack, int slot) {
         if (this.inventory[slot].isEmpty()) {
             this.inventory[slot] = stack;
-            this.markDirty();
+            this.setChanged();
             return true;
         } else {
             return false;
@@ -126,24 +122,24 @@ public class PitKilnBlockEntity extends BlockEntity implements Clearable {
     public ItemStack removeItem(int slot) {
         ItemStack ret = this.inventory[slot];
         this.inventory[slot] = ItemStack.EMPTY;
-        this.markDirty();
+        this.setChanged();
         return ret;
     }
 
-    public ItemStack[] processItems(ServerWorld serverWorld, ServerRecipeManager.MatchGetter<SingleStackRecipeInput, PitKilnFiringRecipe> kilnRecipeMatchGetter, ServerRecipeManager.MatchGetter<SingleStackRecipeInput, MeltingRecipe> vesselRecipeMatchGetter, ServerRecipeManager.MatchGetter<FluidInput, AlloyingRecipe> alloyMatchGetter) {
+    public ItemStack[] processItems(ServerLevel serverWorld, RecipeManager.CachedCheck<SingleRecipeInput, PitKilnFiringRecipe> kilnRecipeMatchGetter, RecipeManager.CachedCheck<SingleRecipeInput, MeltingRecipe> vesselRecipeMatchGetter, RecipeManager.CachedCheck<FluidInput, AlloyingRecipe> alloyMatchGetter) {
         for (int i = 0; i < 4; i++) {
             if (this.inventory[i].getItem() instanceof VesselItem) {
                 this.inventory[i] = VesselItem.processItem(this.inventory[i], serverWorld, vesselRecipeMatchGetter, alloyMatchGetter);
             } else {
-                SingleStackRecipeInput singleStackRecipeInput = new SingleStackRecipeInput(this.inventory[i]);
-                Optional<ItemStack> result = kilnRecipeMatchGetter.getFirstMatch(singleStackRecipeInput, serverWorld).map((recipe) -> (recipe.value()).craft(singleStackRecipeInput, world.getRegistryManager()));
+                SingleRecipeInput singleStackRecipeInput = new SingleRecipeInput(this.inventory[i]);
+                Optional<ItemStack> result = kilnRecipeMatchGetter.getRecipeFor(singleStackRecipeInput, serverWorld).map((recipe) -> (recipe.value()).assemble(singleStackRecipeInput, level.registryAccess()));
                 if (result.isPresent()) {
                     this.inventory[i] = result.get();
                 }
             }
         }
-        this.markDirty();
-        if (world != null) world.updateListeners(pos, this.getCachedState(), this.getCachedState(), Block.NOTIFY_ALL);
+        this.setChanged();
+        if (level != null) level.sendBlockUpdated(worldPosition, this.getBlockState(), this.getBlockState(), Block.UPDATE_ALL);
         return this.inventory;
     }
 
@@ -158,11 +154,11 @@ public class PitKilnBlockEntity extends BlockEntity implements Clearable {
 
     public void stopFiring() {
         this.burnTimer = FIRING_TIMES[0];
-        this.markDirty();
+        this.setChanged();
     }
 
     @Override
-    public void clear() {
+    public void clearContent() {
         this.logs.clear();
         this.inventory = new ItemStack[] {ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY};
         this.burnTimer = -1;

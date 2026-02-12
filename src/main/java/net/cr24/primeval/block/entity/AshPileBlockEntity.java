@@ -2,60 +2,57 @@ package net.cr24.primeval.block.entity;
 
 import net.cr24.primeval.Primeval;
 import net.cr24.primeval.initialization.PrimevalBlocks;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.CrafterBlockEntity;
-import net.minecraft.inventory.Inventories;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.storage.NbtWriteView;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.Clearable;
-import net.minecraft.util.ErrorReporter;
-import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.math.BlockPos;
-
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.Clearable;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.TagValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import java.util.List;
 
 public class AshPileBlockEntity extends BlockEntity implements Clearable {
 
-    private DefaultedList<ItemStack> inventory;
+    private NonNullList<ItemStack> inventory;
 
     public AshPileBlockEntity(BlockPos pos, BlockState state) {
         super(PrimevalBlocks.ASH_PILE_BLOCK_ENTITY, pos, state);
-        inventory = DefaultedList.ofSize(4, ItemStack.EMPTY);
+        inventory = NonNullList.withSize(4, ItemStack.EMPTY);
     }
 
-    protected void readData(ReadView view) {
-        super.readData(view);
-        this.inventory = DefaultedList.ofSize(4, ItemStack.EMPTY);
-        Inventories.readData(view, this.inventory);
+    protected void loadAdditional(ValueInput view) {
+        super.loadAdditional(view);
+        this.inventory = NonNullList.withSize(4, ItemStack.EMPTY);
+        ContainerHelper.loadAllItems(view, this.inventory);
     }
 
-    protected void writeData(WriteView view) {
-        super.writeData(view);
-        Inventories.writeData(view, this.inventory);
+    protected void saveAdditional(ValueOutput view) {
+        super.saveAdditional(view);
+        ContainerHelper.saveAllItems(view, this.inventory);
     }
 
-    public BlockEntityUpdateS2CPacket toUpdatePacket() {
-        return BlockEntityUpdateS2CPacket.create(this);
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     public void setItems(ItemStack[] items) {
         for (int i = 0; i < 4; i++) {
             this.inventory.set(i, items[i]);
         }
-        this.markDirty();
+        this.setChanged();
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registries) {
-        var writeView = NbtWriteView.create(Primeval.errorReporter(this), registries);
-        writeData(writeView);
-        return writeView.getNbt();
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        var writeView = TagValueOutput.createWithContext(Primeval.errorReporter(this), registries);
+        saveAdditional(writeView);
+        return writeView.buildResult();
     }
 
     public List<ItemStack> getItems() {
@@ -63,7 +60,7 @@ public class AshPileBlockEntity extends BlockEntity implements Clearable {
     }
 
     @Override
-    public void clear() {
-        this.inventory = DefaultedList.ofSize(4, ItemStack.EMPTY);
+    public void clearContent() {
+        this.inventory = NonNullList.withSize(4, ItemStack.EMPTY);
     }
 }

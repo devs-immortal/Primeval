@@ -8,65 +8,61 @@ import net.cr24.primeval.util.Weight;
 import net.cr24.primeval.item.WeightedItem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsageContext;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
-
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import java.util.List;
 
 public class WaterWoodenBucketItem extends WeightedItem {
 
-    public WaterWoodenBucketItem(Weight weight, Size size, net.minecraft.item.Item.Settings settings) {
+    public WaterWoodenBucketItem(Weight weight, Size size, net.minecraft.world.item.Item.Properties settings) {
         super(weight, size, 1, settings);
     }
 
     @Override
-    public ActionResult useOnBlock(ItemUsageContext context) {
-        BlockPos pos = context.getBlockPos();
-        World world = context.getWorld();
+    public InteractionResult useOn(UseOnContext context) {
+        BlockPos pos = context.getClickedPos();
+        Level world = context.getLevel();
         Block targetBlock = world.getBlockState(pos).getBlock();
         BlockPos farmlandPos;
         if (targetBlock instanceof PrimevalFarmlandBlock) {
             farmlandPos = pos;
-        } else if (targetBlock instanceof PrimevalCropBlock && world.getBlockState(pos.down()).getBlock() instanceof PrimevalFarmlandBlock) {
-            farmlandPos = pos.down();
+        } else if (targetBlock instanceof PrimevalCropBlock && world.getBlockState(pos.below()).getBlock() instanceof PrimevalFarmlandBlock) {
+            farmlandPos = pos.below();
         } else {
-            return super.useOnBlock(context);
+            return super.useOn(context);
         }
         BlockState farmlandState = world.getBlockState(farmlandPos);
-        if (!(farmlandState.get(PrimevalFarmlandBlock.MOISTURE) == 0)) {
-            return super.useOnBlock(context);
+        if (!(farmlandState.getValue(PrimevalFarmlandBlock.MOISTURE) == 0)) {
+            return super.useOn(context);
         } else {
-            PlayerEntity playerEntity = context.getPlayer();
+            Player playerEntity = context.getPlayer();
             if (!playerEntity.isCreative()) {
-                Hand hand = context.getHand();
+                InteractionHand hand = context.getHand();
                 ItemStack newStack = new ItemStack(PrimevalItems.WOODEN_BUCKET);
-                playerEntity.setStackInHand(hand, newStack);
+                playerEntity.setItemInHand(hand, newStack);
             }
-            Vec3d hitPos = context.getHitPos();
-            Random random = world.getRandom();
+            Vec3 hitPos = context.getClickLocation();
+            RandomSource random = world.getRandom();
             makeParticles(hitPos, world, random);
-            world.playSound(playerEntity, pos, SoundEvents.ENTITY_GENERIC_SPLASH, SoundCategory.BLOCKS, 1.0f, 1.0f);
-            world.setBlockState(farmlandPos, farmlandState.with(PrimevalFarmlandBlock.MOISTURE, 1));
-            return ActionResult.SUCCESS;
+            world.playSound(playerEntity, pos, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, 1.0f, 1.0f);
+            world.setBlockAndUpdate(farmlandPos, farmlandState.setValue(PrimevalFarmlandBlock.MOISTURE, 1));
+            return InteractionResult.SUCCESS;
         }
     }
 
-    private static void makeParticles(Vec3d hitPos, World world, Random random) {
+    private static void makeParticles(Vec3 hitPos, Level world, RandomSource random) {
         for (int i = 0; i < 6; i++) {
             double x = hitPos.x + ((random.nextDouble()-0.5)*0.3);
             double y = hitPos.y + ((random.nextDouble()-0.5)*0.1);
@@ -74,7 +70,7 @@ public class WaterWoodenBucketItem extends WeightedItem {
             double velocityX = (random.nextDouble()-0.5)*2;
             double velocityY = (random.nextDouble()+0.5);
             double velocityZ = (random.nextDouble()-0.5)*2;
-            world.addParticleClient(ParticleTypes.SPLASH, x, y, z, velocityX, velocityY, velocityZ);
+            world.addParticle(ParticleTypes.SPLASH, x, y, z, velocityX, velocityY, velocityZ);
         }
     }
 

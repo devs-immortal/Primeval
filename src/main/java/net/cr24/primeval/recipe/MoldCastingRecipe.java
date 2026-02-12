@@ -6,45 +6,48 @@ import net.cr24.primeval.fluid.FallbackFluid;
 import net.cr24.primeval.initialization.PrimevalRecipes;
 import net.cr24.primeval.item.MoldItem;
 import net.cr24.primeval.util.PrimevalDataComponentTypes;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.recipe.*;
-import net.minecraft.recipe.book.CraftingRecipeCategory;
-import net.minecraft.recipe.input.CraftingRecipeInput;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.world.World;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
+import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.PlacementInfo;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.material.Fluid;
 
 public class MoldCastingRecipe implements CraftingRecipe {
 
     final Ingredient mold;
-    final RegistryEntry<Fluid> fluid;
+    final Holder<Fluid> fluid;
     final ItemStack result;
 
-    public MoldCastingRecipe(Ingredient mold, RegistryEntry<Fluid> fluid, ItemStack result) {
+    public MoldCastingRecipe(Ingredient mold, Holder<Fluid> fluid, ItemStack result) {
         this.result = result;
         this.fluid = fluid;
         this.mold = mold;
     }
 
     @Override
-    public boolean matches(CraftingRecipeInput input, World world) {
-        if (input.getStackCount() != 1) return false;
-        ItemStack stack = input.getStacks().get(0);
+    public boolean matches(CraftingInput input, Level world) {
+        if (input.ingredientCount() != 1) return false;
+        ItemStack stack = input.items().get(0);
         return mold.test(stack) &&
-                stack.contains(PrimevalDataComponentTypes.FLUID_CONTENTS) &&
-                stack.get(PrimevalDataComponentTypes.FLUID_CONTENTS).fluid().matchesKey(this.fluid.getKey().get());
+                stack.has(PrimevalDataComponentTypes.FLUID_CONTENTS) &&
+                stack.get(PrimevalDataComponentTypes.FLUID_CONTENTS).fluid().is(this.fluid.unwrapKey().get());
     }
 
     @Override
-    public ItemStack craft(CraftingRecipeInput input, RegistryWrapper.WrapperLookup registries) {
-        if (input.getStackCount() != 1) return ItemStack.EMPTY;
-        ItemStack stack = input.getStacks().get(0);
+    public ItemStack assemble(CraftingInput input, HolderLookup.Provider registries) {
+        if (input.ingredientCount() != 1) return ItemStack.EMPTY;
+        ItemStack stack = input.items().get(0);
         var fluidContent = stack.get(PrimevalDataComponentTypes.FLUID_CONTENTS);
         if (fluidContent.amount() < ((MoldItem)stack.getItem()).getCapacity()) {
             Fluid containedFluid = fluidContent.fluid().value();
@@ -59,7 +62,7 @@ public class MoldCastingRecipe implements CraftingRecipe {
         return this.mold;
     }
 
-    public RegistryEntry<Fluid> getFluid() {
+    public Holder<Fluid> getFluid() {
         return this.fluid;
     }
 
@@ -73,25 +76,25 @@ public class MoldCastingRecipe implements CraftingRecipe {
     }
 
     @Override
-    public IngredientPlacement getIngredientPlacement() {
-        return IngredientPlacement.forSingleSlot(this.mold);
+    public PlacementInfo placementInfo() {
+        return PlacementInfo.create(this.mold);
     }
 
     @Override
-    public CraftingRecipeCategory getCategory() {
-        return CraftingRecipeCategory.MISC;
+    public CraftingBookCategory category() {
+        return CraftingBookCategory.MISC;
     }
 
     public static class Serializer implements RecipeSerializer<MoldCastingRecipe> {
         private static final MapCodec<MoldCastingRecipe> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
                 Ingredient.CODEC.fieldOf("mold").forGetter((recipe) -> recipe.mold),
-                Registries.FLUID.getEntryCodec().fieldOf("fluid").forGetter((recipe) -> recipe.fluid),
-                ItemStack.VALIDATED_CODEC.fieldOf("result").forGetter((recipe) -> recipe.result)
+                BuiltInRegistries.FLUID.holderByNameCodec().fieldOf("fluid").forGetter((recipe) -> recipe.fluid),
+                ItemStack.STRICT_CODEC.fieldOf("result").forGetter((recipe) -> recipe.result)
         ).apply(instance, MoldCastingRecipe::new));
-        private static final PacketCodec<RegistryByteBuf, MoldCastingRecipe> PACKET_CODEC = PacketCodec.tuple(
-                Ingredient.PACKET_CODEC, MoldCastingRecipe::getMold,
-                PacketCodecs.registryEntry(RegistryKeys.FLUID), MoldCastingRecipe::getFluid,
-                ItemStack.PACKET_CODEC, MoldCastingRecipe::getResult,
+        private static final StreamCodec<RegistryFriendlyByteBuf, MoldCastingRecipe> PACKET_CODEC = StreamCodec.composite(
+                Ingredient.CONTENTS_STREAM_CODEC, MoldCastingRecipe::getMold,
+                ByteBufCodecs.holderRegistry(Registries.FLUID), MoldCastingRecipe::getFluid,
+                ItemStack.STREAM_CODEC, MoldCastingRecipe::getResult,
                 MoldCastingRecipe::new
         );
 
@@ -102,7 +105,7 @@ public class MoldCastingRecipe implements CraftingRecipe {
             return CODEC;
         }
 
-        public PacketCodec<RegistryByteBuf, MoldCastingRecipe> packetCodec() {
+        public StreamCodec<RegistryFriendlyByteBuf, MoldCastingRecipe> streamCodec() {
             return PACKET_CODEC;
         }
     }

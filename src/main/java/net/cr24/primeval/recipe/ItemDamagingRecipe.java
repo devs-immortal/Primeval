@@ -3,26 +3,27 @@ package net.cr24.primeval.recipe;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.recipe.*;
-import net.minecraft.recipe.book.CraftingRecipeCategory;
-import net.minecraft.recipe.input.CraftingRecipeInput;
-import net.minecraft.util.collection.DefaultedList;
-
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.ShapelessRecipe;
 import java.util.List;
 
 public class ItemDamagingRecipe extends ShapelessRecipe {
     final String group;
-    final CraftingRecipeCategory category;
+    final CraftingBookCategory category;
     final ItemStack result;
     final List<Ingredient> ingredients;
     static final int DAMAGE_PER_CRAFT = 2;
 
-    public ItemDamagingRecipe(String group, CraftingRecipeCategory category, ItemStack result, List<Ingredient> ingredients) {
+    public ItemDamagingRecipe(String group, CraftingBookCategory category, ItemStack result, List<Ingredient> ingredients) {
         super(group, category, result, ingredients);
         this.group = group;
         this.category = category;
@@ -31,18 +32,18 @@ public class ItemDamagingRecipe extends ShapelessRecipe {
     }
 
     @Override
-    public DefaultedList<ItemStack> getRecipeRemainders(CraftingRecipeInput input) {
-        DefaultedList<ItemStack> defaultedList = DefaultedList.ofSize(input.size(), ItemStack.EMPTY);
+    public NonNullList<ItemStack> getRemainingItems(CraftingInput input) {
+        NonNullList<ItemStack> defaultedList = NonNullList.withSize(input.size(), ItemStack.EMPTY);
 
         for(int i = 0; i < defaultedList.size(); ++i) {
-            var stack = input.getStackInSlot(i);
-            if (stack.contains(DataComponentTypes.DAMAGE) && (stack.getDamage() + DAMAGE_PER_CRAFT) < stack.getMaxDamage()) {
+            var stack = input.getItem(i);
+            if (stack.has(DataComponents.DAMAGE) && (stack.getDamageValue() + DAMAGE_PER_CRAFT) < stack.getMaxDamage()) {
                 var copy = stack.copy();
-                copy.setDamage(stack.getDamage() + DAMAGE_PER_CRAFT);
+                copy.setDamageValue(stack.getDamageValue() + DAMAGE_PER_CRAFT);
                 defaultedList.set(i, copy);
                 continue;
             }
-            defaultedList.set(i, stack.getItem().getRecipeRemainder());
+            defaultedList.set(i, stack.getItem().getCraftingRemainder());
         }
 
         return defaultedList;
@@ -51,12 +52,12 @@ public class ItemDamagingRecipe extends ShapelessRecipe {
     public static class Serializer implements RecipeSerializer<ItemDamagingRecipe> {
         private static final MapCodec<ItemDamagingRecipe> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
                 Codec.STRING.optionalFieldOf("group", "").forGetter((recipe) -> recipe.group),
-                CraftingRecipeCategory.CODEC.fieldOf("category").orElse(CraftingRecipeCategory.MISC).forGetter((recipe) -> recipe.category),
-                ItemStack.VALIDATED_CODEC.fieldOf("result").forGetter((recipe) -> recipe.result),
+                CraftingBookCategory.CODEC.fieldOf("category").orElse(CraftingBookCategory.MISC).forGetter((recipe) -> recipe.category),
+                ItemStack.STRICT_CODEC.fieldOf("result").forGetter((recipe) -> recipe.result),
                 Ingredient.CODEC.listOf(1, 9).fieldOf("ingredients").forGetter((recipe) -> recipe.ingredients)
         ).apply(instance, ItemDamagingRecipe::new));
 
-        public static final PacketCodec<RegistryByteBuf, ItemDamagingRecipe> PACKET_CODEC;
+        public static final StreamCodec<RegistryFriendlyByteBuf, ItemDamagingRecipe> PACKET_CODEC;
 
         public Serializer() {
         }
@@ -65,16 +66,16 @@ public class ItemDamagingRecipe extends ShapelessRecipe {
             return CODEC;
         }
 
-        public PacketCodec<RegistryByteBuf, ItemDamagingRecipe> packetCodec() {
+        public StreamCodec<RegistryFriendlyByteBuf, ItemDamagingRecipe> streamCodec() {
             return PACKET_CODEC;
         }
 
         static {
-            PACKET_CODEC = PacketCodec.tuple(
-                    PacketCodecs.STRING, (recipe) -> recipe.group,
-                    CraftingRecipeCategory.PACKET_CODEC, (recipe) -> recipe.category,
-                    ItemStack.PACKET_CODEC, (recipe) -> recipe.result,
-                    Ingredient.PACKET_CODEC.collect(PacketCodecs.toList()), (recipe) -> recipe.ingredients,
+            PACKET_CODEC = StreamCodec.composite(
+                    ByteBufCodecs.STRING_UTF8, (recipe) -> recipe.group,
+                    CraftingBookCategory.STREAM_CODEC, (recipe) -> recipe.category,
+                    ItemStack.STREAM_CODEC, (recipe) -> recipe.result,
+                    Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()), (recipe) -> recipe.ingredients,
                     ItemDamagingRecipe::new
             );
         }

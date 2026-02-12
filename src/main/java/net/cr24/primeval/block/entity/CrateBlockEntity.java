@@ -3,56 +3,51 @@ package net.cr24.primeval.block.entity;
 import net.cr24.primeval.block.functional.CrateBlock;
 import net.cr24.primeval.initialization.PrimevalBlocks;
 import net.cr24.primeval.screen.Primeval3x5ContainerScreenHandler;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BarrelBlockEntity;
-import net.minecraft.block.entity.ChestBlockEntity;
-import net.minecraft.block.entity.LootableContainerBlockEntity;
-import net.minecraft.block.entity.ViewerCountManager;
-import net.minecraft.entity.ContainerUser;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventories;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.screen.GenericContainerScreenHandler;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.text.Text;
-import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.Container;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.entity.ContainerUser;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.ContainerOpenersCounter;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
-public class CrateBlockEntity extends LootableContainerBlockEntity {
-    private DefaultedList<ItemStack> inventory;
-    private final ViewerCountManager stateManager;
+public class CrateBlockEntity extends RandomizableContainerBlockEntity {
+    private NonNullList<ItemStack> inventory;
+    private final ContainerOpenersCounter stateManager;
 
     public CrateBlockEntity(BlockPos pos, BlockState state) {
         super(PrimevalBlocks.CRATE_BLOCK_ENTITY, pos, state);
-        this.inventory = DefaultedList.ofSize(15, ItemStack.EMPTY);
-        this.stateManager = new ViewerCountManager() {
-            protected void onContainerOpen(World world, BlockPos pos, BlockState state) {
-                CrateBlockEntity.this.playSound(state, SoundEvents.BLOCK_BARREL_OPEN);
+        this.inventory = NonNullList.withSize(15, ItemStack.EMPTY);
+        this.stateManager = new ContainerOpenersCounter() {
+            protected void onOpen(Level world, BlockPos pos, BlockState state) {
+                CrateBlockEntity.this.playSound(state, SoundEvents.BARREL_OPEN);
                 CrateBlockEntity.this.setOpen(state, true);
             }
 
-            protected void onContainerClose(World world, BlockPos pos, BlockState state) {
-                CrateBlockEntity.this.playSound(state, SoundEvents.BLOCK_BARREL_CLOSE);
+            protected void onClose(Level world, BlockPos pos, BlockState state) {
+                CrateBlockEntity.this.playSound(state, SoundEvents.BARREL_CLOSE);
                 CrateBlockEntity.this.setOpen(state, false);
             }
 
-            protected void onViewerCountUpdate(World world, BlockPos pos, BlockState state, int oldViewerCount, int newViewerCount) {
+            protected void openerCountChanged(Level world, BlockPos pos, BlockState state, int oldViewerCount, int newViewerCount) {
             }
 
-            public boolean isPlayerViewing(PlayerEntity player) {
-                if (player.currentScreenHandler instanceof Primeval3x5ContainerScreenHandler) {
-                    Inventory inventory = ((Primeval3x5ContainerScreenHandler)player.currentScreenHandler).getInventory();
+            public boolean isOwnContainer(Player player) {
+                if (player.containerMenu instanceof Primeval3x5ContainerScreenHandler) {
+                    Container inventory = ((Primeval3x5ContainerScreenHandler)player.containerMenu).getInventory();
                     return inventory == CrateBlockEntity.this;
                 } else {
                     return false;
@@ -61,76 +56,76 @@ public class CrateBlockEntity extends LootableContainerBlockEntity {
         };
     }
 
-    protected void readData(ReadView view) {
-        super.readData(view);
-        this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
-        if (!this.readLootTable(view)) {
-            Inventories.readData(view, this.inventory);
+    protected void loadAdditional(ValueInput view) {
+        super.loadAdditional(view);
+        this.inventory = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
+        if (!this.tryLoadLootTable(view)) {
+            ContainerHelper.loadAllItems(view, this.inventory);
         }
     }
 
-    protected void writeData(WriteView view) {
-        super.writeData(view);
-        if (!this.writeLootTable(view)) {
-            Inventories.writeData(view, this.inventory);
+    protected void saveAdditional(ValueOutput view) {
+        super.saveAdditional(view);
+        if (!this.trySaveLootTable(view)) {
+            ContainerHelper.saveAllItems(view, this.inventory);
         }
 
     }
 
     @Override
-    public int size() {
+    public int getContainerSize() {
         return 15;
     }
 
     @Override
-    protected DefaultedList<ItemStack> getHeldStacks() {
+    protected NonNullList<ItemStack> getItems() {
         return this.inventory;
     }
 
     @Override
-    protected void setHeldStacks(DefaultedList<ItemStack> list) {
+    protected void setItems(NonNullList<ItemStack> list) {
         this.inventory = list;
     }
 
     @Override
-    protected Text getContainerName() {
-        return Text.translatable("container.primeval.crate");
+    protected Component getDefaultName() {
+        return Component.translatable("container.primeval.crate");
     }
 
 
     @Override
-    protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
+    protected AbstractContainerMenu createMenu(int syncId, Inventory playerInventory) {
         return Primeval3x5ContainerScreenHandler.create(syncId, playerInventory, this);
     }
 
     @Override
-    public void onOpen(ContainerUser user) {
-        if (!this.removed && !user.asLivingEntity().isSpectator()) {
-            this.stateManager.openContainer(user.asLivingEntity(), this.getWorld(), this.getPos(), this.getCachedState(), user.getContainerInteractionRange());
+    public void startOpen(ContainerUser user) {
+        if (!this.remove && !user.getLivingEntity().isSpectator()) {
+            this.stateManager.incrementOpeners(user.getLivingEntity(), this.getLevel(), this.getBlockPos(), this.getBlockState(), user.getContainerInteractionRange());
         }
     }
 
     @Override
-    public void onClose(ContainerUser user) {
-        if (!this.removed && !user.asLivingEntity().isSpectator()) {
-            this.stateManager.closeContainer(user.asLivingEntity(), this.getWorld(), this.getPos(), this.getCachedState());
+    public void stopOpen(ContainerUser user) {
+        if (!this.remove && !user.getLivingEntity().isSpectator()) {
+            this.stateManager.decrementOpeners(user.getLivingEntity(), this.getLevel(), this.getBlockPos(), this.getBlockState());
         }
     }
 
     public void tick() {
-        if (!this.removed) {
-            this.stateManager.updateViewerCount(this.getWorld(), this.getPos(), this.getCachedState());
+        if (!this.remove) {
+            this.stateManager.recheckOpeners(this.getLevel(), this.getBlockPos(), this.getBlockState());
         }
     }
 
     void setOpen(BlockState state, boolean open) {
-        this.world.setBlockState(this.getPos(), state.with(CrateBlock.OPEN, open), Block.NOTIFY_ALL);
+        this.level.setBlock(this.getBlockPos(), state.setValue(CrateBlock.OPEN, open), Block.UPDATE_ALL);
     }
 
     void playSound(BlockState state, SoundEvent soundEvent) {
-        double d = (double)this.pos.getX() + 0.5;
-        double e = (double)this.pos.getY() + 0.5;
-        double f = (double)this.pos.getZ() + 0.5;
-        this.world.playSound(null, d, e, f, soundEvent, SoundCategory.BLOCKS, 0.5f, this.world.random.nextFloat() * 0.1f + 0.9f);
+        double d = (double)this.worldPosition.getX() + 0.5;
+        double e = (double)this.worldPosition.getY() + 0.5;
+        double f = (double)this.worldPosition.getZ() + 0.5;
+        this.level.playSound(null, d, e, f, soundEvent, SoundSource.BLOCKS, 0.5f, this.level.random.nextFloat() * 0.1f + 0.9f);
     }
 }

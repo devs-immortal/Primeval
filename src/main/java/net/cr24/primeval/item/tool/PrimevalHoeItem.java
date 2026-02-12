@@ -5,23 +5,21 @@ import net.cr24.primeval.util.Size;
 import net.cr24.primeval.util.Weight;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.Block;
-import net.minecraft.component.type.TooltipDisplayComponent;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsageContext;
-import net.minecraft.item.ToolMaterial;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ToolMaterial;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import java.util.HashMap;
 import java.util.function.Consumer;
 
@@ -32,37 +30,37 @@ public class PrimevalHoeItem extends Item implements IWeightedItem {
 
     public static HashMap<Block, Block> hoeables = new HashMap<>();
 
-    public PrimevalHoeItem(ToolMaterial material, float attackDamage, float attackSpeed, Weight weight, Size size, net.minecraft.item.Item.Settings settings) {
-        super(settings.tool(material, BlockTags.HOE_MINEABLE, attackDamage, attackSpeed, 0.0F));
+    public PrimevalHoeItem(ToolMaterial material, float attackDamage, float attackSpeed, Weight weight, Size size, net.minecraft.world.item.Item.Properties settings) {
+        super(settings.tool(material, BlockTags.MINEABLE_WITH_HOE, attackDamage, attackSpeed, 0.0F));
         this.weight = weight;
         this.size = size;
     }
 
     @Override
-    public ActionResult useOnBlock(ItemUsageContext context) {
-        BlockPos pos = context.getBlockPos();
-        World world = context.getWorld();
+    public InteractionResult useOn(UseOnContext context) {
+        BlockPos pos = context.getClickedPos();
+        Level world = context.getLevel();
         Block targetBlock = world.getBlockState(pos).getBlock();
-        if (hoeables.containsKey(targetBlock) && world.getBlockState(pos.up()).isAir()) {
+        if (hoeables.containsKey(targetBlock) && world.getBlockState(pos.above()).isAir()) {
             var playerEntity = context.getPlayer();
-            world.setBlockState(pos, hoeables.get(targetBlock).getDefaultState());
-            world.playSound(playerEntity, pos, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS, 1.0f, 1.0f);
-            if (!world.isClient()) {
+            world.setBlockAndUpdate(pos, hoeables.get(targetBlock).defaultBlockState());
+            world.playSound(playerEntity, pos, SoundEvents.HOE_TILL, SoundSource.BLOCKS, 1.0f, 1.0f);
+            if (!world.isClientSide()) {
                 if (playerEntity != null) {
-                    context.getStack().damage(1, playerEntity, context.getHand());
+                    context.getItemInHand().hurtAndBreak(1, playerEntity, context.getHand());
                 }
             }
-            return ActionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         } else {
-            return super.useOnBlock(context);
+            return super.useOn(context);
         }
     }
 
     @Override
     @Environment(EnvType.CLIENT)
-    public void appendTooltip(ItemStack stack, Item.TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type) {
-        super.appendTooltip(stack, context, displayComponent, textConsumer, type);
-        textConsumer.accept((Text.translatable("⚖ ").append(this.weight.getText()).append(" ⤧ ").append(this.size.getText())).formatted(Formatting.GRAY));
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay displayComponent, Consumer<Component> textConsumer, TooltipFlag type) {
+        super.appendHoverText(stack, context, displayComponent, textConsumer, type);
+        textConsumer.accept((Component.translatable("⚖ ").append(this.weight.getText()).append(" ⤧ ").append(this.size.getText())).withStyle(ChatFormatting.GRAY));
     }
 
     @Override

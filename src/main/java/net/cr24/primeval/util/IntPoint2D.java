@@ -1,6 +1,6 @@
 package net.cr24.primeval.util;
 
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 
 public class IntPoint2D {
     private int x;

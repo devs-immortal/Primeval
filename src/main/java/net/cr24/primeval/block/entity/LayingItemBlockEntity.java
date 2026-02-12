@@ -2,20 +2,17 @@ package net.cr24.primeval.block.entity;
 
 import net.cr24.primeval.Primeval;
 import net.cr24.primeval.initialization.PrimevalBlocks;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.inventory.Inventories;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.storage.NbtWriteView;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.Clearable;
-import net.minecraft.util.ErrorReporter;
-import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.Clearable;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.TagValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 public class LayingItemBlockEntity extends BlockEntity implements Clearable {
 
@@ -28,20 +25,20 @@ public class LayingItemBlockEntity extends BlockEntity implements Clearable {
         randomInt = (pos.getX() + pos.getY()*2 + pos.getZ()*3)%4;
     }
 
-    protected void readData(ReadView view) {
-        super.readData(view);
+    protected void loadAdditional(ValueInput view) {
+        super.loadAdditional(view);
         this.item = view.read("item", ItemStack.CODEC).orElse(ItemStack.EMPTY);
     }
 
-    protected void writeData(WriteView view) {
-        super.writeData(view);
+    protected void saveAdditional(ValueOutput view) {
+        super.saveAdditional(view);
         if (!this.item.isEmpty()) {
-            view.put("item", ItemStack.CODEC, this.item);
+            view.store("item", ItemStack.CODEC, this.item);
         }
     }
 
-    public BlockEntityUpdateS2CPacket toUpdatePacket() {
-        return BlockEntityUpdateS2CPacket.create(this);
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     public void setItem(ItemStack newItem) {
@@ -49,10 +46,10 @@ public class LayingItemBlockEntity extends BlockEntity implements Clearable {
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registries) {
-        var writeView = NbtWriteView.create(Primeval.errorReporter(this), registries);
-        writeData(writeView);
-        return writeView.getNbt();
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        var writeView = TagValueOutput.createWithContext(Primeval.errorReporter(this), registries);
+        saveAdditional(writeView);
+        return writeView.buildResult();
     }
 
     public ItemStack getItem() {
@@ -64,7 +61,7 @@ public class LayingItemBlockEntity extends BlockEntity implements Clearable {
     }
 
     @Override
-    public void clear() {
+    public void clearContent() {
         item = ItemStack.EMPTY;
     }
 }

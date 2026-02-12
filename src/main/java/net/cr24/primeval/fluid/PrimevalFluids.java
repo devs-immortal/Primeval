@@ -6,26 +6,24 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
-import net.minecraft.client.render.BlockRenderLayer;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.fluid.FlowableFluid;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-
+import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.level.material.FlowingFluid;
+import net.minecraft.world.level.material.Fluid;
 import java.util.List;
 
 public class PrimevalFluids {
 
-    public static final FlowableFluid MOLTEN_COPPER = registerFluid("molten_copper", new StillMoltenMetalFluid.Copper());
-    public static final FlowableFluid MOLTEN_TIN = registerFluid("molten_tin", new StillMoltenMetalFluid.Tin());
-    public static final FlowableFluid MOLTEN_ZINC = registerFluid("molten_zinc", new StillMoltenMetalFluid.Zinc());
+    public static final FlowingFluid MOLTEN_COPPER = registerFluid("molten_copper", new StillMoltenMetalFluid.Copper());
+    public static final FlowingFluid MOLTEN_TIN = registerFluid("molten_tin", new StillMoltenMetalFluid.Tin());
+    public static final FlowingFluid MOLTEN_ZINC = registerFluid("molten_zinc", new StillMoltenMetalFluid.Zinc());
 
-    public static final FlowableFluid MOLTEN_BRONZE = registerFluid("molten_bronze", new StillMoltenMetalFluid.Bronze());
-    public static final FlowableFluid MOLTEN_BRASS = registerFluid("molten_brass", new StillMoltenMetalFluid.Brass());
-    public static final FlowableFluid MOLTEN_PEWTER = registerFluid("molten_pewter", new StillMoltenMetalFluid.Pewter());
-    public static final FlowableFluid MOLTEN_GOLD = registerFluid("molten_gold", new StillMoltenMetalFluid.Gold());
-    public static final FlowableFluid MOLTEN_BOTCHED_ALLOY = registerFluid("molten_botched_alloy", new StillMoltenMetalFluid.Botched());
+    public static final FlowingFluid MOLTEN_BRONZE = registerFluid("molten_bronze", new StillMoltenMetalFluid.Bronze());
+    public static final FlowingFluid MOLTEN_BRASS = registerFluid("molten_brass", new StillMoltenMetalFluid.Brass());
+    public static final FlowingFluid MOLTEN_PEWTER = registerFluid("molten_pewter", new StillMoltenMetalFluid.Pewter());
+    public static final FlowingFluid MOLTEN_GOLD = registerFluid("molten_gold", new StillMoltenMetalFluid.Gold());
+    public static final FlowingFluid MOLTEN_BOTCHED_ALLOY = registerFluid("molten_botched_alloy", new StillMoltenMetalFluid.Botched());
 
 
     public static List<Fluid> TOOL_MOLD_FLUIDS = List.of(
@@ -65,8 +63,8 @@ public class PrimevalFluids {
         setupFluidRendering(MOLTEN_BOTCHED_ALLOY, "molten_botched_alloy", 0xcbbbcb);
     }
 
-    private static FlowableFluid registerFluid(String id, Fluid fluid) {
-        return (FlowableFluid)Registry.register(Registries.FLUID, Primeval.identify(id), fluid);
+    private static FlowingFluid registerFluid(String id, Fluid fluid) {
+        return (FlowingFluid)Registry.register(BuiltInRegistries.FLUID, Primeval.identify(id), fluid);
     }
 
     @Environment(EnvType.CLIENT)
@@ -83,7 +81,7 @@ public class PrimevalFluids {
                 color
         ));
 
-        BlockRenderLayerMap.putFluids(BlockRenderLayer.TRANSLUCENT, still);
+        BlockRenderLayerMap.putFluids(ChunkSectionLayer.TRANSLUCENT, still);
     }
 
 }

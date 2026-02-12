@@ -1,14 +1,13 @@
 package net.cr24.primeval.block.entity;
 
 import com.google.common.collect.ImmutableList;
-import net.minecraft.client.render.block.entity.state.BlockEntityRenderState;
-import net.minecraft.client.render.item.ItemRenderState;
-
 import java.util.Collections;
 import java.util.List;
+import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
+import net.minecraft.client.renderer.item.ItemStackRenderState;
 
 public class FourItemBlockEntityRenderState extends BlockEntityRenderState {
-    public List<ItemRenderState> itemStates = ImmutableList.of(new ItemRenderState(), new ItemRenderState(), new ItemRenderState(), new ItemRenderState());
+    public List<ItemStackRenderState> itemStates = ImmutableList.of(new ItemStackRenderState(), new ItemStackRenderState(), new ItemStackRenderState(), new ItemStackRenderState());
 
     public FourItemBlockEntityRenderState() {
     }

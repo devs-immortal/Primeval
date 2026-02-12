@@ -4,39 +4,39 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import net.cr24.primeval.item.MoldItem;
 import net.cr24.primeval.util.PrimevalDataComponentTypes;
-import net.minecraft.client.render.item.property.select.SelectProperty;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.item.ItemDisplayContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.item.properties.select.SelectItemModelProperty;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.material.Fluid;
 import org.jetbrains.annotations.Nullable;
 
-public record FluidContentProperty() implements SelectProperty<RegistryKey<Fluid>> {
+public record FluidContentProperty() implements SelectItemModelProperty<ResourceKey<Fluid>> {
 
-    public static final Codec<RegistryKey<Fluid>> CODEC = RegistryKey.createCodec(RegistryKeys.FLUID);
-    public static final SelectProperty.Type<FluidContentProperty, RegistryKey<Fluid>> TYPE = Type.create(MapCodec.unit(new FluidContentProperty()), RegistryKey.createCodec(RegistryKeys.FLUID));
+    public static final Codec<ResourceKey<Fluid>> CODEC = ResourceKey.codec(Registries.FLUID);
+    public static final SelectItemModelProperty.Type<FluidContentProperty, ResourceKey<Fluid>> TYPE = Type.create(MapCodec.unit(new FluidContentProperty()), ResourceKey.codec(Registries.FLUID));
 
     @Nullable
     @Override
-    public RegistryKey<Fluid> getValue(ItemStack stack, @Nullable ClientWorld world, @Nullable LivingEntity user, int seed, ItemDisplayContext displayContext) {
-        if (stack.contains(PrimevalDataComponentTypes.FLUID_CONTENTS) && stack.getItem() instanceof MoldItem) {
+    public ResourceKey<Fluid> get(ItemStack stack, @Nullable ClientLevel world, @Nullable LivingEntity user, int seed, ItemDisplayContext displayContext) {
+        if (stack.has(PrimevalDataComponentTypes.FLUID_CONTENTS) && stack.getItem() instanceof MoldItem) {
             var component = stack.get(PrimevalDataComponentTypes.FLUID_CONTENTS);
             if (component.amount() == ((MoldItem) stack.getItem()).getCapacity())
-                return component.fluid().getKey().get();
+                return component.fluid().unwrapKey().get();
         }
         return null;
     }
 
     @Override
-    public Codec<RegistryKey<Fluid>> valueCodec() {
+    public Codec<ResourceKey<Fluid>> valueCodec() {
         return CODEC;
     }
 
     @Override
-    public Type<? extends SelectProperty<RegistryKey<Fluid>>, RegistryKey<Fluid>> getType() {
+    public Type<? extends SelectItemModelProperty<ResourceKey<Fluid>>, ResourceKey<Fluid>> type() {
         return TYPE;
     }
 }

@@ -13,31 +13,27 @@ import net.cr24.primeval.util.Weight;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.BundleContentsComponent;
-import net.minecraft.component.type.TooltipDisplayComponent;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.inventory.StackReference;
-import net.minecraft.item.BundleItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.tooltip.BundleTooltipData;
-import net.minecraft.item.tooltip.TooltipData;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.recipe.RecipeEntry;
-import net.minecraft.recipe.ServerRecipeManager;
-import net.minecraft.recipe.input.SingleStackRecipeInput;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.screen.slot.Slot;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Text;
-import net.minecraft.util.ClickType;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Pair;
-
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.SlotAccess;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ClickAction;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.tooltip.TooltipComponent;
+import net.minecraft.world.item.BundleItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.BundleContents;
+import net.minecraft.world.item.component.TooltipDisplay;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
 import javax.swing.text.html.Option;
 import java.util.*;
 import java.util.function.Consumer;
@@ -47,33 +43,33 @@ public class VesselItem extends BundleItem implements IWeightedItem {
     private final Weight weight;
     private final Size size;
 
-    public VesselItem(Weight weight, Size size, net.minecraft.item.Item.Settings settings) {
-        super(settings.maxCount(1).component(DataComponentTypes.BUNDLE_CONTENTS, BundleContentsComponent.DEFAULT));
+    public VesselItem(Weight weight, Size size, net.minecraft.world.item.Item.Properties settings) {
+        super(settings.stacksTo(1).component(DataComponents.BUNDLE_CONTENTS, BundleContents.EMPTY));
         this.weight = weight;
         this.size = size;
     }
 
-    public boolean isItemBarVisible(ItemStack stack) {
+    public boolean isBarVisible(ItemStack stack) {
         return false;
     }
 
     @Override
-    public boolean onStackClicked(ItemStack stack, Slot slot, ClickType clickType, PlayerEntity player) {
+    public boolean overrideStackedOnOther(ItemStack stack, Slot slot, ClickAction clickType, Player player) {
         PrimevalDataComponentTypes.FluidContentComponent fluidContentComponent = stack.get(PrimevalDataComponentTypes.FLUID_CONTENTS);
         // no fluid
         if (fluidContentComponent == null) {
-            return super.onStackClicked(stack, slot, clickType, player);
+            return super.overrideStackedOnOther(stack, slot, clickType, player);
         } else { // yes fluid
-            ItemStack itemStack = slot.getStack();
+            ItemStack itemStack = slot.getItem();
             if (itemStack.getItem() instanceof MoldItem) {
                 var maybeContents = MoldItem.insertFluid(fluidContentComponent, itemStack);
-                if (maybeContents.getLeft()) { // fluid was inserted
-                    if (maybeContents.getRight() == null) {
-                        player.playSound(SoundEvents.ITEM_BUCKET_FILL_LAVA, 0.4F, 1.8F + player.getEntityWorld().getRandom().nextFloat() * 0.4F);
+                if (maybeContents.getA()) { // fluid was inserted
+                    if (maybeContents.getB() == null) {
+                        player.playSound(SoundEvents.BUCKET_FILL_LAVA, 0.4F, 1.8F + player.level().getRandom().nextFloat() * 0.4F);
                     } else {
-                        player.playSound(SoundEvents.ITEM_BUCKET_FILL_LAVA, 0.4F, 0.7F + player.getEntityWorld().getRandom().nextFloat() * 0.4F);
+                        player.playSound(SoundEvents.BUCKET_FILL_LAVA, 0.4F, 0.7F + player.level().getRandom().nextFloat() * 0.4F);
                     }
-                    stack.set(PrimevalDataComponentTypes.FLUID_CONTENTS, maybeContents.getRight());
+                    stack.set(PrimevalDataComponentTypes.FLUID_CONTENTS, maybeContents.getB());
                     return true;
                 } else { // fluid was not inserted
                     return false;
@@ -85,25 +81,25 @@ public class VesselItem extends BundleItem implements IWeightedItem {
     }
 
     @Override
-    public boolean onClicked(ItemStack stack, ItemStack otherStack, Slot slot, ClickType clickType, PlayerEntity player, StackReference cursorStackReference) {
+    public boolean overrideOtherStackedOnMe(ItemStack stack, ItemStack otherStack, Slot slot, ClickAction clickType, Player player, SlotAccess cursorStackReference) {
         PrimevalDataComponentTypes.FluidContentComponent fluidContentComponent = stack.get(PrimevalDataComponentTypes.FLUID_CONTENTS);
         if (fluidContentComponent == null) {
-            return super.onClicked(stack, otherStack, slot, clickType, player, cursorStackReference);
+            return super.overrideOtherStackedOnMe(stack, otherStack, slot, clickType, player, cursorStackReference);
         } else {
             return false;
         }
     }
 
-    public static ItemStack processItem(ItemStack vessel, ServerWorld world, ServerRecipeManager.MatchGetter<SingleStackRecipeInput, MeltingRecipe> meltingMatchGetter, ServerRecipeManager.MatchGetter<FluidInput, AlloyingRecipe> alloyMatchGetter) {
+    public static ItemStack processItem(ItemStack vessel, ServerLevel world, RecipeManager.CachedCheck<SingleRecipeInput, MeltingRecipe> meltingMatchGetter, RecipeManager.CachedCheck<FluidInput, AlloyingRecipe> alloyMatchGetter) {
         // fluids from contents
-        Map<RegistryEntry<Fluid>, Integer> fluids = new HashMap<>();
+        Map<Holder<Fluid>, Integer> fluids = new HashMap<>();
         int overallFluid = 0;
 
-        if (vessel.contains(DataComponentTypes.BUNDLE_CONTENTS)) {
-            var contents = vessel.get(DataComponentTypes.BUNDLE_CONTENTS).iterate();
+        if (vessel.has(DataComponents.BUNDLE_CONTENTS)) {
+            var contents = vessel.get(DataComponents.BUNDLE_CONTENTS).items();
             for (ItemStack inputItem : contents) {
-                SingleStackRecipeInput singleStackRecipeInput = new SingleStackRecipeInput(inputItem);
-                var meltingRecipe = meltingMatchGetter.getFirstMatch(singleStackRecipeInput, world);
+                SingleRecipeInput singleStackRecipeInput = new SingleRecipeInput(inputItem);
+                var meltingRecipe = meltingMatchGetter.getRecipeFor(singleStackRecipeInput, world);
                 if (meltingRecipe.isPresent()) {
                     var r = meltingRecipe.get().value();
                     if (fluids.containsKey(r.getFluidResult())) {
@@ -120,42 +116,42 @@ public class VesselItem extends BundleItem implements IWeightedItem {
         //System.out.println(fluids);
 
         // output fluid
-        RegistryEntry<Fluid> resultFluid;
+        Holder<Fluid> resultFluid;
         if (fluids.size() == 1) {
             resultFluid = fluids.keySet().stream().findFirst().get();
             //System.out.println("ONLY ONE FLUID");
         } else {
             //System.out.println("ATTEMPTING ALLOY");
             FluidInput input = new FluidInput(fluids);
-            Optional<AlloyingRecipe> recipe = alloyMatchGetter.getFirstMatch(input, world).map(RecipeEntry::value);
+            Optional<AlloyingRecipe> recipe = alloyMatchGetter.getRecipeFor(input, world).map(RecipeHolder::value);
             if (recipe.isPresent()) {
                 resultFluid = recipe.get().getFluidResult();
             } else {
-                resultFluid = PrimevalFluids.MOLTEN_BOTCHED_ALLOY.getRegistryEntry();
+                resultFluid = PrimevalFluids.MOLTEN_BOTCHED_ALLOY.builtInRegistryHolder();
             }
         }
         //System.out.println("result = " + resultFluid + "  overallFluid = " + overallFluid);
 
-        vessel.remove(DataComponentTypes.BUNDLE_CONTENTS);
+        vessel.remove(DataComponents.BUNDLE_CONTENTS);
         vessel.set(PrimevalDataComponentTypes.FLUID_CONTENTS, new PrimevalDataComponentTypes.FluidContentComponent(resultFluid, overallFluid));
         return vessel;
     }
 
-    public Optional<TooltipData> getTooltipData(ItemStack stack) {
-        return stack.contains(PrimevalDataComponentTypes.FLUID_CONTENTS) ? Optional.empty() : super.getTooltipData(stack);
+    public Optional<TooltipComponent> getTooltipImage(ItemStack stack) {
+        return stack.has(PrimevalDataComponentTypes.FLUID_CONTENTS) ? Optional.empty() : super.getTooltipImage(stack);
     }
 
     @Override
     @Environment(EnvType.CLIENT)
-    public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type) {
-        super.appendTooltip(stack, context, displayComponent, textConsumer, type);
-        textConsumer.accept((Text.translatable("⚖ ").append(this.weight.getText()).append(" ⤧ ").append(this.size.getText())).formatted(Formatting.GRAY));
-        var contents = stack.getOrDefault(PrimevalDataComponentTypes.FLUID_CONTENTS, new PrimevalDataComponentTypes.FluidContentComponent(RegistryEntry.of(Fluids.EMPTY), 0));
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay displayComponent, Consumer<Component> textConsumer, TooltipFlag type) {
+        super.appendHoverText(stack, context, displayComponent, textConsumer, type);
+        textConsumer.accept((Component.translatable("⚖ ").append(this.weight.getText()).append(" ⤧ ").append(this.size.getText())).withStyle(ChatFormatting.GRAY));
+        var contents = stack.getOrDefault(PrimevalDataComponentTypes.FLUID_CONTENTS, new PrimevalDataComponentTypes.FluidContentComponent(Holder.direct(Fluids.EMPTY), 0));
         if (contents.amount() > 0) {
             textConsumer.accept(
-                    (Text.translatable("text.primeval.fluid.contains", contents.amount(), Text.translatable(
-                            "block." + contents.fluid().getIdAsString().replace(':', '.')
-                    ))).formatted(Formatting.GRAY));
+                    (Component.translatable("text.primeval.fluid.contains", contents.amount(), Component.translatable(
+                            "block." + contents.fluid().getRegisteredName().replace(':', '.')
+                    ))).withStyle(ChatFormatting.GRAY));
         }
     }
 

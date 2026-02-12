@@ -6,29 +6,30 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.cr24.primeval.initialization.PrimevalRecipes;
 import net.cr24.primeval.util.FluidInput;
 import net.cr24.primeval.util.RangedValue;
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.recipe.*;
-import net.minecraft.recipe.book.RecipeBookCategory;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.world.World;
-
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.PlacementInfo;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeBookCategory;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.material.Fluid;
 import java.util.HashMap;
 import java.util.Map;
 
 public class AlloyingRecipe implements Recipe<FluidInput> {
 
-    private final Map<RegistryEntry<Fluid>, RangedValue> fluidInputs;
-    private final RegistryEntry<Fluid> fluidResult;
+    private final Map<Holder<Fluid>, RangedValue> fluidInputs;
+    private final Holder<Fluid> fluidResult;
 
-    public AlloyingRecipe(Map<RegistryEntry<Fluid>, RangedValue> fluidsIn, RegistryEntry<Fluid> fluidResult) {
+    public AlloyingRecipe(Map<Holder<Fluid>, RangedValue> fluidsIn, Holder<Fluid> fluidResult) {
         this.fluidInputs = fluidsIn;
         this.fluidResult = fluidResult;
     }
@@ -36,17 +37,17 @@ public class AlloyingRecipe implements Recipe<FluidInput> {
     // Matching and Crafting
 
     @Override
-    public boolean matches(FluidInput input, World world) {
+    public boolean matches(FluidInput input, Level world) {
         if (input.isEmpty()) return false;
-        Map<RegistryEntry<Fluid>, Integer> inventoryFluids = input.getContents();
+        Map<Holder<Fluid>, Integer> inventoryFluids = input.getContents();
         int overallAmount = 0;
-        for (RegistryEntry<Fluid> f : inventoryFluids.keySet()) {
+        for (Holder<Fluid> f : inventoryFluids.keySet()) {
             if (!fluidInputs.containsKey(f)) {
                 return false;
             }
             overallAmount += inventoryFluids.get(f);
         }
-        for (RegistryEntry<Fluid> f : inventoryFluids.keySet()) {
+        for (Holder<Fluid> f : inventoryFluids.keySet()) {
             int stepAmount = inventoryFluids.get(f);
             float percent = ((float)stepAmount) / ((float)overallAmount);
             if (!fluidInputs.get(f).valueIsWithin(percent)) {
@@ -57,23 +58,23 @@ public class AlloyingRecipe implements Recipe<FluidInput> {
     }
 
     @Override
-    public ItemStack craft(FluidInput input, RegistryWrapper.WrapperLookup registries) {
+    public ItemStack assemble(FluidInput input, HolderLookup.Provider registries) {
         return ItemStack.EMPTY;
     }
 
     // Accessors
 
-    public RegistryEntry<Fluid> getFluidResult() {
+    public Holder<Fluid> getFluidResult() {
         return this.fluidResult;
     }
 
-    public Map<RegistryEntry<Fluid>, RangedValue> getFluidInputs() {
+    public Map<Holder<Fluid>, RangedValue> getFluidInputs() {
         return fluidInputs;
     }
 
 
     @Override
-    public boolean isIgnoredInRecipeBook() {
+    public boolean isSpecial() {
         return true;
     }
 
@@ -86,12 +87,12 @@ public class AlloyingRecipe implements Recipe<FluidInput> {
     // Crafting Layout
 
     @Override
-    public IngredientPlacement getIngredientPlacement() {
-        return IngredientPlacement.NONE;
+    public PlacementInfo placementInfo() {
+        return PlacementInfo.NOT_PLACEABLE;
     }
 
     @Override
-    public RecipeBookCategory getRecipeBookCategory() {
+    public RecipeBookCategory recipeBookCategory() {
         return null;
     }
 
@@ -104,12 +105,12 @@ public class AlloyingRecipe implements Recipe<FluidInput> {
 
     public static class Serializer implements RecipeSerializer<AlloyingRecipe> {
         private static final MapCodec<AlloyingRecipe> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
-                Codec.unboundedMap(Registries.FLUID.getEntryCodec(), RangedValue.CODEC).fieldOf("fluids").forGetter((recipe) -> recipe.fluidInputs),
-                Registries.FLUID.getEntryCodec().fieldOf("result").forGetter((recipe) -> recipe.fluidResult)
+                Codec.unboundedMap(BuiltInRegistries.FLUID.holderByNameCodec(), RangedValue.CODEC).fieldOf("fluids").forGetter((recipe) -> recipe.fluidInputs),
+                BuiltInRegistries.FLUID.holderByNameCodec().fieldOf("result").forGetter((recipe) -> recipe.fluidResult)
         ).apply(instance, AlloyingRecipe::new));
-        private static final PacketCodec<RegistryByteBuf, AlloyingRecipe> PACKET_CODEC = PacketCodec.tuple(
-                PacketCodecs.map(HashMap::new, PacketCodecs.registryEntry(RegistryKeys.FLUID), RangedValue.PACKET_CODEC), AlloyingRecipe::getFluidInputs,
-                PacketCodecs.registryEntry(RegistryKeys.FLUID), AlloyingRecipe::getFluidResult,
+        private static final StreamCodec<RegistryFriendlyByteBuf, AlloyingRecipe> PACKET_CODEC = StreamCodec.composite(
+                ByteBufCodecs.map(HashMap::new, ByteBufCodecs.holderRegistry(Registries.FLUID), RangedValue.PACKET_CODEC), AlloyingRecipe::getFluidInputs,
+                ByteBufCodecs.holderRegistry(Registries.FLUID), AlloyingRecipe::getFluidResult,
                 AlloyingRecipe::new
         );
 
@@ -120,7 +121,7 @@ public class AlloyingRecipe implements Recipe<FluidInput> {
             return CODEC;
         }
 
-        public PacketCodec<RegistryByteBuf, AlloyingRecipe> packetCodec() {
+        public StreamCodec<RegistryFriendlyByteBuf, AlloyingRecipe> streamCodec() {
             return PACKET_CODEC;
         }
     }

@@ -3,30 +3,29 @@ package net.cr24.primeval.world.gen.feature;
 import com.mojang.serialization.Codec;
 import net.cr24.primeval.block.plant.SpreadingMossBlock;
 import net.cr24.primeval.initialization.PrimevalBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.MultifaceGrowthFeatureConfig;
-import net.minecraft.world.gen.feature.util.FeatureContext;
-
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.MultifaceGrowthConfiguration;
 import java.util.List;
 
-public class MossFeature extends Feature<MultifaceGrowthFeatureConfig> {
-    public MossFeature(Codec<MultifaceGrowthFeatureConfig> configCodec) {
+public class MossFeature extends Feature<MultifaceGrowthConfiguration> {
+    public MossFeature(Codec<MultifaceGrowthConfiguration> configCodec) {
         super(configCodec);
     }
 
     @Override
-    public boolean generate(FeatureContext<MultifaceGrowthFeatureConfig> context) {
-        StructureWorldAccess structureWorldAccess = context.getWorld();
-        BlockPos blockPos = context.getOrigin();
-        Random random = context.getRandom();
-        MultifaceGrowthFeatureConfig glowLichenFeatureConfig = context.getConfig();
+    public boolean place(FeaturePlaceContext<MultifaceGrowthConfiguration> context) {
+        WorldGenLevel structureWorldAccess = context.level();
+        BlockPos blockPos = context.origin();
+        RandomSource random = context.random();
+        MultifaceGrowthConfiguration glowLichenFeatureConfig = context.config();
         if (!isAirOrWater(structureWorldAccess.getBlockState(blockPos))) {
             return false;
         }
@@ -34,14 +33,14 @@ public class MossFeature extends Feature<MultifaceGrowthFeatureConfig> {
         if (generate(structureWorldAccess, blockPos, structureWorldAccess.getBlockState(blockPos), glowLichenFeatureConfig, random, list)) {
             return true;
         }
-        BlockPos.Mutable mutable = blockPos.mutableCopy();
+        BlockPos.MutableBlockPos mutable = blockPos.mutable();
         block0: for (Direction direction : list) {
             mutable.set(blockPos);
             List<Direction> list2 = shuffleDirections(glowLichenFeatureConfig, random, direction.getOpposite());
             for (int i = 0; i < glowLichenFeatureConfig.searchRange; ++i) {
-                mutable.set(blockPos, direction);
+                mutable.setWithOffset(blockPos, direction);
                 BlockState blockState = structureWorldAccess.getBlockState(mutable);
-                if (!isAirOrWater(blockState) && !blockState.isOf(PrimevalBlocks.MOSS)) continue block0;
+                if (!isAirOrWater(blockState) && !blockState.is(PrimevalBlocks.MOSS)) continue block0;
                 if (!generate(structureWorldAccess, mutable, blockState, glowLichenFeatureConfig, random, list2)) continue;
                 return true;
             }
@@ -49,35 +48,35 @@ public class MossFeature extends Feature<MultifaceGrowthFeatureConfig> {
         return false;
     }
 
-    public static boolean generate(StructureWorldAccess world, BlockPos pos, BlockState state, MultifaceGrowthFeatureConfig config, Random random, List<Direction> directions) {
-        BlockPos.Mutable mutable = pos.mutableCopy();
+    public static boolean generate(WorldGenLevel world, BlockPos pos, BlockState state, MultifaceGrowthConfiguration config, RandomSource random, List<Direction> directions) {
+        BlockPos.MutableBlockPos mutable = pos.mutable();
         for (Direction direction : directions) {
-            BlockState blockState = world.getBlockState(mutable.set(pos, direction));
-            if (!blockState.isIn(config.canPlaceOn)) continue;
+            BlockState blockState = world.getBlockState(mutable.setWithOffset(pos, direction));
+            if (!blockState.is(config.canBePlacedOn)) continue;
             SpreadingMossBlock mossBlock = (SpreadingMossBlock)PrimevalBlocks.MOSS;
-            BlockState blockState2 = mossBlock.withDirection(state, world, pos, direction);
+            BlockState blockState2 = mossBlock.getStateForPlacement(state, world, pos, direction);
             if (blockState2 == null) {
                 return false;
             }
-            world.setBlockState(pos, blockState2, Block.NOTIFY_ALL);
-            world.getChunk(pos).markBlockForPostProcessing(pos);
-            if (random.nextFloat() < config.spreadChance) {
-                mossBlock.grower.grow(blockState2, world, pos, direction, random, true);
+            world.setBlock(pos, blockState2, Block.UPDATE_ALL);
+            world.getChunk(pos).markPosForPostprocessing(pos);
+            if (random.nextFloat() < config.chanceOfSpreading) {
+                mossBlock.grower.spreadFromFaceTowardRandomDirection(blockState2, world, pos, direction, random, true);
             }
             return true;
         }
         return false;
     }
 
-    public static List<Direction> shuffleDirections(MultifaceGrowthFeatureConfig config, Random random) {
-        return config.shuffleDirections(random);
+    public static List<Direction> shuffleDirections(MultifaceGrowthConfiguration config, RandomSource random) {
+        return config.getShuffledDirections(random);
     }
 
-    public static List<Direction> shuffleDirections(MultifaceGrowthFeatureConfig config, Random random, Direction excluded) {
-        return config.shuffleDirections(random, excluded);
+    public static List<Direction> shuffleDirections(MultifaceGrowthConfiguration config, RandomSource random, Direction excluded) {
+        return config.getShuffledDirectionsExcept(random, excluded);
     }
 
     private static boolean isAirOrWater(BlockState state) {
-        return state.isAir() || state.isOf(Blocks.WATER);
+        return state.isAir() || state.is(Blocks.WATER);
     }
 }

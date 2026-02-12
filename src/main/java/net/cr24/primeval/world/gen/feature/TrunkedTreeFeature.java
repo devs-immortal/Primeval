@@ -4,14 +4,13 @@ import com.mojang.serialization.Codec;
 import net.cr24.primeval.block.plant.GrowingSaplingBlock;
 import net.cr24.primeval.block.plant.LeafBlock;
 import net.cr24.primeval.block.plant.TrunkBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.util.FeatureContext;
-
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import java.util.ArrayList;
 import java.util.List;
 public class TrunkedTreeFeature extends Feature<TrunkedTreeFeatureConfig> {
@@ -20,18 +19,18 @@ public class TrunkedTreeFeature extends Feature<TrunkedTreeFeatureConfig> {
     }
 
     @Override
-    public boolean generate(FeatureContext<TrunkedTreeFeatureConfig> context) {
-        BlockPos blockPos = context.getOrigin();
-        StructureWorldAccess structureWorldAccess = context.getWorld();
-        Random random = context.getRandom();
+    public boolean place(FeaturePlaceContext<TrunkedTreeFeatureConfig> context) {
+        BlockPos blockPos = context.origin();
+        WorldGenLevel structureWorldAccess = context.level();
+        RandomSource random = context.random();
 
-        TrunkedTreeFeatureConfig config = context.getConfig();
-        BlockState saplingState = config.saplingState().get(random, blockPos);
-        int tries = config.tickTries().get(random);
+        TrunkedTreeFeatureConfig config = context.config();
+        BlockState saplingState = config.saplingState().getState(random, blockPos);
+        int tries = config.tickTries().sample(random);
 
         GrowingSaplingBlock saplingBlock = (GrowingSaplingBlock) saplingState.getBlock();
 
-        structureWorldAccess.setBlockState(blockPos, saplingState, 4);
+        structureWorldAccess.setBlock(blockPos, saplingState, 4);
         List<BlockPos> posList = saplingBlock.trunker.growSapling(structureWorldAccess, blockPos, random);
         int step = 0;
         while (!posList.isEmpty() && step < tries) {
@@ -42,7 +41,7 @@ public class TrunkedTreeFeature extends Feature<TrunkedTreeFeatureConfig> {
             if (tickState.getBlock() instanceof TrunkBlock) {
                 ArrayList<Direction> dirs = new ArrayList<>();
                 for (Direction d : TrunkBlock.DIRECTION_MAP.keySet()) {
-                    if (tickState.get(TrunkBlock.DIRECTION_MAP.get(d)) && structureWorldAccess.getBlockState(tickPos.offset(d, 1)).getBlock() instanceof LeafBlock) {
+                    if (tickState.getValue(TrunkBlock.DIRECTION_MAP.get(d)) && structureWorldAccess.getBlockState(tickPos.relative(d, 1)).getBlock() instanceof LeafBlock) {
                         dirs.add(d);
                     }
                 }

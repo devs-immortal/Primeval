@@ -1,12 +1,12 @@
 package net.cr24.primeval.initialization;
 
 import net.cr24.primeval.Primeval;
-import net.minecraft.block.Block;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.item.Item;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.material.Fluid;
 
 public class PrimevalTags {
 
@@ -39,7 +39,7 @@ public class PrimevalTags {
         public static final TagKey<Block> MINEABLE_CHISEL = register("mineable/chisel");
 
         private static TagKey<Block> register(String id) {
-            return TagKey.of(RegistryKeys.BLOCK, Primeval.identify(id));
+            return TagKey.create(Registries.BLOCK, Primeval.identify(id));
         }
     }
 
@@ -66,7 +66,7 @@ public class PrimevalTags {
         public static final TagKey<Item> CRATES = register("crates");
 
         private static TagKey<Item> register(String id) {
-            return TagKey.of(RegistryKeys.ITEM, Primeval.identify(id));
+            return TagKey.create(Registries.ITEM, Primeval.identify(id));
         }
     }
 
@@ -75,7 +75,7 @@ public class PrimevalTags {
         public static final TagKey<Fluid> TOOL_MOLD_FLUIDS = register("tool_mold_fluids");
 
         private static TagKey<Fluid> register(String id) {
-            return TagKey.of(RegistryKeys.FLUID, Primeval.identify(id));
+            return TagKey.create(Registries.FLUID, Primeval.identify(id));
         }
     }
 
@@ -88,7 +88,7 @@ public class PrimevalTags {
         public static final TagKey<Biome> RAISED_ORES = register("raised_ores");
 
         private static TagKey<Biome> register(String id) {
-            return TagKey.of(RegistryKeys.BIOME, Primeval.identify(id));
+            return TagKey.create(Registries.BIOME, Primeval.identify(id));
         }
     }
 }

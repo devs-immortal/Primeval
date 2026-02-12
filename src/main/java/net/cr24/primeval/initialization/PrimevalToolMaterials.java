@@ -1,7 +1,7 @@
 package net.cr24.primeval.initialization;
 
-import net.minecraft.item.ToolMaterial;
-import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.item.ToolMaterial;
 
 public class PrimevalToolMaterials {
 

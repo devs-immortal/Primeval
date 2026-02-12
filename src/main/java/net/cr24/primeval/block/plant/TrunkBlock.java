@@ -2,18 +2,18 @@ package net.cr24.primeval.block.plant;
 
 import net.cr24.primeval.initialization.PrimevalTags;
 import net.cr24.primeval.world.trunker.AbstractTrunker;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.IntProperty;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
-import net.minecraft.world.block.WireOrientation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.redstone.Orientation;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -26,82 +26,82 @@ public class TrunkBlock extends Block {
     public static final BooleanProperty WEST;
     public static final BooleanProperty UP;
     public static final BooleanProperty DOWN;
-    public static final IntProperty SIZE;
+    public static final IntegerProperty SIZE;
     public static final BooleanProperty GROWN;
-    public static final IntProperty AGE;
+    public static final IntegerProperty AGE;
 
     public final AbstractTrunker trunker;
     public static final HashMap<Direction, BooleanProperty> DIRECTION_MAP;
     public static final Direction[] XZ_DIRECTIONS;
 
-    public TrunkBlock(AbstractTrunker trunker, Settings settings) {
+    public TrunkBlock(AbstractTrunker trunker, Properties settings) {
         super(settings);
         this.trunker = trunker;
-        this.setDefaultState(this.getDefaultState().with(NORTH, false));
-        this.setDefaultState(this.getDefaultState().with(EAST, false));
-        this.setDefaultState(this.getDefaultState().with(SOUTH, false));
-        this.setDefaultState(this.getDefaultState().with(WEST, false));
-        this.setDefaultState(this.getDefaultState().with(UP, false));
-        this.setDefaultState(this.getDefaultState().with(DOWN, false));
-        this.setDefaultState(this.getDefaultState().with(SIZE, 3));
-        this.setDefaultState(this.getDefaultState().with(GROWN, false));
-        this.setDefaultState(this.getDefaultState().with(AGE, 0));
+        this.registerDefaultState(this.defaultBlockState().setValue(NORTH, false));
+        this.registerDefaultState(this.defaultBlockState().setValue(EAST, false));
+        this.registerDefaultState(this.defaultBlockState().setValue(SOUTH, false));
+        this.registerDefaultState(this.defaultBlockState().setValue(WEST, false));
+        this.registerDefaultState(this.defaultBlockState().setValue(UP, false));
+        this.registerDefaultState(this.defaultBlockState().setValue(DOWN, false));
+        this.registerDefaultState(this.defaultBlockState().setValue(SIZE, 3));
+        this.registerDefaultState(this.defaultBlockState().setValue(GROWN, false));
+        this.registerDefaultState(this.defaultBlockState().setValue(AGE, 0));
     }
 
     @Override
-    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        BlockState floor = world.getBlockState(pos.down());
-        if (state.get(AGE) == 0 && floor.isIn(PrimevalTags.Blocks.HEAVY_SOIL) || floor.isIn(PrimevalTags.Blocks.MEDIUM_SOIL)) return;
+    public void tick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
+        BlockState floor = world.getBlockState(pos.below());
+        if (state.getValue(AGE) == 0 && floor.is(PrimevalTags.Blocks.HEAVY_SOIL) || floor.is(PrimevalTags.Blocks.MEDIUM_SOIL)) return;
         for (Direction d : DIRECTION_MAP.keySet()) {
             if (
-                    state.get(DIRECTION_MAP.get(d)) &&
-                            world.getBlockState(pos.offset(d)).getBlock() instanceof TrunkBlock &&
-                            world.getBlockState(pos.offset(d)).get(AGE) < state.get(AGE)
+                    state.getValue(DIRECTION_MAP.get(d)) &&
+                            world.getBlockState(pos.relative(d)).getBlock() instanceof TrunkBlock &&
+                            world.getBlockState(pos.relative(d)).getValue(AGE) < state.getValue(AGE)
             ) return;
         }
-        world.breakBlock(pos, true);
+        world.destroyBlock(pos, true);
     }
 
     @Override
-    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
-        world.scheduleBlockTick(pos, this, 2);
+    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block sourceBlock, @Nullable Orientation wireOrientation, boolean notify) {
+        world.scheduleTick(pos, this, 2);
     }
 
     @Override
-    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
         ArrayList<Direction> dirs = new ArrayList<>();
         for (Direction d : DIRECTION_MAP.keySet()) {
-            if (state.get(DIRECTION_MAP.get(d)) && world.getBlockState(pos.offset(d, 1)).getBlock() instanceof LeafBlock) {
+            if (state.getValue(DIRECTION_MAP.get(d)) && world.getBlockState(pos.relative(d, 1)).getBlock() instanceof LeafBlock) {
                 dirs.add(d);
             }
         }
         trunker.tickTrunk(state, world, pos, random, dirs.toArray(new Direction[dirs.size()]));
     }
 
-    public boolean hasRandomTicks(BlockState state) {
-        return !state.get(GROWN);
+    public boolean isRandomlyTicking(BlockState state) {
+        return !state.getValue(GROWN);
     }
 
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        super.appendProperties(builder);
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
         builder.add(NORTH, EAST, SOUTH, WEST, UP, DOWN, SIZE, GROWN, AGE);
     }
 
     @Nullable
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return this.getDefaultState().with(SIZE, 0);
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        return this.defaultBlockState().setValue(SIZE, 0);
     }
 
     static {
-        NORTH = BooleanProperty.of("north");
-        EAST = BooleanProperty.of("east");
-        SOUTH = BooleanProperty.of("south");
-        WEST = BooleanProperty.of("west");
-        UP = BooleanProperty.of("up");
-        DOWN = BooleanProperty.of("down");
-        SIZE = IntProperty.of("size", 0, 3);
-        GROWN = BooleanProperty.of("grown");
-        AGE = IntProperty.of("age", 0, 24);
+        NORTH = BooleanProperty.create("north");
+        EAST = BooleanProperty.create("east");
+        SOUTH = BooleanProperty.create("south");
+        WEST = BooleanProperty.create("west");
+        UP = BooleanProperty.create("up");
+        DOWN = BooleanProperty.create("down");
+        SIZE = IntegerProperty.create("size", 0, 3);
+        GROWN = BooleanProperty.create("grown");
+        AGE = IntegerProperty.create("age", 0, 24);
 
         DIRECTION_MAP = new HashMap<>();
         DIRECTION_MAP.put(Direction.NORTH, NORTH);

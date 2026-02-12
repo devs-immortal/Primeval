@@ -3,13 +3,13 @@ package net.cr24.primeval.world.gen.feature;
 import com.mojang.serialization.Codec;
 import net.cr24.primeval.util.IntPoint2D;
 import net.cr24.primeval.util.ShapesUtil;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.util.FeatureContext;
-import net.minecraft.world.gen.stateprovider.BlockStateProvider;
+import net.minecraft.core.BlockPos;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 
 
 public class OreClusterFeature extends Feature<OreClusterFeatureConfig> {
@@ -19,19 +19,19 @@ public class OreClusterFeature extends Feature<OreClusterFeatureConfig> {
     }
 
     @Override
-    public boolean generate(FeatureContext<OreClusterFeatureConfig> context) {
-        BlockPos blockPos = context.getOrigin();
-        StructureWorldAccess structureWorldAccess = context.getWorld();
-        Random random = context.getRandom();
+    public boolean place(FeaturePlaceContext<OreClusterFeatureConfig> context) {
+        BlockPos blockPos = context.origin();
+        WorldGenLevel structureWorldAccess = context.level();
+        RandomSource random = context.random();
 
-        OreClusterFeatureConfig config = context.getConfig();
+        OreClusterFeatureConfig config = context.config();
         BlockStateProvider largeState = config.largeState();
         BlockStateProvider mediumState = config.mediumState();
         BlockStateProvider smallState = config.smallState();
-        int radius = config.radius().get(random);
-        int height = config.height().get(random);
-        float density = config.density().get(random);
-        float richness = config.richness().get(random);
+        int radius = config.radius().sample(random);
+        int height = config.height().sample(random);
+        float density = config.density().sample(random);
+        float richness = config.richness().sample(random);
 
         IntPoint2D[] circleCoords = ShapesUtil.getCoordinatesInCircle(radius);
         float oreRichness;
@@ -40,11 +40,11 @@ public class OreClusterFeature extends Feature<OreClusterFeatureConfig> {
                 if (random.nextFloat() < density) { // density check
                     oreRichness = (richness + ((random.nextFloat()*2.0f)-1.0f)*richness);
                     if (oreRichness > 0.75) {
-                        setBlockIfAble(structureWorldAccess, point.getOffsetBlockPos(blockPos).up(y), largeState, random);
+                        setBlockIfAble(structureWorldAccess, point.getOffsetBlockPos(blockPos).above(y), largeState, random);
                     } else if (oreRichness > 0.3) {
-                        setBlockIfAble(structureWorldAccess, point.getOffsetBlockPos(blockPos).up(y), mediumState, random);
+                        setBlockIfAble(structureWorldAccess, point.getOffsetBlockPos(blockPos).above(y), mediumState, random);
                     } else {
-                        setBlockIfAble(structureWorldAccess, point.getOffsetBlockPos(blockPos).up(y), smallState, random);
+                        setBlockIfAble(structureWorldAccess, point.getOffsetBlockPos(blockPos).above(y), smallState, random);
                     }
                 }
             }
@@ -53,9 +53,9 @@ public class OreClusterFeature extends Feature<OreClusterFeatureConfig> {
         return true;
     }
 
-    private boolean setBlockIfAble(StructureWorldAccess structureWorldAccess, BlockPos blockPos, BlockStateProvider stateProvider, Random random) {
-        if (structureWorldAccess.getBlockState(blockPos).isIn(BlockTags.BASE_STONE_OVERWORLD)) {
-            structureWorldAccess.setBlockState(blockPos, stateProvider.get(random, blockPos), 4);
+    private boolean setBlockIfAble(WorldGenLevel structureWorldAccess, BlockPos blockPos, BlockStateProvider stateProvider, RandomSource random) {
+        if (structureWorldAccess.getBlockState(blockPos).is(BlockTags.BASE_STONE_OVERWORLD)) {
+            structureWorldAccess.setBlock(blockPos, stateProvider.getState(random, blockPos), 4);
             return true;
         } else {
             return false;

@@ -2,36 +2,36 @@ package net.cr24.primeval.item;
 
 import net.cr24.primeval.util.Size;
 import net.cr24.primeval.util.Weight;
-import net.minecraft.block.Block;
-import net.minecraft.item.ItemUsageContext;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 
 import static net.cr24.primeval.item.tool.PrimevalHoeItem.hoeables;
 
 public class FlintItem extends WeightedItem {
-    public FlintItem(Weight weight, Size size, net.minecraft.item.Item.Settings settings) {
+    public FlintItem(Weight weight, Size size, net.minecraft.world.item.Item.Properties settings) {
         super(weight, size, settings);
     }
 
     @Override
-    public ActionResult useOnBlock(ItemUsageContext context) {
-        BlockPos pos = context.getBlockPos();
-        World world = context.getWorld();
+    public InteractionResult useOn(UseOnContext context) {
+        BlockPos pos = context.getClickedPos();
+        Level world = context.getLevel();
         Block targetBlock = world.getBlockState(pos).getBlock();
-        if (hoeables.containsKey(targetBlock) && world.getBlockState(pos.up()).isAir()) {
-            world.setBlockState(pos, hoeables.get(targetBlock).getDefaultState());
-            world.playSound(context.getPlayer(), pos, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS, 1.0f, 1.0f);
-            if (!world.isClient() && context.getWorld().getRandom().nextFloat() < 0.2) {
-                context.getStack().decrement(1);
-                return ActionResult.CONSUME;
+        if (hoeables.containsKey(targetBlock) && world.getBlockState(pos.above()).isAir()) {
+            world.setBlockAndUpdate(pos, hoeables.get(targetBlock).defaultBlockState());
+            world.playSound(context.getPlayer(), pos, SoundEvents.HOE_TILL, SoundSource.BLOCKS, 1.0f, 1.0f);
+            if (!world.isClientSide() && context.getLevel().getRandom().nextFloat() < 0.2) {
+                context.getItemInHand().shrink(1);
+                return InteractionResult.CONSUME;
             }
-            return ActionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         } else {
-            return super.useOnBlock(context);
+            return super.useOn(context);
         }
     }
 }

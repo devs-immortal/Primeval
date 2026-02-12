@@ -2,17 +2,21 @@ package net.cr24.primeval.recipe;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.recipe.*;
-import net.minecraft.recipe.book.RecipeBookCategory;
-import net.minecraft.recipe.input.SingleStackRecipeInput;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.world.World;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.PlacementInfo;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeBookCategory;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
+import net.minecraft.world.level.Level;
 
 
-public abstract class SimpleOneToOneRecipe implements Recipe<SingleStackRecipeInput> {
+public abstract class SimpleOneToOneRecipe implements Recipe<SingleRecipeInput> {
 
     protected final Ingredient input;
     protected final ItemStack result;
@@ -22,17 +26,17 @@ public abstract class SimpleOneToOneRecipe implements Recipe<SingleStackRecipeIn
             this.result = result;
     }
 
-    public boolean matches(SingleStackRecipeInput input, World world) {
+    public boolean matches(SingleRecipeInput input, Level world) {
             return this.input.test(input.item());
     }
 
-    public ItemStack craft(SingleStackRecipeInput input, RegistryWrapper.WrapperLookup registries) {
+    public ItemStack assemble(SingleRecipeInput input, HolderLookup.Provider registries) {
             return this.result.copy();
     }
 
     @Override
-    public IngredientPlacement getIngredientPlacement() {
-        return IngredientPlacement.NONE;
+    public PlacementInfo placementInfo() {
+        return PlacementInfo.NOT_PLACEABLE;
     }
 
     
@@ -43,12 +47,12 @@ public abstract class SimpleOneToOneRecipe implements Recipe<SingleStackRecipeIn
     }
 
     
-    public boolean isIgnoredInRecipeBook() {
+    public boolean isSpecial() {
         return true;
     }
     
     @Override
-    public RecipeBookCategory getRecipeBookCategory() {
+    public RecipeBookCategory recipeBookCategory() {
         return null;
     }
 
@@ -67,16 +71,16 @@ public abstract class SimpleOneToOneRecipe implements Recipe<SingleStackRecipeIn
 
     public static class Serializer<T extends SimpleOneToOneRecipe> implements RecipeSerializer<T> {
         private final MapCodec<T> codec;
-        private final PacketCodec<RegistryByteBuf, T> packetCodec;
+        private final StreamCodec<RegistryFriendlyByteBuf, T> packetCodec;
 
         public Serializer(RecipeFactory<T> factory) {
             this.codec = RecordCodecBuilder.mapCodec((instance) -> instance.group(
                     Ingredient.CODEC.fieldOf("input").forGetter((recipe) -> recipe.input),
                     ItemStack.CODEC.fieldOf("result").forGetter((recipe) -> recipe.result)
             ).apply(instance, factory::create));
-            packetCodec = PacketCodec.tuple(
-                    Ingredient.PACKET_CODEC, SimpleOneToOneRecipe::getInput,
-                    ItemStack.PACKET_CODEC, SimpleOneToOneRecipe::getResult,
+            packetCodec = StreamCodec.composite(
+                    Ingredient.CONTENTS_STREAM_CODEC, SimpleOneToOneRecipe::getInput,
+                    ItemStack.STREAM_CODEC, SimpleOneToOneRecipe::getResult,
                     factory::create
             );
         }
@@ -85,7 +89,7 @@ public abstract class SimpleOneToOneRecipe implements Recipe<SingleStackRecipeIn
             return this.codec;
         }
 
-        public PacketCodec<RegistryByteBuf, T> packetCodec() {
+        public StreamCodec<RegistryFriendlyByteBuf, T> streamCodec() {
             return this.packetCodec;
         }
     }

@@ -2,94 +2,98 @@ package net.cr24.primeval.block.functional;
 
 import com.mojang.serialization.MapCodec;
 import net.cr24.primeval.block.entity.LayingItemBlockEntity;
-import net.minecraft.block.*;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.block.WireOrientation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.redstone.Orientation;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class LayingItemBlock extends BlockWithEntity {
+public class LayingItemBlock extends BaseEntityBlock {
 
-    public static final MapCodec<LayingItemBlock> CODEC = createCodec(LayingItemBlock::new);
+    public static final MapCodec<LayingItemBlock> CODEC = simpleCodec(LayingItemBlock::new);
 
-    public LayingItemBlock(Settings settings) {
+    public LayingItemBlock(Properties settings) {
         super(settings);
     }
 
     @Override
-    protected MapCodec<? extends BlockWithEntity> getCodec() {
+    protected MapCodec<? extends BaseEntityBlock> codec() {
         return CODEC;
     }
 
     @Override
-    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
-        super.neighborUpdate(state, world, pos, sourceBlock, wireOrientation, notify);
-        if (!world.getBlockState(pos.down()).isOpaqueFullCube()) {
+    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block sourceBlock, @Nullable Orientation wireOrientation, boolean notify) {
+        super.neighborChanged(state, world, pos, sourceBlock, wireOrientation, notify);
+        if (!world.getBlockState(pos.below()).isSolidRender()) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof LayingItemBlockEntity) {
-                dropStack(world, pos, ((LayingItemBlockEntity) blockEntity).getItem());
+                popResource(world, pos, ((LayingItemBlockEntity) blockEntity).getItem());
             }
-            world.setBlockState(pos, Blocks.AIR.getDefaultState());
-            blockEntity.markRemoved();
+            world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+            blockEntity.setRemoved();
         }
     }
 
     @Override
-    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-        super.onBreak(world, pos, state, player);
+    public BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
+        super.playerWillDestroy(world, pos, state, player);
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof LayingItemBlockEntity) {
-            dropStack(world, pos, ((LayingItemBlockEntity) blockEntity).getItem());
+            popResource(world, pos, ((LayingItemBlockEntity) blockEntity).getItem());
         }
-        blockEntity.markRemoved();
+        blockEntity.setRemoved();
         return state;
     }
 
     @Override
-    protected void onStacksDropped(BlockState state, ServerWorld world, BlockPos pos, ItemStack tool, boolean dropExperience) {
-        super.onStacksDropped(state, world, pos, tool, dropExperience);
+    protected void spawnAfterBreak(BlockState state, ServerLevel world, BlockPos pos, ItemStack tool, boolean dropExperience) {
+        super.spawnAfterBreak(state, world, pos, tool, dropExperience);
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof LayingItemBlockEntity) {
-            dropStack(world, pos, ((LayingItemBlockEntity) blockEntity).getItem());
+            popResource(world, pos, ((LayingItemBlockEntity) blockEntity).getItem());
         }
     }
 
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+        return Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        if (!player.getAbilities().allowModifyWorld) {
-            return ActionResult.PASS;
-        } else if (!player.isSneaking()) {
+    public InteractionResult useWithoutItem(BlockState state, Level world, BlockPos pos, Player player, BlockHitResult hit) {
+        if (!player.getAbilities().mayBuild) {
+            return InteractionResult.PASS;
+        } else if (!player.isShiftKeyDown()) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
-            player.giveItemStack(((LayingItemBlockEntity) blockEntity).getItem());
-            world.setBlockState(pos, Blocks.AIR.getDefaultState());
-            if (!world.isClient()) world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 0.5f, world.getRandom().nextFloat() * 0.4f + 0.8f);
-            return ActionResult.SUCCESS;
+            player.addItem(((LayingItemBlockEntity) blockEntity).getItem());
+            world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+            if (!world.isClientSide()) world.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.5f, world.getRandom().nextFloat() * 0.4f + 0.8f);
+            return InteractionResult.SUCCESS;
         } else {
-            return super.onUse(state, world, pos, player, hit);
+            return super.useWithoutItem(state, world, pos, player, hit);
         }
     }
 
     @Override
-    protected void spawnBreakParticles(World world, PlayerEntity player, BlockPos pos, BlockState state) {
+    protected void spawnDestroyParticles(Level world, Player player, BlockPos pos, BlockState state) {
     }
 
     @Nullable
     @Override
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new LayingItemBlockEntity(pos, state);
     }
 

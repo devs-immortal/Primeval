@@ -10,10 +10,10 @@ import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.cr24.primeval.recipe.OpenFireRecipe;
 import net.cr24.primeval.recipe.PitKilnFiringRecipe;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.recipe.RecipeEntry;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
@@ -30,20 +30,20 @@ public class OpenFireDisplay extends BasicDisplay {
                     Codec.INT.fieldOf("cook_time").forGetter(OpenFireDisplay::getCookTime)
                     ).apply(instance, OpenFireDisplay::new)
             ),
-            PacketCodec.tuple(
-                    EntryIngredient.streamCodec().collect(PacketCodecs.toList()), BasicDisplay::getInputEntries,
-                    EntryIngredient.streamCodec().collect(PacketCodecs.toList()), BasicDisplay::getOutputEntries,
-                    PacketCodecs.optional(Identifier.PACKET_CODEC), BasicDisplay::getDisplayLocation,
-                    PacketCodecs.INTEGER, OpenFireDisplay::getCookTime,
+            StreamCodec.composite(
+                    EntryIngredient.streamCodec().apply(ByteBufCodecs.list()), BasicDisplay::getInputEntries,
+                    EntryIngredient.streamCodec().apply(ByteBufCodecs.list()), BasicDisplay::getOutputEntries,
+                    ByteBufCodecs.optional(Identifier.STREAM_CODEC), BasicDisplay::getDisplayLocation,
+                    ByteBufCodecs.INT, OpenFireDisplay::getCookTime,
                     OpenFireDisplay::new)
     );
 
     private final int cookTime;
 
-    public OpenFireDisplay(RecipeEntry<OpenFireRecipe> recipe) {
+    public OpenFireDisplay(RecipeHolder<OpenFireRecipe> recipe) {
         this(Collections.singletonList(EntryIngredients.ofIngredient(recipe.value().getInput())),
                 Collections.singletonList(EntryIngredients.of(recipe.value().getResult())),
-                Optional.ofNullable(recipe.id().getValue()),
+                Optional.ofNullable(recipe.id().identifier()),
                 recipe.value().getCookTime()
         );
     }

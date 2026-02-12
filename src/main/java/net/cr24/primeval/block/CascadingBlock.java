@@ -1,14 +1,13 @@
 package net.cr24.primeval.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 
 /*
  * A collapsible block that falls based
@@ -20,18 +19,18 @@ import java.util.List;
  */
 public class CascadingBlock extends SemiSupportedBlock {
 
-    public CascadingBlock(float percentPerSide, Block fallBlock, Settings settings) {
+    public CascadingBlock(float percentPerSide, Block fallBlock, Properties settings) {
         super(percentPerSide, fallBlock, settings);
     }
 
-    public CascadingBlock(float percentPerSide, Settings settings) {
+    public CascadingBlock(float percentPerSide, Properties settings) {
         super(percentPerSide, settings);
     }
 
     @Override
-    protected boolean collapse(World world, BlockPos pos, Random random, int step, boolean force) {
+    protected boolean collapse(Level world, BlockPos pos, RandomSource random, int step, boolean force) {
         if ((step < 4) && (force || !this.supported(world, pos, random))) {
-            List<BlockPos> allPositions = Arrays.asList(pos.up(), pos.down(), pos.north(), pos.east(), pos.south(), pos.west());
+            List<BlockPos> allPositions = Arrays.asList(pos.above(), pos.below(), pos.north(), pos.east(), pos.south(), pos.west());
             Collections.shuffle(allPositions);
             for (BlockPos dest : allPositions) {
                 Block bl = world.getBlockState(dest).getBlock();
@@ -40,17 +39,17 @@ public class CascadingBlock extends SemiSupportedBlock {
                 }
             }
 
-            if (canFallThrough(world.getBlockState(pos.down()))) {
-                world.playSound(null, pos, world.getBlockState(pos).getSoundGroup().getBreakSound(), SoundCategory.BLOCKS, 0.5F, 0.6F + world.random.nextFloat() * 0.4F);
+            if (isFree(world.getBlockState(pos.below()))) {
+                world.playSound(null, pos, world.getBlockState(pos).getSoundType().getBreakSound(), SoundSource.BLOCKS, 0.5F, 0.6F + world.random.nextFloat() * 0.4F);
 
-                return world.spawnEntity(createFallingBlockEntity(world, pos, pos));
+                return world.addFreshEntity(createFallingBlockEntity(world, pos, pos));
             } else {
                 List<BlockPos> neighborPositions = Arrays.asList(pos.north(), pos.east(), pos.south(), pos.west());
                 Collections.shuffle(neighborPositions);
                 for (BlockPos dest : neighborPositions) {
-                    if (canFallThrough(world.getBlockState(dest)) && canFallThrough(world.getBlockState(dest.down()))) {
-                        world.playSound(null, pos, world.getBlockState(pos).getSoundGroup().getBreakSound(), SoundCategory.BLOCKS, 0.5F, 0.6F + world.random.nextFloat() * 0.4F);
-                        return world.spawnEntity(createFallingBlockEntity(world, dest, pos));
+                    if (isFree(world.getBlockState(dest)) && isFree(world.getBlockState(dest.below()))) {
+                        world.playSound(null, pos, world.getBlockState(pos).getSoundType().getBreakSound(), SoundSource.BLOCKS, 0.5F, 0.6F + world.random.nextFloat() * 0.4F);
+                        return world.addFreshEntity(createFallingBlockEntity(world, dest, pos));
                     }
                 }
             }

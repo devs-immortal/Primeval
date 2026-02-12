@@ -1,40 +1,34 @@
 package net.cr24.primeval.block.entity;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.block.entity.LootableContainerBlockEntity;
-import net.minecraft.block.entity.ViewerCountManager;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventories;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.screen.Generic3x3ContainerScreenHandler;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.DispenserMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
-public abstract class NineStorageBlockEntity extends LootableContainerBlockEntity {
-    private DefaultedList<ItemStack> inventory;
+public abstract class NineStorageBlockEntity extends RandomizableContainerBlockEntity {
+    private NonNullList<ItemStack> inventory;
 
     protected NineStorageBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
         super(blockEntityType, blockPos, blockState);
-        this.inventory = DefaultedList.ofSize(9, ItemStack.EMPTY);
+        this.inventory = NonNullList.withSize(9, ItemStack.EMPTY);
     }
 
     @Override
-    public int size() {
+    public int getContainerSize() {
         return 9;
     }
 
-    public int chooseNonEmptySlot(Random random) {
-        this.generateLoot(null);
+    public int chooseNonEmptySlot(RandomSource random) {
+        this.unpackLootTable(null);
         int i = -1;
         int j = 1;
 
@@ -48,18 +42,18 @@ public abstract class NineStorageBlockEntity extends LootableContainerBlockEntit
     }
 
     public ItemStack addToFirstFreeSlot(ItemStack stack) {
-        int i = this.getMaxCount(stack);
+        int i = this.getMaxStackSize(stack);
 
         for(int j = 0; j < this.inventory.size(); ++j) {
             ItemStack itemStack = (ItemStack)this.inventory.get(j);
-            if (itemStack.isEmpty() || ItemStack.areItemsAndComponentsEqual(stack, itemStack)) {
+            if (itemStack.isEmpty() || ItemStack.isSameItemSameComponents(stack, itemStack)) {
                 int k = Math.min(stack.getCount(), i - itemStack.getCount());
                 if (k > 0) {
                     if (itemStack.isEmpty()) {
-                        this.setStack(j, stack.split(k));
+                        this.setItem(j, stack.split(k));
                     } else {
-                        stack.decrement(k);
-                        itemStack.increment(k);
+                        stack.shrink(k);
+                        itemStack.grow(k);
                     }
                 }
 
@@ -72,33 +66,33 @@ public abstract class NineStorageBlockEntity extends LootableContainerBlockEntit
         return stack;
     }
 
-    protected void readData(ReadView view) {
-        super.readData(view);
-        if (!this.readLootTable(view)) {
-            this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
+    protected void loadAdditional(ValueInput view) {
+        super.loadAdditional(view);
+        if (!this.tryLoadLootTable(view)) {
+            this.inventory = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         }
-        Inventories.readData(view, this.inventory);
+        ContainerHelper.loadAllItems(view, this.inventory);
     }
 
-    protected void writeData(WriteView view) {
-        super.writeData(view);
-        if (!this.writeLootTable(view)) {
-            Inventories.writeData(view, this.inventory);
+    protected void saveAdditional(ValueOutput view) {
+        super.saveAdditional(view);
+        if (!this.trySaveLootTable(view)) {
+            ContainerHelper.saveAllItems(view, this.inventory);
         }
     }
 
     @Override
-    protected DefaultedList<ItemStack> getHeldStacks() {
+    protected NonNullList<ItemStack> getItems() {
         return this.inventory;
     }
 
     @Override
-    protected void setHeldStacks(DefaultedList<ItemStack> inventory) {
+    protected void setItems(NonNullList<ItemStack> inventory) {
         this.inventory = inventory;
     }
 
     @Override
-    protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
-        return new Generic3x3ContainerScreenHandler(syncId, playerInventory, this);
+    protected AbstractContainerMenu createMenu(int syncId, Inventory playerInventory) {
+        return new DispenserMenu(syncId, playerInventory, this);
     }
 }

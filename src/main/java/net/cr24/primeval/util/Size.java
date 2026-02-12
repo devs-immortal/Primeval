@@ -1,7 +1,6 @@
 package net.cr24.primeval.util;
 
-import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableTextContent;
+import net.minecraft.network.chat.Component;
 
 public enum Size {
     SMALL,      // normal 64 stack
@@ -9,18 +8,18 @@ public enum Size {
     LARGE,      // max 16 in stack
     VERY_LARGE;  // max 1 in stack
 
-    public Text getText() {
+    public Component getText() {
         switch(this) {
             case SMALL:
-                return Text.translatable("text.primeval.size.small");
+                return Component.translatable("text.primeval.size.small");
             case MEDIUM:
-                return Text.translatable("text.primeval.size.medium");
+                return Component.translatable("text.primeval.size.medium");
             case LARGE:
-                return Text.translatable("text.primeval.size.large");
+                return Component.translatable("text.primeval.size.large");
             case VERY_LARGE:
-                return Text.translatable("text.primeval.size.very_large");
+                return Component.translatable("text.primeval.size.very_large");
         }
-        return Text.translatable("text.primeval.size.medium");
+        return Component.translatable("text.primeval.size.medium");
     }
 
     public int getStackSize() {

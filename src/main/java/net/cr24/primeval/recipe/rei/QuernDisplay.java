@@ -10,11 +10,10 @@ import me.shedaniel.rei.api.common.display.basic.BasicDisplay;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.cr24.primeval.recipe.QuernRecipe;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.recipe.RecipeEntry;
-import net.minecraft.recipe.StonecuttingRecipe;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
@@ -31,20 +30,20 @@ public class QuernDisplay extends BasicDisplay {
                     Codec.INT.fieldOf("wheel_damage").forGetter(QuernDisplay::getWheelDamage)
                     ).apply(instance, QuernDisplay::new)
             ),
-            PacketCodec.tuple(
-                    EntryIngredient.streamCodec().collect(PacketCodecs.toList()), BasicDisplay::getInputEntries,
-                    EntryIngredient.streamCodec().collect(PacketCodecs.toList()), BasicDisplay::getOutputEntries,
-                    PacketCodecs.optional(Identifier.PACKET_CODEC), BasicDisplay::getDisplayLocation,
-                    PacketCodecs.INTEGER, QuernDisplay::getWheelDamage,
+            StreamCodec.composite(
+                    EntryIngredient.streamCodec().apply(ByteBufCodecs.list()), BasicDisplay::getInputEntries,
+                    EntryIngredient.streamCodec().apply(ByteBufCodecs.list()), BasicDisplay::getOutputEntries,
+                    ByteBufCodecs.optional(Identifier.STREAM_CODEC), BasicDisplay::getDisplayLocation,
+                    ByteBufCodecs.INT, QuernDisplay::getWheelDamage,
                     QuernDisplay::new)
     );
 
     private final int wheelDamage;
 
-    public QuernDisplay(RecipeEntry<QuernRecipe> recipe) {
+    public QuernDisplay(RecipeHolder<QuernRecipe> recipe) {
         this(Collections.singletonList(EntryIngredients.ofIngredient(recipe.value().getInput())),
                 Collections.singletonList(EntryIngredients.of(recipe.value().getResult())),
-                Optional.ofNullable(recipe.id().getValue()),
+                Optional.ofNullable(recipe.id().identifier()),
                 recipe.value().getWheelDamage()
         );
     }

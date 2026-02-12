@@ -10,7 +10,7 @@ import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.cr24.primeval.initialization.PrimevalItems;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
 import java.util.List;
 
 public class MeltingDisplayCategory implements DisplayCategory<MeltingDisplay> {
@@ -20,8 +20,8 @@ public class MeltingDisplayCategory implements DisplayCategory<MeltingDisplay> {
     }
 
     @Override
-    public Text getTitle() {
-        return Text.translatable("category.primeval.melting");
+    public Component getTitle() {
+        return Component.translatable("category.primeval.melting");
     }
 
     @Override

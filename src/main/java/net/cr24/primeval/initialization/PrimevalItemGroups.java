@@ -3,15 +3,15 @@ package net.cr24.primeval.initialization;
 import net.cr24.primeval.Primeval;
 import net.cr24.primeval.initialization.PrimevalBlocks.BlockSet;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.text.Text;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 
 import static net.cr24.primeval.initialization.PrimevalBlocks.*;
 import static net.cr24.primeval.initialization.PrimevalItems.*;
@@ -19,41 +19,41 @@ import static net.cr24.primeval.initialization.PrimevalItems.BRONZE_TOOL_PARTS;
 
 public class PrimevalItemGroups {
 
-    public static final RegistryKey<ItemGroup> BLOCKS = create("blocks", FabricItemGroup.builder()
+    public static final ResourceKey<CreativeModeTab> BLOCKS = create("blocks", FabricItemGroup.builder()
             .icon(() -> new ItemStack(FIRED_CLAY_BRICK_BLOCKS.block()))
-            .entries((context, entries) -> {
+            .displayItems((context, entries) -> {
                 // Terrain Blocks
-                entries.add(DIRT);
-                entries.add(COARSE_DIRT);
-                entries.add(CLAY);
-                entries.add(MUD);
-                entries.add(DRY_DIRT);
-                entries.add(GRASSY_DIRT);
-                entries.add(GRASSY_CLAY);
-                entries.add(SAND);
-                entries.add(GRAVEL);
-                entries.add(COBBLESTONE);
-                entries.add(STONE);
-                entries.add(SANDSTONE);
+                entries.accept(DIRT);
+                entries.accept(COARSE_DIRT);
+                entries.accept(CLAY);
+                entries.accept(MUD);
+                entries.accept(DRY_DIRT);
+                entries.accept(GRASSY_DIRT);
+                entries.accept(GRASSY_CLAY);
+                entries.accept(SAND);
+                entries.accept(GRAVEL);
+                entries.accept(COBBLESTONE);
+                entries.accept(STONE);
+                entries.accept(SANDSTONE);
                 // Plants
-                entries.add(OAK_SAPLING);
-                entries.add(BIRCH_SAPLING);
-                entries.add(SPRUCE_SAPLING);
-                entries.add(GRASS);
-                entries.add(BUSH);
-                entries.add(SPIKED_PLANT);
-                entries.add(LEAFY_PLANT);
-                entries.add(SHRUB);
-                entries.add(MOSS);
+                entries.accept(OAK_SAPLING);
+                entries.accept(BIRCH_SAPLING);
+                entries.accept(SPRUCE_SAPLING);
+                entries.accept(GRASS);
+                entries.accept(BUSH);
+                entries.accept(SPIKED_PLANT);
+                entries.accept(LEAFY_PLANT);
+                entries.accept(SHRUB);
+                entries.accept(MOSS);
                 // Flowers
-                entries.add(POPPY);
-                entries.add(DANDELION);
-                entries.add(OXEYE_DAISY);
-                entries.add(CORNFLOWER);
-                entries.add(LILY_OF_THE_VALLEY);
+                entries.accept(POPPY);
+                entries.accept(DANDELION);
+                entries.accept(OXEYE_DAISY);
+                entries.accept(CORNFLOWER);
+                entries.accept(LILY_OF_THE_VALLEY);
                 // Water Plants
-                entries.add(REEDS);
-                entries.add(RIVER_GRASS);
+                entries.accept(REEDS);
+                entries.accept(RIVER_GRASS);
                 // Ores
                 addBlockSet(entries, COPPER_MALACHITE_ORE);
                 addBlockSet(entries, COPPER_NATIVE_ORE);
@@ -62,14 +62,14 @@ public class PrimevalItemGroups {
                 addBlockSet(entries, GOLD_NATIVE_ORE);
                 addBlockSet(entries, IRON_HEMATITE_ORE);
                 addBlockSet(entries, LAZURITE_ORE);
-                entries.add(FOSSIL);
+                entries.accept(FOSSIL);
                 // Crafted Blocks
-                entries.add(STRAW_BLOCK);
-                entries.add(STRAW_STAIRS);
-                entries.add(STRAW_SLAB);
-                entries.add(STRAW_MESH);
-                entries.add(STRAW_MAT);
-                entries.add(TERRACOTTA);
+                entries.accept(STRAW_BLOCK);
+                entries.accept(STRAW_STAIRS);
+                entries.accept(STRAW_SLAB);
+                entries.accept(STRAW_MESH);
+                entries.accept(STRAW_MAT);
+                entries.accept(TERRACOTTA);
                 addBlockSet(entries, COLORED_TERRACOTTA);
                 addBlockSet(entries, FIRED_CLAY_SHINGLE_BLOCKS);
                 addBlockSetSet(entries, COLORED_FIRED_CLAY_SHINGLE_BLOCKS);
@@ -80,195 +80,195 @@ public class PrimevalItemGroups {
                 addBlockSet(entries, CRUDE_BRICKS);
                 addBlockSet(entries, STONE_BRICKS);
                 addBlockSet(entries, SMOOTH_STONE);
-                entries.add(STONE_INDENT);
-                entries.add(STONE_PILLAR);
+                entries.accept(STONE_INDENT);
+                entries.accept(STONE_PILLAR);
                 addBlockSet(entries, STONE_PAVER);
-                entries.add(DAUB);
-                entries.add(FRAMED_DAUB);
-                entries.add(FRAMED_PILLAR_DAUB);
-                entries.add(FRAMED_CROSS_DAUB);
-                entries.add(FRAMED_INVERTED_CROSS_DAUB);
-                entries.add(FRAMED_X_DAUB);
-                entries.add(FRAMED_PLUS_DAUB);
-                entries.add(FRAMED_DIVIDED_DAUB);
+                entries.accept(DAUB);
+                entries.accept(FRAMED_DAUB);
+                entries.accept(FRAMED_PILLAR_DAUB);
+                entries.accept(FRAMED_CROSS_DAUB);
+                entries.accept(FRAMED_INVERTED_CROSS_DAUB);
+                entries.accept(FRAMED_X_DAUB);
+                entries.accept(FRAMED_PLUS_DAUB);
+                entries.accept(FRAMED_DIVIDED_DAUB);
                 addBlockSet(entries, OAK_PLANK_BLOCKS);
                 addBlockSet(entries, BIRCH_PLANK_BLOCKS);
                 addBlockSet(entries, SPRUCE_PLANK_BLOCKS);
                 addBlockSet(entries, WICKER);
-                entries.add(WICKER_DOOR);
-                entries.add(WICKER_TRAPDOOR);
-                entries.add(WICKER_BARS);
-                entries.add(ROPE);
-                entries.add(ROPE_LADDER);
-                entries.add(OAK_CRATE);
-                entries.add(BIRCH_CRATE);
-                entries.add(SPRUCE_CRATE);
-                entries.add(LARGE_CLAY_POT);
-                entries.add(LARGE_FIRED_CLAY_POT);
-                entries.add(LARGE_DECORATIVE_FIRED_CLAY_POT);
-                entries.add(WICKER_BASKET);
-                entries.add(LIT_CRUDE_TORCH);
-                entries.add(CRUDE_CRAFTING_BENCH);
-                entries.add(QUERN);
+                entries.accept(WICKER_DOOR);
+                entries.accept(WICKER_TRAPDOOR);
+                entries.accept(WICKER_BARS);
+                entries.accept(ROPE);
+                entries.accept(ROPE_LADDER);
+                entries.accept(OAK_CRATE);
+                entries.accept(BIRCH_CRATE);
+                entries.accept(SPRUCE_CRATE);
+                entries.accept(LARGE_CLAY_POT);
+                entries.accept(LARGE_FIRED_CLAY_POT);
+                entries.accept(LARGE_DECORATIVE_FIRED_CLAY_POT);
+                entries.accept(WICKER_BASKET);
+                entries.accept(LIT_CRUDE_TORCH);
+                entries.accept(CRUDE_CRAFTING_BENCH);
+                entries.accept(QUERN);
             })
     );
 
-    public static final RegistryKey<ItemGroup> ITEMS = create("items", FabricItemGroup.builder()
+    public static final ResourceKey<CreativeModeTab> ITEMS = create("items", FabricItemGroup.builder()
             .icon(() -> new ItemStack(STRAW))
-            .entries((context, entries) -> {
-                entries.add(STRAW);
-                entries.add(STICK);
-                entries.add(OAK_LOG);
-                entries.add(BIRCH_LOG);
-                entries.add(SPRUCE_LOG);
-                entries.add(STRING);
-                entries.add(FLINT);
-                entries.add(ROCK);
-                entries.add(STONE_BRICK);
-                entries.add(ASHES);
-                entries.add(CRUSHED_TERRACOTTA);
-                entries.add(CEMENT_MIX);
-                entries.add(CEMENT);
-                entries.add(BONE);
-                entries.add(BONEMEAL);
-                entries.add(ANIMAL_FAT);
-                entries.add(GUNPOWDER);
-                entries.add(CHARRED_BONE);
+            .displayItems((context, entries) -> {
+                entries.accept(STRAW);
+                entries.accept(STICK);
+                entries.accept(OAK_LOG);
+                entries.accept(BIRCH_LOG);
+                entries.accept(SPRUCE_LOG);
+                entries.accept(STRING);
+                entries.accept(FLINT);
+                entries.accept(ROCK);
+                entries.accept(STONE_BRICK);
+                entries.accept(ASHES);
+                entries.accept(CRUSHED_TERRACOTTA);
+                entries.accept(CEMENT_MIX);
+                entries.accept(CEMENT);
+                entries.accept(BONE);
+                entries.accept(BONEMEAL);
+                entries.accept(ANIMAL_FAT);
+                entries.accept(GUNPOWDER);
+                entries.accept(CHARRED_BONE);
 
-                entries.add(SANDY_CLAY_BALL);
-                entries.add(SANDY_CLAY_BRICK);
-                entries.add(DRIED_BRICK);
+                entries.accept(SANDY_CLAY_BALL);
+                entries.accept(SANDY_CLAY_BRICK);
+                entries.accept(DRIED_BRICK);
 
-                entries.add(RAW_COPPER_MALACHITE_SMALL);
-                entries.add(RAW_COPPER_MALACHITE_MEDIUM);
-                entries.add(RAW_COPPER_MALACHITE_LARGE);
-                entries.add(RAW_COPPER_NATIVE_SMALL);
-                entries.add(RAW_COPPER_NATIVE_MEDIUM);
-                entries.add(RAW_COPPER_NATIVE_LARGE);
-                entries.add(RAW_TIN_CASSITERITE_SMALL);
-                entries.add(RAW_TIN_CASSITERITE_MEDIUM);
-                entries.add(RAW_TIN_CASSITERITE_LARGE);
-                entries.add(RAW_ZINC_SPHALERITE_SMALL);
-                entries.add(RAW_ZINC_SPHALERITE_MEDIUM);
-                entries.add(RAW_ZINC_SPHALERITE_LARGE);
-                entries.add(RAW_GOLD_NATIVE_SMALL);
-                entries.add(RAW_GOLD_NATIVE_MEDIUM);
-                entries.add(RAW_GOLD_NATIVE_LARGE);
-                entries.add(RAW_IRON_HEMATITE_SMALL);
-                entries.add(RAW_IRON_HEMATITE_MEDIUM);
-                entries.add(RAW_IRON_HEMATITE_LARGE);
-                entries.add(RAW_LAZURITE_SMALL);
-                entries.add(RAW_LAZURITE_MEDIUM);
-                entries.add(RAW_LAZURITE_LARGE);
+                entries.accept(RAW_COPPER_MALACHITE_SMALL);
+                entries.accept(RAW_COPPER_MALACHITE_MEDIUM);
+                entries.accept(RAW_COPPER_MALACHITE_LARGE);
+                entries.accept(RAW_COPPER_NATIVE_SMALL);
+                entries.accept(RAW_COPPER_NATIVE_MEDIUM);
+                entries.accept(RAW_COPPER_NATIVE_LARGE);
+                entries.accept(RAW_TIN_CASSITERITE_SMALL);
+                entries.accept(RAW_TIN_CASSITERITE_MEDIUM);
+                entries.accept(RAW_TIN_CASSITERITE_LARGE);
+                entries.accept(RAW_ZINC_SPHALERITE_SMALL);
+                entries.accept(RAW_ZINC_SPHALERITE_MEDIUM);
+                entries.accept(RAW_ZINC_SPHALERITE_LARGE);
+                entries.accept(RAW_GOLD_NATIVE_SMALL);
+                entries.accept(RAW_GOLD_NATIVE_MEDIUM);
+                entries.accept(RAW_GOLD_NATIVE_LARGE);
+                entries.accept(RAW_IRON_HEMATITE_SMALL);
+                entries.accept(RAW_IRON_HEMATITE_MEDIUM);
+                entries.accept(RAW_IRON_HEMATITE_LARGE);
+                entries.accept(RAW_LAZURITE_SMALL);
+                entries.accept(RAW_LAZURITE_MEDIUM);
+                entries.accept(RAW_LAZURITE_LARGE);
 
-                entries.add(MUD_BALL);
-                entries.add(MUD_BRICK);
-                entries.add(CLAY_BALL);
-                entries.add(CLAY_BRICK);
-                entries.add(FIRED_CLAY_BRICK);
-                entries.add(CLAY_TILE);
-                entries.add(FIRED_CLAY_TILE);
-                entries.add(CLAY_BOWL);
-                entries.add(FIRED_CLAY_BOWL);
-                entries.add(CLAY_JUG);
-                entries.add(FIRED_CLAY_JUG);
-                entries.add(CLAY_VESSEL);
-                entries.add(FIRED_CLAY_VESSEL);
+                entries.accept(MUD_BALL);
+                entries.accept(MUD_BRICK);
+                entries.accept(CLAY_BALL);
+                entries.accept(CLAY_BRICK);
+                entries.accept(FIRED_CLAY_BRICK);
+                entries.accept(CLAY_TILE);
+                entries.accept(FIRED_CLAY_TILE);
+                entries.accept(CLAY_BOWL);
+                entries.accept(FIRED_CLAY_BOWL);
+                entries.accept(CLAY_JUG);
+                entries.accept(FIRED_CLAY_JUG);
+                entries.accept(CLAY_VESSEL);
+                entries.accept(FIRED_CLAY_VESSEL);
 
-                entries.add(CLAY_INGOT_MOLD);
-                entries.add(FIRED_CLAY_INGOT_MOLD);
-                entries.add(CLAY_AXE_HEAD_MOLD);
-                entries.add(FIRED_CLAY_AXE_HEAD_MOLD);
-                entries.add(CLAY_CHISEL_HEAD_MOLD);
-                entries.add(FIRED_CLAY_CHISEL_HEAD_MOLD);
-                entries.add(CLAY_KNIFE_BLADE_MOLD);
-                entries.add(FIRED_CLAY_KNIFE_BLADE_MOLD);
-                entries.add(CLAY_PICKAXE_HEAD_MOLD);
-                entries.add(FIRED_CLAY_PICKAXE_HEAD_MOLD);
-                entries.add(CLAY_SHOVEL_HEAD_MOLD);
-                entries.add(FIRED_CLAY_SHOVEL_HEAD_MOLD);
-                entries.add(CLAY_SWORD_BLADE_MOLD);
-                entries.add(FIRED_CLAY_SWORD_BLADE_MOLD);
-                entries.add(CLAY_HOE_HEAD_MOLD);
-                entries.add(FIRED_CLAY_HOE_HEAD_MOLD);
-                entries.add(CLAY_PROSPECTING_PICKAXE_HEAD_MOLD);
-                entries.add(FIRED_CLAY_PROSPECTING_PICKAXE_HEAD_MOLD);
+                entries.accept(CLAY_INGOT_MOLD);
+                entries.accept(FIRED_CLAY_INGOT_MOLD);
+                entries.accept(CLAY_AXE_HEAD_MOLD);
+                entries.accept(FIRED_CLAY_AXE_HEAD_MOLD);
+                entries.accept(CLAY_CHISEL_HEAD_MOLD);
+                entries.accept(FIRED_CLAY_CHISEL_HEAD_MOLD);
+                entries.accept(CLAY_KNIFE_BLADE_MOLD);
+                entries.accept(FIRED_CLAY_KNIFE_BLADE_MOLD);
+                entries.accept(CLAY_PICKAXE_HEAD_MOLD);
+                entries.accept(FIRED_CLAY_PICKAXE_HEAD_MOLD);
+                entries.accept(CLAY_SHOVEL_HEAD_MOLD);
+                entries.accept(FIRED_CLAY_SHOVEL_HEAD_MOLD);
+                entries.accept(CLAY_SWORD_BLADE_MOLD);
+                entries.accept(FIRED_CLAY_SWORD_BLADE_MOLD);
+                entries.accept(CLAY_HOE_HEAD_MOLD);
+                entries.accept(FIRED_CLAY_HOE_HEAD_MOLD);
+                entries.accept(CLAY_PROSPECTING_PICKAXE_HEAD_MOLD);
+                entries.accept(FIRED_CLAY_PROSPECTING_PICKAXE_HEAD_MOLD);
 
-                entries.add(COPPER_INGOT);
-                entries.add(COPPER_CHUNK);
-                entries.add(TIN_INGOT);
-                entries.add(TIN_CHUNK);
-                entries.add(ZINC_INGOT);
-                entries.add(ZINC_CHUNK);
+                entries.accept(COPPER_INGOT);
+                entries.accept(COPPER_CHUNK);
+                entries.accept(TIN_INGOT);
+                entries.accept(TIN_CHUNK);
+                entries.accept(ZINC_INGOT);
+                entries.accept(ZINC_CHUNK);
 
-                entries.add(BRONZE_INGOT);
-                entries.add(BRONZE_CHUNK);
-                entries.add(BRASS_INGOT);
-                entries.add(BRASS_CHUNK);
-                entries.add(PEWTER_INGOT);
-                entries.add(PEWTER_CHUNK);
-                entries.add(GOLD_INGOT);
-                entries.add(GOLD_CHUNK);
-                entries.add(BOTCHED_ALLOY_INGOT);
-                entries.add(BOTCHED_ALLOY_CHUNK);
+                entries.accept(BRONZE_INGOT);
+                entries.accept(BRONZE_CHUNK);
+                entries.accept(BRASS_INGOT);
+                entries.accept(BRASS_CHUNK);
+                entries.accept(PEWTER_INGOT);
+                entries.accept(PEWTER_CHUNK);
+                entries.accept(GOLD_INGOT);
+                entries.accept(GOLD_CHUNK);
+                entries.accept(BOTCHED_ALLOY_INGOT);
+                entries.accept(BOTCHED_ALLOY_CHUNK);
 
-                entries.add(WHITE_DYE);
-                entries.add(ORANGE_DYE);
-                entries.add(MAGENTA_DYE);
-                entries.add(LIGHT_BLUE_DYE);
-                entries.add(YELLOW_DYE);
-                entries.add(LIME_DYE);
-                entries.add(PINK_DYE);
-                entries.add(DARK_GRAY_DYE);
-                entries.add(LIGHT_GRAY_DYE);
-                entries.add(CYAN_DYE);
-                entries.add(PURPLE_DYE);
-                entries.add(BLUE_DYE);
-                entries.add(BROWN_DYE);
-                entries.add(GREEN_DYE);
-                entries.add(RED_DYE);
-                entries.add(BLACK_DYE);
+                entries.accept(WHITE_DYE);
+                entries.accept(ORANGE_DYE);
+                entries.accept(MAGENTA_DYE);
+                entries.accept(LIGHT_BLUE_DYE);
+                entries.accept(YELLOW_DYE);
+                entries.accept(LIME_DYE);
+                entries.accept(PINK_DYE);
+                entries.accept(DARK_GRAY_DYE);
+                entries.accept(LIGHT_GRAY_DYE);
+                entries.accept(CYAN_DYE);
+                entries.accept(PURPLE_DYE);
+                entries.accept(BLUE_DYE);
+                entries.accept(BROWN_DYE);
+                entries.accept(GREEN_DYE);
+                entries.accept(RED_DYE);
+                entries.accept(BLACK_DYE);
             })
     );
 
-    public static final RegistryKey<ItemGroup> TOOLS = create("tools", FabricItemGroup.builder()
+    public static final ResourceKey<CreativeModeTab> TOOLS = create("tools", FabricItemGroup.builder()
             .icon(() -> new ItemStack(FLINT_AXE))
-            .entries((context, entries) -> {
-                entries.add(FLINT_AXE);
-                entries.add(FLINT_KNIFE);
-                entries.add(FLINT_SHOVEL);
-                entries.add(FLINT_SPEAR);
+            .displayItems((context, entries) -> {
+                entries.accept(FLINT_AXE);
+                entries.accept(FLINT_KNIFE);
+                entries.accept(FLINT_SHOVEL);
+                entries.accept(FLINT_SPEAR);
                 addItemSet(entries, COPPER_TOOLS);
                 addItemSet(entries, BRONZE_TOOLS);
                 addItemSet(entries, COPPER_TOOL_PARTS);
                 addItemSet(entries, BRONZE_TOOL_PARTS);
 
-                entries.add(WOODEN_BUCKET);
-                entries.add(WOODEN_BUCKET_WATER);
-                entries.add(FIRED_CLAY_JUG);
-                entries.add(FIRED_CLAY_WATER_JUG);
-                entries.add(FIRED_CLAY_VESSEL);
-                entries.add(QUERN_WHEEL);
+                entries.accept(WOODEN_BUCKET);
+                entries.accept(WOODEN_BUCKET_WATER);
+                entries.accept(FIRED_CLAY_JUG);
+                entries.accept(FIRED_CLAY_WATER_JUG);
+                entries.accept(FIRED_CLAY_VESSEL);
+                entries.accept(QUERN_WHEEL);
 
-                entries.add(COPPER_COIN);
-                entries.add(GOLD_COIN);
+                entries.accept(COPPER_COIN);
+                entries.accept(GOLD_COIN);
             })
     );
 
-    public static final RegistryKey<ItemGroup> FOODS = create("foods", FabricItemGroup.builder()
+    public static final ResourceKey<CreativeModeTab> FOODS = create("foods", FabricItemGroup.builder()
             .icon(() -> new ItemStack(COOKED_PORKCHOP))
-            .entries((context, entries) -> {
-                entries.add(PORKCHOP);
-                entries.add(COOKED_PORKCHOP);
-                entries.add(CARROT);
-                entries.add(WHEAT);
-                entries.add(CABBAGE);
-                entries.add(BEANS);
-                entries.add(POTATO);
-                entries.add(WHEAT_SEEDS);
-                entries.add(CABBAGE_SEEDS);
-                entries.add(ROTTEN_FLESH);
-                entries.add(SPIDER_EYE);
+            .displayItems((context, entries) -> {
+                entries.accept(PORKCHOP);
+                entries.accept(COOKED_PORKCHOP);
+                entries.accept(CARROT);
+                entries.accept(WHEAT);
+                entries.accept(CABBAGE);
+                entries.accept(BEANS);
+                entries.accept(POTATO);
+                entries.accept(WHEAT_SEEDS);
+                entries.accept(CABBAGE_SEEDS);
+                entries.accept(ROTTEN_FLESH);
+                entries.accept(SPIDER_EYE);
             })
     );
 
@@ -279,22 +279,22 @@ public class PrimevalItemGroups {
     }
 
     // item group registry helper
-    private static RegistryKey<ItemGroup> create(String id, ItemGroup.Builder itemGroup) {
-        var key = RegistryKey.of(RegistryKeys.ITEM_GROUP, Primeval.identify(id));
-        Registry.register(Registries.ITEM_GROUP, key, itemGroup.displayName(Text.translatable("itemGroup.primeval." + id)).build());
+    private static ResourceKey<CreativeModeTab> create(String id, CreativeModeTab.Builder itemGroup) {
+        var key = ResourceKey.create(Registries.CREATIVE_MODE_TAB, Primeval.identify(id));
+        Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, key, itemGroup.title(Component.translatable("itemGroup.primeval." + id)).build());
         return key;
     }
 
-    private static <T extends Iterable<Block>> void addBlockSet(ItemGroup.Entries entries, T bs) {
-        bs.iterator().forEachRemaining((b) -> entries.add(b.asItem()));
+    private static <T extends Iterable<Block>> void addBlockSet(CreativeModeTab.Output entries, T bs) {
+        bs.iterator().forEachRemaining((b) -> entries.accept(b.asItem()));
     }
 
-    private static <T extends Iterable<BlockSet>> void addBlockSetSet(ItemGroup.Entries entries, T bs) {
+    private static <T extends Iterable<BlockSet>> void addBlockSetSet(CreativeModeTab.Output entries, T bs) {
         bs.iterator().forEachRemaining((b) -> addBlockSet(entries, b));
     }
 
-    private static <T extends Iterable<Item>> void addItemSet(ItemGroup.Entries entries, T bs) {
-        bs.iterator().forEachRemaining((b) -> entries.add(b));
+    private static <T extends Iterable<Item>> void addItemSet(CreativeModeTab.Output entries, T bs) {
+        bs.iterator().forEachRemaining((b) -> entries.accept(b));
     }
 
 }

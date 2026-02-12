@@ -12,12 +12,12 @@ import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.cr24.primeval.initialization.PrimevalItems;
 import net.cr24.primeval.recipe.AlloyingRecipe;
 import net.cr24.primeval.util.RangedValue;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.recipe.RecipeEntry;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.Holder;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.level.material.Fluid;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -33,21 +33,21 @@ public class AlloyingDisplay extends BasicDisplay {
                     Identifier.CODEC.optionalFieldOf("location").forGetter(BasicDisplay::getDisplayLocation)
                     ).apply(instance, AlloyingDisplay::new)
             ),
-            PacketCodec.tuple(
-                    PacketCodecs.map(HashMap::new, EntryIngredient.streamCodec(), RangedValue.PACKET_CODEC), AlloyingDisplay::getFluidRatios,
-                    EntryIngredient.streamCodec().collect(PacketCodecs.toList()), BasicDisplay::getOutputEntries,
-                    PacketCodecs.optional(Identifier.PACKET_CODEC), BasicDisplay::getDisplayLocation,
+            StreamCodec.composite(
+                    ByteBufCodecs.map(HashMap::new, EntryIngredient.streamCodec(), RangedValue.PACKET_CODEC), AlloyingDisplay::getFluidRatios,
+                    EntryIngredient.streamCodec().apply(ByteBufCodecs.list()), BasicDisplay::getOutputEntries,
+                    ByteBufCodecs.optional(Identifier.STREAM_CODEC), BasicDisplay::getDisplayLocation,
                     AlloyingDisplay::new)
     );
 
-    public AlloyingDisplay(RecipeEntry<AlloyingRecipe> recipe) {
+    public AlloyingDisplay(RecipeHolder<AlloyingRecipe> recipe) {
         this(mapFluids(recipe.value().getFluidInputs()),
                 Collections.singletonList(EntryIngredients.of(FluidStack.create(recipe.value().getFluidResult().value(), 10000))),
-                Optional.ofNullable(recipe.id().getValue())
+                Optional.ofNullable(recipe.id().identifier())
         );
     }
 
-    private static Map<EntryIngredient, RangedValue> mapFluids(Map<RegistryEntry<Fluid>, RangedValue> rawFluids) {
+    private static Map<EntryIngredient, RangedValue> mapFluids(Map<Holder<Fluid>, RangedValue> rawFluids) {
         Map<EntryIngredient, RangedValue> fluidEntries = new HashMap<>();
         for (var entry : rawFluids.entrySet()) {
             var fluid = entry.getKey().value();

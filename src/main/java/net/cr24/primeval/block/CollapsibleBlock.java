@@ -3,20 +3,22 @@ package net.cr24.primeval.block;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.cr24.primeval.entity.CollapsingBlockEntity;
-import net.minecraft.block.*;
-import net.minecraft.entity.FallingBlockEntity;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.tick.ScheduledTickView;
-
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.item.FallingBlockEntity;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.FallingBlock;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -29,37 +31,37 @@ import java.util.List;
 public class CollapsibleBlock extends FallingBlock {
 
     public static final MapCodec<CollapsibleBlock> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
-            Registries.BLOCK.getCodec().fieldOf("fall_block").forGetter((block) -> block.fallBlock),
-            createSettingsCodec()
+            BuiltInRegistries.BLOCK.byNameCodec().fieldOf("fall_block").forGetter((block) -> block.fallBlock),
+            propertiesCodec()
     ).apply(instance, CollapsibleBlock::new));
 
     @Override
-    protected MapCodec<? extends FallingBlock> getCodec() {
+    protected MapCodec<? extends FallingBlock> codec() {
         return CODEC;
     }
 
     public Block fallBlock;
 
-    public CollapsibleBlock(Block block, Settings settings) {
+    public CollapsibleBlock(Block block, Properties settings) {
         super(settings);
         this.fallBlock = block;
     }
 
-    public CollapsibleBlock(Settings settings) {
+    public CollapsibleBlock(Properties settings) {
         super(settings);
         this.fallBlock = this;
     }
 
-    protected BlockState getStateForNeighborUpdate(BlockState state, WorldView world, ScheduledTickView tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random) {
-        if (!(neighborState.getBlock() instanceof FluidBlock)) {
-            tickView.scheduleBlockTick(pos, this, this.getFallDelay());
-            return super.getStateForNeighborUpdate(state, world, tickView, pos, direction, neighborPos, neighborState, random);
+    protected BlockState updateShape(BlockState state, LevelReader world, ScheduledTickAccess tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
+        if (!(neighborState.getBlock() instanceof LiquidBlock)) {
+            tickView.scheduleTick(pos, this, this.getDelayAfterPlace());
+            return super.updateShape(state, world, tickView, pos, direction, neighborPos, neighborState, random);
         }
         return state;
     }
 
     @Override
-    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    public void tick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
         collapse(world, pos, random, 0, false);
     }
 
@@ -68,18 +70,18 @@ public class CollapsibleBlock extends FallingBlock {
      * Controls logic for how this block is expected
      * fall based on blocks around it
      */
-    protected boolean collapse(World world, BlockPos pos, Random random, int step, boolean force) {
+    protected boolean collapse(Level world, BlockPos pos, RandomSource random, int step, boolean force) {
         if (!this.supported(world, pos, random)) {
-            if (canFallThrough(world.getBlockState(pos.down()))) {
-                world.playSound(null, pos, world.getBlockState(pos).getSoundGroup().getBreakSound(), SoundCategory.BLOCKS, 0.5F, 0.6F + world.random.nextFloat() * 0.4F);
-                return world.spawnEntity(createFallingBlockEntity(world, pos, pos));
+            if (isFree(world.getBlockState(pos.below()))) {
+                world.playSound(null, pos, world.getBlockState(pos).getSoundType().getBreakSound(), SoundSource.BLOCKS, 0.5F, 0.6F + world.random.nextFloat() * 0.4F);
+                return world.addFreshEntity(createFallingBlockEntity(world, pos, pos));
             } else {
                 List<BlockPos> neighborPositions = Arrays.asList(pos.north(), pos.east(), pos.south(), pos.west());
                 Collections.shuffle(neighborPositions);
                 for (BlockPos dest : neighborPositions) {
-                    if (canFallThrough(world.getBlockState(dest)) && canFallThrough(world.getBlockState(dest.down()))) {
-                        world.playSound(null, pos, world.getBlockState(pos).getSoundGroup().getBreakSound(), SoundCategory.BLOCKS, 0.5F, 0.6F + world.random.nextFloat() * 0.4F);
-                        return world.spawnEntity(createFallingBlockEntity(world, dest, pos));
+                    if (isFree(world.getBlockState(dest)) && isFree(world.getBlockState(dest.below()))) {
+                        world.playSound(null, pos, world.getBlockState(pos).getSoundType().getBreakSound(), SoundSource.BLOCKS, 0.5F, 0.6F + world.random.nextFloat() * 0.4F);
+                        return world.addFreshEntity(createFallingBlockEntity(world, dest, pos));
                     }
                 }
             }
@@ -87,25 +89,25 @@ public class CollapsibleBlock extends FallingBlock {
         return false;
     }
 
-    protected boolean supported(World world, BlockPos pos, Random random) {
+    protected boolean supported(Level world, BlockPos pos, RandomSource random) {
         return false;
     }
 
-    public static boolean canFallThrough(BlockState state) {
-        return state.isAir() || state.isIn(BlockTags.FIRE) || state.isLiquid() || !state.isSolid();
+    public static boolean isFree(BlockState state) {
+        return state.isAir() || state.is(BlockTags.FIRE) || state.liquid() || !state.isSolid();
     }
 
     @Override
-    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+    public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
     }
 
     @Override
-    public int getColor(BlockState state, BlockView world, BlockPos pos) {
-        return state.getMapColor(world, pos).color;
+    public int getDustColor(BlockState state, BlockGetter world, BlockPos pos) {
+        return state.getMapColor(world, pos).col;
     }
 
-    protected FallingBlockEntity createFallingBlockEntity(World world, BlockPos fallPos, BlockPos origin) {
-        BlockState fallingBlockState = fallBlock == null ? world.getBlockState(origin) : fallBlock.getDefaultState();
+    protected FallingBlockEntity createFallingBlockEntity(Level world, BlockPos fallPos, BlockPos origin) {
+        BlockState fallingBlockState = fallBlock == null ? world.getBlockState(origin) : fallBlock.defaultBlockState();
         if (fallPos.equals(origin)) {
             return new CollapsingBlockEntity(world, (double)fallPos.getX() + 0.5D, fallPos.getY(), (double)fallPos.getZ() + 0.5D, fallingBlockState, origin, world.getBlockState(origin));
         } else {

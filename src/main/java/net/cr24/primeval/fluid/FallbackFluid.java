@@ -1,6 +1,6 @@
 package net.cr24.primeval.fluid;
 
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
 
 public interface FallbackFluid {
 

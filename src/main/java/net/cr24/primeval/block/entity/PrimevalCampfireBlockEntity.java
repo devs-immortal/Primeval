@@ -4,35 +4,34 @@ import net.cr24.primeval.Primeval;
 import net.cr24.primeval.block.functional.PrimevalCampfireBlock;
 import net.cr24.primeval.initialization.PrimevalBlocks;
 import net.cr24.primeval.recipe.OpenFireRecipe;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.CampfireBlockEntity;
-import net.minecraft.inventory.Inventories;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.recipe.ServerRecipeManager;
-import net.minecraft.recipe.input.SingleStackRecipeInput;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.storage.NbtWriteView;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.Clearable;
-import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
-
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.Clearable;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.CampfireBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.TagValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearable {
 
-    private final DefaultedList<ItemStack> itemsBeingCooked = DefaultedList.ofSize(4, ItemStack.EMPTY);
+    private final NonNullList<ItemStack> itemsBeingCooked = NonNullList.withSize(4, ItemStack.EMPTY);
     private final int[] cookingTimes = new int[4];
     private final int[] cookingTotalTimes = new int[4];
     private int burnTime = 0;
@@ -44,26 +43,26 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
         super(PrimevalBlocks.CAMPFIRE_BLOCK_ENTITY, pos, state);
     }
 
-    protected void readData(ReadView view) {
-        super.readData(view);
+    protected void loadAdditional(ValueInput view) {
+        super.loadAdditional(view);
         this.itemsBeingCooked.clear();
-        Inventories.readData(view, this.itemsBeingCooked);
-        var cookingTime = view.getOptionalIntArray("CookingTimes");
+        ContainerHelper.loadAllItems(view, this.itemsBeingCooked);
+        var cookingTime = view.getIntArray("CookingTimes");
         if (cookingTime.isPresent()) {
             System.arraycopy(cookingTime.get(), 0, this.cookingTimes, 0, Math.min(this.cookingTotalTimes.length, cookingTime.get().length));
         }
-        var cookingTotalTime = view.getOptionalIntArray("CookingTotalTimes");
+        var cookingTotalTime = view.getIntArray("CookingTotalTimes");
         if (cookingTotalTime.isPresent()) {
             System.arraycopy(cookingTotalTime.get(), 0, this.cookingTotalTimes, 0, Math.min(this.cookingTotalTimes.length, cookingTotalTime.get().length));
         }
-        this.burnTime = view.getInt("BurnTime", 0);
-        this.fuel = view.getInt("Fuel", 0);
-        this.lit = view.getBoolean("Lit", false);
+        this.burnTime = view.getIntOr("BurnTime", 0);
+        this.fuel = view.getIntOr("Fuel", 0);
+        this.lit = view.getBooleanOr("Lit", false);
     }
 
-    protected void writeData(WriteView view) {
-        super.writeData(view);
-        Inventories.writeData(view, this.itemsBeingCooked);
+    protected void saveAdditional(ValueOutput view) {
+        super.saveAdditional(view);
+        ContainerHelper.saveAllItems(view, this.itemsBeingCooked);
         view.putIntArray("CookingTimes", this.cookingTimes);
         view.putIntArray("CookingTotalTimes", this.cookingTotalTimes);
         view.putInt("BurnTime", this.burnTime);
@@ -71,7 +70,7 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
         view.putBoolean("Lit", this.lit);
     }
 
-    public DefaultedList<ItemStack> getItemsBeingCooked() {
+    public NonNullList<ItemStack> getItemsBeingCooked() {
         return this.itemsBeingCooked;
     }
 
@@ -93,7 +92,7 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
         return arr;
     }
 
-    public boolean addFuel(BlockState state, World world, BlockPos pos, int amount) {
+    public boolean addFuel(BlockState state, Level world, BlockPos pos, int amount) {
         if (this.fuel + amount < MAX_FUEL) {
             this.fuel += amount;
             this.updateListeners();
@@ -103,7 +102,7 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
         return false;
     }
 
-    private void updateKindling(BlockState state, World world, BlockPos pos, int fuelAmount) {
+    private void updateKindling(BlockState state, Level world, BlockPos pos, int fuelAmount) {
         int kState;
         if (fuelAmount > 8000) {
             kState = 3;
@@ -114,10 +113,10 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
         } else {
             kState = 0;
         }
-        world.setBlockState(pos, state.with(PrimevalCampfireBlock.KINDLING, kState));
+        world.setBlockAndUpdate(pos, state.setValue(PrimevalCampfireBlock.KINDLING, kState));
     }
 
-    private int updateFireHeight(BlockState state, World world, BlockPos pos, int fireLevel) {
+    private int updateFireHeight(BlockState state, Level world, BlockPos pos, int fireLevel) {
         int fState;
         if (fireLevel > 3600) {
             fState = 3;
@@ -128,7 +127,7 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
         } else {
             fState = 0;
         }
-        world.setBlockState(pos, state.with(PrimevalCampfireBlock.FIRE_SCALE, fState));
+        world.setBlockAndUpdate(pos, state.setValue(PrimevalCampfireBlock.FIRE_SCALE, fState));
         return fState;
     }
 
@@ -151,9 +150,9 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
         this.updateListeners();
     }
 
-    public static void tick(World world, BlockPos pos, BlockState state, PrimevalCampfireBlockEntity blockEntity, ServerRecipeManager.MatchGetter<SingleStackRecipeInput, OpenFireRecipe> recipeMatchGetter) {
+    public static void tick(Level world, BlockPos pos, BlockState state, PrimevalCampfireBlockEntity blockEntity, RecipeManager.CachedCheck<SingleRecipeInput, OpenFireRecipe> recipeMatchGetter) {
         // If client, just make particles
-        if (world.isClient()) {
+        if (world.isClientSide()) {
             clientParticles(world, pos, state, blockEntity);
             return;
         }
@@ -165,9 +164,9 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
                 ItemStack itemStack = blockEntity.itemsBeingCooked.get(i);
                 if (itemStack.isEmpty() || blockEntity.cookingTimes[i] == -1) continue;
                 blockEntity.cookingTimes[i] += blockEntity.updateFireHeight(state, world, pos, blockEntity.burnTime)+1;
-                if (blockEntity.cookingTimes[i] >= blockEntity.cookingTotalTimes[i] && world instanceof ServerWorld) {
-                    SingleStackRecipeInput singleStackRecipeInput = new SingleStackRecipeInput(itemStack);
-                    Optional<ItemStack> result = recipeMatchGetter.getFirstMatch(singleStackRecipeInput, (ServerWorld) world).map((recipe) -> (recipe.value()).craft(singleStackRecipeInput, world.getRegistryManager()));
+                if (blockEntity.cookingTimes[i] >= blockEntity.cookingTotalTimes[i] && world instanceof ServerLevel) {
+                    SingleRecipeInput singleStackRecipeInput = new SingleRecipeInput(itemStack);
+                    Optional<ItemStack> result = recipeMatchGetter.getRecipeFor(singleStackRecipeInput, (ServerLevel) world).map((recipe) -> (recipe.value()).assemble(singleStackRecipeInput, world.registryAccess()));
                     if (result.isPresent()) {
                         blockEntity.itemsBeingCooked.set(i, result.get());
                     }
@@ -177,20 +176,20 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
             }
             blockEntity.updateKindling(state, world, pos, blockEntity.fuel);
             blockEntity.updateFireHeight(state, world, pos, blockEntity.burnTime);
-            world.updateListeners(pos, state, state, Block.NOTIFY_ALL);
+            world.sendBlockUpdated(pos, state, state, Block.UPDATE_ALL);
         } else if (blockEntity.lit){
             blockEntity.setLit(false);
-            world.setBlockState(pos, world.getBlockState(pos).with(PrimevalCampfireBlock.LIT, false).with(PrimevalCampfireBlock.KINDLING, 0));
-            world.updateListeners(pos, state, state, Block.NOTIFY_ALL);
+            world.setBlockAndUpdate(pos, world.getBlockState(pos).setValue(PrimevalCampfireBlock.LIT, false).setValue(PrimevalCampfireBlock.KINDLING, 0));
+            world.sendBlockUpdated(pos, state, state, Block.UPDATE_ALL);
         }
         if (bl) {
-            CampfireBlockEntity.markDirty(world, pos, state);
+            CampfireBlockEntity.setChanged(world, pos, state);
         }
     }
 
-    private static void clientParticles(World world, BlockPos pos, BlockState state, PrimevalCampfireBlockEntity blockEntity) {
-        if (!state.get(PrimevalCampfireBlock.LIT)) return;
-        Random random = world.random;
+    private static void clientParticles(Level world, BlockPos pos, BlockState state, PrimevalCampfireBlockEntity blockEntity) {
+        if (!state.getValue(PrimevalCampfireBlock.LIT)) return;
+        RandomSource random = world.random;
         for (int j = 0; j < blockEntity.itemsBeingCooked.size(); ++j) {
             if (blockEntity.itemsBeingCooked.get(j).isEmpty() || random.nextFloat() < 0.95f) continue;
             double d = (double)pos.getX() + 0.15 + 0.7*(j % 2);
@@ -198,29 +197,29 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
             double g = (double)pos.getZ() + 0.15;
             if (j > 1) g += 0.7;
             for (int k = 0; k < 4; ++k) {
-                world.addParticleClient(ParticleTypes.SMOKE, d, e, g, 0.0, 5.0E-4, 0.0);
+                world.addParticle(ParticleTypes.SMOKE, d, e, g, 0.0, 5.0E-4, 0.0);
             }
         }
     }
 
     private void updateListeners() {
-        this.markDirty();
-        this.getWorld().updateListeners(this.getPos(), this.getCachedState(), this.getCachedState(), Block.NOTIFY_ALL);
+        this.setChanged();
+        this.getLevel().sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), Block.UPDATE_ALL);
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registries) {
-        var writeView = NbtWriteView.create(Primeval.errorReporter(this), registries);
-        writeData(writeView);
-        return writeView.getNbt();
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        var writeView = TagValueOutput.createWithContext(Primeval.errorReporter(this), registries);
+        saveAdditional(writeView);
+        return writeView.buildResult();
     }
 
-    public BlockEntityUpdateS2CPacket toUpdatePacket() {
-        return BlockEntityUpdateS2CPacket.create(this);
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
-    public void clear() {
+    public void clearContent() {
         this.itemsBeingCooked.clear();
     }
 }

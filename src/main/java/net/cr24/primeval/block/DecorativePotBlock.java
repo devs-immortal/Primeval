@@ -1,28 +1,28 @@
 package net.cr24.primeval.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.BlockView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class DecorativePotBlock extends Block {
 
-    protected static final VoxelShape SHAPE = VoxelShapes.union(
-            Block.createCuboidShape(2.0, 0.0, 2.0, 14.0, 2.0, 14.0),
-            Block.createCuboidShape(1.0, 2.0, 1.0, 15.0, 11.0, 15.0),
-            Block.createCuboidShape(3.0, 11.0, 3.0, 13.0, 13.0, 13.0),
-            Block.createCuboidShape(2.0, 13.0, 2.0, 14.0, 16.0, 14.0)
+    protected static final VoxelShape SHAPE = Shapes.or(
+            Block.box(2.0, 0.0, 2.0, 14.0, 2.0, 14.0),
+            Block.box(1.0, 2.0, 1.0, 15.0, 11.0, 15.0),
+            Block.box(3.0, 11.0, 3.0, 13.0, 13.0, 13.0),
+            Block.box(2.0, 13.0, 2.0, 14.0, 16.0, 14.0)
     );
 
-    public DecorativePotBlock(Settings settings) {
+    public DecorativePotBlock(Properties settings) {
         super(settings);
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
 }

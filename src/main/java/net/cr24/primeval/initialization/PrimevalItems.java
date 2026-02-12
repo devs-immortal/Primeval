@@ -8,17 +8,17 @@ import net.cr24.primeval.item.*;
 import net.cr24.primeval.item.tool.*;
 import net.cr24.primeval.util.Size;
 import net.cr24.primeval.util.Weight;
-import net.minecraft.block.*;
-import net.minecraft.component.type.ConsumableComponents;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.item.Item;
-import net.minecraft.item.ToolMaterial;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.TagKey;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ToolMaterial;
+import net.minecraft.world.item.component.Consumables;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.material.Fluid;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ import static net.cr24.primeval.initialization.PrimevalItemActions.*;
 
 public class PrimevalItems {
 
-    private static Item.Settings SETTINGS_BASIC() { return new Item.Settings(); }
+    private static Item.Properties SETTINGS_BASIC() { return new Item.Properties(); }
 
     // region CRAFTING MATERIALS
     // basic
@@ -42,7 +42,7 @@ public class PrimevalItems {
     public static final Item FLINT = registerItem("flint", SETTINGS_BASIC(), FlintItem::new, Weight.LIGHT, Size.SMALL);
     public static final Item ROCK = registerItem("rock", SETTINGS_BASIC(), WeightedItem::new, Weight.LIGHT, Size.SMALL);
     public static final Item STONE_BRICK = registerItem("stone_brick", SETTINGS_BASIC(), WeightedItem::new, Weight.LIGHT, Size.SMALL);
-    public static final Item ASHES = registerItem("ashes", SETTINGS_BASIC().fireproof(), WeightedItem::new, Weight.VERY_LIGHT, Size.SMALL);
+    public static final Item ASHES = registerItem("ashes", SETTINGS_BASIC().fireResistant(), WeightedItem::new, Weight.VERY_LIGHT, Size.SMALL);
     public static final Item CRUSHED_TERRACOTTA = registerItem("crushed_terracotta", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.SMALL);
     public static final Item CEMENT_MIX = registerItem("cement_mix", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.SMALL);
     public static final Item CEMENT = registerItem("cement", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.SMALL);
@@ -83,12 +83,12 @@ public class PrimevalItems {
     // region FOODSTUFF
 
     public static final Item PORKCHOP = registerItem("porkchop", SETTINGS_BASIC().food(foodComponent(2, 0.3f),
-            consumableComponent(new Consumable(StatusEffects.HUNGER, 600, 0, 0.3f))), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
+            consumableComponent(new Consumable(MobEffects.HUNGER, 600, 0, 0.3f))), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
     public static final Item COOKED_PORKCHOP = registerItem("cooked_porkchop", SETTINGS_BASIC().food(foodComponent(8, 0.8f)), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
     public static final Item ROTTEN_FLESH = registerItem("rotten_flesh", SETTINGS_BASIC().food(foodComponent(4, 0.1f),
-            consumableComponent(new Consumable(StatusEffects.HUNGER, 300, 0, 0.8f), new Consumable(StatusEffects.POISON, 100, 0, 0.8f))), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
+            consumableComponent(new Consumable(MobEffects.HUNGER, 300, 0, 0.8f), new Consumable(MobEffects.POISON, 100, 0, 0.8f))), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
     public static final Item SPIDER_EYE = registerItem("spider_eye", SETTINGS_BASIC().food(foodComponent(3, 0.1f),
-            consumableComponent(new Consumable(StatusEffects.HUNGER, 100, 0, 0.4f), new Consumable(StatusEffects.POISON, 300, 1, 0.9f))), WeightedItem::new, Weight.LIGHT, Size.SMALL);
+            consumableComponent(new Consumable(MobEffects.HUNGER, 100, 0, 0.4f), new Consumable(MobEffects.POISON, 300, 1, 0.9f))), WeightedItem::new, Weight.LIGHT, Size.SMALL);
 
     public static final Item CARROT = registerItem("carrot", SETTINGS_BASIC().food(foodComponent(4, 1f)), (w, s, settings) -> new WeightedBlockItem(PrimevalBlocks.CARROT_CROP, w, s, settings), Weight.LIGHT, Size.SMALL);
     public static final Item WHEAT = registerItem("wheat", SETTINGS_BASIC(), WeightedItem::new, Weight.LIGHT, Size.SMALL);
@@ -148,11 +148,11 @@ public class PrimevalItems {
 
     // Other
     public static final Item WOODEN_BUCKET = registerItem("wooden_bucket", SETTINGS_BASIC(), WoodenBucketItem::new, Weight.NORMAL, Size.MEDIUM);
-    public static final Item WOODEN_BUCKET_WATER = registerItem("wooden_bucket_water", SETTINGS_BASIC().recipeRemainder(WOODEN_BUCKET), WaterWoodenBucketItem::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Item WOODEN_BUCKET_WATER = registerItem("wooden_bucket_water", SETTINGS_BASIC().craftRemainder(WOODEN_BUCKET), WaterWoodenBucketItem::new, Weight.NORMAL, Size.MEDIUM);
     public static final Item FIRED_CLAY_JUG = registerItem("fired_clay_jug", SETTINGS_BASIC(), EmptyJugItem::new, Weight.NORMAL, Size.MEDIUM);
-    public static final Item FIRED_CLAY_WATER_JUG = registerItem("fired_clay_jug_filled", SETTINGS_BASIC().recipeRemainder(FIRED_CLAY_JUG).food(foodComponent(0, 0f, true), ConsumableComponents.drink().build()).useRemainder(FIRED_CLAY_JUG), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Item FIRED_CLAY_WATER_JUG = registerItem("fired_clay_jug_filled", SETTINGS_BASIC().craftRemainder(FIRED_CLAY_JUG).food(foodComponent(0, 0f, true), Consumables.defaultDrink().build()).usingConvertsTo(FIRED_CLAY_JUG), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
     public static final Item FIRED_CLAY_VESSEL = registerItem("fired_clay_vessel", SETTINGS_BASIC(), VesselItem::new, Weight.NORMAL, Size.LARGE);
-    public static final Item QUERN_WHEEL = registerItem("quern_wheel", SETTINGS_BASIC().maxDamage(99), (w, s, settings) -> new WeightedItem(w, s, 1, settings), Weight.HEAVY, Size.MEDIUM);
+    public static final Item QUERN_WHEEL = registerItem("quern_wheel", SETTINGS_BASIC().durability(99), (w, s, settings) -> new WeightedItem(w, s, 1, settings), Weight.HEAVY, Size.MEDIUM);
 
     // Molds
     public static final Item CLAY_INGOT_MOLD = registerItem("clay_mold_ingot", SETTINGS_BASIC(), WeightedItem::new, Weight.NORMAL, Size.MEDIUM);
@@ -232,9 +232,9 @@ public class PrimevalItems {
     }
 
     @SafeVarargs
-    private static <T extends Item> T registerItem(String id, Item.Settings settings, ItemFactory<T> factory, Weight w, Size s, Consumer<Block>... additionalActions) {
-        RegistryKey<Item> itemKey = RegistryKey.of(RegistryKeys.ITEM, Primeval.identify(id));
-        return Registry.register(Registries.ITEM, identify(id), factory.create(w, s, settings.registryKey(itemKey)));
+    private static <T extends Item> T registerItem(String id, Item.Properties settings, ItemFactory<T> factory, Weight w, Size s, Consumer<Block>... additionalActions) {
+        ResourceKey<Item> itemKey = ResourceKey.create(Registries.ITEM, Primeval.identify(id));
+        return Registry.register(BuiltInRegistries.ITEM, identify(id), factory.create(w, s, settings.setId(itemKey)));
     }
 
     private static Item registerMold(String formId, Weight weight, Size size, TagKey<Fluid> validFluids, int amount) {
@@ -245,7 +245,7 @@ public class PrimevalItems {
 
     @FunctionalInterface
     public interface ItemFactory<T extends Item> {
-        T create(Weight weight, Size size, Item.Settings settings);
+        T create(Weight weight, Size size, Item.Properties settings);
     }
 
     public record ToolSet(PrimevalAxeItem axe, ChiselItem chisel, PrimevalKnifeItem knife, PrimevalPickaxeItem pickaxe, PrimevalShovelItem shovel, PrimevalSwordItem sword, PrimevalHoeItem hoe, ProspectingPickaxeItem prospecting_pickaxe, PrimevalSpearItem spear) implements Iterable<Item> {

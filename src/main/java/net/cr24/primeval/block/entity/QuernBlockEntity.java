@@ -6,34 +6,30 @@ import net.cr24.primeval.initialization.PrimevalBlocks;
 import net.cr24.primeval.initialization.PrimevalItems;
 import net.cr24.primeval.initialization.PrimevalRecipes;
 import net.cr24.primeval.recipe.QuernRecipe;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.particle.BlockStateParticleEffect;
-import net.minecraft.particle.ItemStackParticleEffect;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.recipe.CampfireCookingRecipe;
-import net.minecraft.recipe.RecipeEntry;
-import net.minecraft.recipe.ServerRecipeManager;
-import net.minecraft.recipe.input.SingleStackRecipeInput;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.storage.NbtWriteView;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.Clearable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
-import net.minecraft.world.event.GameEvent;
-
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ItemParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.Clearable;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.TagValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import java.util.Optional;
 
 public class QuernBlockEntity extends BlockEntity implements Clearable {
@@ -53,67 +49,67 @@ public class QuernBlockEntity extends BlockEntity implements Clearable {
         currentAngle = FLOW_ANGLE;
     }
 
-    public static void tick(World world, BlockPos pos, BlockState state, QuernBlockEntity blockEntity, ServerRecipeManager.MatchGetter<SingleStackRecipeInput, QuernRecipe> recipeMatchGetter) {
-        float newAngle = MathHelper.lerp(0.05f, blockEntity.currentAngle, blockEntity.targetAngle+FLOW_ANGLE);
+    public static void tick(Level world, BlockPos pos, BlockState state, QuernBlockEntity blockEntity, RecipeManager.CachedCheck<SingleRecipeInput, QuernRecipe> recipeMatchGetter) {
+        float newAngle = Mth.lerp(0.05f, blockEntity.currentAngle, blockEntity.targetAngle+FLOW_ANGLE);
         if (newAngle < (blockEntity.targetAngle-2)) {
             blockEntity.makeParticles(world, pos);
         }
         blockEntity.currentAngle = newAngle;
-        blockEntity.markDirty();
-        if (blockEntity.currentAngle >= 359.97 && world instanceof ServerWorld) {
-                world.playSound(null, pos, PrimevalSoundEvents.QUERN_PROCESS, SoundCategory.BLOCKS, 0.8f, 0.8f);
-                blockEntity.process((ServerWorld) world, pos, recipeMatchGetter);
+        blockEntity.setChanged();
+        if (blockEntity.currentAngle >= 359.97 && world instanceof ServerLevel) {
+                world.playSound(null, pos, PrimevalSoundEvents.QUERN_PROCESS, SoundSource.BLOCKS, 0.8f, 0.8f);
+                blockEntity.process((ServerLevel) world, pos, recipeMatchGetter);
         }
     }
 
-    public void process(ServerWorld world, BlockPos pos, ServerRecipeManager.MatchGetter<SingleStackRecipeInput, QuernRecipe> recipeMatchGetter) {
-        SingleStackRecipeInput singleStackRecipeInput = new SingleStackRecipeInput(this.inputItem);
-        var quernRecipe = recipeMatchGetter.getFirstMatch(singleStackRecipeInput, world);
+    public void process(ServerLevel world, BlockPos pos, RecipeManager.CachedCheck<SingleRecipeInput, QuernRecipe> recipeMatchGetter) {
+        SingleRecipeInput singleStackRecipeInput = new SingleRecipeInput(this.inputItem);
+        var quernRecipe = recipeMatchGetter.getRecipeFor(singleStackRecipeInput, world);
 
         if (quernRecipe.isPresent()) {
             int remainder = inputItem.getCount();
             for (int i = 0; i < inputItem.getCount(); i++) {
-                Block.dropStack(world, pos, Direction.UP, quernRecipe.get().value().getResult());
+                Block.popResourceFromFace(world, pos, Direction.UP, quernRecipe.get().value().getResult());
                 wheelDamage += quernRecipe.get().value().getWheelDamage();
                 remainder--;
-                if (wheelDamage > PrimevalItems.QUERN_WHEEL.getComponents().get(DataComponentTypes.MAX_DAMAGE)) {
+                if (wheelDamage > PrimevalItems.QUERN_WHEEL.components().get(DataComponents.MAX_DAMAGE)) {
                     wheelDamage = -1;
                     breakParticles(world, pos);
-                    if (!world.isClient())
-                        world.playSound(null, pos, PrimevalSoundEvents.QUERN_BREAK, SoundCategory.BLOCKS, 0.3f, 0.8f);
+                    if (!world.isClientSide())
+                        world.playSound(null, pos, PrimevalSoundEvents.QUERN_BREAK, SoundSource.BLOCKS, 0.3f, 0.8f);
                     break;
                 }
             }
-            Block.dropStack(world, pos, Direction.UP, new ItemStack(inputItem.getItem(), remainder));
+            Block.popResourceFromFace(world, pos, Direction.UP, new ItemStack(inputItem.getItem(), remainder));
             this.targetAngle = 0;
             this.currentAngle = 0;
             this.inputItem = ItemStack.EMPTY;
-            this.markDirty();
-            world.updateListeners(pos, this.getCachedState(), this.getCachedState(), Block.NOTIFY_ALL);
+            this.setChanged();
+            world.sendBlockUpdated(pos, this.getBlockState(), this.getBlockState(), Block.UPDATE_ALL);
         }
     }
 
-    public void makeParticles(World world, BlockPos pos) {
-        if (world.isClient()) {
-            Random rand = Random.create();
-            world.addParticleClient(
-                    new ItemStackParticleEffect(ParticleTypes.ITEM, inputItem),
+    public void makeParticles(Level world, BlockPos pos) {
+        if (world.isClientSide()) {
+            RandomSource rand = RandomSource.create();
+            world.addParticle(
+                    new ItemParticleOption(ParticleTypes.ITEM, inputItem),
                     pos.getX()+0.5f, pos.getY()+0.5f, pos.getZ()+0.5f,
                     rand.nextFloat()*0.8-0.4, rand.nextFloat()*0.01, rand.nextFloat()*0.8-0.4
             );
-            world.addParticleClient(
-                    new BlockStateParticleEffect(ParticleTypes.BLOCK, PrimevalBlocks.SMOOTH_STONE.block().getDefaultState()),
+            world.addParticle(
+                    new BlockParticleOption(ParticleTypes.BLOCK, PrimevalBlocks.SMOOTH_STONE.block().defaultBlockState()),
                     pos.getX()+0.5f, pos.getY()+0.5f, pos.getZ()+0.5f,
                     rand.nextFloat()*0.4-0.2, 0, rand.nextFloat()*0.4-0.2
             );
         }
     }
-    public void breakParticles(World world, BlockPos pos) {
-        if (world.isClient()) {
-            Random rand = Random.create();
+    public void breakParticles(Level world, BlockPos pos) {
+        if (world.isClientSide()) {
+            RandomSource rand = RandomSource.create();
             for (int i = 0; i < 16; i++) {
-                world.addParticleClient(
-                        new BlockStateParticleEffect(ParticleTypes.BLOCK, PrimevalBlocks.QUERN.getDefaultState()),
+                world.addParticle(
+                        new BlockParticleOption(ParticleTypes.BLOCK, PrimevalBlocks.QUERN.defaultBlockState()),
                         pos.getX()+0.5f, pos.getY()+0.5f, pos.getZ()+0.5f,
                         rand.nextFloat()*0.5-0.25, rand.nextFloat()*0.2, rand.nextFloat()*0.5-0.25
                 );
@@ -121,32 +117,32 @@ public class QuernBlockEntity extends BlockEntity implements Clearable {
         }
     }
 
-    public boolean tryTurnWheel(World world, BlockPos pos, int amount) {
+    public boolean tryTurnWheel(Level world, BlockPos pos, int amount) {
         if (wheelDamage == -1 || currentAngle < (targetAngle-0.03f) || inputItem.isEmpty()) return false;
         targetAngle += amount;
         makeParticles(world, pos);
-        this.markDirty();
+        this.setChanged();
         return true;
     }
 
     public boolean tryAddWheel(ItemStack wheel) {
         if (wheelDamage > -1) return false;
-        wheelDamage = wheel.getDamage();
-        this.markDirty();
+        wheelDamage = wheel.getDamageValue();
+        this.setChanged();
         return true;
     }
 
     public ItemStack getWheelToDrop() {
         if (wheelDamage == -1) return ItemStack.EMPTY;
         ItemStack wheel = new ItemStack(PrimevalItems.QUERN_WHEEL);
-        wheel.setDamage(wheelDamage);
+        wheel.setDamageValue(wheelDamage);
         return wheel;
     }
 
     public boolean tryPutInputItem(ItemStack item) {
         if (wheelDamage > -1 && inputItem.isEmpty()){
             inputItem = item;
-            this.markDirty();
+            this.setChanged();
             return true;
         }
         return false;
@@ -156,44 +152,44 @@ public class QuernBlockEntity extends BlockEntity implements Clearable {
         if (currentAngle <= 20) {
             ItemStack out = inputItem;
             inputItem = ItemStack.EMPTY;
-            this.markDirty();
+            this.setChanged();
             return out;
         } else {
             return ItemStack.EMPTY;
         }
     }
 
-    protected void readData(ReadView view) {
-        super.readData(view);
+    protected void loadAdditional(ValueInput view) {
+        super.loadAdditional(view);
         this.inputItem = view.read("input_item", ItemStack.CODEC).orElse(ItemStack.EMPTY);
-        wheelDamage = view.getInt("wheel_health", -1);
-        targetAngle = view.getFloat("target_angle", 0);
-        currentAngle = view.getFloat("current_angle", FLOW_ANGLE);
+        wheelDamage = view.getIntOr("wheel_health", -1);
+        targetAngle = view.getFloatOr("target_angle", 0);
+        currentAngle = view.getFloatOr("current_angle", FLOW_ANGLE);
     }
 
-    protected void writeData(WriteView view) {
-        super.writeData(view);
+    protected void saveAdditional(ValueOutput view) {
+        super.saveAdditional(view);
         if (!this.inputItem.isEmpty()) {
-            view.put("input_item", ItemStack.CODEC, this.inputItem);
+            view.store("input_item", ItemStack.CODEC, this.inputItem);
         }
         view.putInt("wheel_health", wheelDamage);
         view.putFloat("target_angle", targetAngle);
         view.putFloat("current_angle", currentAngle);
     }
 
-    public BlockEntityUpdateS2CPacket toUpdatePacket() {
-        return BlockEntityUpdateS2CPacket.create(this);
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registries) {
-        var writeView = NbtWriteView.create(Primeval.errorReporter(this), registries);
-        writeData(writeView);
-        return writeView.getNbt();
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        var writeView = TagValueOutput.createWithContext(Primeval.errorReporter(this), registries);
+        saveAdditional(writeView);
+        return writeView.buildResult();
     }
 
     @Override
-    public void clear() {
+    public void clearContent() {
         inputItem = ItemStack.EMPTY;
     }
 }

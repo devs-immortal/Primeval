@@ -17,21 +17,36 @@ import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
-import net.minecraft.block.*;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.block.piston.PistonBehavior;
-import net.minecraft.client.color.world.BiomeColors;
-import net.minecraft.client.render.BlockRenderLayer;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.fluid.FlowableFluid;
-import net.minecraft.item.Item;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.world.biome.FoliageColors;
-import net.minecraft.world.biome.GrassColors;
+import net.minecraft.client.renderer.BiomeColors;
+import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.FoliageColor;
+import net.minecraft.world.level.GrassColor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CarpetBlock;
+import net.minecraft.world.level.block.ChainBlock;
+import net.minecraft.world.level.block.DoorBlock;
+import net.minecraft.world.level.block.FenceBlock;
+import net.minecraft.world.level.block.FenceGateBlock;
+import net.minecraft.world.level.block.IronBarsBlock;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.TrapDoorBlock;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
+import net.minecraft.world.level.block.state.properties.WoodType;
+import net.minecraft.world.level.material.FlowingFluid;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -47,19 +62,19 @@ import static net.cr24.primeval.Primeval.identify;
 public class PrimevalBlocks {
 
     // region SETTINGS
-    private static AbstractBlock.Settings SETTINGS_SOIL() { return AbstractBlock.Settings.create().mapColor(MapColor.DIRT_BROWN).strength(2.1f, 2.0f).sounds(BlockSoundGroup.GRAVEL); }
-    private static AbstractBlock.Settings SETTINGS_TOUGH_SOIL() { return AbstractBlock.Settings.create().mapColor(MapColor.DIRT_BROWN).strength(3f, 2.0f).sounds(BlockSoundGroup.GRAVEL);}
-    private static AbstractBlock.Settings SETTINGS_GRASSY() { return AbstractBlock.Settings.create().mapColor(MapColor.TERRACOTTA_GREEN).strength(2.5f, 2.0f).sounds(BlockSoundGroup.GRASS);}
-    private static AbstractBlock.Settings SETTINGS_SAND() { return AbstractBlock.Settings.create().mapColor(MapColor.PALE_YELLOW).strength(1.8f, 2.0f).sounds(BlockSoundGroup.SAND);}
-    private static AbstractBlock.Settings SETTINGS_STONE() { return AbstractBlock.Settings.create().mapColor(MapColor.DEEPSLATE_GRAY).strength(4.5f, 6.0f).requiresTool();}
-    private static AbstractBlock.Settings SETTINGS_PLANT() { return AbstractBlock.Settings.create().mapColor(MapColor.GREEN).strength(0.05f, 0f).sounds(BlockSoundGroup.GRASS).replaceable().noCollision(); }
-    private static AbstractBlock.Settings SETTINGS_CROP() { return AbstractBlock.Settings.create().mapColor(MapColor.GREEN).strength(0.05f, 0f).sounds(BlockSoundGroup.GRASS).noCollision().ticksRandomly(); }
-    private static AbstractBlock.Settings SETTINGS_LOG() { return AbstractBlock.Settings.create().mapColor(MapColor.BROWN).strength(5.0f, 6.0f).sounds(BlockSoundGroup.WOOD).requiresTool(); }
-    private static AbstractBlock.Settings SETTINGS_TRUNK() { return AbstractBlock.Settings.create().mapColor(MapColor.BROWN).strength(8.0f, 8.0f).sounds(BlockSoundGroup.WOOD).requiresTool(); }
-    private static AbstractBlock.Settings SETTINGS_FIRED_CLAY() { return AbstractBlock.Settings.create().mapColor(MapColor.ORANGE).strength(4.0f, 6.0f).sounds(BlockSoundGroup.STONE).requiresTool(); }
-    private static AbstractBlock.Settings SETTINGS_REFINED_WOOD() { return AbstractBlock.Settings.create().mapColor(MapColor.OAK_TAN).strength(3.0f, 4.0f).sounds(BlockSoundGroup.WOOD).requiresTool(); }
-    private static AbstractBlock.Settings SETTINGS_STRAW() { return AbstractBlock.Settings.create().mapColor(MapColor.PALE_YELLOW).strength(0.5f).sounds(BlockSoundGroup.GRASS); }
-    private static AbstractBlock.Settings SETTINGS_LOGPILE() { return AbstractBlock.Settings.create().mapColor(MapColor.BROWN).strength(1.0f, 3.0f).sounds(BlockSoundGroup.WOOD).nonOpaque().requiresTool(); }
+    private static BlockBehaviour.Properties SETTINGS_SOIL() { return BlockBehaviour.Properties.of().mapColor(MapColor.DIRT).strength(2.1f, 2.0f).sound(SoundType.GRAVEL); }
+    private static BlockBehaviour.Properties SETTINGS_TOUGH_SOIL() { return BlockBehaviour.Properties.of().mapColor(MapColor.DIRT).strength(3f, 2.0f).sound(SoundType.GRAVEL);}
+    private static BlockBehaviour.Properties SETTINGS_GRASSY() { return BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_GREEN).strength(2.5f, 2.0f).sound(SoundType.GRASS);}
+    private static BlockBehaviour.Properties SETTINGS_SAND() { return BlockBehaviour.Properties.of().mapColor(MapColor.SAND).strength(1.8f, 2.0f).sound(SoundType.SAND);}
+    private static BlockBehaviour.Properties SETTINGS_STONE() { return BlockBehaviour.Properties.of().mapColor(MapColor.DEEPSLATE).strength(4.5f, 6.0f).requiresCorrectToolForDrops();}
+    private static BlockBehaviour.Properties SETTINGS_PLANT() { return BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GREEN).strength(0.05f, 0f).sound(SoundType.GRASS).replaceable().noCollision(); }
+    private static BlockBehaviour.Properties SETTINGS_CROP() { return BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GREEN).strength(0.05f, 0f).sound(SoundType.GRASS).noCollision().randomTicks(); }
+    private static BlockBehaviour.Properties SETTINGS_LOG() { return BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(5.0f, 6.0f).sound(SoundType.WOOD).requiresCorrectToolForDrops(); }
+    private static BlockBehaviour.Properties SETTINGS_TRUNK() { return BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(8.0f, 8.0f).sound(SoundType.WOOD).requiresCorrectToolForDrops(); }
+    private static BlockBehaviour.Properties SETTINGS_FIRED_CLAY() { return BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).strength(4.0f, 6.0f).sound(SoundType.STONE).requiresCorrectToolForDrops(); }
+    private static BlockBehaviour.Properties SETTINGS_REFINED_WOOD() { return BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(3.0f, 4.0f).sound(SoundType.WOOD).requiresCorrectToolForDrops(); }
+    private static BlockBehaviour.Properties SETTINGS_STRAW() { return BlockBehaviour.Properties.of().mapColor(MapColor.SAND).strength(0.5f).sound(SoundType.GRASS); }
+    private static BlockBehaviour.Properties SETTINGS_LOGPILE() { return BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(1.0f, 3.0f).sound(SoundType.WOOD).noOcclusion().requiresCorrectToolForDrops(); }
 
     // endregion
 
@@ -69,44 +84,44 @@ public class PrimevalBlocks {
     public static final Block DIRT = registerBlock("dirt", SETTINGS_SOIL(), (settings) -> new SemiSupportedBlock(0.2f, settings), Weight.NORMAL, Size.MEDIUM);
     public static final Block COARSE_DIRT = registerBlock("coarse_dirt", SETTINGS_SOIL(), (settings) -> new SemiSupportedBlock(0.2f, settings), Weight.NORMAL, Size.MEDIUM);
     public static final Block CLAY = registerBlock("clay", SETTINGS_SOIL(), (settings) -> new SemiSupportedBlock(0.3f, settings), Weight.NORMAL, Size.MEDIUM);
-    public static final Block MUD = registerBlock("mud", SETTINGS_SOIL().velocityMultiplier(0.4f), (settings) -> new MuckBlock(0.25f, settings), Weight.NORMAL, Size.MEDIUM);
+    public static final Block MUD = registerBlock("mud", SETTINGS_SOIL().speedFactor(0.4f), (settings) -> new MuckBlock(0.25f, settings), Weight.NORMAL, Size.MEDIUM);
     public static final Block DRY_DIRT = registerBlock("dry_dirt", SETTINGS_TOUGH_SOIL(), (settings) -> new SemiSupportedBlock(0.2f, settings), Weight.NORMAL, Size.MEDIUM);
-    public static final Block GRASSY_DIRT = registerBlock("grassy_dirt", SETTINGS_GRASSY().ticksRandomly(), (settings) -> new GrassySoilBlock(0.35f, PrimevalBlocks.DIRT, new Block[]{DIRT}, settings), Weight.NORMAL, Size.MEDIUM);
-    public static final Block GRASSY_CLAY = registerBlock("grassy_clay", SETTINGS_GRASSY().ticksRandomly(), (settings) -> new GrassySoilBlock(0.45f, PrimevalBlocks.CLAY, new Block[]{CLAY}, settings), Weight.NORMAL, Size.MEDIUM);
+    public static final Block GRASSY_DIRT = registerBlock("grassy_dirt", SETTINGS_GRASSY().randomTicks(), (settings) -> new GrassySoilBlock(0.35f, PrimevalBlocks.DIRT, new Block[]{DIRT}, settings), Weight.NORMAL, Size.MEDIUM);
+    public static final Block GRASSY_CLAY = registerBlock("grassy_clay", SETTINGS_GRASSY().randomTicks(), (settings) -> new GrassySoilBlock(0.45f, PrimevalBlocks.CLAY, new Block[]{CLAY}, settings), Weight.NORMAL, Size.MEDIUM);
     public static final Block SAND = registerBlock("sand", SETTINGS_SAND(), (settings) -> new SemiSupportedBlock(0.1f, settings), Weight.NORMAL, Size.MEDIUM);
     public static final Block GRAVEL = registerBlock("gravel", SETTINGS_SAND(), (settings) -> new SemiSupportedBlock(0.1f, settings), Weight.NORMAL, Size.MEDIUM);
     public static final Block COBBLESTONE = registerBlock("cobblestone", SETTINGS_STONE().strength(5.0f, 6.0f), (settings) -> new SemiSupportedBlock(0.1f, settings), Weight.HEAVY, Size.MEDIUM);
     public static final Block STONE = registerBlock("stone", SETTINGS_STONE(), (settings) -> new CascadingBlock(0.35f, COBBLESTONE, settings), Weight.HEAVY, Size.MEDIUM);
     public static final Block SANDSTONE = registerBlock("sandstone", SETTINGS_STONE(), (settings) -> new CascadingBlock(0.3f, settings), Weight.HEAVY, Size.MEDIUM);
-    public static final Block DIRT_FARMLAND = registerBlockWithoutItem("farmland_dirt", SETTINGS_SOIL().ticksRandomly(), (settings) -> new PrimevalFarmlandBlock(0.2f, DIRT, new Block[]{DIRT, COARSE_DIRT, GRASSY_DIRT}, settings));
-    public static final Block CLAY_FARMLAND = registerBlockWithoutItem("farmland_clay", SETTINGS_SOIL().ticksRandomly(), (settings) -> new PrimevalFarmlandBlock(0.3f, CLAY, new Block[]{CLAY, GRASSY_CLAY}, settings));
+    public static final Block DIRT_FARMLAND = registerBlockWithoutItem("farmland_dirt", SETTINGS_SOIL().randomTicks(), (settings) -> new PrimevalFarmlandBlock(0.2f, DIRT, new Block[]{DIRT, COARSE_DIRT, GRASSY_DIRT}, settings));
+    public static final Block CLAY_FARMLAND = registerBlockWithoutItem("farmland_clay", SETTINGS_SOIL().randomTicks(), (settings) -> new PrimevalFarmlandBlock(0.3f, CLAY, new Block[]{CLAY, GRASSY_CLAY}, settings));
 
     // endregion
 
     // region PLANT BLOCKS
 
     // Oak Trees
-    public static final Block OAK_LOG_BLOCK = registerBlockWithoutItem("oak_log", SETTINGS_LOG(), PillarBlock::new);
-    public static final Block OAK_TRUNK = registerBlockWithoutItem("oak_trunk", SETTINGS_TRUNK().nonOpaque(), (settings) -> new TrunkBlock(OakTrunker.INSTANCE, settings));
-    public static final Block OAK_LEAVES = registerBlockWithoutItem("oak_leaves", AbstractBlock.Settings.copy(Blocks.OAK_LEAVES), LeafBlock::new);
+    public static final Block OAK_LOG_BLOCK = registerBlockWithoutItem("oak_log", SETTINGS_LOG(), RotatedPillarBlock::new);
+    public static final Block OAK_TRUNK = registerBlockWithoutItem("oak_trunk", SETTINGS_TRUNK().noOcclusion(), (settings) -> new TrunkBlock(OakTrunker.INSTANCE, settings));
+    public static final Block OAK_LEAVES = registerBlockWithoutItem("oak_leaves", BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES), LeafBlock::new);
     // Birch Trees
-    public static final Block BIRCH_LOG_BLOCK = registerBlockWithoutItem("birch_log", SETTINGS_LOG(), PillarBlock::new);
-    public static final Block BIRCH_TRUNK = registerBlockWithoutItem("birch_trunk", SETTINGS_TRUNK().nonOpaque(), (settings) -> new TrunkBlock(BirchTrunker.INSTANCE, settings));
-    public static final Block BIRCH_LEAVES = registerBlockWithoutItem("birch_leaves", AbstractBlock.Settings.copy(Blocks.OAK_LEAVES), LeafBlock::new);
+    public static final Block BIRCH_LOG_BLOCK = registerBlockWithoutItem("birch_log", SETTINGS_LOG(), RotatedPillarBlock::new);
+    public static final Block BIRCH_TRUNK = registerBlockWithoutItem("birch_trunk", SETTINGS_TRUNK().noOcclusion(), (settings) -> new TrunkBlock(BirchTrunker.INSTANCE, settings));
+    public static final Block BIRCH_LEAVES = registerBlockWithoutItem("birch_leaves", BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES), LeafBlock::new);
     // Spruce Trees
-    public static final Block SPRUCE_LOG_BLOCK = registerBlockWithoutItem("spruce_log", SETTINGS_LOG(), PillarBlock::new);
-    public static final Block SPRUCE_TRUNK = registerBlockWithoutItem("spruce_trunk", SETTINGS_TRUNK().nonOpaque(), (settings) -> new TrunkBlock(SpruceTrunker.INSTANCE, settings));
-    public static final Block SPRUCE_LEAVES = registerBlockWithoutItem("spruce_leaves", AbstractBlock.Settings.copy(Blocks.OAK_LEAVES), LeafBlock::new);
+    public static final Block SPRUCE_LOG_BLOCK = registerBlockWithoutItem("spruce_log", SETTINGS_LOG(), RotatedPillarBlock::new);
+    public static final Block SPRUCE_TRUNK = registerBlockWithoutItem("spruce_trunk", SETTINGS_TRUNK().noOcclusion(), (settings) -> new TrunkBlock(SpruceTrunker.INSTANCE, settings));
+    public static final Block SPRUCE_LEAVES = registerBlockWithoutItem("spruce_leaves", BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES), LeafBlock::new);
     // Saplings+
-    public static final Block OAK_SAPLING = registerBlock("oak_sapling", SETTINGS_PLANT().ticksRandomly(), (settings) -> new GrowingSaplingBlock(OakTrunker.INSTANCE, settings), Weight.HEAVY, Size.LARGE);
-    public static final Block BIRCH_SAPLING = registerBlock("birch_sapling", SETTINGS_PLANT().ticksRandomly(), (settings) -> new GrowingSaplingBlock(BirchTrunker.INSTANCE, settings), Weight.HEAVY, Size.LARGE);
-    public static final Block SPRUCE_SAPLING = registerBlock("spruce_sapling", SETTINGS_PLANT().ticksRandomly(), (settings) -> new GrowingSaplingBlock(SpruceTrunker.INSTANCE, settings), Weight.HEAVY, Size.LARGE);
-    public static final Block GRASS = registerBlock("grass", SETTINGS_PLANT().ticksRandomly(), GrowingGrassBlock::new, Weight.VERY_LIGHT, Size.SMALL);
+    public static final Block OAK_SAPLING = registerBlock("oak_sapling", SETTINGS_PLANT().randomTicks(), (settings) -> new GrowingSaplingBlock(OakTrunker.INSTANCE, settings), Weight.HEAVY, Size.LARGE);
+    public static final Block BIRCH_SAPLING = registerBlock("birch_sapling", SETTINGS_PLANT().randomTicks(), (settings) -> new GrowingSaplingBlock(BirchTrunker.INSTANCE, settings), Weight.HEAVY, Size.LARGE);
+    public static final Block SPRUCE_SAPLING = registerBlock("spruce_sapling", SETTINGS_PLANT().randomTicks(), (settings) -> new GrowingSaplingBlock(SpruceTrunker.INSTANCE, settings), Weight.HEAVY, Size.LARGE);
+    public static final Block GRASS = registerBlock("grass", SETTINGS_PLANT().randomTicks(), GrowingGrassBlock::new, Weight.VERY_LIGHT, Size.SMALL);
     public static final Block BUSH = registerBlock("bush", SETTINGS_PLANT(), PrimevalPlantBlock::new, Weight.VERY_LIGHT, Size.SMALL);
     public static final Block SPIKED_PLANT = registerBlock("plant_0", SETTINGS_PLANT(), PrimevalPlantBlock::new, Weight.VERY_LIGHT, Size.SMALL);
     public static final Block LEAFY_PLANT = registerBlock("plant_1", SETTINGS_PLANT(), PrimevalPlantBlock::new, Weight.VERY_LIGHT, Size.SMALL);
-    public static final Block SHRUB = registerBlock("shrub", AbstractBlock.Settings.create().mapColor(MapColor.GREEN).strength(0.05f, 0f).sounds(BlockSoundGroup.GRASS).noCollision(), PrimevalPlantBlock::new, Weight.LIGHT, Size.MEDIUM);
-    public static final Block MOSS = registerBlock("moss", SETTINGS_PLANT().ticksRandomly(), SpreadingMossBlock::new, Weight.VERY_LIGHT, Size.SMALL);
+    public static final Block SHRUB = registerBlock("shrub", BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GREEN).strength(0.05f, 0f).sound(SoundType.GRASS).noCollision(), PrimevalPlantBlock::new, Weight.LIGHT, Size.MEDIUM);
+    public static final Block MOSS = registerBlock("moss", SETTINGS_PLANT().randomTicks(), SpreadingMossBlock::new, Weight.VERY_LIGHT, Size.SMALL);
     // Flowers
     public static final Block POPPY = registerBlock("poppy", SETTINGS_PLANT(), PrimevalPlantBlock::new, Weight.VERY_LIGHT, Size.SMALL);
     public static final Block DANDELION = registerBlock("dandelion", SETTINGS_PLANT(), PrimevalPlantBlock::new, Weight.VERY_LIGHT, Size.SMALL);
@@ -114,8 +129,8 @@ public class PrimevalBlocks {
     public static final Block CORNFLOWER = registerBlock("cornflower", SETTINGS_PLANT(), PrimevalPlantBlock::new, Weight.VERY_LIGHT, Size.SMALL);
     public static final Block LILY_OF_THE_VALLEY = registerBlock("lily_of_the_valley", SETTINGS_PLANT(), PrimevalPlantBlock::new, Weight.VERY_LIGHT, Size.SMALL);
     // Misc
-    public static final Block REEDS = registerBlock("reeds", SETTINGS_PLANT().ticksRandomly().pistonBehavior(PistonBehavior.DESTROY), ReedsBlock::new, Weight.VERY_LIGHT, Size.SMALL);
-    public static final Block RIVER_GRASS = registerBlock("river_grass", SETTINGS_PLANT().offset(AbstractBlock.OffsetType.XZ), PrimevalWaterPlantBlock::new, Weight.VERY_LIGHT, Size.SMALL);
+    public static final Block REEDS = registerBlock("reeds", SETTINGS_PLANT().randomTicks().pushReaction(PushReaction.DESTROY), ReedsBlock::new, Weight.VERY_LIGHT, Size.SMALL);
+    public static final Block RIVER_GRASS = registerBlock("river_grass", SETTINGS_PLANT().offsetType(BlockBehaviour.OffsetType.XZ), PrimevalWaterPlantBlock::new, Weight.VERY_LIGHT, Size.SMALL);
 
     // endregion
 
@@ -134,8 +149,8 @@ public class PrimevalBlocks {
     
     // region CRAFTED BLOCKS
 
-    public static final Block STRAW_BLOCK = registerBlock("straw_block", SETTINGS_STRAW(), PillarBlock::new, Weight.LIGHT, Size.MEDIUM);
-    public static final Block STRAW_STAIRS = registerBlock("straw_stairs", SETTINGS_STRAW(), (settings) -> new StairsBlock(STRAW_BLOCK.getDefaultState(), settings), Weight.LIGHT, Size.MEDIUM);
+    public static final Block STRAW_BLOCK = registerBlock("straw_block", SETTINGS_STRAW(), RotatedPillarBlock::new, Weight.LIGHT, Size.MEDIUM);
+    public static final Block STRAW_STAIRS = registerBlock("straw_stairs", SETTINGS_STRAW(), (settings) -> new StairBlock(STRAW_BLOCK.defaultBlockState(), settings), Weight.LIGHT, Size.MEDIUM);
     public static final Block STRAW_SLAB = registerBlock("straw_slab", SETTINGS_STRAW(), SlabBlock::new, Weight.LIGHT, Size.MEDIUM);
     public static final Block STRAW_MESH = registerBlock("straw_mesh", SETTINGS_STRAW(), Block::new, Weight.LIGHT, Size.MEDIUM);
     public static final Block STRAW_MAT = registerBlock("straw_mat", SETTINGS_STRAW().strength(0.3f), CarpetBlock::new, Weight.LIGHT, Size.MEDIUM);
@@ -151,25 +166,25 @@ public class PrimevalBlocks {
     public static final BlockSet STONE_BRICKS = registerBlockSet("stone_bricks", SETTINGS_STONE(), Weight.HEAVY, Size.MEDIUM);
     public static final BlockSet SMOOTH_STONE = registerBlockSet("smooth_stone", SETTINGS_STONE(), Weight.HEAVY, Size.MEDIUM);
     public static final Block STONE_INDENT = registerBlock("stone_indent", SETTINGS_STONE(), Block::new, Weight.HEAVY, Size.MEDIUM);
-    public static final Block STONE_PILLAR = registerBlock("stone_pillar", SETTINGS_STONE(), PillarBlock::new, Weight.HEAVY, Size.MEDIUM);
+    public static final Block STONE_PILLAR = registerBlock("stone_pillar", SETTINGS_STONE(), RotatedPillarBlock::new, Weight.HEAVY, Size.MEDIUM);
     public static final BlockSet STONE_PAVER = registerBlockSet("stone_paver", SETTINGS_STONE(), Weight.HEAVY, Size.MEDIUM);
     public static final Block DAUB = registerBlock("daub", SETTINGS_REFINED_WOOD(), Block::new, Weight.NORMAL, Size.MEDIUM);
     public static final Block FRAMED_DAUB = registerBlock("framed_daub", SETTINGS_REFINED_WOOD(), Block::new, Weight.NORMAL, Size.MEDIUM);
-    public static final Block FRAMED_PILLAR_DAUB = registerBlock("framed_pillar_daub", SETTINGS_REFINED_WOOD(), PillarBlock::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Block FRAMED_PILLAR_DAUB = registerBlock("framed_pillar_daub", SETTINGS_REFINED_WOOD(), RotatedPillarBlock::new, Weight.NORMAL, Size.MEDIUM);
     public static final Block FRAMED_CROSS_DAUB = registerBlock("framed_cross_daub", SETTINGS_REFINED_WOOD(), Block::new, Weight.NORMAL, Size.MEDIUM);
     public static final Block FRAMED_INVERTED_CROSS_DAUB = registerBlock("framed_inverted_cross_daub", SETTINGS_REFINED_WOOD(), Block::new, Weight.NORMAL, Size.MEDIUM);
     public static final Block FRAMED_X_DAUB = registerBlock("framed_x_daub", SETTINGS_REFINED_WOOD(), Block::new, Weight.NORMAL, Size.MEDIUM);
     public static final Block FRAMED_PLUS_DAUB = registerBlock("framed_plus_daub", SETTINGS_REFINED_WOOD(), Block::new, Weight.NORMAL, Size.MEDIUM);
     public static final Block FRAMED_DIVIDED_DAUB = registerBlock("framed_divided_daub", SETTINGS_REFINED_WOOD(), Block::new, Weight.NORMAL, Size.MEDIUM);
-    public static final WoodBlockSet OAK_PLANK_BLOCKS = registerWoodBlockSet("oak", AbstractBlock.Settings.create().mapColor(MapColor.OAK_TAN).strength(3.0f, 4.0f).sounds(BlockSoundGroup.WOOD).requiresTool(), PrimevalTypes.Wood.OAK, PrimevalTypes.BlockSet.OAK, Weight.NORMAL, Size.MEDIUM);
-    public static final WoodBlockSet BIRCH_PLANK_BLOCKS = registerWoodBlockSet("birch", AbstractBlock.Settings.create().mapColor(MapColor.YELLOW).strength(3.0f, 4.0f).sounds(BlockSoundGroup.WOOD).requiresTool(), PrimevalTypes.Wood.BIRCH, PrimevalTypes.BlockSet.BIRCH, Weight.NORMAL, Size.MEDIUM);
-    public static final WoodBlockSet SPRUCE_PLANK_BLOCKS = registerWoodBlockSet("spruce", AbstractBlock.Settings.create().mapColor(MapColor.DIRT_BROWN).strength(3.0f, 4.0f).sounds(BlockSoundGroup.WOOD).requiresTool(), PrimevalTypes.Wood.SPRUCE, PrimevalTypes.BlockSet.SPRUCE, Weight.NORMAL, Size.MEDIUM);
+    public static final WoodBlockSet OAK_PLANK_BLOCKS = registerWoodBlockSet("oak", BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(3.0f, 4.0f).sound(SoundType.WOOD).requiresCorrectToolForDrops(), PrimevalTypes.Wood.OAK, PrimevalTypes.BlockSet.OAK, Weight.NORMAL, Size.MEDIUM);
+    public static final WoodBlockSet BIRCH_PLANK_BLOCKS = registerWoodBlockSet("birch", BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_YELLOW).strength(3.0f, 4.0f).sound(SoundType.WOOD).requiresCorrectToolForDrops(), PrimevalTypes.Wood.BIRCH, PrimevalTypes.BlockSet.BIRCH, Weight.NORMAL, Size.MEDIUM);
+    public static final WoodBlockSet SPRUCE_PLANK_BLOCKS = registerWoodBlockSet("spruce", BlockBehaviour.Properties.of().mapColor(MapColor.DIRT).strength(3.0f, 4.0f).sound(SoundType.WOOD).requiresCorrectToolForDrops(), PrimevalTypes.Wood.SPRUCE, PrimevalTypes.BlockSet.SPRUCE, Weight.NORMAL, Size.MEDIUM);
     public static final BlockSet WICKER = registerBlockSet("wicker", SETTINGS_REFINED_WOOD(), Weight.LIGHT, Size.MEDIUM);
-    public static final Block WICKER_DOOR = registerBlock("wicker_door", SETTINGS_REFINED_WOOD().nonOpaque(), (settings) -> new DoorBlock(PrimevalTypes.BlockSet.WICKER, settings), Weight.LIGHT, Size.MEDIUM);
-    public static final Block WICKER_TRAPDOOR = registerBlock("wicker_trapdoor", SETTINGS_REFINED_WOOD().nonOpaque(), (settings) -> new TrapdoorBlock(PrimevalTypes.BlockSet.WICKER, settings), Weight.LIGHT, Size.MEDIUM);
-    public static final Block WICKER_BARS = registerBlock("wicker_bars", SETTINGS_REFINED_WOOD().nonOpaque(), PaneBlock::new, Weight.LIGHT, Size.MEDIUM);
-    public static final Block ROPE = registerBlock("rope", AbstractBlock.Settings.create().strength(0.2F).sounds(BlockSoundGroup.GRASS), ChainBlock::new, Weight.LIGHT, Size.SMALL);
-    public static final Block ROPE_LADDER = registerBlock("rope_ladder", AbstractBlock.Settings.create().mapColor(MapColor.OAK_TAN).strength(0.3F).sounds(BlockSoundGroup.WOOD).nonOpaque(), SuspendedLadderBlock::new, Weight.NORMAL, Size.MEDIUM);
+    public static final Block WICKER_DOOR = registerBlock("wicker_door", SETTINGS_REFINED_WOOD().noOcclusion(), (settings) -> new DoorBlock(PrimevalTypes.BlockSet.WICKER, settings), Weight.LIGHT, Size.MEDIUM);
+    public static final Block WICKER_TRAPDOOR = registerBlock("wicker_trapdoor", SETTINGS_REFINED_WOOD().noOcclusion(), (settings) -> new TrapDoorBlock(PrimevalTypes.BlockSet.WICKER, settings), Weight.LIGHT, Size.MEDIUM);
+    public static final Block WICKER_BARS = registerBlock("wicker_bars", SETTINGS_REFINED_WOOD().noOcclusion(), IronBarsBlock::new, Weight.LIGHT, Size.MEDIUM);
+    public static final Block ROPE = registerBlock("rope", BlockBehaviour.Properties.of().strength(0.2F).sound(SoundType.GRASS), ChainBlock::new, Weight.LIGHT, Size.SMALL);
+    public static final Block ROPE_LADDER = registerBlock("rope_ladder", BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(0.3F).sound(SoundType.WOOD).noOcclusion(), SuspendedLadderBlock::new, Weight.NORMAL, Size.MEDIUM);
     public static final Block OAK_LOG_PILE = registerBlockWithoutItem("oak_log_pile", SETTINGS_LOGPILE(), (settings) -> new LogPileBlock(() -> PrimevalItems.OAK_LOG, settings));
     public static final Block BIRCH_LOG_PILE = registerBlockWithoutItem("birch_log_pile", SETTINGS_LOGPILE(), (settings) -> new LogPileBlock(() -> PrimevalItems.BIRCH_LOG, settings));
     public static final Block SPRUCE_LOG_PILE = registerBlockWithoutItem("spruce_log_pile", SETTINGS_LOGPILE(), (settings) -> new LogPileBlock(() -> PrimevalItems.SPRUCE_LOG, settings));
@@ -194,22 +209,22 @@ public class PrimevalBlocks {
     // region TECHNICAL BLOCKS
 
     public static final Block STRAW_PILE = registerBlockWithoutItem("straw", SETTINGS_STRAW(), StrawLayeredBlock::new);
-    public static final Block ASH_PILE = registerBlockWithoutItem("ash_pile", AbstractBlock.Settings.create().strength(0.5F).sounds(BlockSoundGroup.SAND), AshPileBlock::new);
-    public static final Block LAYING_ITEM = registerBlockWithoutItem("laying_item", AbstractBlock.Settings.create().notSolid().breakInstantly().noCollision(), LayingItemBlock::new);
+    public static final Block ASH_PILE = registerBlockWithoutItem("ash_pile", BlockBehaviour.Properties.of().strength(0.5F).sound(SoundType.SAND), AshPileBlock::new);
+    public static final Block LAYING_ITEM = registerBlockWithoutItem("laying_item", BlockBehaviour.Properties.of().forceSolidOff().instabreak().noCollision(), LayingItemBlock::new);
     public static final Block OAK_CRATE = registerBlock("oak_crate", SETTINGS_REFINED_WOOD(), CrateBlock::new, Weight.HEAVY, Size.LARGE);
     public static final Block BIRCH_CRATE = registerBlock("birch_crate", SETTINGS_REFINED_WOOD(), CrateBlock::new, Weight.HEAVY, Size.LARGE);
     public static final Block SPRUCE_CRATE = registerBlock("spruce_crate", SETTINGS_REFINED_WOOD(), CrateBlock::new, Weight.HEAVY, Size.LARGE);
 
-    public static final Block LARGE_CLAY_POT = registerBlock("large_clay_pot", SETTINGS_SOIL().nonOpaque(), DecorativePotBlock::new, Weight.HEAVY, Size.LARGE);
-    public static final Block LARGE_FIRED_CLAY_POT = registerBlock("fired_large_clay_pot", SETTINGS_FIRED_CLAY().nonOpaque(), StoragePotBlock::new, Weight.HEAVY, Size.LARGE);
-    public static final Block LARGE_DECORATIVE_FIRED_CLAY_POT = registerBlock("fired_large_decorative_clay_pot", SETTINGS_FIRED_CLAY().nonOpaque(), DecorativePotBlock::new, Weight.HEAVY, Size.LARGE);
-    public static final Block WICKER_BASKET = registerBlock("wicker_basket", SETTINGS_REFINED_WOOD().nonOpaque(), WickerBasketBlock::new, Weight.NORMAL, Size.LARGE);
+    public static final Block LARGE_CLAY_POT = registerBlock("large_clay_pot", SETTINGS_SOIL().noOcclusion(), DecorativePotBlock::new, Weight.HEAVY, Size.LARGE);
+    public static final Block LARGE_FIRED_CLAY_POT = registerBlock("fired_large_clay_pot", SETTINGS_FIRED_CLAY().noOcclusion(), StoragePotBlock::new, Weight.HEAVY, Size.LARGE);
+    public static final Block LARGE_DECORATIVE_FIRED_CLAY_POT = registerBlock("fired_large_decorative_clay_pot", SETTINGS_FIRED_CLAY().noOcclusion(), DecorativePotBlock::new, Weight.HEAVY, Size.LARGE);
+    public static final Block WICKER_BASKET = registerBlock("wicker_basket", SETTINGS_REFINED_WOOD().noOcclusion(), WickerBasketBlock::new, Weight.NORMAL, Size.LARGE);
 
-    public static final Block PIT_KILN = registerBlockWithoutItem("pit_kiln", AbstractBlock.Settings.create().strength(1.0F).sounds(BlockSoundGroup.GRASS).nonOpaque(), PitKilnBlock::new);
+    public static final Block PIT_KILN = registerBlockWithoutItem("pit_kiln", BlockBehaviour.Properties.of().strength(1.0F).sound(SoundType.GRASS).noOcclusion(), PitKilnBlock::new);
     public static final Block CRUDE_CRAFTING_BENCH = registerBlock("crude_crafting_bench", SETTINGS_REFINED_WOOD(), PrimevalCraftingTableBlock::new, Weight.HEAVY, Size.LARGE);
-    public static final Block CRUDE_TORCH = registerBlockWithoutItem("crude_torch", AbstractBlock.Settings.create().notSolid().sounds(BlockSoundGroup.WOOD).breakInstantly().noCollision().luminance(TimedTorchBlock::getLuminanceFromState), TimedTorchBlock::new);
-    public static final Block CAMPFIRE = registerBlock("campfire", SETTINGS_STONE().luminance(PrimevalCampfireBlock::getLuminanceFromState).nonOpaque(), PrimevalCampfireBlock::new, Weight.HEAVY, Size.LARGE);
-    public static final Block QUERN = registerBlock("quern", SETTINGS_STONE().nonOpaque(), QuernBlock::new, Weight.HEAVY, Size.LARGE);
+    public static final Block CRUDE_TORCH = registerBlockWithoutItem("crude_torch", BlockBehaviour.Properties.of().forceSolidOff().sound(SoundType.WOOD).instabreak().noCollision().lightLevel(TimedTorchBlock::getLuminanceFromState), TimedTorchBlock::new);
+    public static final Block CAMPFIRE = registerBlock("campfire", SETTINGS_STONE().lightLevel(PrimevalCampfireBlock::getLuminanceFromState).noOcclusion(), PrimevalCampfireBlock::new, Weight.HEAVY, Size.LARGE);
+    public static final Block QUERN = registerBlock("quern", SETTINGS_STONE().noOcclusion(), QuernBlock::new, Weight.HEAVY, Size.LARGE);
 
     // endregion
 
@@ -231,14 +246,14 @@ public class PrimevalBlocks {
 
     // region BLOCK ENTITIES
 
-    public static final BlockEntityType<PitKilnBlockEntity> PIT_KILN_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, Primeval.identify("pit_kiln_block_entity"), FabricBlockEntityTypeBuilder.create(PitKilnBlockEntity::new, PIT_KILN).build());
-    public static final BlockEntityType<AshPileBlockEntity> ASH_PILE_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, Primeval.identify("ash_pile_block_entity"), FabricBlockEntityTypeBuilder.create(AshPileBlockEntity::new, ASH_PILE).build());
-    public static final BlockEntityType<LayingItemBlockEntity> LAYING_ITEM_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, Primeval.identify("laying_item_block_entity"), FabricBlockEntityTypeBuilder.create(LayingItemBlockEntity::new, LAYING_ITEM).build());
-    public static final BlockEntityType<CrateBlockEntity> CRATE_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, Primeval.identify("crate_block_entity"), FabricBlockEntityTypeBuilder.create(CrateBlockEntity::new, OAK_CRATE, BIRCH_CRATE, SPRUCE_CRATE).build());
-    public static final BlockEntityType<StoragePotBlockEntity> LARGE_POT_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, Primeval.identify("large_pot_block_entity"), FabricBlockEntityTypeBuilder.create(StoragePotBlockEntity::new, LARGE_FIRED_CLAY_POT).build());
-    public static final BlockEntityType<WickerBasketBlockEntity> WICKER_BASKET_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, Primeval.identify("wicker_basket_block_entity"), FabricBlockEntityTypeBuilder.create(WickerBasketBlockEntity::new, WICKER_BASKET).build());
-    public static final BlockEntityType<PrimevalCampfireBlockEntity> CAMPFIRE_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, Primeval.identify("campfire_block_entity"), FabricBlockEntityTypeBuilder.create(PrimevalCampfireBlockEntity::new, CAMPFIRE).build());
-    public static final BlockEntityType<QuernBlockEntity> QUERN_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, Primeval.identify("quern_block_entity"), FabricBlockEntityTypeBuilder.create(QuernBlockEntity::new, QUERN).build());
+    public static final BlockEntityType<PitKilnBlockEntity> PIT_KILN_BLOCK_ENTITY = Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Primeval.identify("pit_kiln_block_entity"), FabricBlockEntityTypeBuilder.create(PitKilnBlockEntity::new, PIT_KILN).build());
+    public static final BlockEntityType<AshPileBlockEntity> ASH_PILE_BLOCK_ENTITY = Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Primeval.identify("ash_pile_block_entity"), FabricBlockEntityTypeBuilder.create(AshPileBlockEntity::new, ASH_PILE).build());
+    public static final BlockEntityType<LayingItemBlockEntity> LAYING_ITEM_BLOCK_ENTITY = Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Primeval.identify("laying_item_block_entity"), FabricBlockEntityTypeBuilder.create(LayingItemBlockEntity::new, LAYING_ITEM).build());
+    public static final BlockEntityType<CrateBlockEntity> CRATE_BLOCK_ENTITY = Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Primeval.identify("crate_block_entity"), FabricBlockEntityTypeBuilder.create(CrateBlockEntity::new, OAK_CRATE, BIRCH_CRATE, SPRUCE_CRATE).build());
+    public static final BlockEntityType<StoragePotBlockEntity> LARGE_POT_BLOCK_ENTITY = Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Primeval.identify("large_pot_block_entity"), FabricBlockEntityTypeBuilder.create(StoragePotBlockEntity::new, LARGE_FIRED_CLAY_POT).build());
+    public static final BlockEntityType<WickerBasketBlockEntity> WICKER_BASKET_BLOCK_ENTITY = Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Primeval.identify("wicker_basket_block_entity"), FabricBlockEntityTypeBuilder.create(WickerBasketBlockEntity::new, WICKER_BASKET).build());
+    public static final BlockEntityType<PrimevalCampfireBlockEntity> CAMPFIRE_BLOCK_ENTITY = Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Primeval.identify("campfire_block_entity"), FabricBlockEntityTypeBuilder.create(PrimevalCampfireBlockEntity::new, CAMPFIRE).build());
+    public static final BlockEntityType<QuernBlockEntity> QUERN_BLOCK_ENTITY = Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Primeval.identify("quern_block_entity"), FabricBlockEntityTypeBuilder.create(QuernBlockEntity::new, QUERN).build());
 
     // endregion
 
@@ -251,7 +266,7 @@ public class PrimevalBlocks {
     @Environment(EnvType.CLIENT)
     public static void initClient() {
         // Render Layers
-        BlockRenderLayerMap.putBlocks(BlockRenderLayer.CUTOUT,
+        BlockRenderLayerMap.putBlocks(ChunkSectionLayer.CUTOUT,
                 GRASSY_DIRT, GRASSY_CLAY,
                 GRASS, BUSH, SPIKED_PLANT, LEAFY_PLANT, SHRUB,
                 POPPY, DANDELION, OXEYE_DAISY, CORNFLOWER, LILY_OF_THE_VALLEY,
@@ -283,17 +298,17 @@ public class PrimevalBlocks {
                 WICKER_BARS
         );
 
-        ColorProviderRegistry.BLOCK.register(((state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getGrassColor(world, pos) : GrassColors.getColor(0.7D, 1.0D)),
+        ColorProviderRegistry.BLOCK.register(((state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getAverageGrassColor(world, pos) : GrassColor.get(0.7D, 1.0D)),
                 GRASSY_DIRT, GRASSY_CLAY,
                 GRASS, BUSH, SPIKED_PLANT, LEAFY_PLANT, SHRUB
         );
-        ColorProviderRegistry.BLOCK.register(((state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getFoliageColor(world, pos) : FoliageColors.getColor(0.5D, 1.0D)),
+        ColorProviderRegistry.BLOCK.register(((state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getAverageFoliageColor(world, pos) : FoliageColor.get(0.5D, 1.0D)),
                 OAK_LEAVES
         );
-        ColorProviderRegistry.BLOCK.register(((state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getFoliageColor(world, pos)+2621440 : FoliageColors.getColor(0.5D, 1.0D)),
+        ColorProviderRegistry.BLOCK.register(((state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getAverageFoliageColor(world, pos)+2621440 : FoliageColor.get(0.5D, 1.0D)),
                 BIRCH_LEAVES
         );
-        ColorProviderRegistry.BLOCK.register(((state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getFoliageColor(world, pos)-4082973 : FoliageColors.getColor(0.5D, 1.0D)),
+        ColorProviderRegistry.BLOCK.register(((state, world, pos, tintIndex) -> world != null && pos != null ? BiomeColors.getAverageFoliageColor(world, pos)-4082973 : FoliageColor.get(0.5D, 1.0D)),
                 SPRUCE_LEAVES
         );
 
@@ -307,16 +322,16 @@ public class PrimevalBlocks {
 
     // region HELPER FUNCTIONS
 
-    private static RegistryKey<Block> blockKey(String id) {
-        return RegistryKey.of(RegistryKeys.BLOCK, identify(id));
+    private static ResourceKey<Block> blockKey(String id) {
+        return ResourceKey.create(Registries.BLOCK, identify(id));
     }
 
     @SafeVarargs
-    private static <T extends Block> T registerBlock(String id, AbstractBlock.Settings settings, BlockFactory<T> factory, Weight w, Size s, Consumer<Block>... additionalActions) {
-        RegistryKey<Block> blockKey = blockKey(id);
-        RegistryKey<Item> itemKey = RegistryKey.of(RegistryKeys.ITEM, blockKey.getValue());
-        var registeredBlock = Registry.register(Registries.BLOCK, blockKey, factory.create(settings.registryKey(blockKey)));
-        Registry.register(Registries.ITEM, identify(id), new WeightedBlockItem(registeredBlock, w, s, new Item.Settings().registryKey(itemKey).useBlockPrefixedTranslationKey()));
+    private static <T extends Block> T registerBlock(String id, BlockBehaviour.Properties settings, BlockFactory<T> factory, Weight w, Size s, Consumer<Block>... additionalActions) {
+        ResourceKey<Block> blockKey = blockKey(id);
+        ResourceKey<Item> itemKey = ResourceKey.create(Registries.ITEM, blockKey.identifier());
+        var registeredBlock = Registry.register(BuiltInRegistries.BLOCK, blockKey, factory.create(settings.setId(blockKey)));
+        Registry.register(BuiltInRegistries.ITEM, identify(id), new WeightedBlockItem(registeredBlock, w, s, new Item.Properties().setId(itemKey).useBlockDescriptionPrefix()));
         for (var action : additionalActions) {
             action.accept(registeredBlock);
         }
@@ -324,27 +339,27 @@ public class PrimevalBlocks {
     }
 
     @SafeVarargs
-    private static <T extends Block> T registerBlockWithoutItem(String id, AbstractBlock.Settings settings, BlockFactory<T> factory, Consumer<Block>... additionalActions) {
-        RegistryKey<Block> blockKey = blockKey(id);
-        var registeredBlock = Registry.register(Registries.BLOCK, blockKey, factory.create(settings.registryKey(blockKey)));
+    private static <T extends Block> T registerBlockWithoutItem(String id, BlockBehaviour.Properties settings, BlockFactory<T> factory, Consumer<Block>... additionalActions) {
+        ResourceKey<Block> blockKey = blockKey(id);
+        var registeredBlock = Registry.register(BuiltInRegistries.BLOCK, blockKey, factory.create(settings.setId(blockKey)));
         for (var action : additionalActions) {
             action.accept(registeredBlock);
         }
         return registeredBlock;
     }
 
-    private static Block registerMoltenFluid(String id, FlowableFluid fluid) {
-        return registerBlockWithoutItem(id, AbstractBlock.Settings.copy(Blocks.LAVA), (s) -> new FluidBlock(fluid, s));
+    private static Block registerMoltenFluid(String id, FlowingFluid fluid) {
+        return registerBlockWithoutItem(id, BlockBehaviour.Properties.ofFullCopy(Blocks.LAVA), (s) -> new LiquidBlock(fluid, s));
     }
 
     @FunctionalInterface
     public interface BlockFactory<T extends Block> {
-        T create(AbstractBlock.Settings settings);
+        T create(BlockBehaviour.Properties settings);
     }
 
     // records
 
-    private static ColoredBlockSet registerColoredBlockSet(String baseId, AbstractBlock.Settings settings, Weight weight, Size size) {
+    private static ColoredBlockSet registerColoredBlockSet(String baseId, BlockBehaviour.Properties settings, Weight weight, Size size) {
         return new ColoredBlockSet(
                 registerBlock(baseId + "_white", settings, Block::new, weight, size),
                 registerBlock(baseId + "_orange", settings, Block::new, weight, size),
@@ -364,7 +379,7 @@ public class PrimevalBlocks {
                 registerBlock(baseId + "_black", settings, Block::new, weight, size)
         );
     }
-    private static ColoredBlockSetSet registerColoredBlockSetSet(String baseId, AbstractBlock.Settings settings, Weight weight, Size size) {
+    private static ColoredBlockSetSet registerColoredBlockSetSet(String baseId, BlockBehaviour.Properties settings, Weight weight, Size size) {
         return new ColoredBlockSetSet(
                 registerBlockSet(baseId + "_white", settings, weight, size),
                 registerBlockSet(baseId + "_orange", settings, weight, size),
@@ -385,38 +400,38 @@ public class PrimevalBlocks {
         );
     }
 
-    private static BlockSet registerBlockSet(String id, AbstractBlock.Settings settings, Weight weight, Size size) {
+    private static BlockSet registerBlockSet(String id, BlockBehaviour.Properties settings, Weight weight, Size size) {
         return registerBlockSet(id, id+"_stairs", id+"_slab", settings, weight, size);
     }
-    private static BlockSet registerBlockSet(String base_id, String stairs_id, String slab_id, AbstractBlock.Settings settings, Weight weight, Size size) {
+    private static BlockSet registerBlockSet(String base_id, String stairs_id, String slab_id, BlockBehaviour.Properties settings, Weight weight, Size size) {
         Block base = registerBlock(base_id, settings, Block::new, Weight.LIGHT, Size.MEDIUM);
         return new BlockSet(
                 base,
-                registerBlock(stairs_id, settings, (s) -> new StairsBlock(base.getDefaultState(), s), Weight.LIGHT, Size.MEDIUM),
+                registerBlock(stairs_id, settings, (s) -> new StairBlock(base.defaultBlockState(), s), Weight.LIGHT, Size.MEDIUM),
                 registerBlock(slab_id, settings, SlabBlock::new, Weight.LIGHT, Size.MEDIUM)
         );
     }
 
-    private static WoodBlockSet registerWoodBlockSet(String id, AbstractBlock.Settings settings, WoodType woodType, BlockSetType blockSetType, Weight weight, Size size) {
+    private static WoodBlockSet registerWoodBlockSet(String id, BlockBehaviour.Properties settings, WoodType woodType, BlockSetType blockSetType, Weight weight, Size size) {
         return registerWoodBlockSet(id+"_planks", id+"_stairs", id+"_slab", id+"_panel", id+"_fence", id+"_log_fence", id+"_fence_gate", id+"_door", id+"_trapdoor", settings, woodType, blockSetType, weight, size);
     }
-    private static WoodBlockSet registerWoodBlockSet(String block_id, String stairs_id, String slab_id, String panel_id, String fence_id, String log_fence_id, String fence_gate_id, String door_id, String trapdoor_id, AbstractBlock.Settings settings, WoodType woodType, BlockSetType blockSetType, Weight weight, Size size) {
+    private static WoodBlockSet registerWoodBlockSet(String block_id, String stairs_id, String slab_id, String panel_id, String fence_id, String log_fence_id, String fence_gate_id, String door_id, String trapdoor_id, BlockBehaviour.Properties settings, WoodType woodType, BlockSetType blockSetType, Weight weight, Size size) {
         Block base = registerBlock(block_id, settings, Block::new, Weight.LIGHT, Size.MEDIUM);
 
         return new WoodBlockSet(
                 base,
-                registerBlock(stairs_id, settings, (s) -> new StairsBlock(base.getDefaultState(), s), Weight.LIGHT, Size.MEDIUM),
+                registerBlock(stairs_id, settings, (s) -> new StairBlock(base.defaultBlockState(), s), Weight.LIGHT, Size.MEDIUM),
                 registerBlock(slab_id, settings, SlabBlock::new, Weight.LIGHT, Size.MEDIUM),
                 registerBlock(panel_id, settings, Block::new, Weight.LIGHT, Size.MEDIUM),
                 registerBlock(fence_id, settings, FenceBlock::new, Weight.LIGHT, Size.MEDIUM),
                 registerBlock(log_fence_id, settings, FenceBlock::new, Weight.LIGHT, Size.MEDIUM),
                 registerBlock(fence_gate_id, settings, (s) -> new FenceGateBlock(woodType, s), Weight.LIGHT, Size.MEDIUM),
                 registerBlock(door_id, settings, (s) -> new DoorBlock(blockSetType, s), Weight.LIGHT, Size.MEDIUM),
-                registerBlock(trapdoor_id, settings, (s) -> new TrapdoorBlock(blockSetType, s.nonOpaque()), Weight.LIGHT, Size.MEDIUM)
+                registerBlock(trapdoor_id, settings, (s) -> new TrapDoorBlock(blockSetType, s.noOcclusion()), Weight.LIGHT, Size.MEDIUM)
         );
     }
 
-    private static OreBlockSet registerOreBlockSet(String ore_id, AbstractBlock.Settings s, Weight weight, Size size) {
+    private static OreBlockSet registerOreBlockSet(String ore_id, BlockBehaviour.Properties s, Weight weight, Size size) {
         return new OreBlockSet(
                 registerBlock(ore_id + "_small", s, (settings) -> new SemiSupportedBlock(0.35f, COBBLESTONE, settings), weight, size),
                 registerBlock(ore_id + "_medium", s, (settings) -> new SemiSupportedBlock(0.35f, COBBLESTONE, settings), weight, size),
@@ -426,7 +441,7 @@ public class PrimevalBlocks {
 
     // Block Sets
 
-    public record BlockSet(Block block, StairsBlock stairs, SlabBlock slab) implements Iterable<Block> {
+    public record BlockSet(Block block, StairBlock stairs, SlabBlock slab) implements Iterable<Block> {
         public @NotNull Iterator<Block> iterator() {
             return Arrays.stream(new Block[]{block, stairs, slab}).iterator();
         }
@@ -442,7 +457,7 @@ public class PrimevalBlocks {
             return Arrays.stream(new BlockSet[]{white, orange, magenta, lightBlue, yellow, lime, pink, darkGray, lightGray, cyan, purple, blue, brown, green, red, black}).iterator();
         }
     }
-    public record WoodBlockSet(Block block, StairsBlock stairs, SlabBlock slab, Block panel, FenceBlock fence, FenceBlock logFence, FenceGateBlock fenceGate, DoorBlock door, TrapdoorBlock trapdoor) implements Iterable<Block> {
+    public record WoodBlockSet(Block block, StairBlock stairs, SlabBlock slab, Block panel, FenceBlock fence, FenceBlock logFence, FenceGateBlock fenceGate, DoorBlock door, TrapDoorBlock trapdoor) implements Iterable<Block> {
         public @NotNull Iterator<Block> iterator() {
             return Arrays.stream(new Block[]{block, stairs, slab, panel, fence, logFence, fenceGate, door, trapdoor}).iterator();
         }

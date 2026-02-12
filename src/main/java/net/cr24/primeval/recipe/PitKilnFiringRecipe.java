@@ -2,8 +2,10 @@ package net.cr24.primeval.recipe;
 
 import net.cr24.primeval.initialization.PrimevalItems;
 import net.cr24.primeval.initialization.PrimevalRecipes;
-import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.*;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 
 public class PitKilnFiringRecipe extends SimpleOneToOneRecipe {
     public PitKilnFiringRecipe(Ingredient input, ItemStack result) {

@@ -4,14 +4,14 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.cr24.primeval.initialization.PrimevalBlocks;
 import net.cr24.primeval.initialization.PrimevalRecipes;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.recipe.RecipeType;
-import net.minecraft.util.dynamic.Codecs;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.util.ExtraCodecs;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 
 public class QuernRecipe extends SimpleOneToOneRecipe {
 
@@ -45,12 +45,12 @@ public class QuernRecipe extends SimpleOneToOneRecipe {
         private static final MapCodec<QuernRecipe> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
                 Ingredient.CODEC.fieldOf("input").forGetter((recipe) -> recipe.input),
                 ItemStack.CODEC.fieldOf("result").forGetter((recipe) -> recipe.result),
-                Codecs.NON_NEGATIVE_INT.fieldOf("wheel_damage").forGetter((recipe) -> recipe.wheelDamage)
+                ExtraCodecs.NON_NEGATIVE_INT.fieldOf("wheel_damage").forGetter((recipe) -> recipe.wheelDamage)
         ).apply(instance, QuernRecipe::new));
-        private static final PacketCodec<RegistryByteBuf, QuernRecipe> PACKET_CODEC = PacketCodec.tuple(
-                Ingredient.PACKET_CODEC, QuernRecipe::getInput,
-                ItemStack.PACKET_CODEC, QuernRecipe::getResult,
-                PacketCodecs.INTEGER, QuernRecipe::getWheelDamage,
+        private static final StreamCodec<RegistryFriendlyByteBuf, QuernRecipe> PACKET_CODEC = StreamCodec.composite(
+                Ingredient.CONTENTS_STREAM_CODEC, QuernRecipe::getInput,
+                ItemStack.STREAM_CODEC, QuernRecipe::getResult,
+                ByteBufCodecs.INT, QuernRecipe::getWheelDamage,
                 QuernRecipe::new
         );
 
@@ -61,7 +61,7 @@ public class QuernRecipe extends SimpleOneToOneRecipe {
             return CODEC;
         }
 
-        public PacketCodec<RegistryByteBuf, QuernRecipe> packetCodec() {
+        public StreamCodec<RegistryFriendlyByteBuf, QuernRecipe> streamCodec() {
             return PACKET_CODEC;
         }
     }

@@ -2,29 +2,24 @@ package net.cr24.primeval.entity;
 
 import com.google.common.collect.Lists;
 import net.cr24.primeval.initialization.PrimevalTags;
-import net.minecraft.block.*;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.*;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.AutomaticItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.packet.s2c.play.BlockUpdateS2CPacket;
-import net.minecraft.predicate.entity.EntityPredicates;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.registry.tag.FluidTags;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
-import net.minecraft.world.rule.GameRules;
-
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.item.FallingBlockEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gamerules.GameRules;
+import net.minecraft.world.phys.Vec3;
 import java.util.function.Predicate;
 
 public class CollapsingBlockEntity extends FallingBlockEntity {
@@ -33,18 +28,18 @@ public class CollapsingBlockEntity extends FallingBlockEntity {
     public BlockPos origin;
     public BlockState sourceBlock;
 
-    public CollapsingBlockEntity(World world, double x, double y, double z, BlockState block, BlockPos origin, BlockState sourceBlock) {
+    public CollapsingBlockEntity(Level world, double x, double y, double z, BlockState block, BlockPos origin, BlockState sourceBlock) {
         super(EntityType.FALLING_BLOCK, world);
         this.block = block;
-        this.intersectionChecked = true;
-        this.updatePosition(x, y + (double)((1.0F - this.getHeight()) / 2.0F), z);
-        this.setVelocity(Vec3d.ZERO);
-        this.lastX = x;
-        this.lastY = y;
-        this.lastZ = z;
+        this.blocksBuilding = true;
+        this.absSnapTo(x, y + (double)((1.0F - this.getBbHeight()) / 2.0F), z);
+        this.setDeltaMovement(Vec3.ZERO);
+        this.xo = x;
+        this.yo = y;
+        this.zo = z;
         this.origin = origin;
         this.sourceBlock = sourceBlock;
-        this.setFallingBlockPos(this.getBlockPos());
+        this.setStartPos(this.blockPosition());
     }
 
     @Override
@@ -54,61 +49,61 @@ public class CollapsingBlockEntity extends FallingBlockEntity {
         } else {
             Block block = this.block.getBlock();
             Block source = this.sourceBlock.getBlock();
-            if (++this.timeFalling == 1) {
-                if (getEntityWorld().getBlockState(this.origin).isOf(block) || getEntityWorld().getBlockState(this.origin).isOf(source)) {
-                    getEntityWorld().removeBlock(this.origin, false);
-                } else if (!getEntityWorld().isClient()) {
+            if (++this.time == 1) {
+                if (level().getBlockState(this.origin).is(block) || level().getBlockState(this.origin).is(source)) {
+                    level().removeBlock(this.origin, false);
+                } else if (!level().isClientSide()) {
                     this.discard();
                     return;
                 }
             }
             this.applyGravity();
-            this.move(MovementType.SELF, this.getVelocity());
-            this.tickBlockCollision();
-            this.tickPortalTeleportation();
-            if (this.getEntityWorld() instanceof ServerWorld serverWorld) {
+            this.move(MoverType.SELF, this.getDeltaMovement());
+            this.applyEffectsFromBlocks();
+            this.handlePortal();
+            if (this.level() instanceof ServerLevel serverWorld) {
                 if (this.isAlive()) {
-                    BlockPos blockPos = this.getBlockPos();
-                    if (!this.isOnGround()) { // still falling
-                        if (this.timeFalling > 100 && (blockPos.getY() <= this.getEntityWorld().getBottomY() || blockPos.getY() > this.getEntityWorld().getTopYInclusive()) || this.timeFalling > 600) {
-                            if (this.dropItem && serverWorld.getGameRules().getValue(GameRules.ENTITY_DROPS)) {
-                                this.dropItem(serverWorld, block);
+                    BlockPos blockPos = this.blockPosition();
+                    if (!this.onGround()) { // still falling
+                        if (this.time > 100 && (blockPos.getY() <= this.level().getMinY() || blockPos.getY() > this.level().getMaxY()) || this.time > 600) {
+                            if (this.dropItem && serverWorld.getGameRules().get(GameRules.ENTITY_DROPS)) {
+                                this.spawnAtLocation(serverWorld, block);
                             }
                             this.discard();
                         }
                     } else { // hit ground
-                        BlockState blockState = this.getEntityWorld().getBlockState(blockPos);
-                        if (blockState.isIn(PrimevalTags.Blocks.COLLAPSING_NO_CRUSH)) {
-                            blockPos = blockPos.up();
-                            blockState = getEntityWorld().getBlockState(blockPos);
+                        BlockState blockState = this.level().getBlockState(blockPos);
+                        if (blockState.is(PrimevalTags.Blocks.COLLAPSING_NO_CRUSH)) {
+                            blockPos = blockPos.above();
+                            blockState = level().getBlockState(blockPos);
                         }
-                        this.setVelocity(this.getVelocity().multiply(0.7, -0.5, 0.7));
-                        if (!blockState.isOf(Blocks.MOVING_PISTON)) {
-                            if (this.getEntityWorld().setBlockState(blockPos, this.block, 3) || this.getEntityWorld().setBlockState(blockPos.up(), this.block, 3)) {
-                                ((ServerWorld)this.getEntityWorld()).getChunkManager().chunkLoadingManager.sendToOtherNearbyPlayers(this, new BlockUpdateS2CPacket(blockPos, this.getEntityWorld().getBlockState(blockPos)));
+                        this.setDeltaMovement(this.getDeltaMovement().multiply(0.7, -0.5, 0.7));
+                        if (!blockState.is(Blocks.MOVING_PISTON)) {
+                            if (this.level().setBlock(blockPos, this.block, 3) || this.level().setBlock(blockPos.above(), this.block, 3)) {
+                                ((ServerLevel)this.level()).getChunkSource().chunkMap.sendToTrackingPlayers(this, new ClientboundBlockUpdatePacket(blockPos, this.level().getBlockState(blockPos)));
                                 this.discard();
-                            } else if (this.dropItem && serverWorld.getGameRules().getValue(GameRules.ENTITY_DROPS) && this.random.nextBoolean()) {
+                            } else if (this.dropItem && serverWorld.getGameRules().get(GameRules.ENTITY_DROPS) && this.random.nextBoolean()) {
                                 this.discard();
-                                this.onDestroyedOnLanding(block, blockPos);
-                                this.dropItem(serverWorld, block);
+                                this.callOnBrokenAfterFall(block, blockPos);
+                                this.spawnAtLocation(serverWorld, block);
                             }
                         }
                     }
                 }
             }
-            this.setVelocity(this.getVelocity().multiply(0.98));
+            this.setDeltaMovement(this.getDeltaMovement().scale(0.98));
         }
     }
 
     @Override
-    public boolean handleFallDamage(double fallDistance, float damagePerDistance, DamageSource damageSource) {
-        int i = MathHelper.ceil(fallDistance - 1.0F);
+    public boolean causeFallDamage(double fallDistance, float damagePerDistance, DamageSource damageSource) {
+        int i = Mth.ceil(fallDistance - 1.0F);
         if (i > 0) {
-            Predicate<Entity> predicate = EntityPredicates.EXCEPT_CREATIVE_OR_SPECTATOR.and((entity) -> entity.isAlive() && (entity instanceof LivingEntity || entity instanceof ItemEntity));
+            Predicate<Entity> predicate = EntitySelector.NO_CREATIVE_OR_SPECTATOR.and((entity) -> entity.isAlive() && (entity instanceof LivingEntity || entity instanceof ItemEntity));
 
-            DamageSource source = this.getDamageSources().fallingBlock(this);
-            float damageAmount = Math.min(MathHelper.floor((float)i * 2.0f), 40.0f);
-            this.getEntityWorld().getOtherEntities(this, this.getBoundingBox(), predicate).forEach((entity) -> entity.serverDamage(source, damageAmount));
+            DamageSource source = this.damageSources().fallingBlock(this);
+            float damageAmount = Math.min(Mth.floor((float)i * 2.0f), 40.0f);
+            this.level().getEntities(this, this.getBoundingBox(), predicate).forEach((entity) -> entity.hurt(source, damageAmount));
         }
         return false;
     }

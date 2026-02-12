@@ -2,34 +2,34 @@ package net.cr24.primeval.world.gen.feature;
 
 import com.mojang.serialization.Codec;
 import net.cr24.primeval.initialization.PrimevalBlocks;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.Heightmap;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.util.FeatureContext;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class RiverGrassFeature extends Feature<DefaultFeatureConfig> {
-    public RiverGrassFeature(Codec<DefaultFeatureConfig> codec) {
+public class RiverGrassFeature extends Feature<NoneFeatureConfiguration> {
+    public RiverGrassFeature(Codec<NoneFeatureConfiguration> codec) {
         super(codec);
     }
 
-    public boolean generate(FeatureContext<DefaultFeatureConfig> context) {
+    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
         boolean bl = false;
-        Random random = context.getRandom();
-        StructureWorldAccess structureWorldAccess = context.getWorld();
-        BlockPos blockPos = context.getOrigin();
+        RandomSource random = context.random();
+        WorldGenLevel structureWorldAccess = context.level();
+        BlockPos blockPos = context.origin();
         int i = random.nextInt(8) - random.nextInt(8);
         int j = random.nextInt(8) - random.nextInt(8);
-        int k = structureWorldAccess.getTopY(Heightmap.Type.OCEAN_FLOOR, blockPos.getX() + i, blockPos.getZ() + j);
+        int k = structureWorldAccess.getHeight(Heightmap.Types.OCEAN_FLOOR, blockPos.getX() + i, blockPos.getZ() + j);
         BlockPos blockPos2 = new BlockPos(blockPos.getX() + i, k, blockPos.getZ() + j);
-        if (structureWorldAccess.getBlockState(blockPos2).isOf(Blocks.WATER)) {
-            BlockState blockState = PrimevalBlocks.RIVER_GRASS.getDefaultState();
-            if (blockState.canPlaceAt(structureWorldAccess, blockPos2)) {
-                structureWorldAccess.setBlockState(blockPos2, blockState, 2);
+        if (structureWorldAccess.getBlockState(blockPos2).is(Blocks.WATER)) {
+            BlockState blockState = PrimevalBlocks.RIVER_GRASS.defaultBlockState();
+            if (blockState.canSurvive(structureWorldAccess, blockPos2)) {
+                structureWorldAccess.setBlock(blockPos2, blockState, 2);
                 bl = true;
             }
         }

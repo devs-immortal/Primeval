@@ -3,11 +3,11 @@ package net.cr24.primeval.world.gen.feature;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.cr24.primeval.initialization.PrimevalBlocks;
-import net.minecraft.util.math.floatprovider.FloatProvider;
-import net.minecraft.util.math.intprovider.IntProvider;
-import net.minecraft.world.gen.feature.FeatureConfig;
-import net.minecraft.world.gen.stateprovider.BlockStateProvider;
-import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider;
+import net.minecraft.util.valueproviders.FloatProvider;
+import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
+import net.minecraft.world.level.levelgen.feature.stateproviders.SimpleStateProvider;
 
 public record OreClusterFeatureConfig(BlockStateProvider largeState,
                                       BlockStateProvider mediumState,
@@ -15,7 +15,7 @@ public record OreClusterFeatureConfig(BlockStateProvider largeState,
                                       IntProvider radius,
                                       IntProvider height,
                                       FloatProvider density,
-                                      FloatProvider richness) implements FeatureConfig {
+                                      FloatProvider richness) implements FeatureConfiguration {
 
     /*
      * Ore Cluster Feature Configuration:
@@ -29,20 +29,20 @@ public record OreClusterFeatureConfig(BlockStateProvider largeState,
      */
     public static final Codec<OreClusterFeatureConfig> CODEC = RecordCodecBuilder.create((instance) -> {
         return instance.group(
-                BlockStateProvider.TYPE_CODEC.fieldOf("large_ore").forGetter(OreClusterFeatureConfig::largeState),
-                BlockStateProvider.TYPE_CODEC.fieldOf("medium_ore").forGetter(OreClusterFeatureConfig::mediumState),
-                BlockStateProvider.TYPE_CODEC.fieldOf("small_ore").forGetter(OreClusterFeatureConfig::smallState),
-                IntProvider.createValidatingCodec(0, 16).fieldOf("radius").forGetter(OreClusterFeatureConfig::radius),
-                IntProvider.createValidatingCodec(0, 16).fieldOf("height").forGetter(OreClusterFeatureConfig::height),
-                FloatProvider.createValidatedCodec(0.0f, 1.0f).fieldOf("density").forGetter(OreClusterFeatureConfig::density),
-                FloatProvider.createValidatedCodec(0.0f, 1.0f).fieldOf("richness").forGetter(OreClusterFeatureConfig::richness)
+                BlockStateProvider.CODEC.fieldOf("large_ore").forGetter(OreClusterFeatureConfig::largeState),
+                BlockStateProvider.CODEC.fieldOf("medium_ore").forGetter(OreClusterFeatureConfig::mediumState),
+                BlockStateProvider.CODEC.fieldOf("small_ore").forGetter(OreClusterFeatureConfig::smallState),
+                IntProvider.codec(0, 16).fieldOf("radius").forGetter(OreClusterFeatureConfig::radius),
+                IntProvider.codec(0, 16).fieldOf("height").forGetter(OreClusterFeatureConfig::height),
+                FloatProvider.codec(0.0f, 1.0f).fieldOf("density").forGetter(OreClusterFeatureConfig::density),
+                FloatProvider.codec(0.0f, 1.0f).fieldOf("richness").forGetter(OreClusterFeatureConfig::richness)
         ).apply(instance, OreClusterFeatureConfig::new);
     });
 
     public OreClusterFeatureConfig(PrimevalBlocks.OreBlockSet ore, IntProvider radius, IntProvider height, FloatProvider density, FloatProvider richness) {
-        this(SimpleBlockStateProvider.of(ore.large()),
-                SimpleBlockStateProvider.of(ore.medium()),
-                SimpleBlockStateProvider.of(ore.small()),
+        this(SimpleStateProvider.simple(ore.large()),
+                SimpleStateProvider.simple(ore.medium()),
+                SimpleStateProvider.simple(ore.small()),
                 radius, height, density, richness);
     }
 }

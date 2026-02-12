@@ -1,30 +1,30 @@
 package net.cr24.primeval.screen;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.SimpleInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.slot.Slot;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
-public class Primeval3x5ContainerScreenHandler extends ScreenHandler {
+public class Primeval3x5ContainerScreenHandler extends AbstractContainerMenu {
 
-    private final Inventory inventory;
+    private final Container inventory;
 
-    public static Primeval3x5ContainerScreenHandler create(int syncId, PlayerInventory playerInventory) {
-        return new Primeval3x5ContainerScreenHandler(syncId, playerInventory, new SimpleInventory(15));
+    public static Primeval3x5ContainerScreenHandler create(int syncId, Inventory playerInventory) {
+        return new Primeval3x5ContainerScreenHandler(syncId, playerInventory, new SimpleContainer(15));
     }
 
-    public static Primeval3x5ContainerScreenHandler create(int syncId, PlayerInventory playerInventory, Inventory inventory) {
+    public static Primeval3x5ContainerScreenHandler create(int syncId, Inventory playerInventory, Container inventory) {
         return new Primeval3x5ContainerScreenHandler(syncId, playerInventory, inventory);
     }
 
-    public Primeval3x5ContainerScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory) {
+    public Primeval3x5ContainerScreenHandler(int syncId, Inventory playerInventory, Container inventory) {
         super(PrimevalScreens.GENERIC_3X5_HANDLER, syncId);
-        checkSize(inventory, 15);
+        checkContainerSize(inventory, 15);
         this.inventory = inventory;
-        inventory.onOpen(playerInventory.player);
+        inventory.startOpen(playerInventory.player);
 
         for (int m = 0; m < 3; ++m) {
             for (int l = 0; l < 5; ++l) {
@@ -44,29 +44,29 @@ public class Primeval3x5ContainerScreenHandler extends ScreenHandler {
     }
 
     @Override
-    public boolean canUse(PlayerEntity player) {
-        return this.inventory.canPlayerUse(player);
+    public boolean stillValid(Player player) {
+        return this.inventory.stillValid(player);
     }
 
     @Override
-    public ItemStack quickMove(PlayerEntity player, int index) {
+    public ItemStack quickMoveStack(Player player, int index) {
         ItemStack newStack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
-        if (slot != null && slot.hasStack()) {
-            ItemStack originalStack = slot.getStack();
+        if (slot != null && slot.hasItem()) {
+            ItemStack originalStack = slot.getItem();
             newStack = originalStack.copy();
-            if (index < this.inventory.size()) {
-                if (!this.insertItem(originalStack, this.inventory.size(), this.slots.size(), true)) {
+            if (index < this.inventory.getContainerSize()) {
+                if (!this.moveItemStackTo(originalStack, this.inventory.getContainerSize(), this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.insertItem(originalStack, 0, this.inventory.size(), false)) {
+            } else if (!this.moveItemStackTo(originalStack, 0, this.inventory.getContainerSize(), false)) {
                 return ItemStack.EMPTY;
             }
 
             if (originalStack.isEmpty()) {
-                slot.setStack(ItemStack.EMPTY);
+                slot.setByPlayer(ItemStack.EMPTY);
             } else {
-                slot.markDirty();
+                slot.setChanged();
             }
         }
 
@@ -74,12 +74,12 @@ public class Primeval3x5ContainerScreenHandler extends ScreenHandler {
     }
 
     @Override
-    public void onClosed(PlayerEntity player) {
-        super.onClosed(player);
-        this.inventory.onClose(player);
+    public void removed(Player player) {
+        super.removed(player);
+        this.inventory.stopOpen(player);
     }
 
-    public Inventory getInventory() {
+    public Container getInventory() {
         return this.inventory;
     }
 }

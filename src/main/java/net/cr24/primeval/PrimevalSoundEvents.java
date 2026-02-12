@@ -1,9 +1,9 @@
 package net.cr24.primeval;
 
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.sounds.SoundEvent;
 
 public class PrimevalSoundEvents {
 
@@ -15,6 +15,6 @@ public class PrimevalSoundEvents {
 
     private static SoundEvent registerSound(String id) {
         Identifier located = Primeval.identify(id);
-        return Registry.register(Registries.SOUND_EVENT, located, SoundEvent.of(located));
+        return Registry.register(BuiltInRegistries.SOUND_EVENT, located, SoundEvent.createVariableRangeEvent(located));
     }
 }

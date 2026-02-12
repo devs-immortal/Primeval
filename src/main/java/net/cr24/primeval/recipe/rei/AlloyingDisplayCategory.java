@@ -12,7 +12,7 @@ import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.cr24.primeval.initialization.PrimevalItems;
 import net.cr24.primeval.util.RangedValue;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
 import java.util.List;
 import java.util.Map;
 
@@ -23,8 +23,8 @@ public class AlloyingDisplayCategory implements DisplayCategory<AlloyingDisplay>
     }
 
     @Override
-    public Text getTitle() {
-        return Text.translatable("category.primeval.alloying");
+    public Component getTitle() {
+        return Component.translatable("category.primeval.alloying");
     }
 
     @Override

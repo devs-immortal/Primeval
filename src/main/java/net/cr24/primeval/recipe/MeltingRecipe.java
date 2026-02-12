@@ -3,49 +3,49 @@ package net.cr24.primeval.recipe;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.cr24.primeval.initialization.PrimevalRecipes;
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
-import net.fabricmc.fabric.impl.transfer.VariantCodecs;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.recipe.*;
-import net.minecraft.recipe.book.RecipeBookCategory;
-import net.minecraft.recipe.input.SingleStackRecipeInput;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Pair;
-import net.minecraft.util.dynamic.Codecs;
-import net.minecraft.world.World;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.util.ExtraCodecs;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.PlacementInfo;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeBookCategory;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.material.Fluid;
 
-public class MeltingRecipe implements Recipe<SingleStackRecipeInput> {
+public class MeltingRecipe implements Recipe<SingleRecipeInput> {
 
     final Ingredient input;
-    final RegistryEntry<Fluid> fluidResult;
+    final Holder<Fluid> fluidResult;
     final int fluidAmount;
 
-    public MeltingRecipe(Ingredient input, RegistryEntry<Fluid> fluidResult, int fluidAmount) {
+    public MeltingRecipe(Ingredient input, Holder<Fluid> fluidResult, int fluidAmount) {
         this.input = input;
         this.fluidResult = fluidResult;
         this.fluidAmount = fluidAmount;
     }
 
     @Override
-    public boolean matches(SingleStackRecipeInput inventory, World world) {
+    public boolean matches(SingleRecipeInput inventory, Level world) {
         return this.input.test(inventory.item());
     }
 
     @Override
-    public ItemStack craft(SingleStackRecipeInput input, RegistryWrapper.WrapperLookup registries) {
+    public ItemStack assemble(SingleRecipeInput input, HolderLookup.Provider registries) {
         return ItemStack.EMPTY;
     }
 
     @Override
-    public boolean isIgnoredInRecipeBook() {
+    public boolean isSpecial() {
         return true;
     }
 
@@ -53,7 +53,7 @@ public class MeltingRecipe implements Recipe<SingleStackRecipeInput> {
         return this.input;
     }
 
-    public RegistryEntry<Fluid> getFluidResult() {
+    public Holder<Fluid> getFluidResult() {
         return this.fluidResult;
     }
     public int getFluidAmount() {
@@ -71,25 +71,25 @@ public class MeltingRecipe implements Recipe<SingleStackRecipeInput> {
     }
 
     @Override
-    public IngredientPlacement getIngredientPlacement() {
-        return IngredientPlacement.NONE;
+    public PlacementInfo placementInfo() {
+        return PlacementInfo.NOT_PLACEABLE;
     }
 
     @Override
-    public RecipeBookCategory getRecipeBookCategory() {
+    public RecipeBookCategory recipeBookCategory() {
         return null;
     }
 
     public static class Serializer implements RecipeSerializer<MeltingRecipe> {
         private static final MapCodec<MeltingRecipe> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
                 Ingredient.CODEC.fieldOf("input").forGetter((recipe) -> recipe.input),
-                Registries.FLUID.getEntryCodec().fieldOf("fluid").forGetter((recipe) -> recipe.fluidResult),
-                Codecs.POSITIVE_INT.fieldOf("fluid_amount").forGetter((recipe) -> recipe.fluidAmount)
+                BuiltInRegistries.FLUID.holderByNameCodec().fieldOf("fluid").forGetter((recipe) -> recipe.fluidResult),
+                ExtraCodecs.POSITIVE_INT.fieldOf("fluid_amount").forGetter((recipe) -> recipe.fluidAmount)
         ).apply(instance, MeltingRecipe::new));
-        private static final PacketCodec<RegistryByteBuf, MeltingRecipe> PACKET_CODEC = PacketCodec.tuple(
-                Ingredient.PACKET_CODEC, MeltingRecipe::getInput,
-                PacketCodecs.registryEntry(RegistryKeys.FLUID), MeltingRecipe::getFluidResult,
-                PacketCodecs.INTEGER, MeltingRecipe::getFluidAmount,
+        private static final StreamCodec<RegistryFriendlyByteBuf, MeltingRecipe> PACKET_CODEC = StreamCodec.composite(
+                Ingredient.CONTENTS_STREAM_CODEC, MeltingRecipe::getInput,
+                ByteBufCodecs.holderRegistry(Registries.FLUID), MeltingRecipe::getFluidResult,
+                ByteBufCodecs.INT, MeltingRecipe::getFluidAmount,
                 MeltingRecipe::new
         );
 
@@ -100,7 +100,7 @@ public class MeltingRecipe implements Recipe<SingleStackRecipeInput> {
             return CODEC;
         }
 
-        public PacketCodec<RegistryByteBuf, MeltingRecipe> packetCodec() {
+        public StreamCodec<RegistryFriendlyByteBuf, MeltingRecipe> streamCodec() {
             return PACKET_CODEC;
         }
     }

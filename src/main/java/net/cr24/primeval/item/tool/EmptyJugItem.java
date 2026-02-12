@@ -6,28 +6,26 @@ import net.cr24.primeval.util.Size;
 import net.cr24.primeval.util.Weight;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.component.type.TooltipDisplayComponent;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.GlassBottleItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsage;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.registry.tag.FluidTags;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.stat.Stats;
-import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Hand;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.RaycastContext;
-import net.minecraft.world.World;
-import net.minecraft.world.event.GameEvent;
-
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -36,43 +34,43 @@ public class EmptyJugItem extends Item implements IWeightedItem {
     private final Weight weight;
     private final Size size;
 
-    public EmptyJugItem(Weight weight, Size size, net.minecraft.item.Item.Settings settings) {
-        super(settings.maxCount(1));
+    public EmptyJugItem(Weight weight, Size size, net.minecraft.world.item.Item.Properties settings) {
+        super(settings.stacksTo(1));
         this.weight = weight;
         this.size = size;
     }
 
     @Override
-    public ActionResult use(World world, PlayerEntity user, Hand hand) {
-        ItemStack itemStack = user.getStackInHand(hand);
-        BlockHitResult blockHitResult = raycast(world, user, RaycastContext.FluidHandling.SOURCE_ONLY);
+    public InteractionResult use(Level world, Player user, InteractionHand hand) {
+        ItemStack itemStack = user.getItemInHand(hand);
+        BlockHitResult blockHitResult = getPlayerPOVHitResult(world, user, ClipContext.Fluid.SOURCE_ONLY);
         if (blockHitResult.getType() != HitResult.Type.MISS) {
             if (blockHitResult.getType() == HitResult.Type.BLOCK) {
                 BlockPos blockPos = blockHitResult.getBlockPos();
-                if (!world.canEntityModifyAt(user, blockPos)) {
-                    return ActionResult.PASS;
+                if (!world.mayInteract(user, blockPos)) {
+                    return InteractionResult.PASS;
                 }
 
-                if (world.getFluidState(blockPos).isIn(FluidTags.WATER)) {
-                    world.playSound(user, user.getX(), user.getY(), user.getZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-                    world.emitGameEvent(user, GameEvent.FLUID_PICKUP, blockPos);
-                    return ActionResult.SUCCESS.withNewHandStack(this.fill(itemStack, user, new ItemStack(PrimevalItems.FIRED_CLAY_WATER_JUG)));
+                if (world.getFluidState(blockPos).is(FluidTags.WATER)) {
+                    world.playSound(user, user.getX(), user.getY(), user.getZ(), SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 1.0F);
+                    world.gameEvent(user, GameEvent.FLUID_PICKUP, blockPos);
+                    return InteractionResult.SUCCESS.heldItemTransformedTo(this.fill(itemStack, user, new ItemStack(PrimevalItems.FIRED_CLAY_WATER_JUG)));
                 }
             }
         }
-        return ActionResult.PASS;
+        return InteractionResult.PASS;
     }
 
-    protected ItemStack fill(ItemStack stack, PlayerEntity player, ItemStack outputStack) {
-        player.incrementStat(Stats.USED.getOrCreateStat(this));
-        return ItemUsage.exchangeStack(stack, player, outputStack);
+    protected ItemStack fill(ItemStack stack, Player player, ItemStack outputStack) {
+        player.awardStat(Stats.ITEM_USED.get(this));
+        return ItemUtils.createFilledResult(stack, player, outputStack);
     }
 
     @Override
     @Environment(EnvType.CLIENT)
-    public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type) {
-        super.appendTooltip(stack, context, displayComponent, textConsumer, type);
-        textConsumer.accept((Text.translatable("⚖ ").append(this.weight.getText()).append(" ⤧ ").append(this.size.getText())).formatted(Formatting.GRAY));
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay displayComponent, Consumer<Component> textConsumer, TooltipFlag type) {
+        super.appendHoverText(stack, context, displayComponent, textConsumer, type);
+        textConsumer.accept((Component.translatable("⚖ ").append(this.weight.getText()).append(" ⤧ ").append(this.size.getText())).withStyle(ChatFormatting.GRAY));
     }
 
     @Override

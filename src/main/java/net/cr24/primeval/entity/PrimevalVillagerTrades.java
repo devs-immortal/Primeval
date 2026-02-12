@@ -4,28 +4,24 @@ import com.google.common.collect.ImmutableList;
 import net.cr24.primeval.initialization.PrimevalBlocks;
 import net.cr24.primeval.initialization.PrimevalItems;
 import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.passive.WanderingTraderEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.potion.Potions;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.village.TradeOffer;
-import net.minecraft.village.TradeOffers;
-import net.minecraft.village.TradedItem;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.npc.villager.VillagerTrades;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.trading.ItemCost;
+import net.minecraft.world.item.trading.MerchantOffer;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
 
 public class PrimevalVillagerTrades {
 
-    public static final List<Pair<TradeOffers.Factory[], Integer>> CUSTOM_WANDERING_TRADER_TRADES =
+    public static final List<Pair<VillagerTrades.ItemListing[], Integer>> CUSTOM_WANDERING_TRADER_TRADES =
             ImmutableList.of(
                     Pair.of(
-                            new TradeOffers.Factory[]{
+                            new VillagerTrades.ItemListing[]{
                                     new PrimevalTradeFactory(
                                             PrimevalItems.ANIMAL_FAT, 1,
                                             new ItemStack(PrimevalItems.COPPER_COIN, 2),
@@ -48,7 +44,7 @@ public class PrimevalVillagerTrades {
                                     )
                             }, 2),
                     Pair.of(
-                            new TradeOffers.Factory[]{
+                            new VillagerTrades.ItemListing[]{
                                     new PrimevalTradeFactory(
                                             PrimevalItems.COPPER_COIN, 8,
                                             new ItemStack(PrimevalItems.CABBAGE_SEEDS, 1),
@@ -81,7 +77,7 @@ public class PrimevalVillagerTrades {
                                     )
                             }, 5),
                     Pair.of(
-                            new TradeOffers.Factory[]{
+                            new VillagerTrades.ItemListing[]{
                                     new PrimevalTradeFactory(
                                             PrimevalItems.COPPER_COIN, 4,
                                             new ItemStack(PrimevalBlocks.OAK_SAPLING, 1),
@@ -143,8 +139,8 @@ public class PrimevalVillagerTrades {
     public static void init() {
     }
 
-    private static class PrimevalTradeFactory implements TradeOffers.Factory {
-        private final TradedItem buy;
+    private static class PrimevalTradeFactory implements VillagerTrades.ItemListing {
+        private final ItemCost buy;
 
         private final ItemStack sell;
         private final int maxUses;
@@ -152,7 +148,7 @@ public class PrimevalVillagerTrades {
         private final float multiplier;
 
         public PrimevalTradeFactory(Item buy, int buyCount, ItemStack sell, int maxUses, int experience) {
-            this.buy = new TradedItem(buy, buyCount);
+            this.buy = new ItemCost(buy, buyCount);
             this.sell = sell;
             this.maxUses = maxUses;
             this.experience = experience;
@@ -160,8 +156,8 @@ public class PrimevalVillagerTrades {
         }
 
         @Override
-        public TradeOffer create(ServerWorld world, Entity entity, Random random) {
-            return new TradeOffer(buy, sell, this.maxUses, this.experience, this.multiplier);
+        public MerchantOffer getOffer(ServerLevel world, Entity entity, RandomSource random) {
+            return new MerchantOffer(buy, sell, this.maxUses, this.experience, this.multiplier);
         }
     }
 }
