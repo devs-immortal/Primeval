@@ -88,15 +88,15 @@ public class PrimevalCampfireBlock extends BlockWithEntity {
             if (blockEntity instanceof PrimevalCampfireBlockEntity) {
                 ItemStack stack = ((ItemEntity) entity).getStack();
                 if (stack.isIn(PrimevalTags.Items.BURNABLE_LONG)) {
-                    if (!world.isClient) bl = ((PrimevalCampfireBlockEntity) blockEntity).addFuel(state, world, pos, 1200);
+                    if (!world.isClient()) bl = ((PrimevalCampfireBlockEntity) blockEntity).addFuel(state, world, pos, 1200);
                 } else if (stack.isIn(PrimevalTags.Items.BURNABLE_SHORT)) {
-                    if (!world.isClient) bl = ((PrimevalCampfireBlockEntity) blockEntity).addFuel(state, world, pos, 200);
+                    if (!world.isClient()) bl = ((PrimevalCampfireBlockEntity) blockEntity).addFuel(state, world, pos, 200);
                 } else if (state.get(LIT)) {
                     entity.setFireTicks(20);
                 }
                 if (bl) stack.decrement(1);
             }
-        } else if (state.get(LIT) && !world.isClient) {
+        } else if (state.get(LIT) && !world.isClient()) {
             entity.serverDamage(world.getDamageSources().inFire(), 1);
         }
     }
@@ -118,7 +118,7 @@ public class PrimevalCampfireBlock extends BlockWithEntity {
     protected ActionResult onUseWithItem(ItemStack itemStack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof PrimevalCampfireBlockEntity) {
-            if (itemStack == ItemStack.EMPTY && !world.isClient) {
+            if (itemStack == ItemStack.EMPTY && !world.isClient()) {
                 boolean bl = false;
                 List<ItemStack> cooked = ((PrimevalCampfireBlockEntity) blockEntity).retrieveCookedItems();
                 for (ItemStack i : cooked) {
@@ -129,7 +129,7 @@ public class PrimevalCampfireBlock extends BlockWithEntity {
                     world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 0.5f, world.getRandom().nextFloat() * 0.4f + 0.8f);
                     return ActionResult.SUCCESS;
                 }
-            } else if (itemStack.getItem() instanceof PrimevalShovelItem && !world.isClient && state.get(LIT)) {
+            } else if (itemStack.getItem() instanceof PrimevalShovelItem && !world.isClient() && state.get(LIT)) {
                 ((PrimevalCampfireBlockEntity) blockEntity).setLit(false);
                 world.setBlockState(pos, state.with(LIT, false));
                 return ActionResult.SUCCESS;
@@ -150,7 +150,7 @@ public class PrimevalCampfireBlock extends BlockWithEntity {
     }
 
     public static boolean tryLight(World world, BlockPos pos, BlockState state) {
-        if (!world.isClient && state.get(KINDLING) > 0) {
+        if (!world.isClient() && state.get(KINDLING) > 0) {
             world.setBlockState(pos, state.with(LIT, true));
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof PrimevalCampfireBlockEntity) {

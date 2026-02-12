@@ -58,9 +58,9 @@ public class CollapsingBlockEntity extends FallingBlockEntity {
             Block block = this.block.getBlock();
             Block source = this.sourceBlock.getBlock();
             if (++this.timeFalling == 1) {
-                if (getWorld().getBlockState(this.origin).isOf(block) || getWorld().getBlockState(this.origin).isOf(source)) {
-                    getWorld().removeBlock(this.origin, false);
-                } else if (!getWorld().isClient) {
+                if (getEntityWorld().getBlockState(this.origin).isOf(block) || getEntityWorld().getBlockState(this.origin).isOf(source)) {
+                    getEntityWorld().removeBlock(this.origin, false);
+                } else if (!getEntityWorld().isClient()) {
                     this.discard();
                     return;
                 }
@@ -69,26 +69,26 @@ public class CollapsingBlockEntity extends FallingBlockEntity {
             this.move(MovementType.SELF, this.getVelocity());
             this.tickBlockCollision();
             this.tickPortalTeleportation();
-            if (this.getWorld() instanceof ServerWorld serverWorld) {
+            if (this.getEntityWorld() instanceof ServerWorld serverWorld) {
                 if (this.isAlive()) {
                     BlockPos blockPos = this.getBlockPos();
                     if (!this.isOnGround()) { // still falling
-                        if (this.timeFalling > 100 && (blockPos.getY() <= this.getWorld().getBottomY() || blockPos.getY() > this.getWorld().getTopYInclusive()) || this.timeFalling > 600) {
+                        if (this.timeFalling > 100 && (blockPos.getY() <= this.getEntityWorld().getBottomY() || blockPos.getY() > this.getEntityWorld().getTopYInclusive()) || this.timeFalling > 600) {
                             if (this.dropItem && serverWorld.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
                                 this.dropItem(serverWorld, block);
                             }
                             this.discard();
                         }
                     } else { // hit ground
-                        BlockState blockState = this.getWorld().getBlockState(blockPos);
+                        BlockState blockState = this.getEntityWorld().getBlockState(blockPos);
                         if (blockState.isIn(PrimevalTags.Blocks.COLLAPSING_NO_CRUSH)) {
                             blockPos = blockPos.up();
-                            blockState = getWorld().getBlockState(blockPos);
+                            blockState = getEntityWorld().getBlockState(blockPos);
                         }
                         this.setVelocity(this.getVelocity().multiply(0.7, -0.5, 0.7));
                         if (!blockState.isOf(Blocks.MOVING_PISTON)) {
-                            if (this.getWorld().setBlockState(blockPos, this.block, 3) || this.getWorld().setBlockState(blockPos.up(), this.block, 3)) {
-                                ((ServerWorld)this.getWorld()).getChunkManager().chunkLoadingManager.sendToOtherNearbyPlayers(this, new BlockUpdateS2CPacket(blockPos, this.getWorld().getBlockState(blockPos)));
+                            if (this.getEntityWorld().setBlockState(blockPos, this.block, 3) || this.getEntityWorld().setBlockState(blockPos.up(), this.block, 3)) {
+                                ((ServerWorld)this.getEntityWorld()).getChunkManager().chunkLoadingManager.sendToOtherNearbyPlayers(this, new BlockUpdateS2CPacket(blockPos, this.getEntityWorld().getBlockState(blockPos)));
                                 this.discard();
                             } else if (this.dropItem && serverWorld.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS) && this.random.nextBoolean()) {
                                 this.discard();
@@ -111,7 +111,7 @@ public class CollapsingBlockEntity extends FallingBlockEntity {
 
             DamageSource source = this.getDamageSources().fallingBlock(this);
             float damageAmount = Math.min(MathHelper.floor((float)i * 2.0f), 40.0f);
-            this.getWorld().getOtherEntities(this, this.getBoundingBox(), predicate).forEach((entity) -> entity.serverDamage(source, damageAmount));
+            this.getEntityWorld().getOtherEntities(this, this.getBoundingBox(), predicate).forEach((entity) -> entity.serverDamage(source, damageAmount));
         }
         return false;
     }

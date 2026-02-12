@@ -69,9 +69,9 @@ public class VesselItem extends BundleItem implements IWeightedItem {
                 var maybeContents = MoldItem.insertFluid(fluidContentComponent, itemStack);
                 if (maybeContents.getLeft()) { // fluid was inserted
                     if (maybeContents.getRight() == null) {
-                        player.playSound(SoundEvents.ITEM_BUCKET_FILL_LAVA, 0.4F, 1.8F + player.getWorld().getRandom().nextFloat() * 0.4F);
+                        player.playSound(SoundEvents.ITEM_BUCKET_FILL_LAVA, 0.4F, 1.8F + player.getEntityWorld().getRandom().nextFloat() * 0.4F);
                     } else {
-                        player.playSound(SoundEvents.ITEM_BUCKET_FILL_LAVA, 0.4F, 0.7F + player.getWorld().getRandom().nextFloat() * 0.4F);
+                        player.playSound(SoundEvents.ITEM_BUCKET_FILL_LAVA, 0.4F, 0.7F + player.getEntityWorld().getRandom().nextFloat() * 0.4F);
                     }
                     stack.set(PrimevalDataComponentTypes.FLUID_CONTENTS, maybeContents.getRight());
                     return true;

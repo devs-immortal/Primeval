@@ -23,7 +23,7 @@ public class ProspectingPickaxeItem extends PrimevalPickaxeItem {
     private final int horizontalSearchRange;
     private final int verticalSearchRange;
 
-    public ProspectingPickaxeItem(ToolMaterial material, float attackDamage, float attackSpeed, int horizontalSearchRange, int verticalSearchRange, Weight weight, Size size, Settings settings) {
+    public ProspectingPickaxeItem(ToolMaterial material, float attackDamage, float attackSpeed, int horizontalSearchRange, int verticalSearchRange, Weight weight, Size size, net.minecraft.item.Item.Settings settings) {
         super(material, attackDamage, attackSpeed, weight, size, settings);
         this.horizontalSearchRange = horizontalSearchRange;
         this.verticalSearchRange = verticalSearchRange;

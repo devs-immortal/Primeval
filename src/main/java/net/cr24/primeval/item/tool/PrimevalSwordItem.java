@@ -21,7 +21,7 @@ public class PrimevalSwordItem extends Item implements IWeightedItem {
     private final Weight weight;
     private final Size size;
 
-    public PrimevalSwordItem(ToolMaterial toolMaterial, float attackDamage, float attackSpeed, Weight weight, Size size, Settings settings) {
+    public PrimevalSwordItem(ToolMaterial toolMaterial, float attackDamage, float attackSpeed, Weight weight, Size size, net.minecraft.item.Item.Settings settings) {
         super(settings.sword(toolMaterial, 3.0F, -2.4F));
         this.weight = weight;
         this.size = size;

@@ -54,7 +54,7 @@ public class FirestarterItem extends WeightedItem {
                 if (world.getBlockState(pos2.down()).isIn(PrimevalTags.Blocks.CAMPFIRE_BASE) && PrimevalUtil.itemEntitiesInBlock(world, pos2, PrimevalTags.Items.LOGS, PrimevalTags.Items.ROCKS, PrimevalTags.Items.ROCKS, PrimevalTags.Items.CAMPFIRE_KINDLING)) {
                     world.setBlockState(pos2, PrimevalBlocks.CAMPFIRE.getDefaultState().with(PrimevalCampfireBlock.LIT, true));
                     BlockEntity blockEntity = world.getBlockEntity(pos2);
-                    if (!world.isClient && blockEntity instanceof PrimevalCampfireBlockEntity) {
+                    if (!world.isClient() && blockEntity instanceof PrimevalCampfireBlockEntity) {
                         ((PrimevalCampfireBlockEntity) blockEntity).addFuel(world.getBlockState(pos2), world, pos2, 1200);
                         ((PrimevalCampfireBlockEntity) blockEntity).setLit(true);
                     }
@@ -62,7 +62,7 @@ public class FirestarterItem extends WeightedItem {
                     setFire(world, pos2);
                 }
             }
-            if (!world.isClient) world.playSound(null, pos, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.BLOCKS, 0.5f, world.getRandom().nextFloat() * 0.4f + 0.8f);
+            if (!world.isClient()) world.playSound(null, pos, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.BLOCKS, 0.5f, world.getRandom().nextFloat() * 0.4f + 0.8f);
         }
         return stack;
     }

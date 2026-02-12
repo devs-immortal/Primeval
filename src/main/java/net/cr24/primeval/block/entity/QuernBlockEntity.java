@@ -96,7 +96,7 @@ public class QuernBlockEntity extends BlockEntity implements Clearable {
     }
 
     public void makeParticles(World world, BlockPos pos) {
-        if (world.isClient) {
+        if (world.isClient()) {
             Random rand = Random.create();
             world.addParticleClient(
                     new ItemStackParticleEffect(ParticleTypes.ITEM, inputItem),
@@ -111,7 +111,7 @@ public class QuernBlockEntity extends BlockEntity implements Clearable {
         }
     }
     public void breakParticles(World world, BlockPos pos) {
-        if (world.isClient) {
+        if (world.isClient()) {
             Random rand = Random.create();
             for (int i = 0; i < 16; i++) {
                 world.addParticleClient(

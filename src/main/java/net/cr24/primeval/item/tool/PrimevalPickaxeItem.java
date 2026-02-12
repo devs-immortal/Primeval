@@ -21,7 +21,7 @@ public class PrimevalPickaxeItem extends Item implements IWeightedItem {
     private final Weight weight;
     private final Size size;
 
-    public PrimevalPickaxeItem(ToolMaterial material, float attackDamage, float attackSpeed, Weight weight, Size size, Settings settings) {
+    public PrimevalPickaxeItem(ToolMaterial material, float attackDamage, float attackSpeed, Weight weight, Size size, net.minecraft.item.Item.Settings settings) {
         super(settings.tool(material, BlockTags.PICKAXE_MINEABLE, attackDamage, attackSpeed, 0.0F));
         this.weight = weight;
         this.size = size;

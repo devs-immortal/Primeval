@@ -9,6 +9,7 @@ import net.minecraft.block.entity.BarrelBlockEntity;
 import net.minecraft.block.entity.ChestBlockEntity;
 import net.minecraft.block.entity.LootableContainerBlockEntity;
 import net.minecraft.block.entity.ViewerCountManager;
+import net.minecraft.entity.ContainerUser;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
@@ -49,7 +50,7 @@ public class CrateBlockEntity extends LootableContainerBlockEntity {
             protected void onViewerCountUpdate(World world, BlockPos pos, BlockState state, int oldViewerCount, int newViewerCount) {
             }
 
-            protected boolean isPlayerViewing(PlayerEntity player) {
+            public boolean isPlayerViewing(PlayerEntity player) {
                 if (player.currentScreenHandler instanceof Primeval3x5ContainerScreenHandler) {
                     Inventory inventory = ((Primeval3x5ContainerScreenHandler)player.currentScreenHandler).getInventory();
                     return inventory == CrateBlockEntity.this;
@@ -103,16 +104,16 @@ public class CrateBlockEntity extends LootableContainerBlockEntity {
     }
 
     @Override
-    public void onOpen(PlayerEntity player) {
-        if (!this.removed && !player.isSpectator()) {
-            this.stateManager.openContainer(player, this.getWorld(), this.getPos(), this.getCachedState());
+    public void onOpen(ContainerUser user) {
+        if (!this.removed && !user.asLivingEntity().isSpectator()) {
+            this.stateManager.openContainer(user.asLivingEntity(), this.getWorld(), this.getPos(), this.getCachedState(), user.getContainerInteractionRange());
         }
     }
 
     @Override
-    public void onClose(PlayerEntity player) {
-        if (!this.removed && !player.isSpectator()) {
-            this.stateManager.closeContainer(player, this.getWorld(), this.getPos(), this.getCachedState());
+    public void onClose(ContainerUser user) {
+        if (!this.removed && !user.asLivingEntity().isSpectator()) {
+            this.stateManager.closeContainer(user.asLivingEntity(), this.getWorld(), this.getPos(), this.getCachedState());
         }
     }
 

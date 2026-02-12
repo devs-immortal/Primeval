@@ -32,7 +32,7 @@ public class PrimevalHoeItem extends Item implements IWeightedItem {
 
     public static HashMap<Block, Block> hoeables = new HashMap<>();
 
-    public PrimevalHoeItem(ToolMaterial material, float attackDamage, float attackSpeed, Weight weight, Size size, Settings settings) {
+    public PrimevalHoeItem(ToolMaterial material, float attackDamage, float attackSpeed, Weight weight, Size size, net.minecraft.item.Item.Settings settings) {
         super(settings.tool(material, BlockTags.HOE_MINEABLE, attackDamage, attackSpeed, 0.0F));
         this.weight = weight;
         this.size = size;
@@ -47,9 +47,9 @@ public class PrimevalHoeItem extends Item implements IWeightedItem {
             var playerEntity = context.getPlayer();
             world.setBlockState(pos, hoeables.get(targetBlock).getDefaultState());
             world.playSound(playerEntity, pos, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS, 1.0f, 1.0f);
-            if (!world.isClient) {
+            if (!world.isClient()) {
                 if (playerEntity != null) {
-                    context.getStack().damage(1, playerEntity, LivingEntity.getSlotForHand(context.getHand()));
+                    context.getStack().damage(1, playerEntity, context.getHand());
                 }
             }
             return ActionResult.SUCCESS;

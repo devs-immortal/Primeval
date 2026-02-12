@@ -76,7 +76,7 @@ public class LayingItemBlock extends BlockWithEntity {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             player.giveItemStack(((LayingItemBlockEntity) blockEntity).getItem());
             world.setBlockState(pos, Blocks.AIR.getDefaultState());
-            if (!world.isClient) world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 0.5f, world.getRandom().nextFloat() * 0.4f + 0.8f);
+            if (!world.isClient()) world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 0.5f, world.getRandom().nextFloat() * 0.4f + 0.8f);
             return ActionResult.SUCCESS;
         } else {
             return super.onUse(state, world, pos, player, hit);

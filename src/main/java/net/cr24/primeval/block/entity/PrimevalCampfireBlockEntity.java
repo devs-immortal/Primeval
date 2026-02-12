@@ -153,7 +153,7 @@ public class PrimevalCampfireBlockEntity extends BlockEntity implements Clearabl
 
     public static void tick(World world, BlockPos pos, BlockState state, PrimevalCampfireBlockEntity blockEntity, ServerRecipeManager.MatchGetter<SingleStackRecipeInput, OpenFireRecipe> recipeMatchGetter) {
         // If client, just make particles
-        if (world.isClient) {
+        if (world.isClient()) {
             clientParticles(world, pos, state, blockEntity);
             return;
         }

@@ -16,6 +16,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
@@ -43,7 +44,7 @@ public class WickerBasketBlock extends BlockWithEntity {
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        if (world.isClient) {
+        if (world.isClient()) {
             return ActionResult.SUCCESS;
         }
         BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -80,7 +81,7 @@ public class WickerBasketBlock extends BlockWithEntity {
     }
 
     @Override
-    public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
+    protected int getComparatorOutput(BlockState state, World world, BlockPos pos, Direction direction) {
         return ScreenHandler.calculateComparatorOutput(world.getBlockEntity(pos));
     }
 }
