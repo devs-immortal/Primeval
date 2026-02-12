@@ -81,7 +81,7 @@ public class PrimevalCampfireBlock extends BlockWithEntity {
     }
 
     @Override
-    protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler) {
+    protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler, boolean bl2) {
         if (entity instanceof ItemEntity) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             boolean bl = false;

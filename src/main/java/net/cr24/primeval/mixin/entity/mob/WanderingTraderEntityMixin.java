@@ -4,6 +4,7 @@ import net.cr24.primeval.entity.PrimevalVillagerTrades;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.passive.WanderingTraderEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.village.TradeOfferList;
 import net.minecraft.village.TradeOffers;
@@ -24,12 +25,12 @@ public abstract class WanderingTraderEntityMixin extends MerchantEntity {
     }
 
     @Inject(method = "fillRecipes", at = @At("HEAD"), cancellable = true)
-    private void fillRecipes(CallbackInfo info) {
+    private void fillRecipes(ServerWorld world, CallbackInfo info) {
         TradeOfferList tradeOfferList = this.getOffers();
 
         for(Pair<TradeOffers.Factory[], Integer> pair : PrimevalVillagerTrades.CUSTOM_WANDERING_TRADER_TRADES) {
-            TradeOffers.Factory[] factorys = pair.getLeft();
-            this.fillRecipesFromPool(tradeOfferList, factorys, pair.getRight());
+            TradeOffers.Factory[] factories = pair.getLeft();
+            this.fillRecipesFromPool(world, tradeOfferList, factories, pair.getRight());
         }
         info.cancel();
     }

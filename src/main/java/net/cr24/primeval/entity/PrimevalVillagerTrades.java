@@ -11,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.potion.Potions;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.village.TradeOffer;
 import net.minecraft.village.TradeOffers;
@@ -159,7 +160,7 @@ public class PrimevalVillagerTrades {
         }
 
         @Override
-        public TradeOffer create(Entity entity, Random random) {
+        public TradeOffer create(ServerWorld world, Entity entity, Random random) {
             return new TradeOffer(buy, sell, this.maxUses, this.experience, this.multiplier);
         }
     }

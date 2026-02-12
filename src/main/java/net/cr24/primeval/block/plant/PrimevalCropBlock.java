@@ -60,7 +60,7 @@ public class PrimevalCropBlock extends PlantBlock {
         int soilFertilized = soil.get(PrimevalFarmlandBlock.FERTILIZED);
 
         double growthChance = 0.6;
-        growthChance += 0.05d * soilFertilized;
+        growthChance += 0.13d * soilFertilized;
         if (soilMoisture == 0) growthChance = growthChance / 2;
 
         if (random.nextDouble() <= growthChance) {

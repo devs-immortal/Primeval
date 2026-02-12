@@ -22,12 +22,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.GameRules;
-import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
+import net.minecraft.world.rule.GameRules;
 
-import java.util.Iterator;
-import java.util.List;
 import java.util.function.Predicate;
 
 public class CollapsingBlockEntity extends FallingBlockEntity {
@@ -74,7 +71,7 @@ public class CollapsingBlockEntity extends FallingBlockEntity {
                     BlockPos blockPos = this.getBlockPos();
                     if (!this.isOnGround()) { // still falling
                         if (this.timeFalling > 100 && (blockPos.getY() <= this.getEntityWorld().getBottomY() || blockPos.getY() > this.getEntityWorld().getTopYInclusive()) || this.timeFalling > 600) {
-                            if (this.dropItem && serverWorld.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
+                            if (this.dropItem && serverWorld.getGameRules().getValue(GameRules.ENTITY_DROPS)) {
                                 this.dropItem(serverWorld, block);
                             }
                             this.discard();
@@ -90,7 +87,7 @@ public class CollapsingBlockEntity extends FallingBlockEntity {
                             if (this.getEntityWorld().setBlockState(blockPos, this.block, 3) || this.getEntityWorld().setBlockState(blockPos.up(), this.block, 3)) {
                                 ((ServerWorld)this.getEntityWorld()).getChunkManager().chunkLoadingManager.sendToOtherNearbyPlayers(this, new BlockUpdateS2CPacket(blockPos, this.getEntityWorld().getBlockState(blockPos)));
                                 this.discard();
-                            } else if (this.dropItem && serverWorld.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS) && this.random.nextBoolean()) {
+                            } else if (this.dropItem && serverWorld.getGameRules().getValue(GameRules.ENTITY_DROPS) && this.random.nextBoolean()) {
                                 this.discard();
                                 this.onDestroyedOnLanding(block, blockPos);
                                 this.dropItem(serverWorld, block);
