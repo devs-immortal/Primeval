@@ -84,7 +84,7 @@ public class VesselItem extends BundleItem implements IWeightedItem {
     @Override
     public boolean overrideOtherStackedOnMe(ItemStack stack, ItemStack otherStack, Slot slot, ClickAction clickType, Player player, SlotAccess cursorStackReference) {
         PrimevalDataComponentTypes.FluidContentComponent fluidContentComponent = stack.get(PrimevalDataComponentTypes.FLUID_CONTENTS);
-        if (fluidContentComponent == null || fluidContentComponent.amount() == 0) {
+        if (fluidContentComponent == null) {
             return super.overrideOtherStackedOnMe(stack, otherStack, slot, clickType, player, cursorStackReference);
         } else {
             return false;
