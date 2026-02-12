@@ -33,12 +33,16 @@ public class QuernBlockEntityRenderer implements BlockEntityRenderer<QuernBlockE
     public void render(QuernBlockEntityRenderState state, MatrixStack matrices, OrderedRenderCommandQueue queue, CameraRenderState cameraState) {
         // how far the item being querned has sunk into the quern
         if (state.itemState == null) return;
-        double sinkProgress = 0.7-(state.currentAngle / 360D)*0.2;
-        matrices.translate(0.5, sinkProgress, 0.5);
+        matrices.translate(0.5, 0.0, 0.5);
+        matrices.push();
+        double sinkProgress = 0.9-(state.currentAngle / 360D)*0.2;
+        matrices.translate(0.0, sinkProgress, 0.0);
+        matrices.scale(0.5f, 0.5f, 0.5f);
         state.itemState.render(matrices, queue, state.lightmapCoordinates, OverlayTexture.DEFAULT_UV, 0);
-        matrices.translate(0, -sinkProgress, 0);
+        matrices.translate(0, -(sinkProgress + 0.6), 0);
+        matrices.pop();
         // render quern wheel if present, at current angle from BE
-        if (state.hasWheel) return;
+        if (!state.hasWheel) return;
         matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(state.currentAngle));
         var renderManager = MinecraftClient.getInstance().getBlockRenderManager();
         var wheelState = PrimevalBlocks.QUERN.getDefaultState().with(QuernBlock.WHEELED, true);

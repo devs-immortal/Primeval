@@ -32,15 +32,15 @@ public class PrimevalCampfireBlockEntityRenderer implements BlockEntityRenderer<
 
     @Override
     public void render(FourItemBlockEntityRenderState state, MatrixStack matrices, OrderedRenderCommandQueue queue, CameraRenderState cameraState) {
-        matrices.scale(0.6f, 0.5f, 0.6f);
+        matrices.scale(0.3f, 0.5f, 0.3f);
         matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(-90));
-        matrices.translate(0.25, -0.37, 0.4);
+        matrices.translate(0.6, -0.5, 0.4);
         state.itemStates.get(0).render(matrices, queue, state.lightmapCoordinates, OverlayTexture.DEFAULT_UV, 0);
-        matrices.translate(1.15, 0, 0);
+        matrices.translate(2.3, 0, 0);
         state.itemStates.get(1).render(matrices, queue, state.lightmapCoordinates, OverlayTexture.DEFAULT_UV, 0);
-        matrices.translate(-1.15, -1.15, 0);
+        matrices.translate(-2.3, -2.3, 0);
         state.itemStates.get(2).render(matrices, queue, state.lightmapCoordinates, OverlayTexture.DEFAULT_UV, 0);
-        matrices.translate(1.15, 0, 0);
+        matrices.translate(2.3, 0, 0);
         state.itemStates.get(3).render(matrices, queue, state.lightmapCoordinates, OverlayTexture.DEFAULT_UV, 0);
     }
 

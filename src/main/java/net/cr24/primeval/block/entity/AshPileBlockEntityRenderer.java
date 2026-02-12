@@ -37,13 +37,14 @@ public class AshPileBlockEntityRenderer implements BlockEntityRenderer<AshPileBl
 
     @Override
     public void render(FourItemBlockEntityRenderState state, MatrixStack matrices, OrderedRenderCommandQueue queue, CameraRenderState cameraState) {
-        matrices.translate(0.25, 0.125, 0.25);
+        matrices.scale(0.5f, 0.5f, 0.5f);
+        matrices.translate(0.5, 0.47, 0.5);
         state.itemStates.get(0).render(matrices, queue, state.lightmapCoordinates, OverlayTexture.DEFAULT_UV, 0);
-        matrices.translate(0.5, 0, 0);
+        matrices.translate(1.0, 0, 0);
         state.itemStates.get(1).render(matrices, queue, state.lightmapCoordinates, OverlayTexture.DEFAULT_UV, 0);
-        matrices.translate(-0.5, 0, 0.5);
+        matrices.translate(-1.0, 0, 1.0);
         state.itemStates.get(2).render(matrices, queue, state.lightmapCoordinates, OverlayTexture.DEFAULT_UV, 0);
-        matrices.translate(0.5, 0, 0);
+        matrices.translate(1.0, 0, 0);
         state.itemStates.get(3).render(matrices, queue, state.lightmapCoordinates, OverlayTexture.DEFAULT_UV, 0);
     }
 

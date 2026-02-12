@@ -61,10 +61,8 @@ public class QuernBlockEntity extends BlockEntity implements Clearable {
         blockEntity.currentAngle = newAngle;
         blockEntity.markDirty();
         if (blockEntity.currentAngle >= 359.97 && world instanceof ServerWorld) {
-
                 world.playSound(null, pos, PrimevalSoundEvents.QUERN_PROCESS, SoundCategory.BLOCKS, 0.8f, 0.8f);
                 blockEntity.process((ServerWorld) world, pos, recipeMatchGetter);
-
         }
     }
 
