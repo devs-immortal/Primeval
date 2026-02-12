@@ -12,11 +12,10 @@ public class PrimevalScreens {
 
     public static final MenuType<Primeval3x5ContainerScreenHandler> GENERIC_3X5_HANDLER = registerHandler("generic_3x5", Primeval3x5ContainerScreenHandler::create);
 
-
-
-
-
     public static void init() {
+    }
+
+    public static void initClient() {
         MenuScreens.register(GENERIC_3X5_HANDLER, Primeval3x5ContainerScreen::new);
     }
 

@@ -18,6 +18,8 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.ChestBlock;
+import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.entity.ContainerOpenersCounter;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -91,7 +93,6 @@ public class CrateBlockEntity extends RandomizableContainerBlockEntity {
     protected Component getDefaultName() {
         return Component.translatable("container.primeval.crate");
     }
-
 
     @Override
     protected AbstractContainerMenu createMenu(int syncId, Inventory playerInventory) {

@@ -66,6 +66,7 @@ public class VesselItem extends BundleItem implements IWeightedItem {
                 if (maybeContents.getA()) { // fluid was inserted
                     if (maybeContents.getB() == null) {
                         player.playSound(SoundEvents.BUCKET_FILL_LAVA, 0.4F, 1.8F + player.level().getRandom().nextFloat() * 0.4F);
+                        stack.set(DataComponents.BUNDLE_CONTENTS, BundleContents.EMPTY);
                     } else {
                         player.playSound(SoundEvents.BUCKET_FILL_LAVA, 0.4F, 0.7F + player.level().getRandom().nextFloat() * 0.4F);
                     }
@@ -83,7 +84,7 @@ public class VesselItem extends BundleItem implements IWeightedItem {
     @Override
     public boolean overrideOtherStackedOnMe(ItemStack stack, ItemStack otherStack, Slot slot, ClickAction clickType, Player player, SlotAccess cursorStackReference) {
         PrimevalDataComponentTypes.FluidContentComponent fluidContentComponent = stack.get(PrimevalDataComponentTypes.FLUID_CONTENTS);
-        if (fluidContentComponent == null) {
+        if (fluidContentComponent == null || fluidContentComponent.amount() == 0) {
             return super.overrideOtherStackedOnMe(stack, otherStack, slot, clickType, player, cursorStackReference);
         } else {
             return false;

@@ -39,7 +39,8 @@ public class AshPileBlockEntityRenderer implements BlockEntityRenderer<AshPileBl
         state.itemStates.get(3).submit(matrices, queue, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
     }
 
-    public void updateRenderState(AshPileBlockEntity blockEntity, FourItemBlockEntityRenderState renderState, float f, Vec3 vec3d, @Nullable ModelFeatureRenderer.CrumblingOverlay crumblingOverlayCommand) {
+    @Override
+    public void extractRenderState(AshPileBlockEntity blockEntity, FourItemBlockEntityRenderState renderState, float f, Vec3 vec3d, @Nullable ModelFeatureRenderer.CrumblingOverlay crumblingOverlayCommand) {
         BlockEntityRenderState.extractBase(blockEntity, renderState, crumblingOverlayCommand);
         List<ItemStack> items = blockEntity.getItems();
         int i = (int)blockEntity.getBlockPos().asLong();

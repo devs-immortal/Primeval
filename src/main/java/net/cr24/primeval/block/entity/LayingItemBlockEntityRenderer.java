@@ -35,7 +35,8 @@ public class LayingItemBlockEntityRenderer implements BlockEntityRenderer<Laying
         }
     }
 
-    public void updateRenderState(LayingItemBlockEntity blockEntity, LayingItemBlockEntityRenderState renderState, float f, Vec3 vec3d, @Nullable ModelFeatureRenderer.CrumblingOverlay crumblingOverlayCommand) {
+    @Override
+    public void extractRenderState(LayingItemBlockEntity blockEntity, LayingItemBlockEntityRenderState renderState, float f, Vec3 vec3d, @Nullable ModelFeatureRenderer.CrumblingOverlay crumblingOverlayCommand) {
         BlockEntityRenderState.extractBase(blockEntity, renderState, crumblingOverlayCommand);
         ItemStackRenderState itemRenderState = new ItemStackRenderState();
         this.itemModelManager.updateForTopItem(itemRenderState, blockEntity.getItem(), ItemDisplayContext.FIXED, blockEntity.getLevel(), null, blockEntity.getRandomInt());

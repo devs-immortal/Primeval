@@ -47,7 +47,8 @@ public class QuernBlockEntityRenderer implements BlockEntityRenderer<QuernBlockE
         //renderManager.renderBlock(wheelState, entity.getPos(), entity.getWorld(), matrices, vertexConsumers.getBuffer(RenderLayer.getCutout()), false, renderManager.getModel(wheelState).getParts(Random.create()));
     }
 
-    public void updateRenderState(QuernBlockEntity blockEntity, QuernBlockEntityRenderState renderState, float f, Vec3 vec3d, @Nullable ModelFeatureRenderer.CrumblingOverlay crumblingOverlayCommand) {
+    @Override
+    public void extractRenderState(QuernBlockEntity blockEntity, QuernBlockEntityRenderState renderState, float f, Vec3 vec3d, @Nullable ModelFeatureRenderer.CrumblingOverlay crumblingOverlayCommand) {
         BlockEntityRenderState.extractBase(blockEntity, renderState, crumblingOverlayCommand);
         ItemStackRenderState itemRenderState = new ItemStackRenderState();
         this.itemModelManager.updateForTopItem(itemRenderState, blockEntity.inputItem, ItemDisplayContext.FIXED, blockEntity.getLevel(), null, 0);

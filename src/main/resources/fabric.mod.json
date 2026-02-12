@@ -1,43 +1,43 @@
 {
-	"schemaVersion": 1,
-	"id": "primeval",
-	"version": "${version}",
-	"name": "Primeval",
-	"description": "Primeval aims for a complete overhaul of Minecraft systems to create a rustic, realistic game progression.",
-	"authors": [
-		"cr24"
-	],
-	"contact": {
-		"homepage": "https://immortaldevs.net/wiki/primeval",
-		"sources": "https://github.com/devs-immortal/Primeval"
-	},
-	"license": "CC0-1.0",
-	"icon": "assets/primeval/icon.png",
-	"environment": "*",
-	"entrypoints": {
-		"main": [
+    "schemaVersion": 1,
+    "id": "primeval",
+    "version": "${version}",
+    "name": "Primeval",
+    "description": "Primeval aims for a complete overhaul of Minecraft systems to create a rustic, realistic game progression.",
+    "authors": [
+        "cr24"
+    ],
+    "contact": {
+        "homepage": "https://immortaldevs.net/wiki/primeval",
+        "sources": "https://github.com/devs-immortal/Primeval"
+    },
+    "license": "CC0-1.0",
+    "icon": "assets/primeval/icon.png",
+    "environment": "*",
+    "entrypoints": {
+        "main": [
           "net.cr24.primeval.Primeval"
-		],
-		"client": [
+        ],
+        "client": [
           "net.cr24.primeval.Primeval"
-		],
-		"rei_client": [
-			"net.cr24.primeval.recipe.rei.PrimevalREIClientIntegration"
-		],
-		"rei_common": [
-			"net.cr24.primeval.recipe.rei.PrimevalREICommonIntegration"
-		],
-		"fabric-datagen": [
-			"net.cr24.primeval.PrimevalDataGenerator"
-		]
-	},
-	"mixins": [
-		"primeval.mixins.json"
-	],
-	"depends": {
-		"fabricloader": ">=0.16.10",
-		"minecraft": "~1.21.4",
-		"java": ">=21",
-		"fabric-api": "*"
-	}
+        ],
+        "rei_client": [
+            "net.cr24.primeval.recipe.rei.PrimevalREIClientIntegration"
+        ],
+        "rei_common": [
+            "net.cr24.primeval.recipe.rei.PrimevalREICommonIntegration"
+        ],
+        "fabric-datagen": [
+            "net.cr24.primeval.PrimevalDataGenerator"
+        ]
+    },
+    "mixins": [
+        "primeval.mixins.json"
+    ],
+    "depends": {
+        "fabricloader": ">=0.16.10",
+        "minecraft": "~1.21.4",
+        "java": ">=21",
+        "fabric-api": "*"
+    }
 }

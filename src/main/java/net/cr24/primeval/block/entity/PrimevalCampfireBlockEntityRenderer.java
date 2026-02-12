@@ -40,7 +40,8 @@ public class PrimevalCampfireBlockEntityRenderer implements BlockEntityRenderer<
         state.itemStates.get(3).submit(matrices, queue, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
     }
 
-    public void updateRenderState(PrimevalCampfireBlockEntity blockEntity, FourItemBlockEntityRenderState renderState, float f, Vec3 vec3d, @Nullable ModelFeatureRenderer.CrumblingOverlay crumblingOverlayCommand) {
+    @Override
+    public void extractRenderState(PrimevalCampfireBlockEntity blockEntity, FourItemBlockEntityRenderState renderState, float f, Vec3 vec3d, @Nullable ModelFeatureRenderer.CrumblingOverlay crumblingOverlayCommand) {
         BlockEntityRenderState.extractBase(blockEntity, renderState, crumblingOverlayCommand);
         List<ItemStack> items = blockEntity.getItemsBeingCooked();
         int i = (int)blockEntity.getBlockPos().asLong();
